@@ -17,7 +17,7 @@ function handleError(err) {
   process.exit(-1);
 }
 
-gulp.task("default", ["test", "buildAtom", "buildTmLanguage"]);
+gulp.task("default", ["buildAtom", "buildTmLanguage"]);
 
 gulp.task("buildTmLanguage", function() {
   const text = fs.readFileSync(inputGrammar);
