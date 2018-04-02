@@ -1,22 +1,16 @@
 {
-  "name": "csharp-tmlanguage",
+  "name": "apex-tmlanguage",
   "version": "0.1.0",
-  "description": "Textmate grammar for C# with outputs for VSCode, Atom and TextMate.",
-  "displayName": "csharp-tmLanguage",
+  "description":
+    "Textmate grammar for Apex with outputs for VSCode, Atom and TextMate.",
+  "displayName": "apex-tmLanguage",
   "license": "MIT",
-  "icon": "images/csharpIcon.png",
   "bugs": {
-    "url": "https://github.com/dotnet/csharp-tmLanguage/issues"
+    "url": "https://github.com/forcedotcom/apex-tmLanguage/issues"
   },
   "contributors": [
     {
-      "name": "Dustin Campbell"
-    },
-    {
-      "name": "Ivan Zlatev"
-    },
-    {
-      "name": "Damien Guard"
+      "name": "Nathan Totten"
     }
   ],
   "scripts": {

@@ -3,3 +3,4 @@ out/
 .vscode/
 #grammars/
 npm-debug.log*
+.DS_Store
