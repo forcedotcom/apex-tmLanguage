@@ -11,8 +11,8 @@ On Windows you may see a node-gyp error - [follow the instrutions here to resolv
 
 ## Supported outputs
 
-* `grammars\csharp.cson` - for Atom
-* `grammars\csharp.tmLanguage` - TextMate grammar (XML plist)
+* `grammars\apex.tmLanguage.cson` - for Atom
+* `grammars\apex.tmLanguage` - TextMate grammar (XML plist)
 
 
 ## Releasing
