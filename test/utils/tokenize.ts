@@ -6,7 +6,7 @@
 import { ITokenizeLineResult, Registry, StackElement } from 'vscode-textmate';
 
 const registry = new Registry();
-const grammar = registry.loadGrammarFromPathSync('grammars/csharp.tmLanguage');
+const grammar = registry.loadGrammarFromPathSync('grammars/apex.tmLanguage');
 const excludedTypes = ['source.cs', 'meta.interpolation.cs', 'meta.preprocessor.cs', 'meta.tag.cs', 'meta.type.parameters.cs']
 
 export function tokenize(input: string | Input, excludeTypes: boolean = true): Token[] {

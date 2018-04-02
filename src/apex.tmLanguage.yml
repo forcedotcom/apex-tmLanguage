@@ -1,0 +1,414 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: Apex
+scopeName: source.apex
+fileTypes: [apex, cls, trigger]
+uuid: C4D3A5F4-B1DE-48C5-84CE-AC99DDA78292
+foldingStartMarker: '(\{\s*(//.*)?$|^\s*// \{\{\{)'
+foldingStopMarker: '^\s*(\}|// \}\}\}$)'
+keyEquivalent: ^~J
+
+patterns:
+    -
+        captures:
+            '1':
+                name: keyword.other.package.apex
+            '2':
+                name: storage.modifier.package.apex
+            '3':
+                name: punctuation.terminator.apex
+        match: '^\s*(package)\b(?:\s*([^ ;$]+)\s*(;)?)?'
+        name: meta.package.apex
+    -
+        captures:
+            '1':
+                name: keyword.other.import.apex
+            '2':
+                name: storage.modifier.import.apex
+            '3':
+                name: punctuation.terminator.apex
+        match: '^\s*(import)\b(?:\s*([^ ;$]+)\s*(;)?)?'
+        name: meta.import.apex
+    -
+        include: '#code'
+
+repository:
+    all-types:
+        patterns:
+            -
+                include: '#primitive-arrays'
+            -
+                include: '#primitive-types'
+            -
+                include: '#object-types'
+    annotations:
+        patterns:
+            -
+                begin: '(@[^ (]+)(\()'
+                beginCaptures:
+                    '1': {name: storage.type.annotation.apex}
+                    '2': {name: punctuation.definition.annotation-arguments.begin.apex}
+                end: (\))
+                endCaptures:
+                    '1': {name: punctuation.definition.annotation-arguments.end.apex}
+                name: meta.declaration.annotation.apex
+                patterns:
+                    - {captures: {'1': {name: constant.other.key.apex}, '2': {name: keyword.operator.assignment.apex}}, match: '(\w*)\s*(=)'}
+                    - {include: '#code'}
+                    - {match: ',', name: punctuation.seperator.property.apex}
+            -
+                match: '@\w*'
+                name: storage.type.annotation.apex
+    anonymous-classes-and-new:
+        begin: \bnew\b
+        beginCaptures:
+            '0':
+                name: keyword.control.new.apex
+        end: '(?<=\)|\])(?!\s*{)|(?<=})|(?=;)'
+        patterns:
+            -
+                begin: '(\w+)\s*(?=\[)'
+                beginCaptures:
+                    '1': {name: storage.type.apex}
+                end: '}|(?=;|\))'
+                patterns:
+                    - {begin: '\[', end: '\]', patterns: [{include: '#code'}]}
+                    - {begin: '{', end: '(?=})', patterns: [{include: '#code'}]}
+            -
+                begin: '(?=\w.*\()'
+                end: '(?<=\))'
+                patterns:
+                    - {include: '#object-types'}
+                    - {begin: \(, beginCaptures: {'1': {name: storage.type.apex}}, end: \), patterns: [{include: '#code'}]}
+            -
+                begin: '{'
+                end: '}'
+                name: meta.inner-class.apex
+                patterns:
+                    - {include: '#class-body'}
+    assertions:
+        patterns:
+            -
+                begin: \b(assert)\s
+                beginCaptures:
+                    '1': {name: keyword.control.assert.apex}
+                end: $
+                name: meta.declaration.assertion.apex
+                patterns:
+                    - {match: ':', name: keyword.operator.assert.expression-seperator.apex}
+                    - {include: '#code'}
+    class:
+        begin: '(?=\w?[\w\s]*(?:class|(?:@)?interface|enum)\s+\w+)'
+        end: '}'
+        endCaptures:
+            '0':
+                name: punctuation.section.class.end.apex
+        name: meta.class.apex
+        patterns:
+            -
+                include: '#storage-modifiers'
+            -
+                include: '#comments'
+            -
+                captures:
+                    '1': {name: storage.modifier.apex}
+                    '2': {name: entity.name.type.class.apex}
+                match: '(class|(?:@)?interface|enum)\s+(\w+)'
+                name: meta.class.identifier.apex
+            -
+                begin: extends
+                beginCaptures:
+                    '0': {name: storage.modifier.extends.apex}
+                end: '(?={|implements)'
+                name: meta.definition.class.inherited.classes.apex
+                patterns:
+                    - {include: '#object-types-inherited'}
+                    - {include: '#comments'}
+            -
+                begin: (implements)\s
+                beginCaptures:
+                    '1': {name: storage.modifier.implements.apex}
+                end: '(?=\s*extends|\{)'
+                name: meta.definition.class.implemented.interfaces.apex
+                patterns:
+                    - {include: '#object-types-inherited'}
+                    - {include: '#comments'}
+            -
+                begin: '{'
+                end: '(?=})'
+                name: meta.class.body.apex
+                patterns:
+                    - {include: '#class-body'}
+    class-body:
+        patterns:
+            -
+                include: '#comments'
+            -
+                include: '#class'
+            -
+                include: '#enums'
+            -
+                include: '#methods'
+            -
+                include: '#annotations'
+            -
+                include: '#storage-modifiers'
+            -
+                include: '#code'
+    code:
+        patterns:
+            -
+                include: '#comments'
+            -
+                include: '#class'
+            -
+                begin: '{'
+                end: '}'
+                patterns:
+                    - {include: '#code'}
+            -
+                include: '#assertions'
+            -
+                include: '#parens'
+            -
+                include: '#constants-and-special-vars'
+            -
+                include: '#anonymous-classes-and-new'
+            -
+                include: '#keywords'
+            -
+                include: '#storage-modifiers'
+            -
+                include: '#strings'
+            -
+                include: '#all-types'
+    comments:
+        patterns:
+            -
+                captures:
+                    '0': {name: punctuation.definition.comment.apex}
+                match: '/\*\*/'
+                name: comment.block.empty.apex
+            -
+                include: text.html.javadoc
+            -
+                include: '#comments-inline'
+    comments-inline:
+        patterns:
+            -
+                begin: '/\*'
+                captures:
+                    '0': {name: punctuation.definition.comment.apex}
+                end: '\*/'
+                name: comment.block.apex
+            -
+                captures:
+                    '1': {name: comment.line.double-slash.apex}
+                    '2': {name: punctuation.definition.comment.apex}
+                match: '\s*((//).*$\n?)'
+    constants-and-special-vars:
+        patterns:
+            -
+                match: \b(true|false|null)\b
+                name: constant.language.apex
+            -
+                match: \b(this|super)\b
+                name: variable.language.apex
+            -
+                match: '\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)([LlFfUuDd]|UL|ul)?\b'
+                name: constant.numeric.apex
+            -
+                captures:
+                    '1': {name: keyword.operator.dereference.apex}
+                match: '(\.)?\b([A-Z][A-Z0-9_]+)(?!<|\.class|\s*\w+\s*=)\b'
+                name: constant.other.apex
+    enums:
+        begin: '^(?=\s*[A-Z0-9_]+\s*({|\(|,))'
+        end: '(?=;|})'
+        patterns:
+            -
+                begin: \w+
+                beginCaptures:
+                    '0': {name: constant.other.enum.apex}
+                end: '(?=,|;|})'
+                name: meta.enum.apex
+                patterns:
+                    - {include: '#parens'}
+                    - {begin: '{', end: '}', patterns: [{include: '#class-body'}]}
+    keywords:
+        patterns:
+            -
+                match: \b(try|catch|finally|throw)\b
+                name: keyword.control.catch-exception.apex
+            -
+                match: '\?|:'
+                name: keyword.control.apex
+            -
+                match: \b(return|break|case|continue|default|do|while|for|switch|when|if|else)\b
+                name: keyword.control.apex
+            -
+                match: \b(instanceof)\b
+                name: keyword.operator.apex
+            -
+                match: (==|!=|<=|>=|<>|<|>)
+                name: keyword.operator.comparison.apex
+            -
+                match: (=)
+                name: keyword.operator.assignment.apex
+            -
+                match: (\-\-|\+\+)
+                name: keyword.operator.increment-decrement.apex
+            -
+                match: '(\-|\+|\*|\/|%)'
+                name: keyword.operator.arithmetic.apex
+            -
+                match: '(!|&&|\|\|)'
+                name: keyword.operator.logical.apex
+            -
+                match: '(?<=\S)\.(?=\S)'
+                name: keyword.operator.dereference.apex
+            -
+                match: ;
+                name: punctuation.terminator.apex
+    methods:
+        begin: '(?!new)(?=\w.*\s+)(?=[^=]+\()'
+        end: '}|(?=;)'
+        name: meta.method.apex
+        patterns:
+            -
+                include: '#storage-modifiers'
+            -
+                begin: '(\w+)\s*\('
+                beginCaptures:
+                    '1': {name: entity.name.function.apex}
+                end: \)
+                name: meta.method.identifier.apex
+                patterns:
+                    - {include: '#parameters'}
+            -
+                begin: '(?=\w.*\s+\w+\s*\()'
+                end: '(?=\w+\s*\()'
+                name: meta.method.return-type.apex
+                patterns:
+                    - {include: '#all-types'}
+            -
+                include: '#throws'
+            -
+                begin: '{'
+                end: '(?=})'
+                name: meta.method.body.apex
+                patterns:
+                    - {include: '#code'}
+    object-types:
+        patterns:
+            -
+                begin: '\b((?:[a-z]\w*\.)*[A-Z]+\w*)<'
+                end: '>|[^\w\s,\?<\[\]]'
+                name: storage.type.generic.apex
+                patterns:
+                    - {include: '#object-types'}
+                    - {begin: '<', comment: 'This is just to support <>''s with no actual type prefix', end: '>|[^\w\s,\[\]<]', name: storage.type.generic.apex}
+            -
+                begin: '\b((?:[a-z]\w*\.)*[A-Z]+\w*)(?=\[)'
+                end: '(?=[^\]\s])'
+                name: storage.type.object.array.apex
+                patterns:
+                    - {begin: '\[', end: '\]', patterns: [{include: '#code'}]}
+            -
+                captures:
+                    '1': {name: keyword.operator.dereference.apex}
+                match: '\b(?:[a-z]\w*(\.))*[A-Z]+\w*\b'
+                name: storage.type.apex
+    object-types-inherited:
+        patterns:
+            -
+                begin: '\b((?:[a-z]\w*\.)*[A-Z]+\w*)<'
+                end: '>|[^\w\s,<]'
+                name: entity.other.inherited-class.apex
+                patterns:
+                    - {include: '#object-types'}
+                    - {begin: '<', comment: 'This is just to support <>''s with no actual type prefix', end: '>|[^\w\s,<]', name: storage.type.generic.apex}
+            -
+                captures:
+                    '1': {name: keyword.operator.dereference.apex}
+                match: '\b(?:[a-z]\w*(\.))*[A-Z]+\w*'
+                name: entity.other.inherited-class.apex
+    parameters:
+        patterns:
+            -
+                match: final
+                name: storage.modifier.apex
+            -
+                include: '#primitive-arrays'
+            -
+                include: '#primitive-types'
+            -
+                include: '#object-types'
+            -
+                match: \w+
+                name: variable.parameter.apex
+    parens:
+        begin: \(
+        end: \)
+        patterns:
+            -
+                include: '#code'
+    primitive-arrays:
+        patterns:
+            -
+                match: '\b(?:void|boolean|byte|char|short|int|float|long|double)(\[\])*\b'
+                name: storage.type.primitive.array.apex
+    primitive-types:
+        patterns:
+            -
+                match: '\b(?:void|boolean|byte|char|short|int|float|long|double)\b'
+                name: storage.type.primitive.apex
+    storage-modifiers:
+        captures:
+            '1':
+                name: storage.modifier.apex
+        match: \b(public|private|protected|static|final|native|synchronized|abstract|threadsafe|transient)\b
+    strings:
+        patterns:
+            -
+                begin: '"'
+                beginCaptures:
+                    '0': {name: punctuation.definition.string.begin.apex}
+                end: '"'
+                endCaptures:
+                    '0': {name: punctuation.definition.string.end.apex}
+                name: string.quoted.double.apex
+                patterns:
+                    - {match: \\., name: constant.character.escape.apex}
+            -
+                begin: ''''
+                beginCaptures:
+                    '0': {name: punctuation.definition.string.begin.apex}
+                end: ''''
+                endCaptures:
+                    '0': {name: punctuation.definition.string.end.apex}
+                name: string.quoted.single.apex
+                patterns:
+                    - {match: \\., name: constant.character.escape.apex}
+    throws:
+        begin: throws
+        beginCaptures:
+            '0':
+                name: storage.modifier.apex
+        end: '(?={|;)'
+        name: meta.throwables.apex
+        patterns:
+            -
+                include: '#object-types'
+    values:
+        patterns:
+            -
+                include: '#strings'
+            -
+                include: '#object-types'
+            -
+                include: '#constants-and-special-vars'
+
+
+
+
