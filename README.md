@@ -18,3 +18,6 @@ On Windows you may see a node-gyp error - [follow the instrutions here to resolv
 ## Releasing
 
 Tags on this repo get automatically published as a GitHub release and an NPM package through Travis CI.
+
+## Attribution
+This repository was copied from [https://github.com/dotnet/csharp-tmLanguage](https://github.com/dotnet/csharp-tmLanguage)
