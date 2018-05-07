@@ -3,371 +3,2594 @@
 name: Apex
 scopeName: source.apex
 fileTypes: [apex, cls, trigger]
-uuid: C4D3A5F4-B1DE-48C5-84CE-AC99DDA78292
-foldingStartMarker: '(\{\s*(//.*)?$|^\s*// \{\{\{)'
-foldingStopMarker: '^\s*(\}|// \}\}\}$)'
-keyEquivalent: ^~J
+uuid: f7de61e2-bdde-4e2a-a139-8221b179584e
 
 patterns:
-  - captures:
-      '1': { name: keyword.other.package.apex }
-      '2': { name: storage.modifier.package.apex }
-      '3': { name: punctuation.terminator.apex }
-    match: '^\s*(package)\b(?:\s*([^ ;$]+)\s*(;)?)?'
-    name: meta.package.apex
-  - captures:
-      '1': { name: keyword.other.import.apex }
-      '2': {name: storage.modifier.import.apex }
-      '3': { name: punctuation.terminator.apex }
-    match: '^\s*(import)\b(?:\s*([^ ;$]+)\s*(;)?)?'
-    name: meta.import.apex
-  - include: '#code'
-
+- include: '#comment'
+- include: '#directives'
+- include: '#declarations'
+- include: '#script-top-level'
 
 repository:
-  all-types:
+  directives:
     patterns:
-      - include: '#primitive-arrays'
-      - include: '#primitive-types'
-      - include: '#object-types'
+    - include: '#extern-alias-directive'
+    - include: '#using-directive'
+    - include: '#attribute-section'
+    - include: '#punctuation-semicolon'
 
-  annotations:
+  declarations:
     patterns:
-      - begin: '(@[^ (]+)(\()'
-        beginCaptures:
-          '1': { name: storage.type.annotation.apex }
-          '2': { name: punctuation.definition.annotation-arguments.begin.apex }
-        end: (\))
-        endCaptures:
-          '1': { name: punctuation.definition.annotation-arguments.end.apex }
-        name: meta.declaration.annotation.apex
-        patterns:
-          - captures: 
-              '1': { name: constant.other.key.apex }
-              '2': { name: keyword.operator.assignment.apex }
-            match: '(\w*)\s*(=)'
-          - include: '#code'
-          - match: ','
-            name: punctuation.seperator.property.apex
-      - match: '@\w*'
-        name: storage.type.annotation.apex
-              
-  anonymous-classes-and-new:
-    begin: \bnew\b
+    - include: '#namespace-declaration'
+    - include: '#type-declarations'
+    - include: '#punctuation-semicolon'
+
+  script-top-level:
+    patterns:
+    - include: '#method-declaration'
+    - include: '#statement'
+    - include: '#punctuation-semicolon'
+
+  type-declarations:
+    patterns:
+    - include: '#comment'
+    - include: '#storage-modifier'
+    - include: '#sharing-modifier'
+    - include: '#class-declaration'
+    - include: '#delegate-declaration'
+    - include: '#enum-declaration'
+    - include: '#interface-declaration'
+    - include: '#struct-declaration'
+    - include: '#attribute-section'
+    - include: '#punctuation-semicolon'
+
+  class-or-struct-members:
+    patterns:
+    - include: '#comment'
+    - include: '#storage-modifier'
+    - include: '#sharing-modifier'
+    - include: '#type-declarations'
+    - include: '#field-declaration'
+    - include: '#event-declaration'
+    - include: '#property-declaration'
+    - include: '#indexer-declaration'
+    - include: '#variable-initializer'
+    - include: '#constructor-declaration'
+    - include: '#destructor-declaration'
+    - include: '#operator-declaration'
+    - include: '#conversion-operator-declaration'
+    - include: '#method-declaration'
+    - include: '#attribute-section'
+    - include: '#punctuation-semicolon'
+
+  interface-members:
+    patterns:
+    - include: '#comment'
+    - include: '#event-declaration'
+    - include: '#property-declaration'
+    - include: '#indexer-declaration'
+    - include: '#method-declaration'
+    - include: '#attribute-section'
+    - include: '#punctuation-semicolon'
+
+  statement:
+    patterns:
+    - include: '#comment'
+    - include: '#while-statement'
+    - include: '#do-statement'
+    - include: '#for-statement'
+    - include: '#foreach-statement'
+    - include: '#if-statement'
+    - include: '#else-part'
+    - include: '#switch-statement'
+    - include: '#goto-statement'
+    - include: '#return-statement'
+    - include: '#break-or-continue-statement'
+    - include: '#throw-statement'
+    - include: '#yield-statement'
+    - include: '#await-statement'
+    - include: '#try-statement'
+    - include: '#checked-unchecked-statement'
+    - include: '#lock-statement'
+    - include: '#using-statement'
+    - include: '#labeled-statement'
+    - include: '#local-declaration'
+    - include: '#block'
+    - include: '#expression'
+    - include: '#punctuation-semicolon'
+
+  expression:
+    patterns:
+    - include: '#comment'
+    - include: '#checked-unchecked-expression'
+    - include: '#typeof-or-default-expression'
+    - include: '#nameof-expression'
+    - include: '#throw-expression'
+    - include: '#interpolated-string'
+    - include: '#verbatim-interpolated-string'
+    - include: '#this-or-base-expression'
+    - include: '#conditional-operator'
+    - include: '#expression-operators'
+    - include: '#await-expression'
+    - include: '#query-expression'
+    - include: '#as-expression'
+    - include: '#is-expression'
+    - include: '#anonymous-method-expression'
+    - include: '#object-creation-expression'
+    - include: '#array-creation-expression'
+    - include: '#anonymous-object-creation-expression'
+    - include: '#invocation-expression'
+    - include: '#member-access-expression'
+    - include: '#element-access-expression'
+    - include: '#cast-expression'
+    - include: '#literal'
+    - include: '#parenthesized-expression'
+    - include: '#tuple-deconstruction-assignment'
+    - include: '#initializer-expression'
+    - include: '#identifier'
+
+  extern-alias-directive:
+    begin: \s*(extern)\b\s*(alias)\b\s*(@?[_[:alpha:]][_[:alnum:]]*)
     beginCaptures:
-      '0': { name: keyword.control.new.apex }
-    end: '(?<=\)|\])(?!\s*{)|(?<=})|(?=;)'
-    patterns:
-      - begin: '(\w+)\s*(?=\[)'
-        beginCaptures:
-          '1': {name: storage.type.apex}
-        end: '}|(?=;|\))'
-        patterns:
-          - begin: '\['
-            end: '\]'
-            patterns:
-              - include: '#code'
-          - begin: '{'
-            end: '(?=})'
-            patterns:
-              - include: '#code'
-      - begin: '(?=\w.*\()'
-        end: '(?<=\))'
-        patterns:
-          - include: '#object-types'
-          - begin: \(
-            beginCaptures: 
-              '1': { name: storage.type.apex}
-            end: \)
-            patterns:
-              - include: '#code'
-      - begin: '{'
-        end: '}'
-        name: meta.inner-class.apex
-        patterns:
-          - include: '#class-body'
+      '1': { name: keyword.other.extern.apex }
+      '2': { name: keyword.other.alias.apex }
+      '3': { name: variable.other.alias.apex }
+    end: (?=;)
 
-  assertions:
+  using-directive:
     patterns:
-      - begin: \b(assert)\s
-        beginCaptures:
-          '1': { name: keyword.control.assert.apex }
-        end: $
-        name: meta.declaration.assertion.apex
-        patterns:
-          - match: ':'
-            name: keyword.operator.assert.expression-seperator.apex
-          - include: '#code'
+    - begin: \b(using)\b\s+(static)\s+
+      beginCaptures:
+        '1': { name: keyword.other.using.apex }
+        '2': { name: keyword.other.static.apex }
+      end: (?=;)
+      patterns:
+      - include: '#type'
+    - begin: \b(using)\s+(?=(@?[_[:alpha:]][_[:alnum:]]*)\s*=)
+      beginCaptures:
+        '1': { name: keyword.other.using.apex }
+        '2': { name: entity.name.type.alias.apex }
+      end: (?=;)
+      patterns:
+      - include: '#comment'
+      - include: '#type'
+      - include: '#operator-assignment'
+    - begin: \b(using)\s*
+      beginCaptures:
+        '1': { name: keyword.other.using.apex }
+      end: (?=;)
+      patterns:
+      - include: '#comment'
+      - name: entity.name.type.namespace.apex
+        match: '@?[_[:alpha:]][_[:alnum:]]*'
+      - include: '#operator-assignment'
 
-  class:
-    begin: '(?=\w?[\w\s]*(?:class|(?:@)?interface|enum)\s+\w+)'
-    end: '}'
+  attribute-section:
+    begin: (\[)(assembly|module|field|event|method|param|property|return|type)?(\:)?
+    beginCaptures:
+      '1': { name: punctuation.squarebracket.open.apex }
+      '2': { name: keyword.other.attribute-specifier.apex }
+      '3': { name: punctuation.separator.colon.apex }
+    end: (\])
     endCaptures:
-      '0': { name: punctuation.section.class.end.apex }
-    name: meta.class.apex
+      '1': { name: punctuation.squarebracket.close.apex }
     patterns:
-      - include: '#storage-modifiers'
-      - include: '#comments'
-      - captures:
-          '1': { name: storage.modifier.apex }
-          '2': { name: entity.name.type.class.apex }
-        match: '(class|(?:@)?interface|enum)\s+(\w+)'
-        name: meta.class.identifier.apex
-      - begin: extends
-        beginCaptures:
-          '0': { name: storage.modifier.extends.apex }
-        end: '(?={|implements)'
-        name: meta.definition.class.inherited.classes.apex
-        patterns:
-          - include: '#object-types-inherited'
-          - include: '#comments'
-      - begin: (implements)\s
-        beginCaptures:
-          '1': { name: storage.modifier.implements.apex }
-        end: '(?=\s*extends|\{)'
-        name: meta.definition.class.implemented.interfaces.apex
-        patterns:
-          - include: '#object-types-inherited'
-          - include: '#comments'
-      - begin: '{'
-        end: '(?=})'
-        name: meta.class.body.apex
-        patterns:
-          - include: '#class-body'
+    - include: '#comment'
+    - include: '#attribute'
+    - include: '#punctuation-comma'
 
-  class-body:
+  attribute:
     patterns:
-      - include: '#comments'
-      - include: '#class'
-      - include: '#enums'
-      - include: '#methods'
-      - include: '#annotations'
-      - include: '#storage-modifiers'
-      - include: '#code'
+    - include: '#type-name'
+    - include: '#attribute-arguments'
 
-  code:
+  attribute-arguments:
+    begin: (\()
+    beginCaptures:
+      '1': { name: punctuation.parenthesis.open.apex }
+    end: (\))
+    endCaptures:
+      '1': { name: punctuation.parenthesis.close.apex }
     patterns:
-      - include: '#comments'
-      - include: '#class'
-      - begin: '{'
-        end: '}'
+    - include: '#attribute-named-argument'
+    - include: '#expression'
+    - include: '#punctuation-comma'
+
+  attribute-named-argument:
+    begin: (@?[_[:alpha:]][_[:alnum:]]*)\s*(?==)
+    beginCaptures:
+      '1': { name: entity.name.variable.property.apex }
+    end: (?=(,|\)))
+    patterns:
+    - include: '#operator-assignment'
+    - include: '#expression'
+
+  namespace-declaration:
+    begin: \b(namespace)\s+
+    beginCaptures:
+      '1': { name: keyword.other.namespace.apex }
+    end: (?<=\})
+    patterns:
+    - include: '#comment'
+    - name: entity.name.type.namespace.apex
+      match: '@?[_[:alpha:]][_[:alnum:]]*'
+    - include: '#punctuation-accessor'
+    - begin: \{
+      beginCaptures:
+        '0': { name: punctuation.curlybrace.open.apex }
+      end: \}
+      endCaptures:
+        '0': { name: punctuation.curlybrace.close.apex }
+      patterns:
+      - include: '#declarations'
+      - include: '#using-directive'
+      - include: '#punctuation-semicolon'
+
+  sharing-modifier:
+    name: 'sharing.modifier.apex'
+    match: (?<!\.)\b(with sharing|without sharing)\b
+
+  storage-modifier:
+    name: 'storage.modifier.apex'
+    match: (?<!\.)\b(new|public|protected|internal|private|abstract|virtual|override|global|static|partial|const|extern|async)\b
+
+  class-declaration:
+    begin: (?=\bclass\b)
+    end: (?<=\})
+    patterns:
+    - begin: |-
+        (?x)
+        \b(class)\b\s+
+        (@?[_[:alpha:]][_[:alnum:]]*)\s*
+      beginCaptures:
+        '1': { name: keyword.other.class.apex }
+        '2': { name: entity.name.type.class.apex }
+      end: (?=\{)
+      patterns:
+      - include: '#comment'
+      - include: '#type-parameter-list'
+      - include: '#base-types'
+      - include: '#generic-constraints'
+    - begin: \{
+      beginCaptures:
+        '0': { name: punctuation.curlybrace.open.apex }
+      end: \}
+      endCaptures:
+        '0': { name: punctuation.curlybrace.close.apex }
+      patterns:
+      - include: '#class-or-struct-members'
+    - include: '#comment'
+
+  delegate-declaration:
+    begin: |-
+      (?x)
+      (?:\b(delegate)\b)\s+
+      (?<type-name>
+        (?:
+          (?:ref\s+)?   # ref return
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )\s+
+      (\g<identifier>)\s*
+      (<([^<>]+)>)?\s*
+      (?=\()
+    beginCaptures:
+      '1': { name: keyword.other.delegate.apex }
+      '2':
         patterns:
-          - include: '#code'
-      - include: '#assertions'
-      - include: '#parens'
-      - include: '#constants-and-special-vars'
-      - include: '#anonymous-classes-and-new'
-      - include: '#keywords'
-      - include: '#storage-modifiers'
-      - include: '#strings'
-      - include: '#all-types'
-
-  comments:
+        - include: '#type'
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7': { name: entity.name.type.delegate.apex }
+      '8':
+        patterns:
+        - include: '#type-parameter-list'
+    end: (?=;)
     patterns:
-      - captures:
-          '0': { name: punctuation.definition.comment.apex }
-        match: '/\*\*/'
-        name: comment.block.empty.apex
-      - include: text.html.javadoc
-      - include: '#comments-inline'
+    - include: '#comment'
+    - include: '#parenthesized-parameter-list'
+    - include: '#generic-constraints'
 
-  comments-inline:
+  enum-declaration:
+    begin: (?=\benum\b)
+    end: (?<=\})
     patterns:
-      - begin: '/\*'
+    - begin: (?=enum)
+      end: (?=\{)
+      patterns:
+      - include: '#comment'
+      - match: (enum)\s+(@?[_[:alpha:]][_[:alnum:]]*)
         captures:
-          '0': { name: punctuation.definition.comment.apex } 
-        end: '\*/'
-        name: comment.block.apex
-      - captures:
-          '1': { name: comment.line.double-slash.apex }
-          '2': { name: punctuation.definition.comment.apex }
-        match: '\s*((//).*$\n?)'
-
-  constants-and-special-vars:
-    patterns:
-      - match: \b(true|false|null)\b
-        name: constant.language.apex
-      - match: \b(this|super)\b
-        name: variable.language.apex
-      - match: '\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)([LlFfUuDd]|UL|ul)?\b'
-        name: constant.numeric.apex
-      - captures:
-          '1': { name: keyword.operator.dereference.apex }
-        match: '(\.)?\b([A-Z][A-Z0-9_]+)(?!<|\.class|\s*\w+\s*=)\b'
-        name: constant.other.apex
-
-  enums:
-    begin: '^(?=\s*[A-Z0-9_]+\s*({|\(|,))'
-    end: '(?=;|})'
-    patterns:
-      - begin: \w+
+          '1': { name: keyword.other.enum.apex }
+          '2': { name: entity.name.type.enum.apex }
+      - begin: ':'
         beginCaptures:
-          '0': { name: constant.other.enum.apex }
-        end: '(?=,|;|})'
-        name: meta.enum.apex
+          '0': { name: punctuation.separator.colon.apex }
+        end: (?=\{)
         patterns:
-          - include: '#parens'
-          - begin: '{'
-            end: '}'
-            patterns:
-              - include: '#class-body'
-
-  keywords:
-    patterns:
-        - match: \b(try|catch|finally|throw)\b
-          name: keyword.control.catch-exception.apex
-        - match: '\?|:'
-          name: keyword.control.apex
-        - match: \b(return|break|case|continue|default|do|while|for|switch|when|if|else)\b
-          name: keyword.control.apex
-        - match: \b(instanceof)\b
-          name: keyword.operator.apex
-        - match: (==|!=|<=|>=|<>|<|>)
-          name: keyword.operator.comparison.apex
-        - match: (=)
-          name: keyword.operator.assignment.apex
-        - match: (\-\-|\+\+)
-          name: keyword.operator.increment-decrement.apex
-        - match: '(\-|\+|\*|\/|%)'
-          name: keyword.operator.arithmetic.apex
-        - match: '(!|&&|\|\|)'
-          name: keyword.operator.logical.apex
-        - match: '(?<=\S)\.(?=\S)'
-          name: keyword.operator.dereference.apex
-        - match: ;
-          name: punctuation.terminator.apex
-
-  methods:
-    begin: '(?!new)(?=\w.*\s+)(?=[^=]+\()'
-    end: '}|(?=;)'
-    name: meta.method.apex
-    patterns:
-        - include: '#storage-modifiers'
-        - begin: '(\w+)\s*\('
-          beginCaptures:
-            '1': { name: entity.name.function.apex }
-          end: \)
-          name: meta.method.identifier.apex
-          patterns:
-            - include: '#parameters'
-        - begin: '(?=\w.*\s+\w+\s*\()'
-          end: '(?=\w+\s*\()'
-          name: meta.method.return-type.apex
-          patterns:
-              - include: '#all-types'
-        - include: '#throws'
-        - begin: '{'
-          end: '(?=})'
-          name: meta.method.body.apex
-          patterns:
-              - include: '#code'
-
-  object-types:
-    patterns:
-      - begin: '\b((?:[a-z]\w*\.)*[A-Z]+\w*)<'
-        end: '>|[^\w\s,\?<\[\]]'
-        name: storage.type.generic.apex
+        - include: '#type'
+    - begin: \{
+      beginCaptures:
+        '0': { name: punctuation.curlybrace.open.apex }
+      end: \}
+      endCaptures:
+        '0': { name: punctuation.curlybrace.close.apex }
+      patterns:
+      - include: '#comment'
+      - include: '#attribute-section'
+      - include: '#punctuation-comma'
+      - begin: '@?[_[:alpha:]][_[:alnum:]]*'
+        beginCaptures:
+          '0': { name: entity.name.variable.enum-member.apex }
+        end: (?=(,|\}))
         patterns:
-          - include: '#object-types'
-          - begin: '<'
-            comment: 'This is just to support <>''s with no actual type prefix'
-            end: '>|[^\w\s,\[\]<]'
-            name: storage.type.generic.apex
-      - begin: '\b((?:[a-z]\w*\.)*[A-Z]+\w*)(?=\[)'
-        end: '(?=[^\]\s])'
-        name: storage.type.object.array.apex
-        patterns:
-          - begin: '\['
-            end: '\]'
-            patterns:
-              - include: '#code'
-      - captures:
-          '1': { name: keyword.operator.dereference.apex }
-        match: '\b(?:[a-z]\w*(\.))*[A-Z]+\w*\b'
-        name: storage.type.apex
+        - include: '#comment'
+        - include: '#variable-initializer'
+    - include: '#comment'
 
-  object-types-inherited:
+  interface-declaration:
+    begin: (?=\binterface\b)
+    end: (?<=\})
     patterns:
-      - begin: '\b((?:[a-z]\w*\.)*[A-Z]+\w*)<'
-        end: '>|[^\w\s,<]'
-        name: entity.other.inherited-class.apex
-        patterns:
-          - include: '#object-types'
-          - begin: '<'
-            comment: 'This is just to support <>''s with no actual type prefix'
-            end: '>|[^\w\s,<]'
-            name: storage.type.generic.apex
-      - captures:
-          '1': { name: keyword.operator.dereference.apex }
-        match: '\b(?:[a-z]\w*(\.))*[A-Z]+\w*'
-        name: entity.other.inherited-class.apex
+    - begin: |-
+        (?x)
+        (interface)\b\s+
+        (@?[_[:alpha:]][_[:alnum:]]*)
+      beginCaptures:
+        '1': { name: keyword.other.interface.apex }
+        '2': { name: entity.name.type.interface.apex }
+      end: (?=\{)
+      patterns:
+      - include: '#comment'
+      - include: '#type-parameter-list'
+      - include: '#base-types'
+      - include: '#generic-constraints'
+    - begin: \{
+      beginCaptures:
+        '0': { name: punctuation.curlybrace.open.apex }
+      end: \}
+      endCaptures:
+        '0': { name: punctuation.curlybrace.close.apex }
+      patterns:
+      - include: '#interface-members'
+    - include: '#comment'
 
-  parameters:
+  struct-declaration:
+    begin: (?=\bstruct\b)
+    end: (?<=\})
     patterns:
-      - match: final
-        name: storage.modifier.apex
-      - include: '#primitive-arrays'
-      - include: '#primitive-types'
-      - include: '#object-types'
-      - match: \w+
-        name: variable.parameter.
-        
-  parens:
-    begin: \(
-    end: \)
-    patterns:
-      - include: '#code'
+    - begin: |-
+        (?x)
+        (struct)\b\s+
+        (@?[_[:alpha:]][_[:alnum:]]*)
+      beginCaptures:
+        '1': { name: keyword.other.struct.apex }
+        '2': { name: entity.name.type.struct.apex }
+      end: (?=\{)
+      patterns:
+      - include: '#comment'
+      - include: '#type-parameter-list'
+      - include: '#base-types'
+      - include: '#generic-constraints'
+    - begin: \{
+      beginCaptures:
+        '0': { name: punctuation.curlybrace.open.apex }
+      end: \}
+      endCaptures:
+        '0': { name: punctuation.curlybrace.close.apex }
+      patterns:
+      - include: '#class-or-struct-members'
+    - include: '#comment'
 
-  primitive-arrays:
+  type-parameter-list:
+    begin: \<
+    beginCaptures:
+      '0': { name: punctuation.definition.typeparameters.begin.apex }
+    end: \>
+    endCaptures:
+      '0': { name: punctuation.definition.typeparameters.end.apex }
     patterns:
-      - match: '\b(?:void|boolean|byte|char|short|int|float|long|double)(\[\])*\b'
-        name: storage.type.primitive.array.apex
-
-  primitive-types:
-    patterns:
-      - match: '\b(?:void|boolean|byte|char|short|int|float|long|double)\b'
-        name: storage.type.primitive.apex
-
-  storage-modifiers:
+    - match: \b(in|out)\b
       captures:
         '1': { name: storage.modifier.apex }
-      match: \b(public|private|protected|static|final|native|synchronized|abstract|threadsafe|transient)\b
+    - match: (@?[_[:alpha:]][_[:alnum:]]*)\b
+      captures:
+        '1': { name: entity.name.type.type-parameter.apex }
+    - include: '#comment'
+    - include: '#punctuation-comma'
+    - include: '#attribute-section'
 
-  strings:
-    patterns:
-        - begin: '"'
-          beginCaptures:
-              '0': {name: punctuation.definition.string.begin.apex}
-          end: '"'
-          endCaptures:
-              '0': {name: punctuation.definition.string.end.apex}
-          name: string.quoted.double.apex
-          patterns:
-              - {match: \\., name: constant.character.escape.apex}
-        - begin: ''''
-          beginCaptures:
-              '0': {name: punctuation.definition.string.begin.apex}
-          end: ''''
-          endCaptures:
-              '0': {name: punctuation.definition.string.end.apex}
-          name: string.quoted.single.apex
-          patterns:
-              - {match: \\., name: constant.character.escape.apex}
-
-  throws:
-    begin: throws
+  base-types:
+    begin: ':'
     beginCaptures:
-        '0': { name: storage.modifier.apex }
-    end: '(?={|;)'
-    name: meta.throwables.apex
+      '0': { name: punctuation.separator.colon.apex }
+    end: (?=\{|where)
     patterns:
-        - include: '#object-types'
-  values:
+    - include: '#type'
+    - include: '#punctuation-comma'
+
+  generic-constraints:
+    begin: (where)\s+(@?[_[:alpha:]][_[:alnum:]]*)\s*(:)
+    beginCaptures:
+      '1': { name: keyword.other.where.apex }
+      '2': { name: storage.type.apex }
+      '3': { name: punctuation.separator.colon.apex }
+    end: (?=\{|where|;|=>)
     patterns:
-      - include: '#strings'
-      - include: '#object-types'
-      - include: '#constants-and-special-vars'
+    - name: keyword.other.class.apex
+      match: \bclass\b
+    - name: keyword.other.struct.apex
+      match: \bstruct\b
+    - match: (new)\s*(\()\s*(\))
+      captures:
+        '1': { name: keyword.other.new.apex }
+        '2': { name: punctuation.parenthesis.open.apex }
+        '3': { name: punctuation.parenthesis.close.apex }
+    - include: '#type'
+    - include: '#punctuation-comma'
+    - include: '#generic-constraints'
 
+  field-declaration:
+    begin: |-
+      (?x)
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )\s+
+      (\g<identifier>)\s* # first field name
+      (?!=>|==)(?=,|;|=|$)
+    beginCaptures:
+      '1':
+        patterns:
+        - include: '#type'
+      # '2': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '4': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<tuple> is a sub-expression. It's final value is not considered.
+      '6': { name: entity.name.variable.field.apex }
+    end: (?=;)
+    patterns:
+    - name: entity.name.variable.field.apex
+      match: '@?[_[:alpha:]][_[:alnum:]]*'
+    - include: '#punctuation-comma'
+    - include: '#comment'
+    - include: '#variable-initializer'
+    - include: '#class-or-struct-members'
 
+  property-declaration:
+    begin: |-
+      (?x)
+      (?!.*\b(?:class|interface|struct|enum|event)\b)\s*
+      (?<return-type>
+        (?<type-name>
+          (?:
+            (?:ref\s+)?   # ref return
+            (?:
+              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+              (?<name-and-type-args> # identifier + type arguments (if any)
+                \g<identifier>\s*
+                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              )
+              (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+              (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+            )
+            (?:\s*\?\s*)? # nullable suffix?
+            (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+          )
+        )\s+
+      )
+      (?<interface-name>\g<type-name>\s*\.\s*)?
+      (?<property-name>\g<identifier>)\s*
+      (?=\{|=>|$)
+    beginCaptures:
+      '1':
+        patterns:
+        - include: '#type'
+      # '2': ?<type-name> is a sub-expression. It's final value is not considered.
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7':
+        patterns:
+        - include: '#type'
+        - include: '#punctuation-accessor'
+      '8': { name: entity.name.variable.property.apex }
+    end: (?<=\})|(?=;)
+    patterns:
+    - include: '#comment'
+    - include: '#property-accessors'
+    - include: '#expression-body'
+    - include: '#variable-initializer'
+    - include: '#class-or-struct-members'
 
+  indexer-declaration:
+    begin: |-
+      (?x)
+      (?<return-type>
+        (?<type-name>
+          (?:
+            (?:ref\s+)?   # ref return
+            (?:
+              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+              (?<name-and-type-args> # identifier + type arguments (if any)
+                \g<identifier>\s*
+                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              )
+              (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+              (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+            )
+            (?:\s*\?\s*)? # nullable suffix?
+            (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+          )
+        )\s+
+      )
+      (?<interface-name>\g<type-name>\s*\.\s*)?
+      (?<indexer-name>this)\s*
+      (?=\[)
+    beginCaptures:
+      '1':
+        patterns:
+        - include: '#type'
+      # '2': ?<type-name> is a sub-expression. It's final value is not considered.
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7':
+        patterns:
+        - include: '#type'
+        - include: '#punctuation-accessor'
+      '8':
+        name: keyword.other.this.apex
+    end: (?<=\})|(?=;)
+    patterns:
+    - include: '#comment'
+    - include: '#bracketed-parameter-list'
+    - include: '#property-accessors'
+    - include: '#expression-body'
+    - include: '#variable-initializer'
 
+  event-declaration:
+    begin: |-
+      (?x)
+      \b(event)\b\s*
+      (?<return-type>
+        (?<type-name>
+          (?:
+            (?:
+              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+              (?<name-and-type-args> # identifier + type arguments (if any)
+                \g<identifier>\s*
+                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              )
+              (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+              (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+            )
+            (?:\s*\?\s*)? # nullable suffix?
+            (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+          )
+        )\s+
+      )
+      (?<interface-name>\g<type-name>\s*\.\s*)?
+      (?<event-names>\g<identifier>(?:\s*,\s*\g<identifier>)*)\s*
+      (?=\{|;|$)
+    beginCaptures:
+      '1': { name: keyword.other.event.apex }
+      '2':
+        patterns:
+        - include: '#type'
+      # '3': ?<type-name> is a sub-expression. It's final value is not considered.
+      # '4': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '5': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '7': ?<tuple> is a sub-expression. It's final value is not considered.
+      '8':
+        patterns:
+        - include: '#type'
+        - include: '#punctuation-accessor'
+      '9':
+        patterns:
+        - name: entity.name.variable.event.apex
+          match: '@?[_[:alpha:]][_[:alnum:]]*'
+        - include: '#punctuation-comma'
+    end: (?<=\})|(?=;)
+    patterns:
+    - include: '#comment'
+    - include: '#event-accessors'
+    - include: '#punctuation-comma'
+
+  property-accessors:
+    begin: \{
+    beginCaptures:
+      '0': { name: punctuation.curlybrace.open.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.curlybrace.close.apex }
+    patterns:
+    - name: storage.modifier.apex
+      match: \b(private|protected|internal)\b
+    - name: keyword.other.get.apex
+      match: \b(get)\b
+    - name: keyword.other.set.apex
+      match: \b(set)\b
+    - include: '#comment'
+    - include: '#attribute-section'
+    - include: '#expression-body'
+    - include: '#block'
+    - include: '#punctuation-semicolon'
+
+  event-accessors:
+    begin: \{
+    beginCaptures:
+      '0': { name: punctuation.curlybrace.open.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.curlybrace.close.apex }
+    patterns:
+    - name: keyword.other.add.apex
+      match: \b(add)\b
+    - name: keyword.other.remove.apex
+      match: \b(remove)\b
+    - include: '#comment'
+    - include: '#attribute-section'
+    - include: '#expression-body'
+    - include: '#block'
+    - include: '#punctuation-semicolon'
+
+  method-declaration:
+    begin: |-
+      (?x)
+      (?<return-type>
+        (?<type-name>
+          (?:
+            (?:ref\s+)?   # ref return
+            (?:
+              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+              (?<name-and-type-args> # identifier + type arguments (if any)
+                \g<identifier>\s*
+                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              )
+              (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+              (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+            )
+            (?:\s*\?\s*)? # nullable suffix?
+            (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+          )
+        )\s+
+      )
+      (?<interface-name>\g<type-name>\s*\.\s*)?
+      (\g<identifier>)\s*
+      (<([^<>]+)>)?\s*
+      (?=\()
+    beginCaptures:
+      '1':
+        patterns:
+        - include: '#type'
+      # '2': ?<type-name> is a sub-expression. It's final value is not considered.
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7':
+        patterns:
+        - include: '#type'
+        - include: '#punctuation-accessor'
+      '8': { name: entity.name.function.apex }
+      '9':
+        patterns:
+        - include: '#type-parameter-list'
+    end: (?<=\})|(?=;)
+    patterns:
+    - include: '#comment'
+    - include: '#parenthesized-parameter-list'
+    - include: '#generic-constraints'
+    - include: '#expression-body'
+    - include: '#block'
+
+  constructor-declaration:
+    begin: (?=@?[_[:alpha:]][_[:alnum:]]*\s*\()
+    end: (?<=\})|(?=;)
+    patterns:
+    - match: (@?[_[:alpha:]][_[:alnum:]]*)\b
+      captures:
+        '1': { name: entity.name.function.apex }
+    - begin: (:)
+      beginCaptures:
+        '1': { name: punctuation.separator.colon.apex }
+      end: (?=\{|=>)
+      patterns:
+      - include: '#constructor-initializer'
+    - include: '#parenthesized-parameter-list'
+    - include: '#comment'
+    - include: '#expression-body'
+    - include: '#block'
+
+  constructor-initializer:
+    begin: \b(?:(base)|(this))\b\s*(?=\()
+    beginCaptures:
+      '1': { name: keyword.other.base.apex }
+      '2': { name: keyword.other.this.apex }
+    end: (?<=\))
+    patterns:
+    - include: "#argument-list"
+
+  destructor-declaration:
+    begin: (~)(@?[_[:alpha:]][_[:alnum:]]*)\s*(?=\()
+    beginCaptures:
+      '1': { name: punctuation.tilde.apex }
+      '2': { name: entity.name.function.apex }
+    end: (?<=\})|(?=;)
+    patterns:
+    - include: '#comment'
+    - include: '#parenthesized-parameter-list'
+    - include: '#expression-body'
+    - include: '#block'
+
+  operator-declaration:
+    begin: |-
+      (?x)
+      (?<type-name>
+        (?:
+          (?:ref\s+)?   # ref return
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )\s*
+      (?<operator-keyword>(?:\b(?:operator)))\s*
+      (?<operator>(?:\+|-|\*|/|%|&|\||\^|\<\<|\>\>|==|!=|\>|\<|\>=|\<=|!|~|\+\+|--|true|false))\s*
+      (?=\()
+    beginCaptures:
+      '1':
+        patterns:
+        - include: '#type'
+      # '2': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '4': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<tuple> is a sub-expression. It's final value is not considered.
+      '6': { name: keyword.other.operator-decl.apex }
+      '7': { name: entity.name.function.apex }
+    end: (?<=\})|(?=;)
+    patterns:
+    - include: '#comment'
+    - include: '#parenthesized-parameter-list'
+    - include: '#expression-body'
+    - include: '#block'
+
+  conversion-operator-declaration:
+    begin: |-
+      (?x)
+      (?<explicit-or-implicit-keyword>(?:\b(?:explicit|implicit)))\s*
+      (?<operator-keyword>(?:\b(?:operator)))\s*
+      (?<type-name>
+        (?:
+          (?:ref\s+)?   # ref return
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )\s*
+      (?=\()
+    beginCaptures:
+      '1':
+        patterns:
+        - match: \b(explicit)\b
+          captures:
+            '1': { name: keyword.other.explicit.apex }
+        - match: \b(implicit)\b
+          captures:
+            '1': { name: keyword.other.implicit.apex }
+      '2': { name: keyword.other.operator-decl.apex }
+      '3':
+        patterns:
+        - include: '#type'
+    end: (?<=\})|(?=;)
+    patterns:
+    - include: '#comment'
+    - include: '#parenthesized-parameter-list'
+    - include: '#expression-body'
+    - include: '#block'
+
+  block:
+    begin: \{
+    beginCaptures:
+      '0': { name: punctuation.curlybrace.open.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.curlybrace.close.apex }
+    patterns:
+    - include: '#statement'
+
+  variable-initializer:
+    begin: (?<!=|!)(=)(?!=|>)
+    beginCaptures:
+      '1': { name: keyword.operator.assignment.apex }
+    end: (?=[,\)\];}])
+    patterns:
+    - include: '#ref-modifier'
+    - include: '#expression'
+
+  expression-body:
+    begin: =>
+    beginCaptures:
+      '0': { name: keyword.operator.arrow.apex }
+    end: (?=[,\);}])
+    patterns:
+    - include: '#ref-modifier'
+    - include: '#expression'
+
+  goto-statement:
+    begin: (?<!\.)\b(goto)\b
+    beginCaptures:
+      '1': { name: keyword.control.goto.apex }
+    end: (?=;)
+    patterns:
+    - begin: \b(case)\b
+      beginCaptures:
+        '1': { name: keyword.control.case.apex }
+      end: (?=;)
+      patterns:
+      - include: '#expression'
+    - match: \b(default)\b
+      captures:
+        '1': { name: keyword.control.default.apex }
+    - name: entity.name.label.apex
+      match: '@?[_[:alpha:]][_[:alnum:]]*'
+
+  return-statement:
+    begin: (?<!\.)\b(return)\b
+    beginCaptures:
+      '1': { name: keyword.control.flow.return.apex }
+    end: (?=;)
+    patterns:
+    - include: '#ref-modifier'
+    - include: '#expression'
+
+  break-or-continue-statement:
+    match: (?<!\.)\b(?:(break)|(continue))\b
+    captures:
+      '1': { name: keyword.control.flow.break.apex }
+      '2': { name: keyword.control.flow.continue.apex }
+
+  throw-statement:
+    begin: (?<!\.)\b(throw)\b
+    beginCaptures:
+      '1': { name: keyword.control.flow.throw.apex }
+    end: (?=;)
+    patterns:
+    - include: '#expression'
+
+  yield-statement:
+    patterns:
+    - include: '#yield-return-statement'
+    - include: '#yield-break-statement'
+
+  yield-return-statement:
+    begin: (?<!\.)\b(yield)\b\s*\b(return)\b
+    beginCaptures:
+      '1': { name: keyword.control.flow.yield.apex }
+      '2': { name: keyword.control.flow.return.apex }
+    end: (?=;)
+    patterns:
+    - include: '#expression'
+
+  yield-break-statement:
+    match: (?<!\.)\b(yield)\b\s*\b(break)\b
+    captures:
+      '1': { name: keyword.control.flow.yield.apex }
+      '2': { name: keyword.control.flow.break.apex }
+
+  # Technically, there isn't an "await statement" in the C# grammar. However, including one here makes it easier to handle
+  # the scenario where an await-expression will be match by local-declaration first. (e.g. await x;)
+  await-statement:
+    begin: (?<!\.)\b(await)\b
+    beginCaptures:
+      '1': { name: keyword.other.await.apex }
+    end: (?=;)
+    patterns:
+    - include: '#expression'
+
+  if-statement:
+    begin: (?<!\.)\b(if)\b\s*(?=\()
+    beginCaptures:
+      '1': { name: keyword.control.conditional.if.apex }
+    end: (?<=\})|(?=;)
+    patterns:
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - include: '#expression'
+    - include: '#statement'
+
+  else-part:
+    begin: (?<!\.)\b(else)\b
+    beginCaptures:
+      '1': { name: keyword.control.conditional.else.apex }
+    end: (?<=\})|(?=;)
+    patterns:
+    - include: '#statement'
+
+  switch-statement:
+    begin: (?<!\.)\b(switch)\b\s*(?=\()
+    beginCaptures:
+      '1': { name: keyword.control.switch.apex }
+    end: (?<=\})
+    patterns:
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - include: '#expression'
+    - begin: \{
+      beginCaptures:
+        '0': { name: punctuation.curlybrace.open.apex }
+      end: \}
+      endCaptures:
+        '0': { name: punctuation.curlybrace.close.apex }
+      patterns:
+      - include: '#switch-label'
+      - include: '#statement'
+
+  switch-label:
+    patterns:
+    - begin: (?<!\.)\b(case)\b\s+
+      beginCaptures:
+        '1': { name: keyword.control.case.apex }
+      end: ':'
+      endCaptures:
+        '0': { name: punctuation.separator.colon.apex }
+      patterns:
+      - include: '#expression'
+    - match: (?<!\.)\b(default)\b\s*(:)
+      captures:
+        '1': { name: keyword.control.default.apex }
+        '2': { name: punctuation.separator.colon.apex }
+
+  do-statement:
+    begin: (?<!\.)\b(do)\b
+    beginCaptures:
+      '1': { name: keyword.control.loop.do.apex }
+    end: (?=;|})
+    patterns:
+    - include: '#statement'
+
+  while-statement:
+    begin: (?<!\.)\b(while)\b\s*(?=\()
+    beginCaptures:
+      '1': { name: keyword.control.loop.while.apex }
+    end: (?<=\})|(?=;)
+    patterns:
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - include: '#expression'
+    - include: '#statement'
+
+  for-statement:
+    begin: (?<!\.)\b(for)\b\s*(?=\()
+    beginCaptures:
+      '1': { name: keyword.control.loop.for.apex }
+    end: (?<=\})|(?=;)
+    patterns:
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - include: '#local-variable-declaration'
+      - include: '#expression'
+      - include: '#punctuation-comma'
+      - include: '#punctuation-semicolon'
+    - include: '#statement'
+
+  foreach-statement:
+    begin: (?<!\.)\b(foreach)\b\s*(?=\()
+    beginCaptures:
+      '1': { name: keyword.control.loop.foreach.apex }
+    end: (?<=\})|(?=;)
+    patterns:
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - match: |-
+          (?x)
+          (?:
+            (\bvar\b)|
+            (?<type-name>
+              (?:
+                (?:
+                  (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+                  (?<name-and-type-args> # identifier + type arguments (if any)
+                    \g<identifier>\s*
+                    (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+                  )
+                  (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+                  (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+                )
+                (?:\s*\?\s*)? # nullable suffix?
+                (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+              )
+            )
+          )\s+
+          (\g<identifier>)\s+
+          \b(in)\b
+        captures:
+          '1': { name: keyword.other.var.apex }
+          '2':
+            patterns:
+            - include: '#type'
+          # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+          # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+          # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+          # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+          '7': { name: entity.name.variable.local.apex }
+          '8': { name: keyword.control.loop.in.apex }
+      - match: |-
+          (?x) # match foreach (var (x, y) in ...)
+          (?:\b(var)\b\s*)?
+          (?<tuple>\((?:[^\(\)]|\g<tuple>)+\))\s+
+          \b(in)\b
+        captures:
+          '1': { name: keyword.other.var.apex }
+          '2':
+            patterns:
+            - include: '#tuple-declaration-deconstruction-element-list'
+          '3': { name: keyword.control.loop.in.apex }
+      - include: '#expression'
+    - include: '#statement'
+
+  try-statement:
+    patterns:
+    - include: '#try-block'
+    - include: '#catch-clause'
+    - include: '#finally-clause'
+
+  try-block:
+    begin: (?<!\.)\b(try)\b
+    beginCaptures:
+      '1': { name: keyword.control.try.apex }
+    end: (?<=\})
+    patterns:
+    - include: '#comment'
+    - include: '#block'
+
+  finally-clause:
+    begin: (?<!\.)\b(finally)\b
+    beginCaptures:
+      '1': { name: keyword.control.try.finally.apex }
+    end: (?<=\})
+    patterns:
+    - include: '#comment'
+    - include: '#block'
+
+  catch-clause:
+    begin: (?<!\.)\b(catch)\b
+    beginCaptures:
+        '1': { name: keyword.control.try.catch.apex }
+    end: (?<=\})
+    patterns:
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - match: |-
+          (?x)
+          (?<type-name>
+            (?:
+              (?:
+                (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+                (?<name-and-type-args> # identifier + type arguments (if any)
+                  \g<identifier>\s*
+                  (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+                )
+                (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+                (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+              )
+              (?:\s*\?\s*)? # nullable suffix?
+              (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+            )
+          )\s*
+          (?:(\g<identifier>)\b)?
+        captures:
+          '1':
+            patterns:
+            - include: '#type'
+          # '2': ?<identifier> is a sub-expression. It's final value is not considered.
+          # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+          # '4': ?<type-args> is a sub-expression. It's final value is not considered.
+          # '5': ?<tuple> is a sub-expression. It's final value is not considered.
+          '6': { name: entity.name.variable.local.apex }
+    - include: '#when-clause'
+    - include: '#comment'
+    - include: '#block'
+
+  when-clause:
+    begin: (?<!\.)\b(when)\b\s*(\()
+    beginCaptures:
+      '1': { name: keyword.control.try.when.apex }
+      '2': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#expression'
+    - include: '#comment'
+
+  checked-unchecked-statement:
+    begin: (?<!\.)\b(?:(checked)|(unchecked))\b\s*(?!\()
+    beginCaptures:
+      '1': { name: keyword.other.checked.apex }
+      '2': { name: keyword.other.unchecked.apex }
+    end: (?<=\})
+    patterns:
+    - include: '#block'
+    - include: '#comment'
+
+  lock-statement:
+    begin: (?<!\.)\b(lock)\b\s*(?=\()
+    beginCaptures:
+      '1': { name: keyword.other.lock.apex }
+    end: (?<=\})|(?=;)
+    patterns:
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - include: '#expression'
+    - include: '#statement'
+
+  using-statement:
+    begin: (?<!\.)\b(using)\b\s*(?=\()
+    beginCaptures:
+      '1': { name: keyword.other.using.apex }
+    end: (?=\;|})
+    patterns:
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - include: '#local-variable-declaration'
+      - include: '#expression'
+    - include: '#statement'
+
+  labeled-statement:
+    match: '(@?[_[:alpha:]][_[:alnum:]]*)\s*(:)'
+    captures:
+      '1': { name: entity.name.label.apex }
+      '2': { name: punctuation.separator.colon.apex }
+
+  local-declaration:
+    patterns:
+    - include: '#local-constant-declaration'
+    - include: '#local-variable-declaration'
+    - include: '#local-tuple-var-deconstruction'
+
+  local-variable-declaration:
+    begin: |-
+      (?x)
+      (?:
+        (?:(\bref)\s+)?(\bvar\b)| # ref local
+        (?<type-name>
+          (?:
+            (?:ref\s+)?   # ref local
+            (?:
+              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+              (?<name-and-type-args> # identifier + type arguments (if any)
+                \g<identifier>\s*
+                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              )
+              (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+              (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+            )
+            (?:\s*\?\s*)? # nullable suffix?
+            (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+          )
+        )
+      )\s+
+      (\g<identifier>)\s*
+      (?=,|;|=|\))
+    beginCaptures:
+      '1': { name: storage.modifier.apex }
+      '2': { name: keyword.other.var.apex }
+      '3':
+        patterns:
+        - include: '#type'
+      # '4': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '5': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '7': ?<tuple> is a sub-expression. It's final value is not considered.
+      '8': { name: entity.name.variable.local.apex }
+    end: (?=;|\))
+    patterns:
+    - name: entity.name.variable.local.apex
+      match: '@?[_[:alpha:]][_[:alnum:]]*'
+    - include: '#punctuation-comma'
+    - include: '#comment'
+    - include: '#variable-initializer'
+
+  local-constant-declaration:
+    begin: |-
+      (?x)
+      (?<const-keyword>\b(?:const)\b)\s*
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )\s+
+      (\g<identifier>)\s*
+      (?=,|;|=)
+    beginCaptures:
+      '1': { name: storage.modifier.apex }
+      '2':
+        patterns:
+        - include: '#type'
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7': { name: entity.name.variable.local.apex }
+    end: (?=;)
+    patterns:
+    - name: entity.name.variable.local.apex
+      match: '@?[_[:alpha:]][_[:alnum:]]*'
+    - include: '#punctuation-comma'
+    - include: '#comment'
+    - include: '#variable-initializer'
+
+  local-tuple-var-deconstruction:
+    begin: |-
+      (?x) # e.g. var (x, y) = GetPoint();
+      (?:\b(var)\b\s*)
+      (?<tuple>\((?:[^\(\)]|\g<tuple>)+\))\s*
+      (?=;|=|\))
+    beginCaptures:
+      '1': { name: keyword.other.var.apex }
+      '2':
+        patterns:
+        - include: '#tuple-declaration-deconstruction-element-list'
+    end: (?=;|\))
+    patterns:
+    - include: '#comment'
+    - include: '#variable-initializer'
+
+  tuple-deconstruction-assignment:
+    match: |-
+      (?x)
+      (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))\s*
+      (?!=>|==)(?==)
+    captures:
+      '1':
+        patterns:
+        - include: '#tuple-deconstruction-element-list'
+
+  tuple-declaration-deconstruction-element-list:
+    begin: \(
+    beginCaptures:
+      '0': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#comment'
+    - include: '#tuple-declaration-deconstruction-element-list'
+    - include: '#declaration-expression-tuple'
+    - include: '#punctuation-comma'
+    - match: |-
+        (?x) # e.g. x
+        (@?[_[:alpha:]][_[:alnum:]]*)\b\s*
+        (?=[,)])
+      captures:
+        '1': { name: entity.name.variable.tuple-element.apex }
+
+  tuple-deconstruction-element-list:
+    begin: \(
+    beginCaptures:
+      '0': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#comment'
+    - include: '#tuple-deconstruction-element-list'
+    - include: '#declaration-expression-tuple'
+    - include: '#punctuation-comma'
+    - match: |-
+        (?x) # e.g. x
+        (@?[_[:alpha:]][_[:alnum:]]*)\b\s*
+        (?=[,)])
+      captures:
+        '1': { name: variable.other.readwrite.apex }
+
+  declaration-expression-local:
+    match: |-
+      (?x) # e.g. int x OR var x
+      (?:
+        \b(var)\b|
+        (?<type-name>
+          (?:
+            (?:
+              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+              (?<name-and-type-args> # identifier + type arguments (if any)
+                \g<identifier>\s*
+                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              )
+              (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+              (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+            )
+            (?:\s*\?\s*)? # nullable suffix?
+            (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+          )
+        )
+      )\s+
+      (\g<identifier>)\b\s*
+      (?=[,)\]])
+    captures:
+      '1': { name: keyword.other.var.apex }
+      '2':
+        patterns:
+        - include: '#type'
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7': { name: entity.name.variable.local.apex }
+
+  declaration-expression-tuple:
+    match: |-
+      (?x) # e.g. int x OR var x
+      (?:
+        \b(var)\b|
+        (?<type-name>
+          (?:
+            (?:
+              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+              (?<name-and-type-args> # identifier + type arguments (if any)
+                \g<identifier>\s*
+                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              )
+              (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+              (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+            )
+            (?:\s*\?\s*)? # nullable suffix?
+            (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+          )
+        )
+      )\s+
+      (\g<identifier>)\b\s*
+      (?=[,)])
+    captures:
+      '1': { name: keyword.other.var.apex }
+      '2':
+        patterns:
+        - include: '#type'
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7': { name: entity.name.variable.tuple-element.apex }
+
+  checked-unchecked-expression:
+    begin: (?<!\.)\b(?:(checked)|(unchecked))\b\s*(\()
+    beginCaptures:
+      '1': { name: keyword.other.checked.apex }
+      '2': { name: keyword.other.unchecked.apex }
+      '3': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#expression'
+
+  typeof-or-default-expression:
+    begin: (?<!\.)\b(?:(typeof)|(default))\b\s*(\()
+    beginCaptures:
+      '1': { name: keyword.other.typeof.apex }
+      '2': { name: keyword.other.default.apex }
+      '3': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#type'
+
+  nameof-expression:
+    begin: (?<!\.)\b(nameof)\b\s*(\()
+    beginCaptures:
+      '1': { name: keyword.other.nameof.apex }
+      '2': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#expression'
+
+  throw-expression:
+    match: (?<!\.)\b(throw)\b
+    captures:
+      '1': { name: keyword.control.flow.throw.apex }
+
+  interpolated-string:
+    name: string.quoted.double.apex
+    begin: '\$"'
+    beginCaptures:
+      '0': { name: punctuation.definition.string.begin.apex }
+    end: (")|((?:[^\\\n])$)
+    endCaptures:
+      '1': { name: punctuation.definition.string.end.apex }
+      '2': { name: invalid.illegal.newline.apex }
+    patterns:
+    - include: '#string-character-escape'
+    - include: '#interpolation'
+
+  verbatim-interpolated-string:
+    name: string.quoted.double.apex
+    begin: '\$@"'
+    beginCaptures:
+      '0': { name: punctuation.definition.string.begin.apex }
+    end: '"(?=[^"])'
+    endCaptures:
+      '0': { name: punctuation.definition.string.end.apex }
+    patterns:
+    - include: '#verbatim-string-character-escape'
+    - include: '#interpolation'
+
+  interpolation:
+    name: meta.interpolation.apex
+    begin: (?<=[^\{])((?:\{\{)*)(\{)(?=[^\{])
+    beginCaptures:
+      '1': { name: string.quoted.double.apex }
+      '2': { name: punctuation.definition.interpolation.begin.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.definition.interpolation.end.apex }
+    patterns:
+    - include: '#expression'
+
+  literal:
+    patterns:
+    - include: '#boolean-literal'
+    - include: '#null-literal'
+    - include: '#numeric-literal'
+    - include: '#char-literal'
+    - include: '#string-literal'
+    - include: '#verbatim-string-literal'
+    - include: '#tuple-literal'
+
+  boolean-literal:
+    patterns:
+    - name: constant.language.boolean.true.apex
+      match: (?<!\.)\btrue\b
+    - name: constant.language.boolean.false.apex
+      match: (?<!\.)\bfalse\b
+  null-literal:
+    name: constant.language.null.apex
+    match: (?<!\.)\bnull\b
+
+  numeric-literal:
+    patterns:
+    # C# grammar: 0x hex-digits integer-type-suffix[opt] OR 0X hex-digits integer-type-suffix[opt]
+    - name: constant.numeric.hex.apex
+      match: \b0(x|X)[0-9a-fA-F_]+(U|u|L|l|UL|Ul|uL|ul|LU|Lu|lU|lu)?\b
+    # C# grammar: 0b binary-digits integer-type-suffix[opt] OR 0B binary-digits integer-type-suffix[opt]
+    - name: constant.numeric.binary.apex
+      match: \b0(b|B)[01_]+(U|u|L|l|UL|Ul|uL|ul|LU|Lu|lU|lu)?\b
+    # C# grammar: decimal-digits . decimal-digits exponent-part[opt] real-type-suffix[opt] OR . decimal-digits exponent-part[opt] real-type-suffix[opt]
+    - name: constant.numeric.decimal.apex
+      match: \b([0-9_]+)?\.[0-9_]+((e|E)[0-9]+)?(F|f|D|d|M|m)?\b
+    #  C# grammar: decimal-digits exponent-part real-type-suffix[opt]
+    - name: constant.numeric.decimal.apex
+      match: \b[0-9_]+(e|E)[0-9_]+(F|f|D|d|M|m)?\b
+    # C# grammar: decimal-digits real-type-suffix
+    - name: constant.numeric.decimal.apex
+      match: \b[0-9_]+(F|f|D|d|M|m)\b
+    # C# grammar: decimal-digits integer-type-suffix[opt]
+    - name: constant.numeric.decimal.apex
+      match: \b[0-9_]+(U|u|L|l|UL|Ul|uL|ul|LU|Lu|lU|lu)?\b
+
+  char-literal:
+    name: string.quoted.single.apex
+    begin: "'"
+    beginCaptures:
+      '0': { name: punctuation.definition.char.begin.apex }
+    end: (\')|((?:[^\\\n])$)
+    endCaptures:
+      '1': { name: punctuation.definition.char.end.apex }
+      '2': { name: invalid.illegal.newline.apex }
+    patterns:
+    - include: '#string-character-escape'
+
+  string-literal:
+    name: string.quoted.double.apex
+    begin: '(?<!@)"'
+    beginCaptures:
+      '0': { name: punctuation.definition.string.begin.apex }
+    end: (")|((?:[^\\\n])$)
+    endCaptures:
+      '1': { name: punctuation.definition.string.end.apex }
+      '2': { name: invalid.illegal.newline.apex }
+    patterns:
+    - include: '#string-character-escape'
+
+  string-character-escape:
+    name: constant.character.escape.apex
+    match: \\.
+
+  verbatim-string-literal:
+    name: string.quoted.double.apex
+    begin: '@"'
+    beginCaptures:
+      '0': { name: punctuation.definition.string.begin.apex }
+    end: '"(?=[^"])'
+    endCaptures:
+      '0': { name: punctuation.definition.string.end.apex }
+    patterns:
+    - include: '#verbatim-string-character-escape'
+
+  verbatim-string-character-escape:
+    name: constant.character.escape.apex
+    match: '""'
+
+  tuple-literal:
+    begin: (\()(?=.*[:,])
+    beginCaptures:
+      '1': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#comment'
+    - include: '#tuple-literal-element'
+    - include: '#punctuation-comma'
+
+  tuple-literal-element:
+    begin: |-
+      (?x)
+      (?:(@?[_[:alpha:]][_[:alnum:]]*)\s*(:)\s*)?
+      (?![,)])
+    beginCaptures:
+      '0': { name: entity.name.variable.tuple-element.apex }
+      '1': { name: punctuation.separator.colon.apex }
+    end: (?=[,)])
+    patterns:
+    - include: '#expression'
+
+  expression-operators:
+    patterns:
+    - name: keyword.operator.assignment.compound.apex
+      match: \*=|/=|%=|\+=|-=
+    - name: keyword.operator.assignment.compound.bitwise.apex
+      match: \&=|\^=|<<=|>>=|\|=
+    - name: keyword.operator.bitwise.shift.apex
+      match: <<|>>
+    - name: keyword.operator.comparison.apex
+      match: ==|!=
+    - name: keyword.operator.relational.apex
+      match: <=|>=|<|>
+    - name: keyword.operator.logical.apex
+      match: \!|&&|\|\|
+    - name: keyword.operator.bitwise.apex
+      match: \&|~|\^|\|
+    - name: keyword.operator.assignment.apex
+      match: \=
+    - name: keyword.operator.decrement.apex
+      match: --
+    - name: keyword.operator.increment.apex
+      match: \+\+
+    - name: keyword.operator.arithmetic.apex
+      match: '%|\*|/|-|\+'
+    - name: keyword.operator.null-coalescing.apex
+      match: \?\?
+
+  conditional-operator:
+    # Only match ? if:
+    # 1. There isn't a preceding or trailing ? (null-coalescing operator)
+    # 2. There isn't a trailing . or [ (null-conditional operator)
+    begin: (?<!\?)\?(?!\?|\.|\[)
+    beginCaptures:
+      '0': { name: keyword.operator.conditional.question-mark.apex }
+    end: ':'
+    endCaptures:
+      '0': { name: keyword.operator.conditional.colon.apex }
+    patterns:
+    - include: '#expression'
+
+  await-expression:
+    name: keyword.other.await.apex
+    match: (?!\.)\b(await)\b
+
+  parenthesized-expression:
+    begin: \(
+    beginCaptures:
+      '0': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#expression'
+
+  initializer-expression:
+    begin: \{
+    beginCaptures:
+      '0': { name: punctuation.curlybrace.open.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.curlybrace.close.apex }
+    patterns:
+    - include: '#expression'
+    - include: '#punctuation-comma'
+
+  identifier:
+    name: variable.other.readwrite.apex
+    match: '@?[_[:alpha:]][_[:alnum:]]*'
+
+  cast-expression:
+    match: |-
+      (?x)
+      (\()\s*
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )\s*
+      (\))(?=\s*@?[_[:alnum:]\(])
+    captures:
+      '1': { name: punctuation.parenthesis.open.apex }
+      '2':
+        patterns:
+        - include: '#type'
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7': { name: punctuation.parenthesis.close.apex }
+
+  as-expression:
+    match: |-
+      (?x)
+      (?<!\.)\b(as)\b\s*
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )?
+    captures:
+      '1': { name: keyword.other.as.apex }
+      '2':
+        patterns:
+        - include: '#type'
+
+  is-expression:
+    match: |-
+      (?x)
+      (?<!\.)\b(is)\b\s*
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )?
+    captures:
+      '1': { name: keyword.other.is.apex }
+      '2':
+        patterns:
+        - include: '#type'
+
+  this-or-base-expression:
+    match: \b(?:(base)|(this))\b
+    captures:
+      '1': { name: keyword.other.base.apex }
+      '2': { name: keyword.other.this.apex }
+
+  invocation-expression:
+    begin: |-
+      (?x)
+      (?:(\?)\s*)?                                     # preceding null-conditional operator?
+      (?:(\.)\s*)?                                     # preceding dot?
+      (@?[_[:alpha:]][_[:alnum:]]*)\s*                   # method name
+      (?<type-args>\s*<([^<>]|\g<type-args>)+>\s*)?\s* # type arguments
+      (?=\()                                           # open paren of argument list
+    beginCaptures:
+      '1': { name: keyword.operator.null-conditional.apex }
+      '2': { name: punctuation.accessor.apex }
+      '3': { name: entity.name.function.apex }
+      '4':
+        patterns:
+        - include: '#type-arguments'
+    end: (?<=\))
+    patterns:
+    - include: '#argument-list'
+
+  element-access-expression:
+    begin: |-
+      (?x)
+      (?:(\?)\s*)?                        # preceding null-conditional operator?
+      (?:(\.)\s*)?                        # preceding dot?
+      (?:(@?[_[:alpha:]][_[:alnum:]]*)\s*)? # property name
+      (?:(\?)\s*)?                        # null-conditional operator?
+      (?=\[)                              # open bracket of argument list
+    beginCaptures:
+      '1': { name: keyword.operator.null-conditional.apex }
+      '2': { name: punctuation.accessor.apex }
+      '3': { name: variable.other.object.property.apex }
+      '4': { name: keyword.operator.null-conditional.apex }
+    end: (?<=\])(?!\s*\[)
+    patterns:
+    - include: '#bracketed-argument-list'
+
+  member-access-expression:
+    patterns:
+      # An identifier with no type parameters and a dot to the left should
+      # be treated as a property, so long as it isn't followed by a ( or [.
+    - match: |-
+        (?x)
+        (?:(\?)\s*)?                   # preceding null-conditional operator?
+        (\.)\s*                        # preceding dot
+        (@?[_[:alpha:]][_[:alnum:]]*)\s* # property name
+        (?![_[:alnum:]]|\(|(\?)?\[|<)  # next character is not alpha-numeric, nor a (, [, or <. Also, test for ?[
+      captures:
+        '1': { name: keyword.operator.null-conditional.apex }
+        '2': { name: punctuation.accessor.apex }
+        '3': { name: variable.other.object.property.apex }
+      # An identifier with type parameters should be treated as an object,
+      # regardless of whether there is a dot to the left.
+    - match: |-
+        (?x)
+        (\.)?\s*
+        (@?[_[:alpha:]][_[:alnum:]]*)
+        (?<type-params>\s*<([^<>]|\g<type-params>)+>\s*)
+        (?=
+          (\s*\?)?
+          \s*\.\s*@?[_[:alpha:]][_[:alnum:]]*
+        )
+      captures:
+        '1': { name: punctuation.accessor.apex }
+        '2': { name: variable.other.object.apex }
+        '3':
+          patterns:
+          - include: '#type-arguments'
+      # An identifier with no type parameters (and no dot to the left per the
+      # matches above) should be treated as an object.
+    - match: |-
+        (?x)
+        (@?[_[:alpha:]][_[:alnum:]]*)
+        (?=
+          (\s*\?)?
+          \s*\.\s*@?[_[:alpha:]][_[:alnum:]]*
+        )
+      captures:
+        '1': { name: variable.other.object.apex }
+
+  object-creation-expression:
+    patterns:
+    - include: '#object-creation-expression-with-parameters'
+    - include: '#object-creation-expression-with-no-parameters'
+
+  object-creation-expression-with-parameters:
+    begin: |-
+      (?x)
+      (new)\s+
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )\s*
+      (?=\()
+    beginCaptures:
+      '1': { name: keyword.other.new.apex }
+      '2':
+        patterns:
+        - include: '#type'
+    end: (?<=\))
+    patterns:
+    - include: '#argument-list'
+
+  object-creation-expression-with-no-parameters:
+    match: |-
+      (?x)
+      (new)\s+
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )\s*
+      (?=\{|$)
+    captures:
+      '1': { name: keyword.other.new.apex }
+      '2':
+        patterns:
+        - include: '#type'
+
+  array-creation-expression:
+    begin: |-
+      (?x)
+      \b(new)\b\s*
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )?\s*
+      (?=\[)
+    beginCaptures:
+      '1': { name: keyword.other.new.apex }
+      '2':
+        patterns:
+        - include: '#type'
+    end: (?<=\])
+    patterns:
+    - include: '#bracketed-argument-list'
+
+  anonymous-object-creation-expression:
+    begin: \b(new)\b\s*(?=\{|$)
+    beginCaptures:
+      '1': { name: keyword.other.new.apex }
+    end: (?<=\})
+    patterns:
+    - include: '#initializer-expression'
+
+  bracketed-parameter-list:
+    begin: (?=(\[))
+    beginCaptures:
+      '1': { name: punctuation.squarebracket.open.apex }
+    end: (?=(\]))
+    endCaptures:
+      '1': { name: punctuation.squarebracket.close.apex }
+    patterns:
+    # Note: We have to be careful here to skip the [. Otherwise, attributes will conflict.
+    - begin: (?<=\[)
+      end: (?=\])
+      patterns:
+      - include: '#comment'
+      - include: '#attribute-section'
+      - include: '#parameter'
+      - include: '#punctuation-comma'
+      - include: '#variable-initializer'
+
+  parenthesized-parameter-list:
+    begin: (\()
+    beginCaptures:
+      '0': { name: punctuation.parenthesis.open.apex }
+    end: (\))
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#comment'
+    - include: '#attribute-section'
+    - include: '#parameter'
+    - include: '#punctuation-comma'
+    - include: '#variable-initializer'
+
+  parameter:
+    match: |-
+      (?x)
+      (?:(?:\b(ref|params|out|in|this)\b)\s+)?
+      (?<type-name>
+        (?:
+          (?:ref\s+)?   # ref return
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )\s+
+      (\g<identifier>)
+    captures:
+      '1': { name: storage.modifier.apex }
+      '2':
+        patterns:
+        - include: '#type'
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7': { name: entity.name.variable.parameter.apex }
+
+  argument-list:
+    begin: \(
+    beginCaptures:
+      '0': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#named-argument'
+    - include: '#argument'
+    - include: '#punctuation-comma'
+
+  bracketed-argument-list:
+    begin: \[
+    beginCaptures:
+      '0': { name: punctuation.squarebracket.open.apex }
+    end: \]
+    endCaptures:
+      '0': { name: punctuation.squarebracket.close.apex }
+    patterns:
+    - include: '#named-argument'
+    - include: '#argument'
+    - include: '#punctuation-comma'
+
+  named-argument:
+    begin: (@?[_[:alpha:]][_[:alnum:]]*)\s*(:)
+    beginCaptures:
+      '1': { name: entity.name.variable.parameter.apex }
+      '2': { name: punctuation.separator.colon.apex }
+    end: (?=(,|\)|\]))
+    patterns:
+    - include: '#argument'
+
+  argument:
+    patterns:
+    - name: storage.modifier.apex
+      match: \b(ref|out|in)\b
+    - include: '#declaration-expression-local'
+    - include: '#expression'
+
+  query-expression:
+    begin: |-
+      (?x)
+      \b(from)\b\s*
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )?
+      \s+(\g<identifier>)\b\s*
+      \b(in)\b\s*
+    beginCaptures:
+      '1': { name: keyword.query.from.apex }
+      '2':
+        patterns:
+        - include: '#type'
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7': { name: entity.name.variable.range-variable.apex }
+      '8': { name: keyword.query.in.apex }
+    end: (?=;|\))
+    patterns:
+    - include: '#query-body'
+    - include: '#expression'
+
+  query-body:
+    patterns:
+    - include: '#let-clause'
+    - include: '#where-clause'
+    - include: '#join-clause'
+    - include: '#orderby-clause'
+    - include: '#select-clause'
+    - include: '#group-clause'
+
+  let-clause:
+    begin: |-
+      (?x)
+      \b(let)\b\s*
+      (@?[_[:alpha:]][_[:alnum:]]*)\b\s*
+      (=)\s*
+    beginCaptures:
+      '1': { name: keyword.query.let.apex }
+      '2': { name: entity.name.variable.range-variable.apex }
+      '3': { name: keyword.operator.assignment.apex }
+    end: (?=;|\))
+    patterns:
+    - include: '#query-body'
+    - include: '#expression'
+
+  where-clause:
+    begin: |-
+      (?x)
+      \b(where)\b\s*
+    beginCaptures:
+      '1': { name: keyword.query.where.apex }
+    end: (?=;|\))
+    patterns:
+    - include: '#query-body'
+    - include: '#expression'
+
+  join-clause:
+    begin: |-
+      (?x)
+      \b(join)\b\s*
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )?
+      \s+(\g<identifier>)\b\s*
+      \b(in)\b\s*
+    beginCaptures:
+      '1': { name: keyword.query.join.apex }
+      '2':
+        patterns:
+        - include: '#type'
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7': { name: entity.name.variable.range-variable.apex }
+      '8': { name: keyword.query.in.apex }
+    end: (?=;|\))
+    patterns:
+    - include: '#join-on'
+    - include: '#join-equals'
+    - include: '#join-into'
+    - include: '#query-body'
+    - include: '#expression'
+
+  join-on:
+    match: \b(on)\b\s*
+    captures:
+      '1': { name: keyword.query.on.apex }
+
+  join-equals:
+    match: \b(equals)\b\s*
+    captures:
+      '1': { name: keyword.query.equals.apex }
+
+  join-into:
+    match: |-
+      (?x)
+      \b(into)\b\s*
+      (@?[_[:alpha:]][_[:alnum:]]*)\b\s*
+    captures:
+      '1': { name: keyword.query.into.apex }
+      '2': { name: entity.name.variable.range-variable.apex }
+
+  orderby-clause:
+    begin: \b(orderby)\b\s*
+    beginCaptures:
+      '1': { name: keyword.query.orderby.apex }
+    end: (?=;|\))
+    patterns:
+    - include: '#ordering-direction'
+    - include: '#query-body'
+    - include: '#expression'
+    - include: '#punctuation-comma'
+
+  ordering-direction:
+    match: \b(?:(ascending)|(descending))\b
+    captures:
+      '1': { name: keyword.query.ascending.apex }
+      '2': { name: keyword.query.descending.apex }
+
+  select-clause:
+    begin: \b(select)\b\s*
+    beginCaptures:
+      '1': { name: keyword.query.select.apex }
+    end: (?=;|\))
+    patterns:
+    - include: '#query-body'
+    - include: '#expression'
+
+  group-clause:
+    begin: \b(group)\b\s*
+    beginCaptures:
+      '1': { name: keyword.query.group.apex }
+    end: (?=;|\))
+    patterns:
+    - include: '#group-by'
+    - include: '#group-into'
+    - include: '#query-body'
+    - include: '#expression'
+
+  group-by:
+    match: \b(by)\b\s*
+    captures:
+      '1': { name: keyword.query.by.apex }
+
+  group-into:
+    match: |-
+      (?x)
+      \b(into)\b\s*
+      (@?[_[:alpha:]][_[:alnum:]]*)\b\s*
+    captures:
+      '1': { name: keyword.query.into.apex }
+      '2': { name: entity.name.variable.range-variable.apex }
+
+  anonymous-method-expression:
+    patterns:
+    - begin: |-
+        (?x)
+        (?:\b(async)\b\s*)?
+        (@?[_[:alpha:]][_[:alnum:]]*)\b\s*
+        (=>)
+      beginCaptures:
+        '1': { name: storage.modifier.apex }
+        '2': { name: entity.name.variable.parameter.apex }
+        '3': { name: keyword.operator.arrow.apex }
+      end: (?=\)|;|}|,)
+      patterns:
+      - include: '#block'
+      - include: '#ref-modifier'
+      - include: '#expression'
+    - begin: |-
+        (?x)
+        (?:\b(async)\b\s*)?
+        (\(.*?\))\s*
+        (=>)
+      beginCaptures:
+        '1': { name: storage.modifier.apex }
+        '2':
+          patterns:
+          - include: '#lambda-parameter-list'
+        '3': { name: keyword.operator.arrow.apex }
+      end: (?=\)|;|}|,)
+      patterns:
+      - include: '#block'
+      - include: '#ref-modifier'
+      - include: '#expression'
+    - begin: |-
+        (?x)
+        (?:\b(async)\b\s*)?
+        (?:\b(delegate)\b\s*)
+      beginCaptures:
+        '1': { name: storage.modifier.apex }
+        '2': { name: keyword.other.delegate.apex }
+      end: (?=\)|;|}|,)
+      patterns:
+      - include: '#parenthesized-parameter-list'
+      - include: '#block'
+      - include: '#expression'
+
+  lambda-parameter-list:
+    begin: \(
+    beginCaptures:
+      '0': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#comment'
+    - include: '#attribute-section'
+    - include: '#lambda-parameter'
+    - include: '#punctuation-comma'
+
+  lambda-parameter:
+    match: |-
+      (?x)
+      (?:\b(ref|out|in)\b)?\s*
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )?
+      (\g<identifier>)\b\s*
+      (?=[,)])
+    captures:
+      '1': { name: storage.modifier.apex }
+      '2':
+        patterns:
+        - include: '#type'
+      # '3': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '6': ?<tuple> is a sub-expression. It's final value is not considered.
+      '7': { name: entity.name.variable.parameter.apex }
+
+  type:
+    name: meta.type.apex
+    patterns:
+    - include: '#comment'
+    - include: '#ref-modifier'
+    - include: '#tuple-type'
+    - include: '#type-builtin'
+    - include: '#type-name'
+    - include: '#type-arguments'
+    - include: '#type-array-suffix'
+    - include: '#type-nullable-suffix'
+
+  ref-modifier:
+    name: storage.modifier.apex
+    match: \b(ref)\b
+
+  tuple-type:
+    begin: \(
+    beginCaptures:
+      '0': { name: punctuation.parenthesis.open.apex }
+    end: \)
+    endCaptures:
+      '0': { name: punctuation.parenthesis.close.apex }
+    patterns:
+    - include: '#tuple-element'
+    - include: '#punctuation-comma'
+
+  tuple-element:
+    match: |-
+      (?x)
+      (?<type-name>
+        (?:
+          (?:
+            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
+            (?<name-and-type-args> # identifier + type arguments (if any)
+              \g<identifier>\s*
+              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+            )
+            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
+            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
+          )
+          (?:\s*\?\s*)? # nullable suffix?
+          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
+        )
+      )
+      (?:(?<tuple-name>\g<identifier>)\b)?
+    captures:
+      '1':
+        patterns:
+        - include: '#type'
+      # '2': ?<identifier> is a sub-expression. It's final value is not considered.
+      # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
+      # '4': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<tuple> is a sub-expression. It's final value is not considered.
+      '6': { name: entity.name.variable.tuple-element.apex }
+
+  type-builtin:
+    match: \b(bool|byte|char|decimal|double|float|int|long|object|sbyte|short|string|uint|ulong|ushort|void|dynamic)\b
+    captures:
+      '1': { name: keyword.type.apex }
+
+  type-name:
+    patterns:
+    - match: (@?[_[:alpha:]][_[:alnum:]]*)\s*(\:\:)
+      captures:
+        '1': { name: entity.name.type.alias.apex }
+        '2': { name: punctuation.separator.coloncolon.apex }
+    - match: (@?[_[:alpha:]][_[:alnum:]]*)\s*(\.)
+      captures:
+        '1': { name: storage.type.apex }
+        '2': { name: punctuation.accessor.apex }
+    - match: (\.)\s*(@?[_[:alpha:]][_[:alnum:]]*)
+      captures:
+        '1': { name: punctuation.accessor.apex }
+        '2': { name: storage.type.apex }
+    - name: storage.type.apex
+      match: '@?[_[:alpha:]][_[:alnum:]]*'
+
+  type-arguments:
+    begin: '<'
+    beginCaptures:
+      '0': { name: punctuation.definition.typeparameters.begin.apex }
+    end: '>'
+    endCaptures:
+      '0': { name: punctuation.definition.typeparameters.end.apex }
+    patterns:
+    - include: '#comment'
+    - include: '#type'
+    - include: '#punctuation-comma'
+
+  type-array-suffix:
+    begin: \[
+    beginCaptures:
+      '0': { name: punctuation.squarebracket.open.apex }
+    end: \]
+    endCaptures:
+      '0': { name: punctuation.squarebracket.close.apex }
+    patterns:
+    - include: '#punctuation-comma'
+
+  type-nullable-suffix:
+    match: '\?'
+    captures:
+      '0': { name: punctuation.separator.question-mark.apex }
+
+  operator-assignment:
+    name: keyword.operator.assignment.apex
+    match: (?<!=|!)(=)(?!=)
+
+  punctuation-comma:
+    name: punctuation.separator.comma.apex
+    match: ','
+
+  punctuation-semicolon:
+    name: punctuation.terminator.statement.apex
+    match: ;
+
+  punctuation-accessor:
+    name: punctuation.accessor.apex
+    match: \.
+
+  comment:
+    patterns:
+    - name: comment.block.apex
+      begin: /\*+
+      beginCaptures:
+        '0': { name: punctuation.definition.comment.apex }
+      end: \*/
+      endCaptures:
+        '0': { name: punctuation.definition.comment.apex }
+    - begin: (^\s+)?(?=//)
+      beginCaptures:
+        '1': { name: punctuation.whitespace.comment.leading.apex }
+      end: (?=$)
+      patterns:
+      - name: comment.block.documentation.apex
+        begin: (?<!/)///(?!/)
+        beginCaptures:
+          '0': { name: punctuation.definition.comment.apex }
+        end: (?=$)
+        patterns:
+        - include: '#xml-doc-comment'
+      - name: comment.line.double-slash.apex
+        begin: (?<!/)//(?:(?!/)|(?=//))
+        beginCaptures:
+          '0': { name: punctuation.definition.comment.apex }
+        end: (?=$)
+
+  xml-doc-comment:
+    patterns:
+    - include: '#xml-comment'
+    - include: '#xml-character-entity'
+    - include: '#xml-cdata'
+    - include: '#xml-tag'
+
+  xml-tag:
+    name: meta.tag.apex
+    begin: |-
+      (?x)
+      (</?)
+      (
+        (?:
+          ([-_[:alnum:]]+)
+          (:)
+        )?
+        ([-_[:alnum:]]+)
+      )
+    beginCaptures:
+      '1': { name: punctuation.definition.tag.apex }
+      '2': { name: entity.name.tag.apex }
+      '3': { name: entity.name.tag.namespace.apex }
+      '4': { name: punctuation.separator.colon.apex }
+      '5': { name: entity.name.tag.localname.apex }
+    end: (/?>)
+    endCaptures:
+      '1': { name: punctuation.definition.tag.apex }
+    patterns:
+    - include: '#xml-attribute'
+
+  xml-attribute:
+    patterns:
+    - match: |-
+        (?x)
+        (?:^|\s+)
+        (
+          (?:
+            ([-_[:alnum:]]+)
+            (:)
+          )?
+          ([-_[:alnum:]]+)
+        )
+        (=)
+      captures:
+        '1': { name: entity.other.attribute-name.apex }
+        '2': { name: entity.other.attribute-name.namespace.apex }
+        '3': { name: punctuation.separator.colon.apex }
+        '4': { name: entity.other.attribute-name.localname.apex }
+        '5': { name: punctuation.separator.equals.apex }
+    - include: '#xml-string'
+
+  xml-cdata:
+    name: string.unquoted.cdata.apex
+    begin: <!\[CDATA\[
+    beginCaptures:
+      '0': { name: punctuation.definition.string.begin.apex }
+    end: \]\]>
+    endCaptures:
+      '0': { name: punctuation.definition.string.end.apex }
+
+  xml-string:
+    patterns:
+    - name: string.quoted.single.apex
+      begin: \'
+      beginCaptures:
+        '0': { name: punctuation.definition.string.begin.apex }
+      end: \'
+      endCaptures:
+        '0': { name: punctuation.definition.string.end.apex }
+      patterns:
+      - include: '#xml-character-entity'
+    - name: string.quoted.double.apex
+      begin: \"
+      beginCaptures:
+        '0': { name: punctuation.definition.string.begin.apex }
+      end: \"
+      endCaptures:
+        '0': { name: punctuation.definition.string.end.apex }
+      patterns:
+      - include: '#xml-character-entity'
+
+  xml-character-entity:
+    patterns:
+    - name: constant.character.entity.apex
+      match: |-
+        (?x)
+        (&)
+        (
+          (?:[[:alpha:]:_][[:alnum:]:_.-]*)|
+          (?:\#[[:digit:]]+)|
+          (?:\#x[[:xdigit:]]+)
+        )
+        (;)
+      captures:
+        '1': { name: punctuation.definition.constant.apex }
+        '3': { name: punctuation.definition.constant.apex }
+    - name: invalid.illegal.bad-ampersand.apex
+      match: '&'
+
+  xml-comment:
+    name: comment.block.apex
+    begin: <!--
+    beginCaptures:
+      '0': { name: punctuation.definition.comment.apex }
+    end: -->
+    endCaptures:
+      '0': { name: punctuation.definition.comment.apex }

@@ -59,33 +59,6 @@ private List field123;`);
                 Token.Punctuation.Semicolon]);
         });
 
-
-        it("modifiers", () => {
-            const input = Input.InClass(`
-private static readonly List _field;
-readonly string _field2;
-string _field3;`);
-
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Private,
-                Token.Keywords.Modifiers.Static,
-                Token.Keywords.Modifiers.ReadOnly,
-                Token.Type("List"),
-                Token.Identifiers.FieldName("_field"),
-                Token.Punctuation.Semicolon,
-
-                Token.Keywords.Modifiers.ReadOnly,
-                Token.PrimitiveType.String,
-                Token.Identifiers.FieldName("_field2"),
-                Token.Punctuation.Semicolon,
-
-                Token.PrimitiveType.String,
-                Token.Identifiers.FieldName("_field3"),
-                Token.Punctuation.Semicolon]);
-        });
-
         it("types", () => {
             const input = Input.InClass(`
 string field123;
@@ -239,99 +212,6 @@ private UnityEngine.UI.Image[] selectedImages;
             ]);
         });
 
-        it("Fields with dictionary initializer highlights properly (issue omnisharp-vscode#1096)", () => {
-            const input = Input.InClass(`
-private readonly Dictionary<string, int> languageToIndex = new Dictionary<string, int>()
-{
-    {"Simplified Chinese", 0},
-    {"English", 1},
-    {"Japanese", 2},
-    {"Korean", 3}
-};
-`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Private,
-                Token.Keywords.Modifiers.ReadOnly,
-                Token.Type("Dictionary"),
-                Token.Punctuation.TypeParameters.Begin,
-                Token.PrimitiveType.String,
-                Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
-                Token.Punctuation.TypeParameters.End,
-                Token.Identifiers.FieldName("languageToIndex"),
-                Token.Operators.Assignment,
-                Token.Keywords.New,
-                Token.Type("Dictionary"),
-                Token.Punctuation.TypeParameters.Begin,
-                Token.PrimitiveType.String,
-                Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
-                Token.Punctuation.TypeParameters.End,
-                Token.Punctuation.OpenParen,
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.String.Begin,
-                Token.Literals.String("Simplified Chinese"),
-                Token.Punctuation.String.End,
-                Token.Punctuation.Comma,
-                Token.Literals.Numeric.Decimal("0"),
-                Token.Punctuation.CloseBrace,
-                Token.Punctuation.Comma,
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.String.Begin,
-                Token.Literals.String("English"),
-                Token.Punctuation.String.End,
-                Token.Punctuation.Comma,
-                Token.Literals.Numeric.Decimal("1"),
-                Token.Punctuation.CloseBrace,
-                Token.Punctuation.Comma,
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.String.Begin,
-                Token.Literals.String("Japanese"),
-                Token.Punctuation.String.End,
-                Token.Punctuation.Comma,
-                Token.Literals.Numeric.Decimal("2"),
-                Token.Punctuation.CloseBrace,
-                Token.Punctuation.Comma,
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.String.Begin,
-                Token.Literals.String("Korean"),
-                Token.Punctuation.String.End,
-                Token.Punctuation.Comma,
-                Token.Literals.Numeric.Decimal("3"),
-                Token.Punctuation.CloseBrace,
-                Token.Punctuation.CloseBrace,
-                Token.Punctuation.Semicolon
-            ]);
-        });
-        
-        it("initializer on multiple lines (issue omnisharp-vscode#316)", () => {
-            const input = Input.InClass(`
-private readonly string initSportMessageFormatString = "line1"
-    + "line2";`);
-
-            let tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Private,
-                Token.Keywords.Modifiers.ReadOnly,
-                Token.PrimitiveType.String,
-                Token.Identifiers.FieldName("initSportMessageFormatString"),
-                Token.Operators.Assignment,
-                Token.Punctuation.String.Begin,
-                Token.Literals.String("line1"),
-                Token.Punctuation.String.End,
-                Token.Operators.Arithmetic.Addition,
-                Token.Punctuation.String.Begin,
-                Token.Literals.String("line2"),
-                Token.Punctuation.String.End,
-                Token.Punctuation.Semicolon
-            ]);
-        });
-        
         it("initializer containing lambda (issue #31)", () => {
             const input = `
 class C

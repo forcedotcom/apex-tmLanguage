@@ -10,6 +10,32 @@ describe("Grammar", () => {
     before(() => should());
 
     describe("Expressions", () => {
+        describe("Object creation", () => {
+            it("with argument multiplication (issue #82)", () => {
+                const input = Input.InMethod(`
+var newPoint = new Vector(point.x * z, 0);`);
+                const tokens = tokenize(input);
+
+                tokens.should.deep.equal([
+                    Token.Keywords.Var,
+                    Token.Identifiers.LocalName("newPoint"),
+                    Token.Operators.Assignment,
+                    Token.Keywords.New,
+                    Token.Type("Vector"),
+                    Token.Punctuation.OpenParen,
+                    Token.Variables.Object("point"),
+                    Token.Punctuation.Accessor,
+                    Token.Variables.Property("x"),
+                    Token.Operators.Arithmetic.Multiplication,
+                    Token.Variables.ReadWrite("z"),
+                    Token.Punctuation.Comma,
+                    Token.Literals.Numeric.Decimal("0"),
+                    Token.Punctuation.CloseParen,
+                    Token.Punctuation.Semicolon
+                ]);
+            });
+        });
+
         describe("Anonymous Methods", () => {
             it("lambda expression with no parameters (assignment)", () => {
                 const input = Input.InMethod(`Action a = () => { };`);
@@ -662,6 +688,25 @@ describe("Grammar", () => {
                 ]);
             });
 
+            it("lambda expression with in parameter - in int", () => {
+                const input = Input.InMethod(`M((in int x) => x);`);
+                const tokens = tokenize(input);
+
+                tokens.should.deep.equal([
+                    Token.Identifiers.MethodName("M"),
+                    Token.Punctuation.OpenParen,
+                    Token.Punctuation.OpenParen,
+                    Token.Keywords.Modifiers.In,
+                    Token.PrimitiveType.Int,
+                    Token.Identifiers.ParameterName("x"),
+                    Token.Punctuation.CloseParen,
+                    Token.Operators.Arrow,
+                    Token.Variables.ReadWrite("x"),
+                    Token.Punctuation.CloseParen,
+                    Token.Punctuation.Semicolon
+                ]);
+            })
+
             it("anonymous method with no parameter list (passed as argument)", () => {
                 const input = Input.InMethod(`M(delegate { });`);
                 const tokens = tokenize(input);
@@ -824,7 +869,7 @@ public void Method2()
                     Token.Punctuation.OpenParen,
                     Token.Punctuation.CloseParen,
                     Token.Punctuation.OpenBrace,
-                    
+
                     // app.Command()
                     Token.Variables.Object("app"),
                     Token.Punctuation.Accessor,
@@ -874,7 +919,7 @@ var outObjectsToKeep = allOutObjects.Where(outObject => outObject.ShouldKeep);`)
                     Token.Variables.Property("ShouldKeep"),
                     Token.Punctuation.CloseParen,
                     Token.Punctuation.Semicolon,
-                    
+
                     // var outObjectsToKeep = allOutObjects.Where(outObject => outObject.ShouldKeep);;
                     Token.Keywords.Var,
                     Token.Identifiers.LocalName("outObjectsToKeep"),
@@ -1559,6 +1604,23 @@ var result = list.Select(l => new {
                 ]);
             });
 
+            it("in argument", () => {
+                const input = Input.InMethod(`var o = P[in x];`);
+                const tokens = tokenize(input);
+
+                tokens.should.deep.equal([
+                    Token.Keywords.Var,
+                    Token.Identifiers.LocalName("o"),
+                    Token.Operators.Assignment,
+                    Token.Variables.Property("P"),
+                    Token.Punctuation.OpenBracket,
+                    Token.Keywords.Modifiers.In,
+                    Token.Variables.ReadWrite("x"),
+                    Token.Punctuation.CloseBracket,
+                    Token.Punctuation.Semicolon
+                ]);
+            });
+
             it("named ref argument", () => {
                 const input = Input.InMethod(`var o = P[x: ref y];`);
                 const tokens = tokenize(input);
@@ -1597,6 +1659,25 @@ var result = list.Select(l => new {
                 ]);
             });
 
+            it("named in argument", () => {
+                const input = Input.InMethod(`var o = P[x: in y];`);
+                const tokens = tokenize(input);
+
+                tokens.should.deep.equal([
+                    Token.Keywords.Var,
+                    Token.Identifiers.LocalName("o"),
+                    Token.Operators.Assignment,
+                    Token.Variables.Property("P"),
+                    Token.Punctuation.OpenBracket,
+                    Token.Identifiers.ParameterName("x"),
+                    Token.Punctuation.Colon,
+                    Token.Keywords.Modifiers.In,
+                    Token.Variables.ReadWrite("y"),
+                    Token.Punctuation.CloseBracket,
+                    Token.Punctuation.Semicolon
+                ]);
+            });
+
             it("out argument declaration", () => {
                 const input = Input.InMethod(`var o = P[out int x, out var y];`);
                 const tokens = tokenize(input);
@@ -1612,6 +1693,28 @@ var result = list.Select(l => new {
                     Token.Identifiers.LocalName("x"),
                     Token.Punctuation.Comma,
                     Token.Keywords.Modifiers.Out,
+                    Token.Keywords.Var,
+                    Token.Identifiers.LocalName("y"),
+                    Token.Punctuation.CloseBracket,
+                    Token.Punctuation.Semicolon
+                ]);
+            });
+
+            it("in argument declaration", () => {
+                const input = Input.InMethod(`var o = P[in int x, in var y];`);
+                const tokens = tokenize(input);
+
+                tokens.should.deep.equal([
+                    Token.Keywords.Var,
+                    Token.Identifiers.LocalName("o"),
+                    Token.Operators.Assignment,
+                    Token.Variables.Property("P"),
+                    Token.Punctuation.OpenBracket,
+                    Token.Keywords.Modifiers.In,
+                    Token.PrimitiveType.Int,
+                    Token.Identifiers.LocalName("x"),
+                    Token.Punctuation.Comma,
+                    Token.Keywords.Modifiers.In,
                     Token.Keywords.Var,
                     Token.Identifiers.LocalName("y"),
                     Token.Punctuation.CloseBracket,
@@ -2048,6 +2151,20 @@ long total = (data["bonusGame"]["win"].AsLong) * data["bonusGame"]["betMult"].As
                 ]);
             });
 
+            it("in argument", () => {
+                const input = Input.InMethod(`M(in x);`);
+                const tokens = tokenize(input);
+
+                tokens.should.deep.equal([
+                    Token.Identifiers.MethodName("M"),
+                    Token.Punctuation.OpenParen,
+                    Token.Keywords.Modifiers.In,
+                    Token.Variables.ReadWrite("x"),
+                    Token.Punctuation.CloseParen,
+                    Token.Punctuation.Semicolon
+                ]);
+            });
+
             it("named ref argument", () => {
                 const input = Input.InMethod(`M(x: ref y);`);
                 const tokens = tokenize(input);
@@ -2080,6 +2197,22 @@ long total = (data["bonusGame"]["win"].AsLong) * data["bonusGame"]["betMult"].As
                 ]);
             });
 
+            it("named in argument", () => {
+                const input = Input.InMethod(`M(x: in y);`);
+                const tokens = tokenize(input);
+
+                tokens.should.deep.equal([
+                    Token.Identifiers.MethodName("M"),
+                    Token.Punctuation.OpenParen,
+                    Token.Identifiers.ParameterName("x"),
+                    Token.Punctuation.Colon,
+                    Token.Keywords.Modifiers.In,
+                    Token.Variables.ReadWrite("y"),
+                    Token.Punctuation.CloseParen,
+                    Token.Punctuation.Semicolon
+                ]);
+            });
+
             it("out argument declaration", () => {
                 const input = Input.InMethod(`M(out int x, out var y);`);
                 const tokens = tokenize(input);
@@ -2092,6 +2225,25 @@ long total = (data["bonusGame"]["win"].AsLong) * data["bonusGame"]["betMult"].As
                     Token.Identifiers.LocalName("x"),
                     Token.Punctuation.Comma,
                     Token.Keywords.Modifiers.Out,
+                    Token.Keywords.Var,
+                    Token.Identifiers.LocalName("y"),
+                    Token.Punctuation.CloseParen,
+                    Token.Punctuation.Semicolon
+                ]);
+            });
+
+            it("in argument declaration", () => {
+                const input = Input.InMethod(`M(in int x, in var y);`);
+                const tokens = tokenize(input);
+
+                tokens.should.deep.equal([
+                    Token.Identifiers.MethodName("M"),
+                    Token.Punctuation.OpenParen,
+                    Token.Keywords.Modifiers.In,
+                    Token.PrimitiveType.Int,
+                    Token.Identifiers.LocalName("x"),
+                    Token.Punctuation.Comma,
+                    Token.Keywords.Modifiers.In,
                     Token.Keywords.Var,
                     Token.Identifiers.LocalName("y"),
                     Token.Punctuation.CloseParen,
@@ -2296,6 +2448,21 @@ long total = (data["bonusGame"]["win"].AsLong) * data["bonusGame"]["betMult"].As
                     Token.Identifiers.ParameterName("y"),
                     Token.Punctuation.Colon,
                     Token.Literals.Numeric.Decimal("23"),
+                    Token.Punctuation.CloseParen,
+                    Token.Punctuation.Semicolon
+                ]);
+            });
+
+            it("multiplicated parameters (issue #99)", () => {
+                const input = Input.InMethod(`Multiply(n1 * n2);`);
+                const tokens = tokenize(input);
+
+                tokens.should.deep.equal([
+                    Token.Identifiers.MethodName("Multiply"),
+                    Token.Punctuation.OpenParen,
+                    Token.Variables.ReadWrite("n1"),
+                    Token.Operators.Arithmetic.Multiplication,
+                    Token.Variables.ReadWrite("n2"),
                     Token.Punctuation.CloseParen,
                     Token.Punctuation.Semicolon
                 ]);
@@ -3060,159 +3227,6 @@ string s;`);
                 ]);
             });
 
-            it("highlight complex query properly (issue omnisharp-vscode#1106)", () => {
-                const input = Input.InClass(`
-private static readonly Parser<Node> NodeParser =
-    from name in NodeName.Token()
-    from type in NodeValueType.Token()
-    from eq in Parse.Char('=')
-    from value in QuotedString.Token()
-    from lcurl in Parse.Char('{').Token()
-    from children in Parse.Ref(() => ChildrenNodesParser)
-    from rcurl in Parse.Char('}').Token()
-    select new Node
-        {
-            Name = name,
-            Type = type,
-            Value = value,
-            Children = children
-        };
-`);
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.Keywords.Modifiers.Private,
-                    Token.Keywords.Modifiers.Static,
-                    Token.Keywords.Modifiers.ReadOnly,
-                    Token.Type("Parser"),
-                    Token.Punctuation.TypeParameters.Begin,
-                    Token.Type("Node"),
-                    Token.Punctuation.TypeParameters.End,
-                    Token.Identifiers.FieldName("NodeParser"),
-                    Token.Operators.Assignment,
-
-                    // from name in NodeName.Token()
-                    Token.Keywords.Queries.From,
-                    Token.Identifiers.RangeVariableName("name"),
-                    Token.Keywords.Queries.In,
-                    Token.Variables.Object("NodeName"),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Token"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.CloseParen,
-
-                    // from type in NodeValueType.Token()
-                    Token.Keywords.Queries.From,
-                    Token.Identifiers.RangeVariableName("type"),
-                    Token.Keywords.Queries.In,
-                    Token.Variables.Object("NodeValueType"),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Token"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.CloseParen,
-
-                    // from eq in Parse.Char('=')
-                    Token.Keywords.Queries.From,
-                    Token.Identifiers.RangeVariableName("eq"),
-                    Token.Keywords.Queries.In,
-                    Token.Variables.Object("Parse"),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Char"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.Char.Begin,
-                    Token.Literals.Char("="),
-                    Token.Punctuation.Char.End,
-                    Token.Punctuation.CloseParen,
-
-                    // from value in QuotedString.Token()
-                    Token.Keywords.Queries.From,
-                    Token.Identifiers.RangeVariableName("value"),
-                    Token.Keywords.Queries.In,
-                    Token.Variables.Object("QuotedString"),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Token"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.CloseParen,
-
-                    // from lcurl in Parse.Char('{').Token()
-                    Token.Keywords.Queries.From,
-                    Token.Identifiers.RangeVariableName("lcurl"),
-                    Token.Keywords.Queries.In,
-                    Token.Variables.Object("Parse"),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Char"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.Char.Begin,
-                    Token.Literals.Char("{"),
-                    Token.Punctuation.Char.End,
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Token"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.CloseParen,
-
-                    // from children in Parse.Ref(() => ChildrenNodesParser)
-                    Token.Keywords.Queries.From,
-                    Token.Identifiers.RangeVariableName("children"),
-                    Token.Keywords.Queries.In,
-                    Token.Variables.Object("Parse"),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Ref"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.CloseParen,
-                    Token.Operators.Arrow,
-                    Token.Variables.ReadWrite("ChildrenNodesParser"),
-                    Token.Punctuation.CloseParen,
-
-                    // from rcurl in Parse.Char('}').Token()
-                    Token.Keywords.Queries.From,
-                    Token.Identifiers.RangeVariableName("rcurl"),
-                    Token.Keywords.Queries.In,
-                    Token.Variables.Object("Parse"),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Char"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.Char.Begin,
-                    Token.Literals.Char("}"),
-                    Token.Punctuation.Char.End,
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Token"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.CloseParen,
-
-                    // select new Node
-                    // {
-                    //     Name = name,
-                    //     Type = type,
-                    //     Value = value,
-                    //     Children = children
-                    // };
-                    Token.Keywords.Queries.Select,
-                    Token.Keywords.New,
-                    Token.Type("Node"),
-                    Token.Punctuation.OpenBrace,
-                    Token.Variables.ReadWrite("Name"),
-                    Token.Operators.Assignment,
-                    Token.Variables.ReadWrite("name"),
-                    Token.Punctuation.Comma,
-                    Token.Variables.ReadWrite("Type"),
-                    Token.Operators.Assignment,
-                    Token.Variables.ReadWrite("type"),
-                    Token.Punctuation.Comma,
-                    Token.Variables.ReadWrite("Value"),
-                    Token.Operators.Assignment,
-                    Token.Variables.ReadWrite("value"),
-                    Token.Punctuation.Comma,
-                    Token.Variables.ReadWrite("Children"),
-                    Token.Operators.Assignment,
-                    Token.Variables.ReadWrite("children"),
-                    Token.Punctuation.CloseBrace,
-                    Token.Punctuation.Semicolon
-                ]);
-            });
-            
             it("query join with anonymous type (issue #89)", () => {
                 const input = Input.InMethod(`
 var q = from x in list1

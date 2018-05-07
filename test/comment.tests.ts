@@ -29,6 +29,15 @@ describe("Grammar", () => {
                 Token.Comment.SingleLine.Text(" foo")]);
         });
 
+        it("single-line double comment (issue #100)", () => {
+            const input = `//// foo`;
+            const tokens = tokenize(input);
+
+            tokens.should.deep.equal([
+                Token.Comment.SingleLine.Start,
+                Token.Comment.SingleLine.Text("// foo")]);
+        });
+
         it("multi-line comment", () => {
             const input = `/* foo */`;
             const tokens = tokenize(input);
@@ -91,6 +100,20 @@ describe("Grammar", () => {
             tokens.should.deep.equal([
                 Token.Comment.SingleLine.Start,
                 Token.Comment.SingleLine.Text(" foo")]);
+        });
+
+        it("multi-line java doc comment", () => {
+          const input = Input.FromText(`
+/**
+* foo
+*/
+`);
+            const tokens = tokenize(input);
+
+            tokens.should.deep.equal([
+                Token.Comment.MultiLine.JavaDocStart,
+                Token.Comment.MultiLine.Text("* foo"),
+                Token.Comment.MultiLine.End]);
         });
 
         it("comment should colorize if there isn't a space before it (issue omnisharp-vscode#225)", () => {
@@ -437,6 +460,38 @@ catch (DataNotFoundException dnfe) when (dnfe.GetType() == typeof(DataNotFoundEx
                 Token.Punctuation.CloseParen,
                 Token.Comment.SingleLine.Start,
                 Token.Comment.SingleLine.Text("Only catch exceptions that are distinctly DataNotFoundException"),
+                Token.Punctuation.OpenBrace,
+                Token.Punctuation.CloseBrace]);
+        });
+
+        it("after checked (issue #104)", () => {
+            const input = Input.InMethod(`
+checked //comment
+{
+}
+`);
+            const tokens = tokenize(input);
+
+            tokens.should.deep.equal([
+                Token.Keywords.Checked,
+                Token.Comment.SingleLine.Start,
+                Token.Comment.SingleLine.Text("comment"),
+                Token.Punctuation.OpenBrace,
+                Token.Punctuation.CloseBrace]);
+        });
+
+        it("after unchecked (issue #104)", () => {
+            const input = Input.InMethod(`
+unchecked //comment
+{
+}
+`);
+            const tokens = tokenize(input);
+
+            tokens.should.deep.equal([
+                Token.Keywords.Unchecked,
+                Token.Comment.SingleLine.Start,
+                Token.Comment.SingleLine.Text("comment"),
                 Token.Punctuation.OpenBrace,
                 Token.Punctuation.CloseBrace]);
         });
