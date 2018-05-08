@@ -5,7 +5,7 @@ fileTypes: [
   "cls"
   "trigger"
 ]
-uuid: "f7de61e2-bdde-4e2a-a139-8221b179584e"
+uuid: "C4D3A5F4-B1DE-48C5-84CE-AC99DDA78292"
 patterns: [
   {
     include: "#comment"
@@ -75,9 +75,6 @@ repository:
         include: "#class-declaration"
       }
       {
-        include: "#delegate-declaration"
-      }
-      {
         include: "#enum-declaration"
       }
       {
@@ -111,9 +108,6 @@ repository:
         include: "#field-declaration"
       }
       {
-        include: "#event-declaration"
-      }
-      {
         include: "#property-declaration"
       }
       {
@@ -124,9 +118,6 @@ repository:
       }
       {
         include: "#constructor-declaration"
-      }
-      {
-        include: "#destructor-declaration"
       }
       {
         include: "#operator-declaration"
@@ -148,9 +139,6 @@ repository:
     patterns: [
       {
         include: "#comment"
-      }
-      {
-        include: "#event-declaration"
       }
       {
         include: "#property-declaration"
@@ -256,12 +244,6 @@ repository:
       }
       {
         include: "#throw-expression"
-      }
-      {
-        include: "#interpolated-string"
-      }
-      {
-        include: "#verbatim-interpolated-string"
       }
       {
         include: "#this-or-base-expression"
@@ -391,7 +373,7 @@ repository:
       }
     ]
   "attribute-section":
-    begin: "(\\[)(assembly|module|field|event|method|param|property|return|type)?(\\:)?"
+    begin: "(\\[)(assembly|module|field|method|param|property|return|type)?(\\:)?"
     beginCaptures:
       "1":
         name: "punctuation.squarebracket.open.apex"
@@ -501,7 +483,7 @@ repository:
     match: "(?<!\\.)\\b(with sharing|without sharing)\\b"
   "storage-modifier":
     name: "storage.modifier.apex"
-    match: "(?<!\\.)\\b(new|public|protected|internal|private|abstract|virtual|override|global|static|partial|const|extern|async)\\b"
+    match: "(?<!\\.)\\b(new|public|protected|internal|private|abstract|virtual|override|global|static|partial|extern|async)\\b"
   "class-declaration":
     begin: "(?=\\bclass\\b)"
     end: "(?<=\\})"
@@ -550,59 +532,6 @@ repository:
       }
       {
         include: "#comment"
-      }
-    ]
-  "delegate-declaration":
-    begin: '''
-      (?x)
-      (?:\\b(delegate)\\b)\\s+
-      (?<type-name>
-        (?:
-          (?:ref\\s+)?   # ref return
-          (?:
-            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
-              \\g<identifier>\\s*
-              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-            )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-          )
-          (?:\\s*\\?\\s*)? # nullable suffix?
-          (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-        )
-      )\\s+
-      (\\g<identifier>)\\s*
-      (<([^<>]+)>)?\\s*
-      (?=\\()
-    '''
-    beginCaptures:
-      "1":
-        name: "keyword.other.delegate.apex"
-      "2":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-      "7":
-        name: "entity.name.type.delegate.apex"
-      "8":
-        patterns: [
-          {
-            include: "#type-parameter-list"
-          }
-        ]
-    end: "(?=;)"
-    patterns: [
-      {
-        include: "#comment"
-      }
-      {
-        include: "#parenthesized-parameter-list"
-      }
-      {
-        include: "#generic-constraints"
       }
     ]
   "enum-declaration":
@@ -915,7 +844,7 @@ repository:
   "property-declaration":
     begin: '''
       (?x)
-      (?!.*\\b(?:class|interface|struct|enum|event)\\b)\\s*
+      (?!.*\\b(?:class|interface|struct|enum)\\b)\\s*
       (?<return-type>
         (?<type-name>
           (?:
@@ -1035,71 +964,6 @@ repository:
         include: "#variable-initializer"
       }
     ]
-  "event-declaration":
-    begin: '''
-      (?x)
-      \\b(event)\\b\\s*
-      (?<return-type>
-        (?<type-name>
-          (?:
-            (?:
-              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<name-and-type-args> # identifier + type arguments (if any)
-                \\g<identifier>\\s*
-                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-              )
-              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-              (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-            )
-            (?:\\s*\\?\\s*)? # nullable suffix?
-            (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-          )
-        )\\s+
-      )
-      (?<interface-name>\\g<type-name>\\s*\\.\\s*)?
-      (?<event-names>\\g<identifier>(?:\\s*,\\s*\\g<identifier>)*)\\s*
-      (?=\\{|;|$)
-    '''
-    beginCaptures:
-      "1":
-        name: "keyword.other.event.apex"
-      "2":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-      "8":
-        patterns: [
-          {
-            include: "#type"
-          }
-          {
-            include: "#punctuation-accessor"
-          }
-        ]
-      "9":
-        patterns: [
-          {
-            name: "entity.name.variable.event.apex"
-            match: "@?[_[:alpha:]][_[:alnum:]]*"
-          }
-          {
-            include: "#punctuation-comma"
-          }
-        ]
-    end: "(?<=\\})|(?=;)"
-    patterns: [
-      {
-        include: "#comment"
-      }
-      {
-        include: "#event-accessors"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-    ]
   "property-accessors":
     begin: "\\{"
     beginCaptures:
@@ -1121,40 +985,6 @@ repository:
       {
         name: "keyword.other.set.apex"
         match: "\\b(set)\\b"
-      }
-      {
-        include: "#comment"
-      }
-      {
-        include: "#attribute-section"
-      }
-      {
-        include: "#expression-body"
-      }
-      {
-        include: "#block"
-      }
-      {
-        include: "#punctuation-semicolon"
-      }
-    ]
-  "event-accessors":
-    begin: "\\{"
-    beginCaptures:
-      "0":
-        name: "punctuation.curlybrace.open.apex"
-    end: "\\}"
-    endCaptures:
-      "0":
-        name: "punctuation.curlybrace.close.apex"
-    patterns: [
-      {
-        name: "keyword.other.add.apex"
-        match: "\\b(add)\\b"
-      }
-      {
-        name: "keyword.other.remove.apex"
-        match: "\\b(remove)\\b"
       }
       {
         include: "#comment"
@@ -1286,28 +1116,6 @@ repository:
     patterns: [
       {
         include: "#argument-list"
-      }
-    ]
-  "destructor-declaration":
-    begin: "(~)(@?[_[:alpha:]][_[:alnum:]]*)\\s*(?=\\()"
-    beginCaptures:
-      "1":
-        name: "punctuation.tilde.apex"
-      "2":
-        name: "entity.name.function.apex"
-    end: "(?<=\\})|(?=;)"
-    patterns: [
-      {
-        include: "#comment"
-      }
-      {
-        include: "#parenthesized-parameter-list"
-      }
-      {
-        include: "#expression-body"
-      }
-      {
-        include: "#block"
       }
     ]
   "operator-declaration":
@@ -2366,61 +2174,6 @@ repository:
     captures:
       "1":
         name: "keyword.control.flow.throw.apex"
-  "interpolated-string":
-    name: "string.quoted.double.apex"
-    begin: "\\$\""
-    beginCaptures:
-      "0":
-        name: "punctuation.definition.string.begin.apex"
-    end: "(\")|((?:[^\\\\\\n])$)"
-    endCaptures:
-      "1":
-        name: "punctuation.definition.string.end.apex"
-      "2":
-        name: "invalid.illegal.newline.apex"
-    patterns: [
-      {
-        include: "#string-character-escape"
-      }
-      {
-        include: "#interpolation"
-      }
-    ]
-  "verbatim-interpolated-string":
-    name: "string.quoted.double.apex"
-    begin: "\\$@\""
-    beginCaptures:
-      "0":
-        name: "punctuation.definition.string.begin.apex"
-    end: "\"(?=[^\"])"
-    endCaptures:
-      "0":
-        name: "punctuation.definition.string.end.apex"
-    patterns: [
-      {
-        include: "#verbatim-string-character-escape"
-      }
-      {
-        include: "#interpolation"
-      }
-    ]
-  interpolation:
-    name: "meta.interpolation.apex"
-    begin: "(?<=[^\\{])((?:\\{\\{)*)(\\{)(?=[^\\{])"
-    beginCaptures:
-      "1":
-        name: "string.quoted.double.apex"
-      "2":
-        name: "punctuation.definition.interpolation.begin.apex"
-    end: "\\}"
-    endCaptures:
-      "0":
-        name: "punctuation.definition.interpolation.end.apex"
-    patterns: [
-      {
-        include: "#expression"
-      }
-    ]
   literal:
     patterns: [
       {
@@ -2433,13 +2186,10 @@ repository:
         include: "#numeric-literal"
       }
       {
-        include: "#char-literal"
-      }
-      {
         include: "#string-literal"
       }
       {
-        include: "#verbatim-string-literal"
+        include: "#string-double-quote-literal"
       }
       {
         include: "#tuple-literal"
@@ -2486,16 +2236,16 @@ repository:
         match: "\\b[0-9_]+(U|u|L|l|UL|Ul|uL|ul|LU|Lu|lU|lu)?\\b"
       }
     ]
-  "char-literal":
+  "string-literal":
     name: "string.quoted.single.apex"
     begin: "'"
     beginCaptures:
       "0":
-        name: "punctuation.definition.char.begin.apex"
+        name: "punctuation.definition.string.begin.apex"
     end: "(\\')|((?:[^\\\\\\n])$)"
     endCaptures:
       "1":
-        name: "punctuation.definition.char.end.apex"
+        name: "punctuation.definition.string.end.apex"
       "2":
         name: "invalid.illegal.newline.apex"
     patterns: [
@@ -2503,16 +2253,16 @@ repository:
         include: "#string-character-escape"
       }
     ]
-  "string-literal":
+  "string-double-quote-literal":
     name: "string.quoted.double.apex"
     begin: "(?<!@)\""
     beginCaptures:
       "0":
-        name: "punctuation.definition.string.begin.apex"
+        name: "punctuation.definition.stringdoublequote.begin.apex"
     end: "(\")|((?:[^\\\\\\n])$)"
     endCaptures:
       "1":
-        name: "punctuation.definition.string.end.apex"
+        name: "punctuation.definition.stringdoublequote.end.apex"
       "2":
         name: "invalid.illegal.newline.apex"
     patterns: [
@@ -2523,24 +2273,6 @@ repository:
   "string-character-escape":
     name: "constant.character.escape.apex"
     match: "\\\\."
-  "verbatim-string-literal":
-    name: "string.quoted.double.apex"
-    begin: "@\""
-    beginCaptures:
-      "0":
-        name: "punctuation.definition.string.begin.apex"
-    end: "\"(?=[^\"])"
-    endCaptures:
-      "0":
-        name: "punctuation.definition.string.end.apex"
-    patterns: [
-      {
-        include: "#verbatim-string-character-escape"
-      }
-    ]
-  "verbatim-string-character-escape":
-    name: "constant.character.escape.apex"
-    match: "\"\""
   "tuple-literal":
     begin: "(\\()(?=.*[:,])"
     beginCaptures:
@@ -3479,30 +3211,6 @@ repository:
           }
         ]
       }
-      {
-        begin: '''
-          (?x)
-          (?:\\b(async)\\b\\s*)?
-          (?:\\b(delegate)\\b\\s*)
-        '''
-        beginCaptures:
-          "1":
-            name: "storage.modifier.apex"
-          "2":
-            name: "keyword.other.delegate.apex"
-        end: "(?=\\)|;|}|,)"
-        patterns: [
-          {
-            include: "#parenthesized-parameter-list"
-          }
-          {
-            include: "#block"
-          }
-          {
-            include: "#expression"
-          }
-        ]
-      }
     ]
   "lambda-parameter-list":
     begin: "\\("
@@ -3638,7 +3346,7 @@ repository:
       "6":
         name: "entity.name.variable.tuple-element.apex"
   "type-builtin":
-    match: "\\b(bool|byte|char|decimal|double|float|int|long|object|sbyte|short|string|uint|ulong|ushort|void|dynamic)\\b"
+    match: "\\b(Blob|Boolean|byte|Date|Datetime|Decimal|Double|ID|Integer|Long|Object|String|Time|void)\\b"
     captures:
       "1":
         name: "keyword.type.apex"
@@ -3880,7 +3588,7 @@ repository:
         begin: "\\\""
         beginCaptures:
           "0":
-            name: "punctuation.definition.string.begin.apex"
+            name: "punctuation.definition.stringdoublequote.begin.apex"
         end: "\\\""
         endCaptures:
           "0":

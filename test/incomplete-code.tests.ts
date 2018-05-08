@@ -12,8 +12,8 @@ describe("Grammar", () => {
     describe("Incomplete code", () => {
         it("Don't eat the next lines if there isn't a semicolon (issue #15)", () => {
             const input = Input.InClass(`
-private readonly string _color
-public ColorTest(string white)
+private String _color
+public ColorTest(String white)
 {
     _color = white;
 }
@@ -23,7 +23,6 @@ public ColorTest(string white)
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Private,
-                Token.Keywords.Modifiers.ReadOnly,
                 Token.PrimitiveType.String,
                 Token.Identifiers.PropertyName("_color"),
                 Token.Keywords.Modifiers.Public,

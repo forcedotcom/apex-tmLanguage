@@ -61,8 +61,8 @@ private List field123;`);
 
         it("types", () => {
             const input = Input.InClass(`
-string field123;
-string[] field123;`);
+String field123;
+String[] field123;`);
 
             const tokens = tokenize(input);
 
@@ -80,8 +80,8 @@ string[] field123;`);
 
         it("assignment", () => {
             const input = Input.InClass(`
-private string field = "hello";
-const   bool   field = true;`);
+private String field = 'hello';
+   Boolean   field = true;`);
 
             let tokens = tokenize(input);
 
@@ -95,8 +95,7 @@ const   bool   field = true;`);
                 Token.Punctuation.String.End,
                 Token.Punctuation.Semicolon,
 
-                Token.Keywords.Modifiers.Const,
-                Token.PrimitiveType.Bool,
+                Token.PrimitiveType.Boolean,
                 Token.Identifiers.FieldName("field"),
                 Token.Operators.Assignment,
                 Token.Literals.Boolean.True,
@@ -104,11 +103,11 @@ const   bool   field = true;`);
         });
 
         it("declaration with multiple declarators", () => {
-            const input = Input.InClass(`int x = 19, y = 23, z = 42;`);
+            const input = Input.InClass(`Integer x = 19, y = 23, z = 42;`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.FieldName("x"),
                 Token.Operators.Assignment,
                 Token.Literals.Numeric.Decimal("19"),
@@ -124,44 +123,44 @@ const   bool   field = true;`);
         });
 
         it("tuple type with no names and no modifiers", () => {
-            const input = Input.InClass(`(int, int) x;`);
+            const input = Input.InClass(`(Integer, Integer) x;`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Punctuation.CloseParen,
                 Token.Identifiers.FieldName("x"),
                 Token.Punctuation.Semicolon]);
         });
 
         it("tuple type with no names and private modifier", () => {
-            const input = Input.InClass(`private (int, int) x;`);
+            const input = Input.InClass(`private (Integer, Integer) x;`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Private,
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Punctuation.CloseParen,
                 Token.Identifiers.FieldName("x"),
                 Token.Punctuation.Semicolon]);
         });
 
         it("tuple type with names and no modifiers", () => {
-            const input = Input.InClass(`(int x, int y) z;`);
+            const input = Input.InClass(`(Integer x, Integer y) z;`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.TupleElementName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.TupleElementName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Identifiers.FieldName("z"),
@@ -169,16 +168,16 @@ const   bool   field = true;`);
         });
 
         it("tuple type with names and private modifier", () => {
-            const input = Input.InClass(`private (int x, int y) z;`);
+            const input = Input.InClass(`private (Integer x, Integer y) z;`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Private,
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.TupleElementName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.TupleElementName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Identifiers.FieldName("z"),
@@ -209,59 +208,6 @@ private UnityEngine.UI.Image[] selectedImages;
                 Token.Punctuation.CloseBracket,
                 Token.Identifiers.FieldName("selectedImages"),
                 Token.Punctuation.Semicolon
-            ]);
-        });
-
-        it("initializer containing lambda (issue #31)", () => {
-            const input = `
-class C
-{
-    List<Action> f = new List<Action>
-    {
-        () => DoStuff()
-    };
-
-    public C(int x, int y) { }
-}`;
-
-            let tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Class,
-                Token.Identifiers.ClassName("C"),
-                Token.Punctuation.OpenBrace,
-                Token.Type("List"),
-                Token.Punctuation.TypeParameters.Begin,
-                Token.Type("Action"),
-                Token.Punctuation.TypeParameters.End,
-                Token.Identifiers.FieldName("f"),
-                Token.Operators.Assignment,
-                Token.Keywords.New,
-                Token.Type("List"),
-                Token.Punctuation.TypeParameters.Begin,
-                Token.Type("Action"),
-                Token.Punctuation.TypeParameters.End,
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.OpenParen,
-                Token.Punctuation.CloseParen,
-                Token.Operators.Arrow,
-                Token.Identifiers.MethodName("DoStuff"),
-                Token.Punctuation.OpenParen,
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.CloseBrace,
-                Token.Punctuation.Semicolon,
-                Token.Keywords.Modifiers.Public,
-                Token.Identifiers.MethodName("C"),
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("x"),
-                Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("y"),
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.CloseBrace,
-                Token.Punctuation.CloseBrace
             ]);
         });
     });

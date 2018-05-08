@@ -13,7 +13,7 @@ describe("Grammar", () => {
         it("declaration", () => {
 
             const input = Input.InClass(`
-public string this[int index]
+public String this[Integer index]
 {
     get { return index.ToString(); }
 }`);
@@ -25,7 +25,7 @@ public string this[int index]
                 Token.PrimitiveType.String,
                 Token.Keywords.This,
                 Token.Punctuation.OpenBracket,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("index"),
                 Token.Punctuation.CloseBracket,
                 Token.Punctuation.OpenBrace,
@@ -44,7 +44,7 @@ public string this[int index]
 
         it("explicitly-implemented interface member", () => {
 
-            const input = Input.InClass(`string IFoo<string>.this[int index];`);
+            const input = Input.InClass(`String IFoo<String>.this[Integer index];`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -56,7 +56,7 @@ public string this[int index]
                 Token.Punctuation.Accessor,
                 Token.Keywords.This,
                 Token.Punctuation.OpenBracket,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("index"),
                 Token.Punctuation.CloseBracket,
                 Token.Punctuation.Semicolon]);
@@ -64,14 +64,14 @@ public string this[int index]
 
         it("declaration in interface", () => {
 
-            const input = Input.InInterface(`string this[int index] { get; set; }`);
+            const input = Input.InInterface(`String this[Integer index] { get; set; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.PrimitiveType.String,
                 Token.Keywords.This,
                 Token.Punctuation.OpenBracket,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("index"),
                 Token.Punctuation.CloseBracket,
                 Token.Punctuation.OpenBrace,
@@ -84,14 +84,14 @@ public string this[int index]
 
         it("declaration in interface (read-only)", () => {
 
-            const input = Input.InInterface(`string this[int index] { get; }`);
+            const input = Input.InInterface(`String this[Integer index] { get; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.PrimitiveType.String,
                 Token.Keywords.This,
                 Token.Punctuation.OpenBracket,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("index"),
                 Token.Punctuation.CloseBracket,
                 Token.Punctuation.OpenBrace,
@@ -102,14 +102,14 @@ public string this[int index]
 
         it("declaration in interface (write-only)", () => {
 
-            const input = Input.InInterface(`string this[int index] { set; }`);
+            const input = Input.InInterface(`String this[Integer index] { set; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.PrimitiveType.String,
                 Token.Keywords.This,
                 Token.Punctuation.OpenBracket,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("index"),
                 Token.Punctuation.CloseBracket,
                 Token.Punctuation.OpenBrace,
@@ -120,12 +120,12 @@ public string this[int index]
 
         it("parameters with default values (issue #30)", () => {
             const input = Input.InClass(`
-int this[string p = null] { }
+Integer this[String p = null] { }
 `);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Keywords.This,
                 Token.Punctuation.OpenBracket,
                 Token.PrimitiveType.String,
@@ -138,28 +138,10 @@ int this[string p = null] { }
             ]);
         });
 
-        it("ref return", () => {
-            const input = Input.InInterface(`ref int this[int index] { get; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Ref,
-                Token.PrimitiveType.Int,
-                Token.Keywords.This,
-                Token.Punctuation.OpenBracket,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("index"),
-                Token.Punctuation.CloseBracket,
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Get,
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-        
         it("closing bracket of parameter list on next line", () => {
             const input = Input.InClass(`
-string this[
-    int index
+String this[
+    Integer index
     ]
 {
 }`);
@@ -170,19 +152,19 @@ string this[
                 Token.Keywords.This,
                 Token.Punctuation.OpenBracket,
 
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("index"),
-                
+
                 Token.Punctuation.CloseBracket,
                 Token.Punctuation.OpenBrace,
                 Token.Punctuation.CloseBrace
             ]);
         });
-        
+
         it("closing bracket of parameter list on next line with attribute", () => {
             const input = Input.InClass(`
-string this[
-    [In] int index
+String this[
+    [In] Integer index
     ]
 {
 }`);
@@ -196,10 +178,10 @@ string this[
                 Token.Punctuation.OpenBracket,
                 Token.Type("In"),
                 Token.Punctuation.CloseBracket,
-                
-                Token.PrimitiveType.Int,
+
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("index"),
-                
+
                 Token.Punctuation.CloseBracket,
                 Token.Punctuation.OpenBrace,
                 Token.Punctuation.CloseBrace

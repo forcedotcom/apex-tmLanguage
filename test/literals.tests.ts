@@ -12,11 +12,11 @@ describe("Grammar", () => {
     describe("Literals", () => {
         describe("Booleans", () => {
             it("true", () => {
-                const input = Input.InClass(`bool x = true;`);
+                const input = Input.InClass(`Boolean x = true;`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
-                    Token.PrimitiveType.Bool,
+                    Token.PrimitiveType.Boolean,
                     Token.Identifiers.FieldName("x"),
                     Token.Operators.Assignment,
                     Token.Literals.Boolean.True,
@@ -24,11 +24,11 @@ describe("Grammar", () => {
             });
 
             it("false", () => {
-                const input = Input.InClass(`bool x = false;`);
+                const input = Input.InClass(`Boolean x = false;`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
-                    Token.PrimitiveType.Bool,
+                    Token.PrimitiveType.Boolean,
                     Token.Identifiers.FieldName("x"),
                     Token.Operators.Assignment,
                     Token.Literals.Boolean.False,
@@ -38,54 +38,54 @@ describe("Grammar", () => {
 
         describe("Chars", () => {
             it("empty", () => {
-                const input = Input.InMethod(`var x = '';`);
+                const input = Input.InMethod(`String x = '';`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
-                    Token.Keywords.Var,
+                    Token.PrimitiveType.String,
                     Token.Identifiers.LocalName("x"),
                     Token.Operators.Assignment,
-                    Token.Punctuation.Char.Begin,
-                    Token.Punctuation.Char.End,
+                    Token.Punctuation.String.Begin,
+                    Token.Punctuation.String.End,
                     Token.Punctuation.Semicolon]);
             });
 
             it("letter", () => {
-                const input = Input.InMethod(`var x = 'a';`);
+                const input = Input.InMethod(`String x = 'a';`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
-                    Token.Keywords.Var,
+                    Token.PrimitiveType.String,
                     Token.Identifiers.LocalName("x"),
                     Token.Operators.Assignment,
-                    Token.Punctuation.Char.Begin,
-                    Token.Literals.Char("a"),
-                    Token.Punctuation.Char.End,
+                    Token.Punctuation.String.Begin,
+                    Token.Literals.String("a"),
+                    Token.Punctuation.String.End,
                     Token.Punctuation.Semicolon]);
             });
 
             it("escaped single quote", () => {
-                const input = Input.InMethod(`var x = '\\'';`);
+                const input = Input.InMethod(`String x = '\\'';`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
-                    Token.Keywords.Var,
+                    Token.PrimitiveType.String,
                     Token.Identifiers.LocalName("x"),
                     Token.Operators.Assignment,
-                    Token.Punctuation.Char.Begin,
+                    Token.Punctuation.String.Begin,
                     Token.Literals.CharacterEscape("\\'"),
-                    Token.Punctuation.Char.End,
+                    Token.Punctuation.String.End,
                     Token.Punctuation.Semicolon]);
             });
         });
 
         describe("Numbers", () => {
             it("decimal zero", () => {
-                const input = Input.InClass(`int x = 0;`);
+                const input = Input.InClass(`Integer x = 0;`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
-                    Token.PrimitiveType.Int,
+                    Token.PrimitiveType.Integer,
                     Token.Identifiers.FieldName("x"),
                     Token.Operators.Assignment,
                     Token.Literals.Numeric.Decimal("0"),
@@ -93,11 +93,11 @@ describe("Grammar", () => {
             });
 
             it("hexadecimal zero", () => {
-                const input = Input.InClass(`int x = 0x0;`);
+                const input = Input.InClass(`Integer x = 0x0;`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
-                    Token.PrimitiveType.Int,
+                    Token.PrimitiveType.Integer,
                     Token.Identifiers.FieldName("x"),
                     Token.Operators.Assignment,
                     Token.Literals.Numeric.Hexadecimal("0x0"),
@@ -105,23 +105,23 @@ describe("Grammar", () => {
             });
 
             it("binary zero", () => {
-                const input = Input.InClass(`int x = 0b0;`);
+                const input = Input.InClass(`Integer x = 0b0;`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
-                    Token.PrimitiveType.Int,
+                    Token.PrimitiveType.Integer,
                     Token.Identifiers.FieldName("x"),
                     Token.Operators.Assignment,
                     Token.Literals.Numeric.Binary("0b0"),
                     Token.Punctuation.Semicolon]);
             });
 
-            it("floating-point zero", () => {
-                const input = Input.InClass(`float x = 0.0;`);
+            it("Double zero", () => {
+                const input = Input.InClass(`Double x = 0.0;`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
-                    Token.PrimitiveType.Float,
+                    Token.PrimitiveType.Double,
                     Token.Identifiers.FieldName("x"),
                     Token.Operators.Assignment,
                     Token.Literals.Numeric.Decimal("0.0"),
@@ -131,7 +131,7 @@ describe("Grammar", () => {
 
         describe("Strings", () => {
             it("simple", () => {
-                const input = Input.InClass(`string test = "hello world!";`);
+                const input = Input.InClass(`String test = 'hello world!';`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
@@ -145,7 +145,7 @@ describe("Grammar", () => {
             });
 
             it("escaped double-quote", () => {
-                const input = Input.InClass(`string test = "hello \\"world!\\"";`);
+                const input = Input.InClass(`String test = 'hello \\"world!\\"';`);
                 const tokens = tokenize(input);
 
                 tokens.should.deep.equal([
@@ -159,156 +159,6 @@ describe("Grammar", () => {
                     Token.Literals.CharacterEscape("\\\""),
                     Token.Punctuation.String.End,
                     Token.Punctuation.Semicolon]);
-            });
-
-            it("line break before close quote", () => {
-                const input = Input.InClass(`
-string test = "hello 
-world!";`);
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.PrimitiveType.String,
-                    Token.Identifiers.FieldName("test"),
-                    Token.Operators.Assignment,
-                    Token.Punctuation.String.Begin,
-                    Token.Literals.String("hello"),
-
-                    // Note: Because the string ended prematurely, the rest of this line and the contents of the next are junk.
-                    Token.IllegalNewLine(" "),
-                    Token.Variables.ReadWrite("world"),
-                    Token.Operators.Logical.Not,
-                    Token.Punctuation.String.Begin,
-                    Token.IllegalNewLine(";")]);
-            });
-
-            it("simple (verbatim)", () => {
-                const input = Input.InClass(`string test = @"hello world!";`);
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.PrimitiveType.String,
-                    Token.Identifiers.FieldName("test"),
-                    Token.Operators.Assignment,
-                    Token.Punctuation.String.VerbatimBegin,
-                    Token.Literals.String("hello world!"),
-                    Token.Punctuation.String.End,
-                    Token.Punctuation.Semicolon]);
-            });
-
-            it("escaped double-quote (verbatim)", () => {
-                const input = Input.InClass("string test = @\"hello \"\"world!\"\"\";");
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.PrimitiveType.String,
-                    Token.Identifiers.FieldName("test"),
-                    Token.Operators.Assignment,
-                    Token.Punctuation.String.VerbatimBegin,
-                    Token.Literals.String("hello "),
-                    Token.Literals.CharacterEscape("\"\""),
-                    Token.Literals.String("world!"),
-                    Token.Literals.CharacterEscape("\"\""),
-                    Token.Punctuation.String.End,
-                    Token.Punctuation.Semicolon]);
-            });
-
-            it("line break before close quote (verbatim)", () => {
-                const input = Input.InClass(`
-string test = @"hello 
-world!";`);
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.PrimitiveType.String,
-                    Token.Identifiers.FieldName("test"),
-                    Token.Operators.Assignment,
-                    Token.Punctuation.String.VerbatimBegin,
-                    Token.Literals.String("hello "),
-                    Token.Literals.String("world!"),
-                    Token.Punctuation.String.End,
-                    Token.Punctuation.Semicolon]);
-            });
-
-            it("highlight escaped double-quote properly (issue omnisharp-vscode#1078 - repro 1)", () => {
-                const input = Input.InMethod(`
-configContent = rgx.Replace(configContent, $"name{suffix}\\"");
-File.WriteAllText(_testConfigFile, configContent);
-`);
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.Variables.ReadWrite("configContent"),
-                    Token.Operators.Assignment,
-                    Token.Variables.Object('rgx'),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("Replace"),
-                    Token.Punctuation.OpenParen,
-                    Token.Variables.ReadWrite("configContent"),
-                    Token.Punctuation.Comma,
-                    Token.Punctuation.InterpolatedString.Begin,
-                    Token.Literals.String("name"),
-                    Token.Punctuation.Interpolation.Begin,
-                    Token.Variables.ReadWrite("suffix"),
-                    Token.Punctuation.Interpolation.End,
-                    Token.Literals.CharacterEscape("\\\""),
-                    Token.Punctuation.String.End,
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Semicolon,
-                    Token.Variables.Object("File"),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("WriteAllText"),
-                    Token.Punctuation.OpenParen,
-                    Token.Variables.ReadWrite("_testConfigFile"),
-                    Token.Punctuation.Comma,
-                    Token.Variables.ReadWrite("configContent"),
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Semicolon
-                ]);
-            });
-
-            it("highlight escaped double-quote properly (issue omnisharp-vscode#1078 - repro 2)", () => {
-                const input = Input.InMethod(`
-throw new InvalidCastException(
-    $"The value \\"{this.Value} is of the type \\"{this.Type}\\". You asked for \\"{typeof(T)}\\".");
-`);
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.Keywords.Control.Throw,
-                    Token.Keywords.New,
-                    Token.Type("InvalidCastException"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.InterpolatedString.Begin,
-                    Token.Literals.String("The value "),
-                    Token.Literals.CharacterEscape("\\\""),
-                    Token.Punctuation.Interpolation.Begin,
-                    Token.Keywords.This,
-                    Token.Punctuation.Accessor,
-                    Token.Variables.Property("Value"),
-                    Token.Punctuation.Interpolation.End,
-                    Token.Literals.String(" is of the type "),
-                    Token.Literals.CharacterEscape("\\\""),
-                    Token.Punctuation.Interpolation.Begin,
-                    Token.Keywords.This,
-                    Token.Punctuation.Accessor,
-                    Token.Variables.Property("Type"),
-                    Token.Punctuation.Interpolation.End,
-                    Token.Literals.CharacterEscape("\\\""),
-                    Token.Literals.String(". You asked for "),
-                    Token.Literals.CharacterEscape("\\\""),
-                    Token.Punctuation.Interpolation.Begin,
-                    Token.Keywords.TypeOf,
-                    Token.Punctuation.OpenParen,
-                    Token.Type("T"),
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Interpolation.End,
-                    Token.Literals.CharacterEscape("\\\""),
-                    Token.Literals.String("."),
-                    Token.Punctuation.InterpolatedString.End,
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Semicolon
-                ]);
             });
 
             it("highlight strings containing braces correctly (issue omnisharp-vscode#746)", () => {
@@ -344,9 +194,9 @@ namespace X
                     Token.Punctuation.Accessor,
                     Token.Identifiers.MethodName("WriteLine"),
                     Token.Punctuation.OpenParen,
-                    Token.Punctuation.String.Begin,
-                    Token.Literals.String("class CInput{0}Register : public {1}"),
-                    Token.Punctuation.String.End,
+                    Token.Punctuation.StringDoubleQuote.Begin,
+                    Token.Literals.StringDoubleQuote("class CInput{0}Register : public {1}"),
+                    Token.Punctuation.StringDoubleQuote.End,
                     Token.Punctuation.Comma,
                     Token.Variables.ReadWrite("index"),
                     Token.Punctuation.Comma,
