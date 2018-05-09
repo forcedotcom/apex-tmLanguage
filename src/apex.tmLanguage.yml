@@ -14,14 +14,11 @@ patterns:
 repository:
   directives:
     patterns:
-    - include: '#extern-alias-directive'
-    - include: '#using-directive'
     - include: '#attribute-section'
     - include: '#punctuation-semicolon'
 
   declarations:
     patterns:
-    - include: '#namespace-declaration'
     - include: '#type-declarations'
     - include: '#punctuation-semicolon'
 
@@ -39,7 +36,6 @@ repository:
     - include: '#class-declaration'
     - include: '#enum-declaration'
     - include: '#interface-declaration'
-    - include: '#struct-declaration'
     - include: '#attribute-section'
     - include: '#punctuation-semicolon'
 
@@ -54,8 +50,6 @@ repository:
     - include: '#indexer-declaration'
     - include: '#variable-initializer'
     - include: '#constructor-declaration'
-    - include: '#operator-declaration'
-    - include: '#conversion-operator-declaration'
     - include: '#method-declaration'
     - include: '#attribute-section'
     - include: '#punctuation-semicolon'
@@ -75,7 +69,6 @@ repository:
     - include: '#while-statement'
     - include: '#do-statement'
     - include: '#for-statement'
-    - include: '#foreach-statement'
     - include: '#if-statement'
     - include: '#else-part'
     - include: '#switch-statement'
@@ -83,12 +76,8 @@ repository:
     - include: '#return-statement'
     - include: '#break-or-continue-statement'
     - include: '#throw-statement'
-    - include: '#yield-statement'
     - include: '#await-statement'
     - include: '#try-statement'
-    - include: '#checked-unchecked-statement'
-    - include: '#lock-statement'
-    - include: '#using-statement'
     - include: '#labeled-statement'
     - include: '#local-declaration'
     - include: '#block'
@@ -98,8 +87,6 @@ repository:
   expression:
     patterns:
     - include: '#comment'
-    - include: '#checked-unchecked-expression'
-    - include: '#typeof-or-default-expression'
     - include: '#nameof-expression'
     - include: '#throw-expression'
     - include: '#this-or-base-expression'
@@ -122,42 +109,6 @@ repository:
     - include: '#tuple-deconstruction-assignment'
     - include: '#initializer-expression'
     - include: '#identifier'
-
-  extern-alias-directive:
-    begin: \s*(extern)\b\s*(alias)\b\s*(@?[_[:alpha:]][_[:alnum:]]*)
-    beginCaptures:
-      '1': { name: keyword.other.extern.apex }
-      '2': { name: keyword.other.alias.apex }
-      '3': { name: variable.other.alias.apex }
-    end: (?=;)
-
-  using-directive:
-    patterns:
-    - begin: \b(using)\b\s+(static)\s+
-      beginCaptures:
-        '1': { name: keyword.other.using.apex }
-        '2': { name: keyword.other.static.apex }
-      end: (?=;)
-      patterns:
-      - include: '#type'
-    - begin: \b(using)\s+(?=(@?[_[:alpha:]][_[:alnum:]]*)\s*=)
-      beginCaptures:
-        '1': { name: keyword.other.using.apex }
-        '2': { name: entity.name.type.alias.apex }
-      end: (?=;)
-      patterns:
-      - include: '#comment'
-      - include: '#type'
-      - include: '#operator-assignment'
-    - begin: \b(using)\s*
-      beginCaptures:
-        '1': { name: keyword.other.using.apex }
-      end: (?=;)
-      patterns:
-      - include: '#comment'
-      - name: entity.name.type.namespace.apex
-        match: '@?[_[:alpha:]][_[:alnum:]]*'
-      - include: '#operator-assignment'
 
   attribute-section:
     begin: (\[)(assembly|module|field|method|param|property|return|type)?(\:)?
@@ -199,34 +150,13 @@ repository:
     - include: '#operator-assignment'
     - include: '#expression'
 
-  namespace-declaration:
-    begin: \b(namespace)\s+
-    beginCaptures:
-      '1': { name: keyword.other.namespace.apex }
-    end: (?<=\})
-    patterns:
-    - include: '#comment'
-    - name: entity.name.type.namespace.apex
-      match: '@?[_[:alpha:]][_[:alnum:]]*'
-    - include: '#punctuation-accessor'
-    - begin: \{
-      beginCaptures:
-        '0': { name: punctuation.curlybrace.open.apex }
-      end: \}
-      endCaptures:
-        '0': { name: punctuation.curlybrace.close.apex }
-      patterns:
-      - include: '#declarations'
-      - include: '#using-directive'
-      - include: '#punctuation-semicolon'
-
   sharing-modifier:
     name: 'sharing.modifier.apex'
     match: (?<!\.)\b(with sharing|without sharing)\b
 
   storage-modifier:
     name: 'storage.modifier.apex'
-    match: (?<!\.)\b(new|public|protected|internal|private|abstract|virtual|override|global|static|partial|extern|async)\b
+    match: (?<!\.)\b(new|public|protected|internal|private|abstract|virtual|override|global|static|partial|final|async)\b
 
   class-declaration:
     begin: (?=\bclass\b)
@@ -319,33 +249,6 @@ repository:
       - include: '#interface-members'
     - include: '#comment'
 
-  struct-declaration:
-    begin: (?=\bstruct\b)
-    end: (?<=\})
-    patterns:
-    - begin: |-
-        (?x)
-        (struct)\b\s+
-        (@?[_[:alpha:]][_[:alnum:]]*)
-      beginCaptures:
-        '1': { name: keyword.other.struct.apex }
-        '2': { name: entity.name.type.struct.apex }
-      end: (?=\{)
-      patterns:
-      - include: '#comment'
-      - include: '#type-parameter-list'
-      - include: '#base-types'
-      - include: '#generic-constraints'
-    - begin: \{
-      beginCaptures:
-        '0': { name: punctuation.curlybrace.open.apex }
-      end: \}
-      endCaptures:
-        '0': { name: punctuation.curlybrace.close.apex }
-      patterns:
-      - include: '#class-or-struct-members'
-    - include: '#comment'
-
   type-parameter-list:
     begin: \<
     beginCaptures:
@@ -383,8 +286,6 @@ repository:
     patterns:
     - name: keyword.other.class.apex
       match: \bclass\b
-    - name: keyword.other.struct.apex
-      match: \bstruct\b
     - match: (new)\s*(\()\s*(\))
       captures:
         '1': { name: keyword.other.new.apex }
@@ -435,7 +336,7 @@ repository:
   property-declaration:
     begin: |-
       (?x)
-      (?!.*\b(?:class|interface|struct|enum)\b)\s*
+      (?!.*\b(?:class|interface|enum)\b)\s*
       (?<return-type>
         (?<type-name>
           (?:
@@ -623,87 +524,6 @@ repository:
     patterns:
     - include: "#argument-list"
 
-  operator-declaration:
-    begin: |-
-      (?x)
-      (?<type-name>
-        (?:
-          (?:ref\s+)?   # ref return
-          (?:
-            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
-              \g<identifier>\s*
-              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
-            )
-            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
-          )
-          (?:\s*\?\s*)? # nullable suffix?
-          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-        )
-      )\s*
-      (?<operator-keyword>(?:\b(?:operator)))\s*
-      (?<operator>(?:\+|-|\*|/|%|&|\||\^|\<\<|\>\>|==|!=|\>|\<|\>=|\<=|!|~|\+\+|--|true|false))\s*
-      (?=\()
-    beginCaptures:
-      '1':
-        patterns:
-        - include: '#type'
-      # '2': ?<identifier> is a sub-expression. It's final value is not considered.
-      # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-      # '4': ?<type-args> is a sub-expression. It's final value is not considered.
-      # '5': ?<tuple> is a sub-expression. It's final value is not considered.
-      '6': { name: keyword.other.operator-decl.apex }
-      '7': { name: entity.name.function.apex }
-    end: (?<=\})|(?=;)
-    patterns:
-    - include: '#comment'
-    - include: '#parenthesized-parameter-list'
-    - include: '#expression-body'
-    - include: '#block'
-
-  conversion-operator-declaration:
-    begin: |-
-      (?x)
-      (?<explicit-or-implicit-keyword>(?:\b(?:explicit|implicit)))\s*
-      (?<operator-keyword>(?:\b(?:operator)))\s*
-      (?<type-name>
-        (?:
-          (?:ref\s+)?   # ref return
-          (?:
-            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
-              \g<identifier>\s*
-              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
-            )
-            (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
-          )
-          (?:\s*\?\s*)? # nullable suffix?
-          (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-        )
-      )\s*
-      (?=\()
-    beginCaptures:
-      '1':
-        patterns:
-        - match: \b(explicit)\b
-          captures:
-            '1': { name: keyword.other.explicit.apex }
-        - match: \b(implicit)\b
-          captures:
-            '1': { name: keyword.other.implicit.apex }
-      '2': { name: keyword.other.operator-decl.apex }
-      '3':
-        patterns:
-        - include: '#type'
-    end: (?<=\})|(?=;)
-    patterns:
-    - include: '#comment'
-    - include: '#parenthesized-parameter-list'
-    - include: '#expression-body'
-    - include: '#block'
-
   block:
     begin: \{
     beginCaptures:
@@ -720,7 +540,6 @@ repository:
       '1': { name: keyword.operator.assignment.apex }
     end: (?=[,\)\];}])
     patterns:
-    - include: '#ref-modifier'
     - include: '#expression'
 
   expression-body:
@@ -729,7 +548,6 @@ repository:
       '0': { name: keyword.operator.arrow.apex }
     end: (?=[,\);}])
     patterns:
-    - include: '#ref-modifier'
     - include: '#expression'
 
   goto-statement:
@@ -756,7 +574,6 @@ repository:
       '1': { name: keyword.control.flow.return.apex }
     end: (?=;)
     patterns:
-    - include: '#ref-modifier'
     - include: '#expression'
 
   break-or-continue-statement:
@@ -772,26 +589,6 @@ repository:
     end: (?=;)
     patterns:
     - include: '#expression'
-
-  yield-statement:
-    patterns:
-    - include: '#yield-return-statement'
-    - include: '#yield-break-statement'
-
-  yield-return-statement:
-    begin: (?<!\.)\b(yield)\b\s*\b(return)\b
-    beginCaptures:
-      '1': { name: keyword.control.flow.yield.apex }
-      '2': { name: keyword.control.flow.return.apex }
-    end: (?=;)
-    patterns:
-    - include: '#expression'
-
-  yield-break-statement:
-    match: (?<!\.)\b(yield)\b\s*\b(break)\b
-    captures:
-      '1': { name: keyword.control.flow.yield.apex }
-      '2': { name: keyword.control.flow.break.apex }
 
   # Technically, there isn't an "await statement" in the C# grammar. However, including one here makes it easier to handle
   # the scenario where an await-expression will be match by local-declaration first. (e.g. await x;)
@@ -907,66 +704,7 @@ repository:
       - include: '#expression'
       - include: '#punctuation-comma'
       - include: '#punctuation-semicolon'
-    - include: '#statement'
-
-  foreach-statement:
-    begin: (?<!\.)\b(foreach)\b\s*(?=\()
-    beginCaptures:
-      '1': { name: keyword.control.loop.foreach.apex }
-    end: (?<=\})|(?=;)
-    patterns:
-    - begin: \(
-      beginCaptures:
-        '0': { name: punctuation.parenthesis.open.apex }
-      end: \)
-      endCaptures:
-        '0': { name: punctuation.parenthesis.close.apex }
-      patterns:
-      - match: |-
-          (?x)
-          (?:
-            (\bvar\b)|
-            (?<type-name>
-              (?:
-                (?:
-                  (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-                  (?<name-and-type-args> # identifier + type arguments (if any)
-                    \g<identifier>\s*
-                    (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
-                  )
-                  (?:\s*\.\s*\g<name-and-type-args>)* | # Are there any more names being dotted into?
-                  (?<tuple>\s*\((?:[^\(\)]|\g<tuple>)+\))
-                )
-                (?:\s*\?\s*)? # nullable suffix?
-                (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-              )
-            )
-          )\s+
-          (\g<identifier>)\s+
-          \b(in)\b
-        captures:
-          '1': { name: keyword.other.var.apex }
-          '2':
-            patterns:
-            - include: '#type'
-          # '3': ?<identifier> is a sub-expression. It's final value is not considered.
-          # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-          # '5': ?<type-args> is a sub-expression. It's final value is not considered.
-          # '6': ?<tuple> is a sub-expression. It's final value is not considered.
-          '7': { name: entity.name.variable.local.apex }
-          '8': { name: keyword.control.loop.in.apex }
-      - match: |-
-          (?x) # match foreach (var (x, y) in ...)
-          (?:\b(var)\b\s*)?
-          (?<tuple>\((?:[^\(\)]|\g<tuple>)+\))\s+
-          \b(in)\b
-        captures:
-          '1': { name: keyword.other.var.apex }
-          '2':
-            patterns:
-            - include: '#tuple-declaration-deconstruction-element-list'
-          '3': { name: keyword.control.loop.in.apex }
-      - include: '#expression'
+      - include: '#colon-expression'
     - include: '#statement'
 
   try-statement:
@@ -1048,49 +786,6 @@ repository:
     patterns:
     - include: '#expression'
     - include: '#comment'
-
-  checked-unchecked-statement:
-    begin: (?<!\.)\b(?:(checked)|(unchecked))\b\s*(?!\()
-    beginCaptures:
-      '1': { name: keyword.other.checked.apex }
-      '2': { name: keyword.other.unchecked.apex }
-    end: (?<=\})
-    patterns:
-    - include: '#block'
-    - include: '#comment'
-
-  lock-statement:
-    begin: (?<!\.)\b(lock)\b\s*(?=\()
-    beginCaptures:
-      '1': { name: keyword.other.lock.apex }
-    end: (?<=\})|(?=;)
-    patterns:
-    - begin: \(
-      beginCaptures:
-        '0': { name: punctuation.parenthesis.open.apex }
-      end: \)
-      endCaptures:
-        '0': { name: punctuation.parenthesis.close.apex }
-      patterns:
-      - include: '#expression'
-    - include: '#statement'
-
-  using-statement:
-    begin: (?<!\.)\b(using)\b\s*(?=\()
-    beginCaptures:
-      '1': { name: keyword.other.using.apex }
-    end: (?=\;|})
-    patterns:
-    - begin: \(
-      beginCaptures:
-        '0': { name: punctuation.parenthesis.open.apex }
-      end: \)
-      endCaptures:
-        '0': { name: punctuation.parenthesis.close.apex }
-      patterns:
-      - include: '#local-variable-declaration'
-      - include: '#expression'
-    - include: '#statement'
 
   labeled-statement:
     match: '(@?[_[:alpha:]][_[:alnum:]]*)\s*(:)'
@@ -1318,30 +1013,6 @@ repository:
       # '6': ?<tuple> is a sub-expression. It's final value is not considered.
       '7': { name: entity.name.variable.tuple-element.apex }
 
-  checked-unchecked-expression:
-    begin: (?<!\.)\b(?:(checked)|(unchecked))\b\s*(\()
-    beginCaptures:
-      '1': { name: keyword.other.checked.apex }
-      '2': { name: keyword.other.unchecked.apex }
-      '3': { name: punctuation.parenthesis.open.apex }
-    end: \)
-    endCaptures:
-      '0': { name: punctuation.parenthesis.close.apex }
-    patterns:
-    - include: '#expression'
-
-  typeof-or-default-expression:
-    begin: (?<!\.)\b(?:(typeof)|(default))\b\s*(\()
-    beginCaptures:
-      '1': { name: keyword.other.typeof.apex }
-      '2': { name: keyword.other.default.apex }
-      '3': { name: punctuation.parenthesis.open.apex }
-    end: \)
-    endCaptures:
-      '0': { name: punctuation.parenthesis.close.apex }
-    patterns:
-    - include: '#type'
-
   nameof-expression:
     begin: (?<!\.)\b(nameof)\b\s*(\()
     beginCaptures:
@@ -1489,6 +1160,10 @@ repository:
       '0': { name: keyword.operator.conditional.colon.apex }
     patterns:
     - include: '#expression'
+
+  colon-expression:
+    name: keyword.operator.conditional.colon.apex
+    match: ':'
 
   await-expression:
     name: keyword.other.await.apex
@@ -2082,7 +1757,6 @@ repository:
       end: (?=\)|;|}|,)
       patterns:
       - include: '#block'
-      - include: '#ref-modifier'
       - include: '#expression'
     - begin: |-
         (?x)
@@ -2098,7 +1772,6 @@ repository:
       end: (?=\)|;|}|,)
       patterns:
       - include: '#block'
-      - include: '#ref-modifier'
       - include: '#expression'
 
   lambda-parameter-list:
@@ -2150,17 +1823,12 @@ repository:
     name: meta.type.apex
     patterns:
     - include: '#comment'
-    - include: '#ref-modifier'
     - include: '#tuple-type'
     - include: '#type-builtin'
     - include: '#type-name'
     - include: '#type-arguments'
     - include: '#type-array-suffix'
     - include: '#type-nullable-suffix'
-
-  ref-modifier:
-    name: storage.modifier.apex
-    match: \b(ref)\b
 
   tuple-type:
     begin: \(
@@ -2209,10 +1877,6 @@ repository:
 
   type-name:
     patterns:
-    - match: (@?[_[:alpha:]][_[:alnum:]]*)\s*(\:\:)
-      captures:
-        '1': { name: entity.name.type.alias.apex }
-        '2': { name: punctuation.separator.coloncolon.apex }
     - match: (@?[_[:alpha:]][_[:alnum:]]*)\s*(\.)
       captures:
         '1': { name: storage.type.apex }
@@ -2372,7 +2036,7 @@ repository:
         '0': { name: punctuation.definition.stringdoublequote.begin.apex }
       end: \"
       endCaptures:
-        '0': { name: punctuation.definition.string.end.apex }
+        '0': { name: punctuation.definition.stringdoublequote.end.apex }
       patterns:
       - include: '#xml-character-entity'
 

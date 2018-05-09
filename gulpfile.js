@@ -50,7 +50,7 @@ gulp.task("compile", function() {
 
 gulp.task("test", ["compile"], () => {
   return gulp
-    .src(jsOut + "test/**/local.tests.js")
+    .src(jsOut + "test/**/*.tests.js")
     .pipe(mocha())
     .on("error", handleError);
 });

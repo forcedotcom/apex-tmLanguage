@@ -100,7 +100,7 @@ describe("Grammar", () => {
 
         it("Global attribute with three arguments", () => {
 
-            const input = `[Foo(true, 42, "text")]`;
+            const input = `[Foo(true, 42, 'text')]`;
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -154,7 +154,7 @@ describe("Grammar", () => {
 
         it("Global attribute with specifier, one positional argument, and two named arguments", () => {
 
-            const input = `[module: Foo(true, Bar = 42, Baz = "hello")]`;
+            const input = `[module: Foo(true, Bar = 42, Baz = 'hello')]`;
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([

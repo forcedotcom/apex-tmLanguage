@@ -12,17 +12,16 @@ describe("Grammar", () => {
     describe("Operators", () => {
         it("unary +", () => {
 
-            const input = Input.InClass(`public static int operator +(int value) { return +value; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer value) { return +value; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("+"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("value"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -35,17 +34,16 @@ describe("Grammar", () => {
 
         it("unary -", () => {
 
-            const input = Input.InClass(`public static int operator -(int value) { return -value; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer value) { return -value; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("-"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("value"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -58,64 +56,42 @@ describe("Grammar", () => {
 
         it("unary !", () => {
 
-            const input = Input.InClass(`public static bool operator !(int value) { return value == 0; }`);
+            const input = Input.InClass(`public static Boolean opMethodName(Integer value) { return !(value == 0); }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Bool,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("!"),
+                Token.PrimitiveType.Boolean,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("value"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
                 Token.Keywords.Control.Return,
+                Token.Operators.Logical.Not,
+                Token.Punctuation.OpenParen,
                 Token.Variables.ReadWrite("value"),
                 Token.Operators.Relational.Equals,
                 Token.Literals.Numeric.Decimal("0"),
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("unary ~", () => {
-
-            const input = Input.InClass(`public static int operator ~(int value) { return ~value; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("~"),
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("value"),
                 Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Control.Return,
-                Token.Operators.Bitwise.BitwiseComplement,
-                Token.Variables.ReadWrite("value"),
                 Token.Punctuation.Semicolon,
                 Token.Punctuation.CloseBrace]);
         });
 
         it("unary ++", () => {
 
-            const input = Input.InClass(`public static int operator ++(int value) { return ++value; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer value) { return ++value; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("++"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("value"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -128,17 +104,16 @@ describe("Grammar", () => {
 
         it("unary --", () => {
 
-            const input = Input.InClass(`public static int operator --(int value) { return --value; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer value) { return --value; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("--"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("value"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -149,19 +124,18 @@ describe("Grammar", () => {
                 Token.Punctuation.CloseBrace]);
         });
 
-        it("unary true", () => {
+        it("binary not equal", () => {
 
-            const input = Input.InClass(`public static int operator true(int value) { return value != 0; }`);
+            const input = Input.InClass(`public static Boolean opMethodName(Integer value) { return value != 0; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("true"),
+                Token.PrimitiveType.Boolean,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("value"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -173,19 +147,18 @@ describe("Grammar", () => {
                 Token.Punctuation.CloseBrace]);
         });
 
-        it("unary false", () => {
+        it("binary equals", () => {
 
-            const input = Input.InClass(`public static int operator false(int value) { return value == 0; }`);
+            const input = Input.InClass(`public static Boolean opMethodName(Integer value) { return value == 0; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("false"),
+                Token.PrimitiveType.Boolean,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("value"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -199,20 +172,19 @@ describe("Grammar", () => {
 
         it("binary +", () => {
 
-            const input = Input.InClass(`public static int operator +(int x, int y) { return x + y; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer x, Integer y) { return x + y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("+"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -226,20 +198,19 @@ describe("Grammar", () => {
 
         it("binary -", () => {
 
-            const input = Input.InClass(`public static int operator -(int x, int y) { return x - y; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer x, Integer y) { return x - y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("-"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -253,20 +224,19 @@ describe("Grammar", () => {
 
         it("binary *", () => {
 
-            const input = Input.InClass(`public static int operator *(int x, int y) { return x * y; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer x, Integer y) { return x * y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("*"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -280,20 +250,19 @@ describe("Grammar", () => {
 
         it("binary /", () => {
 
-            const input = Input.InClass(`public static int operator /(int x, int y) { return x / y; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer x, Integer y) { return x / y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("/"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -305,49 +274,21 @@ describe("Grammar", () => {
                 Token.Punctuation.CloseBrace]);
         });
 
-        it("binary %", () => {
-
-            const input = Input.InClass(`public static int operator %(int x, int y) { return x % y; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("%"),
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("x"),
-                Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("y"),
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Control.Return,
-                Token.Variables.ReadWrite("x"),
-                Token.Operators.Arithmetic.Remainder,
-                Token.Variables.ReadWrite("y"),
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-
         it("binary &", () => {
 
-            const input = Input.InClass(`public static int operator &(int x, int y) { return x & y; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer x, Integer y) { return x & y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("&"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -361,20 +302,19 @@ describe("Grammar", () => {
 
         it("binary |", () => {
 
-            const input = Input.InClass(`public static int operator |(int x, int y) { return x | y; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer x, Integer y) { return x | y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("|"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -386,49 +326,21 @@ describe("Grammar", () => {
                 Token.Punctuation.CloseBrace]);
         });
 
-        it("binary ^", () => {
-
-            const input = Input.InClass(`public static int operator ^(int x, int y) { return x ^ y; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("^"),
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("x"),
-                Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("y"),
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Control.Return,
-                Token.Variables.ReadWrite("x"),
-                Token.Operators.Bitwise.ExclusiveOr,
-                Token.Variables.ReadWrite("y"),
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-
         it("binary <<", () => {
 
-            const input = Input.InClass(`public static int operator <<(int x, int y) { return x << y; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer x, Integer y) { return x << y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("<<"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -442,20 +354,19 @@ describe("Grammar", () => {
 
         it("binary >>", () => {
 
-            const input = Input.InClass(`public static int operator >>(int x, int y) { return x >> y; }`);
+            const input = Input.InClass(`public static Integer opMethodName(Integer x, Integer y) { return x >> y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName(">>"),
+                Token.PrimitiveType.Integer,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -467,76 +378,21 @@ describe("Grammar", () => {
                 Token.Punctuation.CloseBrace]);
         });
 
-        it("binary ==", () => {
-
-            const input = Input.InClass(`public static bool operator ==(int x, int y) { return x == y; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Bool,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("=="),
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("x"),
-                Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("y"),
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Control.Return,
-                Token.Variables.ReadWrite("x"),
-                Token.Operators.Relational.Equals,
-                Token.Variables.ReadWrite("y"),
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("binary !=", () => {
-
-            const input = Input.InClass(`public static bool operator !=(int x, int y) { return x != y; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Bool,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("!="),
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("x"),
-                Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("y"),
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Control.Return,
-                Token.Variables.ReadWrite("x"),
-                Token.Operators.Relational.NotEqual,
-                Token.Variables.ReadWrite("y"),
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-
         it("binary >", () => {
 
-            const input = Input.InClass(`public static bool operator >(int x, int y) { return x > y; }`);
+            const input = Input.InClass(`public static Boolean opMethodName(Integer x, Integer y) { return x > y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Bool,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName(">"),
+                Token.PrimitiveType.Boolean,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -550,20 +406,19 @@ describe("Grammar", () => {
 
         it("binary <", () => {
 
-            const input = Input.InClass(`public static bool operator <(int x, int y) { return x < y; }`);
+            const input = Input.InClass(`public static Boolean opMethodName(Integer x, Integer y) { return x < y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Bool,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("<"),
+                Token.PrimitiveType.Boolean,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -577,20 +432,19 @@ describe("Grammar", () => {
 
         it("binary >=", () => {
 
-            const input = Input.InClass(`public static bool operator >=(int x, int y) { return x >= y; }`);
+            const input = Input.InClass(`public static Boolean opMethodName(Integer x, Integer y) { return x >= y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Bool,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName(">="),
+                Token.PrimitiveType.Boolean,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -604,20 +458,19 @@ describe("Grammar", () => {
 
         it("binary <=", () => {
 
-            const input = Input.InClass(`public static bool operator <=(int x, int y) { return x <= y; }`);
+            const input = Input.InClass(`public static Boolean opMethodName(Integer x, Integer y) { return x <= y; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Bool,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("<="),
+                Token.PrimitiveType.Boolean,
+                Token.Identifiers.MethodName("opMethodName"),
                 Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("x"),
                 Token.Punctuation.Comma,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.ParameterName("y"),
                 Token.Punctuation.CloseParen,
                 Token.Punctuation.OpenBrace,
@@ -627,119 +480,6 @@ describe("Grammar", () => {
                 Token.Variables.ReadWrite("y"),
                 Token.Punctuation.Semicolon,
                 Token.Punctuation.CloseBrace]);
-        });
-
-        it("implicit conversion", () => {
-
-            const input = Input.InClass(`public static implicit operator bool(int x) { return x != 0; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.Keywords.Implicit,
-                Token.Keywords.Operator,
-                Token.PrimitiveType.Bool,
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("x"),
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Control.Return,
-                Token.Variables.ReadWrite("x"),
-                Token.Operators.Relational.NotEqual,
-                Token.Literals.Numeric.Decimal("0"),
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("explicit conversion", () => {
-
-            const input = Input.InClass(`public static explicit operator bool(int x) { return x != 0; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.Keywords.Explicit,
-                Token.Keywords.Operator,
-                Token.PrimitiveType.Bool,
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("x"),
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Control.Return,
-                Token.Variables.ReadWrite("x"),
-                Token.Operators.Relational.NotEqual,
-                Token.Literals.Numeric.Decimal("0"),
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("with expression body", () => {
-
-            const input = Input.InClass(`public static int operator +(int value) => +value;`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("+"),
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("value"),
-                Token.Punctuation.CloseParen,
-                Token.Operators.Arrow,
-                Token.Operators.Arithmetic.Addition,
-                Token.Variables.ReadWrite("value"),
-                Token.Punctuation.Semicolon]);
-        });
-
-        it("ref return", () => {
-            const input = Input.InClass(`public static ref int operator +(int value) { return ref x; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.Keywords.Modifiers.Ref,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("+"),
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("value"),
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Control.Return,
-                Token.Keywords.Modifiers.Ref,
-                Token.Variables.ReadWrite("x"),
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("expression body ref return", () => {
-            const input = Input.InClass(`public static ref int operator +(int value) => ref x;`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Modifiers.Static,
-                Token.Keywords.Modifiers.Ref,
-                Token.PrimitiveType.Int,
-                Token.Keywords.Operator,
-                Token.Identifiers.MethodName("+"),
-                Token.Punctuation.OpenParen,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.ParameterName("value"),
-                Token.Punctuation.CloseParen,
-                Token.Operators.Arrow,
-                Token.Keywords.Modifiers.Ref,
-                Token.Variables.ReadWrite("x"),
-                Token.Punctuation.Semicolon]);
         });
     });
 });

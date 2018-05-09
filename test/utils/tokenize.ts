@@ -118,32 +118,6 @@ class TestClass {
 
         return new Input(lines, { startLine: 3, startIndex: 8, endLine: lines.length - 2, endIndex: 0 });
     }
-
-    public static InNamespace(input: string) {
-        let text = `
-namespace TestNamespace {
-    ${input}
-}`;
-
-        // ensure consistent line-endings irrelevant of OS
-        text = text.replace('\r\n', '\n');
-        let lines = text.split('\n');
-
-        return new Input(lines, { startLine: 2, startIndex: 4, endLine: lines.length - 1, endIndex: 0 });
-    }
-
-    public static InStruct(input: string) {
-        let text = `
-struct TestStruct {
-    ${input}
-}`;
-
-        // ensure consistent line-endings irrelevant of OS
-        text = text.replace('\r\n', '\n');
-        let lines = text.split('\n');
-
-        return new Input(lines, { startLine: 2, startIndex: 4, endLine: lines.length - 1, endIndex: 0 });
-    }
 }
 
 export interface Token {
@@ -175,7 +149,6 @@ export namespace Token {
     }
 
     export namespace Identifiers {
-        export const AliasName = (text: string) => createToken(text, 'entity.name.type.alias.apex');
         export const ClassName = (text: string) => createToken(text, 'entity.name.type.class.apex');
         export const EnumMemberName = (text: string) => createToken(text, 'entity.name.variable.enum-member.apex');
         export const EnumName = (text: string) => createToken(text, 'entity.name.type.enum.apex');
@@ -184,7 +157,6 @@ export namespace Token {
         export const LabelName = (text: string) => createToken(text, 'entity.name.label.apex');
         export const LocalName = (text: string) => createToken(text, 'entity.name.variable.local.apex');
         export const MethodName = (text: string) => createToken(text, 'entity.name.function.apex');
-        export const NamespaceName = (text: string) => createToken(text, 'entity.name.type.namespace.apex');
         export const ParameterName = (text: string) => createToken(text, 'entity.name.variable.parameter.apex');
         export const PropertyName = (text: string) => createToken(text, 'entity.name.variable.property.apex');
         export const RangeVariableName = (text: string) => createToken(text, 'entity.name.variable.range-variable.apex');
@@ -204,7 +176,6 @@ export namespace Token {
             export const Else = createToken('else', 'keyword.control.conditional.else.apex');
             export const Finally = createToken('finally', 'keyword.control.try.finally.apex');
             export const For = createToken('for', 'keyword.control.loop.for.apex');
-            export const ForEach = createToken('foreach', 'keyword.control.loop.foreach.apex');
             export const Goto = createToken('goto', 'keyword.control.goto.apex');
             export const If = createToken('if', 'keyword.control.conditional.if.apex');
             export const In = createToken('in', 'keyword.control.loop.in.apex');
@@ -214,13 +185,12 @@ export namespace Token {
             export const Try = createToken('try', 'keyword.control.try.apex');
             export const When = createToken('when', 'keyword.control.try.when.apex');
             export const While = createToken('while', 'keyword.control.loop.while.apex');
-            export const Yield = createToken('yield', 'keyword.control.flow.yield.apex');
         }
 
         export namespace Modifiers {
             export const Abstract = createToken('abstract', 'storage.modifier.apex');
             export const Async = createToken('async', 'storage.modifier.apex');
-            // export const Const = createToken('const', 'storage.modifier.apex');
+            export const Final = createToken('final', 'storage.modifier.apex');
             export const Global = createToken('global', 'storage.modifier.apex');
             export const In = createToken('in', 'storage.modifier.apex');
             export const Internal = createToken('internal', 'storage.modifier.apex');
@@ -232,7 +202,6 @@ export namespace Token {
             export const Private = createToken('private', 'storage.modifier.apex');
             export const Protected = createToken('protected', 'storage.modifier.apex');
             export const Public = createToken('public', 'storage.modifier.apex');
-            // export const Ref = createToken('ref', 'storage.modifier.apex');
             export const Static = createToken('static', 'storage.modifier.apex');
             export const This = createToken('this', 'storage.modifier.apex');
             export const Virtual = createToken('virtual', 'storage.modifier.apex');
@@ -258,35 +227,22 @@ export namespace Token {
         }
 
         export const Add = createToken('add', 'keyword.other.add.apex');
-        export const Alias = createToken('alias', 'keyword.other.alias.apex');
         export const AttributeSpecifier = (text: string) => createToken(text, 'keyword.other.attribute-specifier.apex');
         export const Await = createToken('await', 'keyword.other.await.apex');
         export const As = createToken('as', 'keyword.other.as.apex');
         export const Base = createToken('base', 'keyword.other.base.apex');
-        export const Checked = createToken('checked', 'keyword.other.checked.apex');
         export const Class = createToken('class', 'keyword.other.class.apex');
         export const Default = createToken('default', 'keyword.other.default.apex');
         export const Enum = createToken('enum', 'keyword.other.enum.apex');
-        export const Explicit = createToken('explicit', 'keyword.other.explicit.apex');
-        export const Extern = createToken('extern', 'keyword.other.extern.apex');
         export const Get = createToken('get', 'keyword.other.get.apex');
-        export const Implicit = createToken('implicit', 'keyword.other.implicit.apex');
         export const Interface = createToken('interface', 'keyword.other.interface.apex');
         export const Is = createToken('is', 'keyword.other.is.apex');
-        export const Lock = createToken('lock', 'keyword.other.lock.apex');
         export const NameOf = createToken('nameof', 'keyword.other.nameof.apex');
-        export const Namespace = createToken('namespace', 'keyword.other.namespace.apex');
         export const New = createToken('new', 'keyword.other.new.apex');
-        export const Operator = createToken('operator', 'keyword.other.operator-decl.apex');
         export const Remove = createToken('remove', 'keyword.other.remove.apex');
         export const Set = createToken('set', 'keyword.other.set.apex');
         export const Static = createToken('static', 'keyword.other.static.apex');
-        export const Struct = createToken('struct', 'keyword.other.struct.apex');
         export const This = createToken('this', 'keyword.other.this.apex');
-        export const TypeOf = createToken('typeof', 'keyword.other.typeof.apex');
-        export const Unchecked = createToken('unchecked', 'keyword.other.unchecked.apex');
-        export const Using = createToken('using', 'keyword.other.using.apex');
-        // export const Var = createToken('var', 'keyword.other.var.apex');
         export const Where = createToken('where', 'keyword.other.where.apex');
     }
 
@@ -314,14 +270,11 @@ export namespace Token {
             export const Addition = createToken('+', 'keyword.operator.arithmetic.apex');
             export const Division = createToken('/', 'keyword.operator.arithmetic.apex');
             export const Multiplication = createToken('*', 'keyword.operator.arithmetic.apex');
-            export const Remainder = createToken('%', 'keyword.operator.arithmetic.apex');
             export const Subtraction = createToken('-', 'keyword.operator.arithmetic.apex');
         }
 
         export namespace Bitwise {
             export const And = createToken('&', 'keyword.operator.bitwise.apex');
-            export const BitwiseComplement = createToken('~', 'keyword.operator.bitwise.apex');
-            export const ExclusiveOr = createToken('^', 'keyword.operator.bitwise.apex');
             export const Or = createToken('|', 'keyword.operator.bitwise.apex');
             export const ShiftLeft = createToken('<<', 'keyword.operator.bitwise.shift.apex');
             export const ShiftRight = createToken('>>', 'keyword.operator.bitwise.shift.apex');
@@ -366,7 +319,6 @@ export namespace Token {
             export const GreaterThanOrEqual = createToken('>=', 'keyword.operator.relational.apex');
         }
 
-        // export const Arrow = createToken('=>', 'keyword.operator.arrow.apex');
         export const Assignment = createToken('=', 'keyword.operator.assignment.apex');
         export const Decrement = createToken('--', 'keyword.operator.decrement.apex');
         export const Increment = createToken('++', 'keyword.operator.increment.apex');
@@ -424,7 +376,6 @@ export namespace Token {
     }
 
     export namespace Variables {
-        export const Alias = (text: string) => createToken(text, 'variable.other.alias.apex');
         export const Object = (text: string) => createToken(text, 'variable.other.object.apex');
         export const Property = (text: string) => createToken(text, 'variable.other.object.property.apex');
         export const ReadWrite = (text: string) => createToken(text, 'variable.other.readwrite.apex');
@@ -467,8 +418,8 @@ export namespace Token {
 
         export namespace String {
             export namespace DoubleQuoted {
-                export const Begin = createToken('"', 'punctuation.definition.string.begin.apex');
-                export const End = createToken('"', 'punctuation.definition.string.end.apex');
+                export const Begin = createToken('"', 'punctuation.definition.stringdoublequote.begin.apex');
+                export const End = createToken('"', 'punctuation.definition.stringdoublequote.end.apex');
                 export const Text = (text: string) => createToken(text, 'string.quoted.double.apex');
             }
 

@@ -136,7 +136,7 @@ public IBooom Property
         });
 
         it("generic auto-property", () => {
-            const input = Input.InClass(`public Dictionary<string, List<T>[]> Property { get; set; }`);
+            const input = Input.InClass(`public Dictionary<String, List<T>[]> Property { get; set; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -162,7 +162,7 @@ public IBooom Property
         });
 
         it("auto-property initializer", () => {
-            const input = Input.InClass(`public Dictionary<string, List<T>[]> Property { get; } = new Dictionary<string, List<T>[]>();`);
+            const input = Input.InClass(`public Dictionary<String, List<T>[]> Property { get; } = new Dictionary<String, List<T>[]>();`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -203,30 +203,30 @@ public IBooom Property
 
         it("expression body", () => {
             const input = Input.InClass(`
-private string prop1 => "hello";
-private bool   prop2 => true;`);
+private String prop1 = 'hello';
+private Boolean   prop2 = true;`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Private,
                 Token.PrimitiveType.String,
-                Token.Identifiers.PropertyName("prop1"),
-                Token.Operators.Arrow,
+                Token.Identifiers.FieldName("prop1"),
+                Token.Operators.Assignment,
                 Token.Punctuation.String.Begin,
                 Token.Literals.String("hello"),
                 Token.Punctuation.String.End,
                 Token.Punctuation.Semicolon,
 
                 Token.Keywords.Modifiers.Private,
-                Token.PrimitiveType.Bool,
-                Token.Identifiers.PropertyName("prop2"),
-                Token.Operators.Arrow,
+                Token.PrimitiveType.Boolean,
+                Token.Identifiers.FieldName("prop2"),
+                Token.Operators.Assignment,
                 Token.Literals.Boolean.True,
                 Token.Punctuation.Semicolon]);
         });
 
         it("explicitly-implemented interface member", () => {
-            const input = Input.InClass(`string IFoo<string>.Bar { get; set; }`);
+            const input = Input.InClass(`String IFoo<String>.Bar { get; set; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -246,7 +246,7 @@ private bool   prop2 => true;`);
         });
 
         it("declaration in interface", () => {
-            const input = Input.InInterface(`string Bar { get; set; }`);
+            const input = Input.InInterface(`String Bar { get; set; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -261,7 +261,7 @@ private bool   prop2 => true;`);
         });
 
         it("declaration in interface (read-only)", () => {
-            const input = Input.InInterface(`string Bar { get; }`);
+            const input = Input.InInterface(`String Bar { get; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -274,7 +274,7 @@ private bool   prop2 => true;`);
         });
 
         it("declaration in interface (write-only)", () => {
-            const input = Input.InInterface(`string Bar { set; }`);
+            const input = Input.InInterface(`String Bar { set; }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -288,96 +288,52 @@ private bool   prop2 => true;`);
 
         it("declaration with attributes", () => {
             const input = Input.InClass(`
-[Obsolete]
-public int P1
+public Integer P1
 {
-    [Obsolete]
-    get { }
-    [Obsolete]
+    get { return 0; }
     set { }
 }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
-                Token.Punctuation.OpenBracket,
-                Token.Type("Obsolete"),
-                Token.Punctuation.CloseBracket,
                 Token.Keywords.Modifiers.Public,
-                Token.PrimitiveType.Int,
+                Token.PrimitiveType.Integer,
                 Token.Identifiers.PropertyName("P1"),
                 Token.Punctuation.OpenBrace,
-                Token.Punctuation.OpenBracket,
-                Token.Type("Obsolete"),
-                Token.Punctuation.CloseBracket,
                 Token.Keywords.Get,
                 Token.Punctuation.OpenBrace,
+                Token.Keywords.Control.Return,
+                Token.Literals.Numeric.Decimal("0"),
+                Token.Punctuation.Semicolon,
                 Token.Punctuation.CloseBrace,
-                Token.Punctuation.OpenBracket,
-                Token.Type("Obsolete"),
-                Token.Punctuation.CloseBracket,
                 Token.Keywords.Set,
                 Token.Punctuation.OpenBrace,
                 Token.Punctuation.CloseBrace,
                 Token.Punctuation.CloseBrace]);
         });
-
-        it("Expression-bodied property accessors (issue #44)", () => {
+/*
+        it("Static initializer", () => {
             const input = Input.InClass(`
-public int Timeout
-{
-    get => Socket.ReceiveTimeout;
-    set => Socket.ReceiveTimeout = value;
+              public static final Double DISCOUNT;
+static {
+    DISCOUNT = 50.0;
 }`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.PropertyName("Timeout"),
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Get,
-                Token.Operators.Arrow,
-                Token.Variables.Object("Socket"),
-                Token.Punctuation.Accessor,
-                Token.Variables.Property("ReceiveTimeout"),
+                Token.Keywords.Modifiers.Static,
+                Token.Keywords.Modifiers.Final,
+                Token.PrimitiveType.Double,
+                Token.Identifiers.FieldName("DISCOUNT"),
                 Token.Punctuation.Semicolon,
-                Token.Keywords.Set,
-                Token.Operators.Arrow,
-                Token.Variables.Object("Socket"),
-                Token.Punctuation.Accessor,
-                Token.Variables.Property("ReceiveTimeout"),
+                Token.Keywords.Modifiers.Static,
+                Token.Punctuation.OpenBrace,
+                Token.Identifiers.PropertyName("DISCOUNT"),
                 Token.Operators.Assignment,
-                Token.Variables.ReadWrite("value"),
+                Token.Literals.Numeric.Decimal("50.0"),
                 Token.Punctuation.Semicolon,
                 Token.Punctuation.CloseBrace]);
-        });
-
-        it("ref return", () => {
-            const input = Input.InInterface(`ref int P { get; }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Ref,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.PropertyName("P"),
-                Token.Punctuation.OpenBrace,
-                Token.Keywords.Get,
-                Token.Punctuation.Semicolon,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("expression body ref return", () => {
-            const input = Input.InClass(`ref int P => ref x;`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Ref,
-                Token.PrimitiveType.Int,
-                Token.Identifiers.PropertyName("P"),
-                Token.Operators.Arrow,
-                Token.Keywords.Modifiers.Ref,
-                Token.Variables.ReadWrite("x"),
-                Token.Punctuation.Semicolon]);
-        });
+        }); */
     });
 });

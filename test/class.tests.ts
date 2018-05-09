@@ -11,7 +11,7 @@ describe("Grammar", () => {
 
     describe("Apex Class", () => {
       it("class keyword and storage modifiers", () => {
-          const input = Input.InNamespace(`
+          const input = Input.FromText(`
 public             class PublicClass { }
                   class DefaultClass { }
 protected           class ProtectedClass { }
@@ -83,7 +83,7 @@ public    abstract class PublicAbstractClass { }
         });
 
         it("public class with sharing", () => {
-          const input = Input.InNamespace(`public with sharing class C {}`);
+          const input = Input.FromText(`public with sharing class C {}`);
           const tokens = tokenize(input);
 
           tokens.should.deep.equal([
@@ -96,7 +96,7 @@ public    abstract class PublicAbstractClass { }
         });
 
         it("public class without sharing", () => {
-            const input = Input.InNamespace(`public without sharing class Fireburn {}`);
+            const input = Input.FromText(`public without sharing class Fireburn {}`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -109,7 +109,7 @@ public    abstract class PublicAbstractClass { }
         });
 
         it("simple class", () => {
-              const input = Input.InNamespace(`private class SimpleClass {}`);
+              const input = Input.FromText(`private class SimpleClass {}`);
               const tokens = tokenize(input);
 
               tokens.should.deep.equal([
@@ -121,7 +121,7 @@ public    abstract class PublicAbstractClass { }
         });
 
         it("global class", () => {
-              const input = Input.InNamespace(`global class GlobalClass {}`);
+              const input = Input.FromText(`global class GlobalClass {}`);
               const tokens = tokenize(input);
 
               tokens.should.deep.equal([

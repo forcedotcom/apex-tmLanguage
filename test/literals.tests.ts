@@ -160,54 +160,6 @@ describe("Grammar", () => {
                     Token.Punctuation.String.End,
                     Token.Punctuation.Semicolon]);
             });
-
-            it("highlight strings containing braces correctly (issue omnisharp-vscode#746)", () => {
-                const input = `
-namespace X
-{
-    class Y
-    {
-        public MethodZ()
-        {
-            this.Writer.WriteLine("class CInput{0}Register : public {1}", index, baseClass);
-        }
-    }
-}
-`;
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.Keywords.Namespace,
-                    Token.Identifiers.NamespaceName("X"),
-                    Token.Punctuation.OpenBrace,
-                    Token.Keywords.Class,
-                    Token.Identifiers.ClassName("Y"),
-                    Token.Punctuation.OpenBrace,
-                    Token.Keywords.Modifiers.Public,
-                    Token.Identifiers.MethodName("MethodZ"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.OpenBrace,
-                    Token.Keywords.This,
-                    Token.Punctuation.Accessor,
-                    Token.Variables.Property("Writer"),
-                    Token.Punctuation.Accessor,
-                    Token.Identifiers.MethodName("WriteLine"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.StringDoubleQuote.Begin,
-                    Token.Literals.StringDoubleQuote("class CInput{0}Register : public {1}"),
-                    Token.Punctuation.StringDoubleQuote.End,
-                    Token.Punctuation.Comma,
-                    Token.Variables.ReadWrite("index"),
-                    Token.Punctuation.Comma,
-                    Token.Variables.ReadWrite("baseClass"),
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Semicolon,
-                    Token.Punctuation.CloseBrace,
-                    Token.Punctuation.CloseBrace,
-                    Token.Punctuation.CloseBrace
-                ]);
-            });
         });
     });
 });

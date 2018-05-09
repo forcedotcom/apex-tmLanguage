@@ -395,86 +395,6 @@ Object x = new
             });
         });
 
-        describe("Checked/Unchecked", () => {
-            it("checked expression", () => {
-                const input = Input.InMethod(`Integer x = checked(42);`);
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.PrimitiveType.Integer,
-                    Token.Identifiers.LocalName("x"),
-                    Token.Operators.Assignment,
-                    Token.Keywords.Checked,
-                    Token.Punctuation.OpenParen,
-                    Token.Literals.Numeric.Decimal("42"),
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Semicolon
-                ]);
-            });
-
-            it("unchecked expression", () => {
-                const input = Input.InMethod(`Integer x = unchecked(42);`);
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.PrimitiveType.Integer,
-                    Token.Identifiers.LocalName("x"),
-                    Token.Operators.Assignment,
-                    Token.Keywords.Unchecked,
-                    Token.Punctuation.OpenParen,
-                    Token.Literals.Numeric.Decimal("42"),
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Semicolon
-                ]);
-            });
-
-            it("checked expression inside checked statement", () => {
-                const input = `
-class C
-{
-    void M1()
-    {
-        checked
-        {
-            checked(++i);
-        }
-    }
-    void M2() { }
-}`;
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.Keywords.Class,
-                    Token.Identifiers.ClassName("C"),
-                    Token.Punctuation.OpenBrace,
-                    Token.PrimitiveType.Void,
-                    Token.Identifiers.MethodName("M1"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.OpenBrace,
-
-                    Token.Keywords.Checked,
-                    Token.Punctuation.OpenBrace,
-                    Token.Keywords.Checked,
-                    Token.Punctuation.OpenParen,
-                    Token.Operators.Increment,
-                    Token.Variables.ReadWrite("i"),
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.Semicolon,
-                    Token.Punctuation.CloseBrace,
-
-                    Token.Punctuation.CloseBrace,
-                    Token.PrimitiveType.Void,
-                    Token.Identifiers.MethodName("M2"),
-                    Token.Punctuation.OpenParen,
-                    Token.Punctuation.CloseParen,
-                    Token.Punctuation.OpenBrace,
-                    Token.Punctuation.CloseBrace,
-                    Token.Punctuation.CloseBrace
-                ]);
-            });
-        });
-
         describe("Conditional Operator", () => {
             it("in assignment", () => {
                 const input = Input.InMethod(`Integer y = x ? 19 : 23;`);
@@ -712,7 +632,7 @@ a1[1] = ((this.a)); a1[2] = (c); a1[1] = (i);
 
             it("arithmetic expression with multiple element accesses 1 (issue #37)", () => {
                 const input = Input.InMethod(`
-Long total = data["bonusGame"]["win"].AsLong * data["bonusGame"]["betMult"].AsLong;
+Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLong;
 `);
                 const tokens = tokenize(input);
 
@@ -722,28 +642,28 @@ Long total = data["bonusGame"]["win"].AsLong * data["bonusGame"]["betMult"].AsLo
                     Token.Operators.Assignment,
                     Token.Variables.Property("data"),
                     Token.Punctuation.OpenBracket,
-                    Token.Punctuation.StringDoubleQuote.Begin,
+                    Token.Punctuation.String.Begin,
                     Token.Literals.String("bonusGame"),
-                    Token.Punctuation.StringDoubleQuote.End,
+                    Token.Punctuation.String.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.OpenBracket,
-                    Token.Punctuation.StringDoubleQuote.Begin,
+                    Token.Punctuation.String.Begin,
                     Token.Literals.String("win"),
-                    Token.Punctuation.StringDoubleQuote.End,
+                    Token.Punctuation.String.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.Accessor,
                     Token.Variables.Property("AsLong"),
                     Token.Operators.Arithmetic.Multiplication,
                     Token.Variables.Property("data"),
                     Token.Punctuation.OpenBracket,
-                    Token.Punctuation.StringDoubleQuote.Begin,
+                    Token.Punctuation.String.Begin,
                     Token.Literals.String("bonusGame"),
-                    Token.Punctuation.StringDoubleQuote.End,
+                    Token.Punctuation.String.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.OpenBracket,
-                    Token.Punctuation.StringDoubleQuote.Begin,
+                    Token.Punctuation.String.Begin,
                     Token.Literals.String("betMult"),
-                    Token.Punctuation.StringDoubleQuote.End,
+                    Token.Punctuation.String.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.Accessor,
                     Token.Variables.Property("AsLong"),
@@ -763,12 +683,12 @@ total = data["bonusGame"]["win"].AsLong * data["bonusGame"]["betMult"].AsLong;
                     Token.Variables.Property("data"),
                     Token.Punctuation.OpenBracket,
                     Token.Punctuation.StringDoubleQuote.Begin,
-                    Token.Literals.String("bonusGame"),
+                    Token.Literals.StringDoubleQuote("bonusGame"),
                     Token.Punctuation.StringDoubleQuote.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.OpenBracket,
                     Token.Punctuation.StringDoubleQuote.Begin,
-                    Token.Literals.String("win"),
+                    Token.Literals.StringDoubleQuote("win"),
                     Token.Punctuation.StringDoubleQuote.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.Accessor,
@@ -777,12 +697,12 @@ total = data["bonusGame"]["win"].AsLong * data["bonusGame"]["betMult"].AsLong;
                     Token.Variables.Property("data"),
                     Token.Punctuation.OpenBracket,
                     Token.Punctuation.StringDoubleQuote.Begin,
-                    Token.Literals.String("bonusGame"),
+                    Token.Literals.StringDoubleQuote("bonusGame"),
                     Token.Punctuation.StringDoubleQuote.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.OpenBracket,
                     Token.Punctuation.StringDoubleQuote.Begin,
-                    Token.Literals.String("betMult"),
+                    Token.Literals.StringDoubleQuote("betMult"),
                     Token.Punctuation.StringDoubleQuote.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.Accessor,
@@ -805,12 +725,12 @@ Long total = (data["bonusGame"]["win"].AsLong) * data["bonusGame"]["betMult"].As
                     Token.Variables.Property("data"),
                     Token.Punctuation.OpenBracket,
                     Token.Punctuation.StringDoubleQuote.Begin,
-                    Token.Literals.String("bonusGame"),
+                    Token.Literals.StringDoubleQuote("bonusGame"),
                     Token.Punctuation.StringDoubleQuote.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.OpenBracket,
                     Token.Punctuation.StringDoubleQuote.Begin,
-                    Token.Literals.String("win"),
+                    Token.Literals.StringDoubleQuote("win"),
                     Token.Punctuation.StringDoubleQuote.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.Accessor,
@@ -820,12 +740,12 @@ Long total = (data["bonusGame"]["win"].AsLong) * data["bonusGame"]["betMult"].As
                     Token.Variables.Property("data"),
                     Token.Punctuation.OpenBracket,
                     Token.Punctuation.StringDoubleQuote.Begin,
-                    Token.Literals.String("bonusGame"),
+                    Token.Literals.StringDoubleQuote("bonusGame"),
                     Token.Punctuation.StringDoubleQuote.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.OpenBracket,
                     Token.Punctuation.StringDoubleQuote.Begin,
-                    Token.Literals.String("betMult"),
+                    Token.Literals.StringDoubleQuote("betMult"),
                     Token.Punctuation.StringDoubleQuote.End,
                     Token.Punctuation.CloseBracket,
                     Token.Punctuation.Accessor,
@@ -1185,26 +1105,6 @@ Long total = (data["bonusGame"]["win"].AsLong) * data["bonusGame"]["betMult"].As
                     Token.Punctuation.OpenBracket,
                     Token.Literals.Numeric.Decimal("0"),
                     Token.Punctuation.CloseBracket,
-                    Token.Punctuation.Semicolon
-                ]);
-            });
-        });
-
-        describe("Primary", () => {
-            it("typeof", () => {
-                const input = Input.InMethod(`Object t = typeof(List<>);`);
-                const tokens = tokenize(input);
-
-                tokens.should.deep.equal([
-                    Token.PrimitiveType.Object,
-                    Token.Identifiers.LocalName("t"),
-                    Token.Operators.Assignment,
-                    Token.Keywords.TypeOf,
-                    Token.Punctuation.OpenParen,
-                    Token.Type("List"),
-                    Token.Punctuation.TypeParameters.Begin,
-                    Token.Punctuation.TypeParameters.End,
-                    Token.Punctuation.CloseParen,
                     Token.Punctuation.Semicolon
                 ]);
             });

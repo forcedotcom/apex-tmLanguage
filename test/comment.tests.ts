@@ -48,15 +48,6 @@ describe("Grammar", () => {
                 Token.Comment.MultiLine.End]);
         });
 
-        it("in namespace", () => {
-            const input = Input.InNamespace(`// foo`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Comment.SingleLine.Start,
-                Token.Comment.SingleLine.Text(" foo")]);
-        });
-
         it("in class", () => {
             const input = Input.InClass(`// foo`);
             const tokens = tokenize(input);
@@ -77,15 +68,6 @@ describe("Grammar", () => {
 
         it("in interface", () => {
             const input = Input.InInterface(`// foo`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Comment.SingleLine.Start,
-                Token.Comment.SingleLine.Text(" foo")]);
-        });
-
-        it("in struct", () => {
-            const input = Input.InStruct(`// foo`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -199,43 +181,6 @@ public interface CustomBootstrapper /* : DefaultNancyBootstrapper */
                 Token.Keywords.Modifiers.Public,
                 Token.Keywords.Interface,
                 Token.Identifiers.InterfaceName("CustomBootstrapper"),
-                Token.Comment.MultiLine.Start,
-                Token.Comment.MultiLine.Text(" : DefaultNancyBootstrapper "),
-                Token.Comment.MultiLine.End,
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("comment out struct declaration base type list - single line (issue #41)", () => {
-            const input = Input.FromText(`
-public struct CustomBootstrapper // : DefaultNancyBootstrapper
-{
-}
-`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Struct,
-                Token.Identifiers.StructName("CustomBootstrapper"),
-                Token.Comment.SingleLine.Start,
-                Token.Comment.SingleLine.Text(" : DefaultNancyBootstrapper"),
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("comment out struct declaration base type list - multi line (issue #41)", () => {
-            const input = Input.FromText(`
-public struct CustomBootstrapper /* : DefaultNancyBootstrapper */
-{
-}
-`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Modifiers.Public,
-                Token.Keywords.Struct,
-                Token.Identifiers.StructName("CustomBootstrapper"),
                 Token.Comment.MultiLine.Start,
                 Token.Comment.MultiLine.Text(" : DefaultNancyBootstrapper "),
                 Token.Comment.MultiLine.End,
@@ -404,7 +349,7 @@ catch (Exception) //comment
 try
 {
 }
-catch (DataNotFoundException dnfe) when (dnfe.GetType() == typeof(DataNotFoundException)) //Only catch exceptions that are distinctly DataNotFoundException
+catch (DataNotFoundException dnfe) //Only catch exceptions that are distinctly DataNotFoundException
 {
 }
 `);
@@ -419,53 +364,8 @@ catch (DataNotFoundException dnfe) when (dnfe.GetType() == typeof(DataNotFoundEx
                 Token.Type("DataNotFoundException"),
                 Token.Identifiers.LocalName("dnfe"),
                 Token.Punctuation.CloseParen,
-                Token.Keywords.Control.When,
-                Token.Punctuation.OpenParen,
-                Token.Variables.Object("dnfe"),
-                Token.Punctuation.Accessor,
-                Token.Identifiers.MethodName("GetType"),
-                Token.Punctuation.OpenParen,
-                Token.Punctuation.CloseParen,
-                Token.Operators.Relational.Equals,
-                Token.Keywords.TypeOf,
-                Token.Punctuation.OpenParen,
-                Token.Type("DataNotFoundException"),
-                Token.Punctuation.CloseParen,
-                Token.Punctuation.CloseParen,
                 Token.Comment.SingleLine.Start,
                 Token.Comment.SingleLine.Text("Only catch exceptions that are distinctly DataNotFoundException"),
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("after checked (issue #104)", () => {
-            const input = Input.InMethod(`
-checked //comment
-{
-}
-`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Checked,
-                Token.Comment.SingleLine.Start,
-                Token.Comment.SingleLine.Text("comment"),
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.CloseBrace]);
-        });
-
-        it("after unchecked (issue #104)", () => {
-            const input = Input.InMethod(`
-unchecked //comment
-{
-}
-`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Keywords.Unchecked,
-                Token.Comment.SingleLine.Start,
-                Token.Comment.SingleLine.Text("comment"),
                 Token.Punctuation.OpenBrace,
                 Token.Punctuation.CloseBrace]);
         });
