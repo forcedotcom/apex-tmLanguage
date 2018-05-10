@@ -6,7 +6,7 @@ describe("Grammar", () => {
 
     describe("Queries", () => {
         it("simple query inside of brackets", () => {
-            const input = Input.InMethod(`List<User> lUsers = [select Id, Name  from User ];`);
+            const input = Input.InMethod(`List<User> lUsers = [SELECT Id, Name  FROM User ];`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -29,7 +29,7 @@ describe("Grammar", () => {
         });
 
         it("simple query inside of brackets with multiple fields", () => {
-            const input = Input.InMethod(`List<User> lUsers = [select Id, Custom_Field__c, Profile.Id, CreatedDate from User];`);
+            const input = Input.InMethod(`List<User> lUsers = [SELECT Id, Custom_Field__c, Profile.Id, CreatedDate FROM User];`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -56,7 +56,7 @@ describe("Grammar", () => {
         });
 
         it("simple query inside of brackets with multiple fields and where clause", () => {
-            const input = Input.InMethod(`List<User> lUsers = [select Id, Custom_Field__c, Profile.Id, CreatedDate from User where Id = '10'];`);
+            const input = Input.InMethod(`List<User> lUsers = [SELECT Id, Custom_Field__c, Profile.Id, CreatedDate FROM User WHERE Id = '10'];`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -89,7 +89,7 @@ describe("Grammar", () => {
         });
 
         it("complex query", () => {
-            const input = Input.InMethod(`List<User> lUsers = [select Id, Custom_Field__c, (select Id from account), Profile.Id, CreatedDate from User where Id = '10'];`);
+            const input = Input.InMethod(`List<User> lUsers = [SELECT Id, Custom_Field__c, (SELECT Id FROM account), Profile.Id, CreatedDate FROM User WHERE Id = '10'];`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -129,7 +129,7 @@ describe("Grammar", () => {
         });
 
         it("order by", () => {
-            const input = Input.InMethod(`List<User> lUsers = [select Id from account ORDER BY SomeField__c];`);
+            const input = Input.InMethod(`List<User> lUsers = [SELECT Id FROM account ORDER BY SomeField__c];`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -152,7 +152,7 @@ describe("Grammar", () => {
         });
 
         it("order by ascending", () => {
-            const input = Input.InMethod(`List<User> lUsers = [select Id from account ORDER BY SomeField__c ASC];`);
+            const input = Input.InMethod(`List<User> lUsers = [SELECT Id FROM account ORDER BY SomeField__c ASC];`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([
@@ -176,7 +176,7 @@ describe("Grammar", () => {
         });
 
         it("order by descending nulls last", () => {
-            const input = Input.InMethod(`List<User> lUsers = [select Id from account ORDER BY Name DESC NULLS last];`);
+            const input = Input.InMethod(`List<User> lUsers = [SELECT Id FROM account ORDER BY Name DESC NULLS last];`);
             const tokens = tokenize(input);
 
             tokens.should.deep.equal([

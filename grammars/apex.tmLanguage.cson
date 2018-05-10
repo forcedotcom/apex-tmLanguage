@@ -539,7 +539,7 @@ repository:
         name: "entity.name.type.implements.apex"
     end: "(?={|extends)"
   "soql-query-expression":
-    begin: "\\b(select)\\b\\s*"
+    begin: "\\b(SELECT)\\b\\s*"
     beginCaptures:
       "1":
         name: "keyword.query.select.apex"
@@ -590,14 +590,14 @@ repository:
       }
     ]
   "from-clause":
-    match: "(from)\\b\\s*([_\\.[:alnum:]]+)\\b\\s*"
+    match: "(FROM)\\b\\s*([_\\.[:alnum:]]+)\\b\\s*"
     captures:
       "1":
         name: "keyword.query.from.apex"
       "2":
         name: "keyword.query.type.apex"
   "where-clause":
-    match: "\\b(where)\\b\\s*"
+    match: "\\b(WHERE)\\b\\s*"
     captures:
       "1":
         name: "keyword.query.where.apex"

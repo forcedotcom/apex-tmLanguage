@@ -867,7 +867,7 @@
       <key>soql-query-expression</key>
       <dict>
         <key>begin</key>
-        <string>\b(select)\b\s*</string>
+        <string>\b(SELECT)\b\s*</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -945,7 +945,7 @@
       <key>from-clause</key>
       <dict>
         <key>match</key>
-        <string>(from)\b\s*([_\.[:alnum:]]+)\b\s*</string>
+        <string>(FROM)\b\s*([_\.[:alnum:]]+)\b\s*</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -963,7 +963,7 @@
       <key>where-clause</key>
       <dict>
         <key>match</key>
-        <string>\b(where)\b\s*</string>
+        <string>\b(WHERE)\b\s*</string>
         <key>captures</key>
         <dict>
           <key>1</key>

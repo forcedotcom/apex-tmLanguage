@@ -216,7 +216,7 @@ export namespace Token {
             export const By = createToken('by', 'keyword.query.by.apex');
             export const Descending = createToken('DESC', 'keyword.query.descending.apex');
             export const Equals = createToken('equals', 'keyword.query.equals.apex');
-            export const From = createToken('from', 'keyword.query.from.apex');
+            export const From = createToken('FROM', 'keyword.query.from.apex');
             export const Group = createToken('group', 'keyword.query.group.apex');
             export const In = createToken('in', 'keyword.query.in.apex');
             export const Into = createToken('into', 'keyword.query.into.apex');
@@ -227,9 +227,9 @@ export namespace Token {
             export const On = createToken('on', 'keyword.query.on.apex');
             export const OrderBy = createToken('ORDER BY', 'keyword.query.orderby.apex');
             export const FieldName = (text: string) => createToken(text, 'keyword.query.field.apex');
-            export const Select = createToken('select', 'keyword.query.select.apex');
+            export const Select = createToken('SELECT', 'keyword.query.select.apex');
             export const TypeName = (text: string) => createToken(text, 'keyword.query.type.apex');
-            export const Where = createToken('where', 'keyword.query.where.apex');
+            export const Where = createToken('WHERE', 'keyword.query.where.apex');
         }
 
         export const Add = createToken('add', 'keyword.other.add.apex');
