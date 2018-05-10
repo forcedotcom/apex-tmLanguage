@@ -152,7 +152,9 @@ export namespace Token {
         export const ClassName = (text: string) => createToken(text, 'entity.name.type.class.apex');
         export const EnumMemberName = (text: string) => createToken(text, 'entity.name.variable.enum-member.apex');
         export const EnumName = (text: string) => createToken(text, 'entity.name.type.enum.apex');
+        export const ExtendsName = (text: string) => createToken(text, 'entity.name.type.extends.apex');
         export const FieldName = (text: string) => createToken(text, 'entity.name.variable.field.apex');
+        export const ImplementsName = (text: string) => createToken(text, 'entity.name.type.implements.apex');
         export const InterfaceName = (text: string) => createToken(text, 'entity.name.type.interface.apex');
         export const LabelName = (text: string) => createToken(text, 'entity.name.label.apex');
         export const LocalName = (text: string) => createToken(text, 'entity.name.variable.local.apex');
@@ -210,9 +212,9 @@ export namespace Token {
         }
 
         export namespace Queries {
-            export const Ascending = createToken('ascending', 'keyword.query.ascending.apex');
+            export const Ascending = createToken('ASC', 'keyword.query.ascending.apex');
             export const By = createToken('by', 'keyword.query.by.apex');
-            export const Descending = createToken('descending', 'keyword.query.descending.apex');
+            export const Descending = createToken('DESC', 'keyword.query.descending.apex');
             export const Equals = createToken('equals', 'keyword.query.equals.apex');
             export const From = createToken('from', 'keyword.query.from.apex');
             export const Group = createToken('group', 'keyword.query.group.apex');
@@ -220,9 +222,13 @@ export namespace Token {
             export const Into = createToken('into', 'keyword.query.into.apex');
             export const Join = createToken('join', 'keyword.query.join.apex');
             export const Let = createToken('let', 'keyword.query.let.apex');
+            export const NullsFirst = createToken('NULLS first', 'keyword.query.nullsfirst.apex');
+            export const NullsLast = createToken('NULLS last', 'keyword.query.nullslast.apex');
             export const On = createToken('on', 'keyword.query.on.apex');
-            export const OrderBy = createToken('orderby', 'keyword.query.orderby.apex');
+            export const OrderBy = createToken('ORDER BY', 'keyword.query.orderby.apex');
+            export const FieldName = (text: string) => createToken(text, 'keyword.query.field.apex');
             export const Select = createToken('select', 'keyword.query.select.apex');
+            export const TypeName = (text: string) => createToken(text, 'keyword.query.type.apex');
             export const Where = createToken('where', 'keyword.query.where.apex');
         }
 
@@ -234,7 +240,9 @@ export namespace Token {
         export const Class = createToken('class', 'keyword.other.class.apex');
         export const Default = createToken('default', 'keyword.other.default.apex');
         export const Enum = createToken('enum', 'keyword.other.enum.apex');
+        export const Extends = createToken('extends', 'keyword.other.extends.apex');
         export const Get = createToken('get', 'keyword.other.get.apex');
+        export const Implements = createToken('implements', 'keyword.other.implements.apex');
         export const Interface = createToken('interface', 'keyword.other.interface.apex');
         export const Is = createToken('is', 'keyword.other.is.apex');
         export const NameOf = createToken('nameof', 'keyword.other.nameof.apex');

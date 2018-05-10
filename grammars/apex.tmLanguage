@@ -315,7 +315,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#query-expression</string>
+            <string>#soql-query-expression</string>
           </dict>
           <dict>
             <key>include</key>
@@ -565,6 +565,14 @@
                 <key>include</key>
                 <string>#generic-constraints</string>
               </dict>
+              <dict>
+                <key>include</key>
+                <string>#extends-class</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#implements-class</string>
+              </dict>
             </array>
           </dict>
           <dict>
@@ -775,6 +783,10 @@
                 <key>include</key>
                 <string>#generic-constraints</string>
               </dict>
+              <dict>
+                <key>include</key>
+                <string>#extends-class</string>
+              </dict>
             </array>
           </dict>
           <dict>
@@ -811,6 +823,215 @@
             <string>#comment</string>
           </dict>
         </array>
+      </dict>
+      <key>extends-class</key>
+      <dict>
+        <key>begin</key>
+        <string>(extends)\b\s+([_[:alpha:]][_[:alnum:]]*)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.other.extends.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.type.extends.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?={|implements)</string>
+      </dict>
+      <key>implements-class</key>
+      <dict>
+        <key>begin</key>
+        <string>(implements)\b\s+([_[:alpha:]][_[:alnum:]]*)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.other.implements.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.type.implements.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?={|extends)</string>
+      </dict>
+      <key>soql-query-expression</key>
+      <dict>
+        <key>begin</key>
+        <string>\b(select)\b\s*</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.select.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?=;)|(?=\])|(?=\))</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#soql-query-body</string>
+          </dict>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.field.apex</string>
+            <key>match</key>
+            <string>[_.[:alpha:]][_.[:alnum:]]*</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#comment</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#punctuation-comma</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#colon-expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#operator-assignment</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#parenthesized-expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#literal</string>
+          </dict>
+        </array>
+      </dict>
+      <key>soql-query-body</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#from-clause</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#where-clause</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#orderby-clause</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#ordering-direction</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#ordering-nulls</string>
+          </dict>
+        </array>
+      </dict>
+      <key>from-clause</key>
+      <dict>
+        <key>match</key>
+        <string>(from)\b\s*([_\.[:alnum:]]+)\b\s*</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.from.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.type.apex</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>where-clause</key>
+      <dict>
+        <key>match</key>
+        <string>\b(where)\b\s*</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.where.apex</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>orderby-clause</key>
+      <dict>
+        <key>match</key>
+        <string>\b(ORDER BY)\b\s*</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.orderby.apex</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#ordering-direction</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#ordering-nulls</string>
+          </dict>
+        </array>
+      </dict>
+      <key>ordering-direction</key>
+      <dict>
+        <key>match</key>
+        <string>\b(?:(ASC)|(DESC))\b</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.ascending.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.descending.apex</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>ordering-nulls</key>
+      <dict>
+        <key>match</key>
+        <string>\b(?:(NULLS first)|(NULLS last))\b</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.nullsfirst.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.query.nullslast.apex</string>
+          </dict>
+        </dict>
       </dict>
       <key>type-parameter-list</key>
       <dict>
@@ -3841,6 +4062,10 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#soql-query-expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#named-argument</string>
           </dict>
           <dict>
@@ -3899,433 +4124,6 @@
             <string>#expression</string>
           </dict>
         </array>
-      </dict>
-      <key>query-expression</key>
-      <dict>
-        <key>begin</key>
-        <string>(?x)
-\b(from)\b\s*
-(?&lt;type-name&gt;
-  (?:
-    (?:
-      (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
-        \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
-      )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
-    )
-    (?:\s*\?\s*)? # nullable suffix?
-    (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-  )
-)?
-\s+(\g&lt;identifier&gt;)\b\s*
-\b(in)\b\s*</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.from.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#type</string>
-              </dict>
-            </array>
-          </dict>
-          <key>7</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.range-variable.apex</string>
-          </dict>
-          <key>8</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.in.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=;|\))</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#query-body</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-        </array>
-      </dict>
-      <key>query-body</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#let-clause</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#where-clause</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#join-clause</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#orderby-clause</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#select-clause</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#group-clause</string>
-          </dict>
-        </array>
-      </dict>
-      <key>let-clause</key>
-      <dict>
-        <key>begin</key>
-        <string>(?x)
-\b(let)\b\s*
-(@?[_[:alpha:]][_[:alnum:]]*)\b\s*
-(=)\s*</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.let.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.range-variable.apex</string>
-          </dict>
-          <key>3</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.operator.assignment.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=;|\))</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#query-body</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-        </array>
-      </dict>
-      <key>where-clause</key>
-      <dict>
-        <key>begin</key>
-        <string>(?x)
-\b(where)\b\s*</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.where.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=;|\))</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#query-body</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-        </array>
-      </dict>
-      <key>join-clause</key>
-      <dict>
-        <key>begin</key>
-        <string>(?x)
-\b(join)\b\s*
-(?&lt;type-name&gt;
-  (?:
-    (?:
-      (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
-        \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
-      )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
-    )
-    (?:\s*\?\s*)? # nullable suffix?
-    (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-  )
-)?
-\s+(\g&lt;identifier&gt;)\b\s*
-\b(in)\b\s*</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.join.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#type</string>
-              </dict>
-            </array>
-          </dict>
-          <key>7</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.range-variable.apex</string>
-          </dict>
-          <key>8</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.in.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=;|\))</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#join-on</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#join-equals</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#join-into</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#query-body</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-        </array>
-      </dict>
-      <key>join-on</key>
-      <dict>
-        <key>match</key>
-        <string>\b(on)\b\s*</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.on.apex</string>
-          </dict>
-        </dict>
-      </dict>
-      <key>join-equals</key>
-      <dict>
-        <key>match</key>
-        <string>\b(equals)\b\s*</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.equals.apex</string>
-          </dict>
-        </dict>
-      </dict>
-      <key>join-into</key>
-      <dict>
-        <key>match</key>
-        <string>(?x)
-\b(into)\b\s*
-(@?[_[:alpha:]][_[:alnum:]]*)\b\s*</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.into.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.range-variable.apex</string>
-          </dict>
-        </dict>
-      </dict>
-      <key>orderby-clause</key>
-      <dict>
-        <key>begin</key>
-        <string>\b(orderby)\b\s*</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.orderby.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=;|\))</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#ordering-direction</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#query-body</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-        </array>
-      </dict>
-      <key>ordering-direction</key>
-      <dict>
-        <key>match</key>
-        <string>\b(?:(ascending)|(descending))\b</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.ascending.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.descending.apex</string>
-          </dict>
-        </dict>
-      </dict>
-      <key>select-clause</key>
-      <dict>
-        <key>begin</key>
-        <string>\b(select)\b\s*</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.select.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=;|\))</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#query-body</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-        </array>
-      </dict>
-      <key>group-clause</key>
-      <dict>
-        <key>begin</key>
-        <string>\b(group)\b\s*</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.group.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=;|\))</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#group-by</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#group-into</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#query-body</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-        </array>
-      </dict>
-      <key>group-by</key>
-      <dict>
-        <key>match</key>
-        <string>\b(by)\b\s*</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.by.apex</string>
-          </dict>
-        </dict>
-      </dict>
-      <key>group-into</key>
-      <dict>
-        <key>match</key>
-        <string>(?x)
-\b(into)\b\s*
-(@?[_[:alpha:]][_[:alnum:]]*)\b\s*</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.query.into.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.range-variable.apex</string>
-          </dict>
-        </dict>
       </dict>
       <key>anonymous-method-expression</key>
       <dict>

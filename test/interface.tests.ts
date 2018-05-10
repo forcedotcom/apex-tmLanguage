@@ -100,5 +100,20 @@ interface IBar : IFoo { }
                 Token.Punctuation.OpenBrace,
                 Token.Punctuation.CloseBrace]);
         });
+
+        it("interface extends another interface", () => {
+
+            const input = `public interface MyInterface2 extends MyInterface {}`;
+            const tokens = tokenize(input);
+
+            tokens.should.deep.equal([
+                Token.Keywords.Modifiers.Public,
+                Token.Keywords.Interface,
+                Token.Identifiers.InterfaceName("MyInterface2"),
+                Token.Keywords.Extends,
+                Token.Identifiers.ExtendsName("MyInterface"),
+                Token.Punctuation.OpenBrace,
+                Token.Punctuation.CloseBrace]);
+        });
     });
 });

@@ -50,30 +50,6 @@ Integer Add(Integer x, Integer y)
                 Token.Punctuation.CloseBrace]);
         });
 
-        it("declaration in with generic constraints", () => {
-            const input = Input.InClass(`TResult GetString<T, TResult>(T arg) where T : TResult { }`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Type("TResult"),
-                Token.Identifiers.MethodName("GetString"),
-                Token.Punctuation.TypeParameters.Begin,
-                Token.Identifiers.TypeParameterName("T"),
-                Token.Punctuation.Comma,
-                Token.Identifiers.TypeParameterName("TResult"),
-                Token.Punctuation.TypeParameters.End,
-                Token.Punctuation.OpenParen,
-                Token.Type("T"),
-                Token.Identifiers.ParameterName("arg"),
-                Token.Punctuation.CloseParen,
-                Token.Keywords.Where,
-                Token.Type("T"),
-                Token.Punctuation.Colon,
-                Token.Type("TResult"),
-                Token.Punctuation.OpenBrace,
-                Token.Punctuation.CloseBrace]);
-        });
-
         it("explicitly-implemented interface member", () => {
             const input = Input.InClass(`String IFoo<String>.toString();`);
             const tokens = tokenize(input);
@@ -120,29 +96,6 @@ Integer Add(Integer x, Integer y)
                 Token.Punctuation.CloseBracket,
                 Token.Identifiers.ParameterName("args"),
                 Token.Punctuation.CloseParen,
-                Token.Punctuation.Semicolon]);
-        });
-
-        it("declaration in interface with generic constraints", () => {
-            const input = Input.InInterface(`TResult GetString<T, TResult>(T arg) where T : TResult;`);
-            const tokens = tokenize(input);
-
-            tokens.should.deep.equal([
-                Token.Type("TResult"),
-                Token.Identifiers.MethodName("GetString"),
-                Token.Punctuation.TypeParameters.Begin,
-                Token.Identifiers.TypeParameterName("T"),
-                Token.Punctuation.Comma,
-                Token.Identifiers.TypeParameterName("TResult"),
-                Token.Punctuation.TypeParameters.End,
-                Token.Punctuation.OpenParen,
-                Token.Type("T"),
-                Token.Identifiers.ParameterName("arg"),
-                Token.Punctuation.CloseParen,
-                Token.Keywords.Where,
-                Token.Type("T"),
-                Token.Punctuation.Colon,
-                Token.Type("TResult"),
                 Token.Punctuation.Semicolon]);
         });
 

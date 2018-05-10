@@ -131,5 +131,53 @@ public    abstract class PublicAbstractClass { }
                   Token.Punctuation.OpenBrace,
                   Token.Punctuation.CloseBrace]);
         });
+
+        it("private class extends", () => {
+              const input = Input.FromText(`private class Car extends Vehicle {}`);
+              const tokens = tokenize(input);
+
+              tokens.should.deep.equal([
+                  Token.Keywords.Modifiers.Private,
+                  Token.Keywords.Class,
+                  Token.Identifiers.ClassName("Car"),
+                  Token.Keywords.Extends,
+                  Token.Identifiers.ExtendsName("Vehicle"),
+                  Token.Punctuation.OpenBrace,
+                  Token.Punctuation.CloseBrace]);
+        });
+
+        it("class extends implements", () => {
+              const input = Input.FromText(`public abstract class MySecondException extends Exception implements MyInterface {}`);
+              const tokens = tokenize(input);
+
+              tokens.should.deep.equal([
+                  Token.Keywords.Modifiers.Public,
+                  Token.Keywords.Modifiers.Abstract,
+                  Token.Keywords.Class,
+                  Token.Identifiers.ClassName("MySecondException"),
+                  Token.Keywords.Extends,
+                  Token.Identifiers.ExtendsName("Exception"),
+                  Token.Keywords.Implements,
+                  Token.Identifiers.ImplementsName("MyInterface"),
+                  Token.Punctuation.OpenBrace,
+                  Token.Punctuation.CloseBrace]);
+        });
+
+        it("class implements extends", () => {
+              const input = Input.FromText(`public abstract class MySecondException implements MyInterface extends Exception {}`);
+              const tokens = tokenize(input);
+
+              tokens.should.deep.equal([
+                  Token.Keywords.Modifiers.Public,
+                  Token.Keywords.Modifiers.Abstract,
+                  Token.Keywords.Class,
+                  Token.Identifiers.ClassName("MySecondException"),
+                  Token.Keywords.Implements,
+                  Token.Identifiers.ImplementsName("MyInterface"),
+                  Token.Keywords.Extends,
+                  Token.Identifiers.ExtendsName("Exception"),
+                  Token.Punctuation.OpenBrace,
+                  Token.Punctuation.CloseBrace]);
+        });
     });
 });

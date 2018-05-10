@@ -219,7 +219,7 @@ repository:
         include: "#await-expression"
       }
       {
-        include: "#query-expression"
+        include: "#soql-query-expression"
       }
       {
         include: "#as-expression"
@@ -369,6 +369,12 @@ repository:
           {
             include: "#generic-constraints"
           }
+          {
+            include: "#extends-class"
+          }
+          {
+            include: "#implements-class"
+          }
         ]
       }
       {
@@ -492,6 +498,9 @@ repository:
           {
             include: "#generic-constraints"
           }
+          {
+            include: "#extends-class"
+          }
         ]
       }
       {
@@ -513,6 +522,112 @@ repository:
         include: "#comment"
       }
     ]
+  "extends-class":
+    begin: "(extends)\\b\\s+([_[:alpha:]][_[:alnum:]]*)"
+    beginCaptures:
+      "1":
+        name: "keyword.other.extends.apex"
+      "2":
+        name: "entity.name.type.extends.apex"
+    end: "(?={|implements)"
+  "implements-class":
+    begin: "(implements)\\b\\s+([_[:alpha:]][_[:alnum:]]*)"
+    beginCaptures:
+      "1":
+        name: "keyword.other.implements.apex"
+      "2":
+        name: "entity.name.type.implements.apex"
+    end: "(?={|extends)"
+  "soql-query-expression":
+    begin: "\\b(select)\\b\\s*"
+    beginCaptures:
+      "1":
+        name: "keyword.query.select.apex"
+    end: "(?=;)|(?=\\])|(?=\\))"
+    patterns: [
+      {
+        include: "#soql-query-body"
+      }
+      {
+        name: "keyword.query.field.apex"
+        match: "[_.[:alpha:]][_.[:alnum:]]*"
+      }
+      {
+        include: "#comment"
+      }
+      {
+        include: "#punctuation-comma"
+      }
+      {
+        include: "#colon-expression"
+      }
+      {
+        include: "#operator-assignment"
+      }
+      {
+        include: "#parenthesized-expression"
+      }
+      {
+        include: "#literal"
+      }
+    ]
+  "soql-query-body":
+    patterns: [
+      {
+        include: "#from-clause"
+      }
+      {
+        include: "#where-clause"
+      }
+      {
+        include: "#orderby-clause"
+      }
+      {
+        include: "#ordering-direction"
+      }
+      {
+        include: "#ordering-nulls"
+      }
+    ]
+  "from-clause":
+    match: "(from)\\b\\s*([_\\.[:alnum:]]+)\\b\\s*"
+    captures:
+      "1":
+        name: "keyword.query.from.apex"
+      "2":
+        name: "keyword.query.type.apex"
+  "where-clause":
+    match: "\\b(where)\\b\\s*"
+    captures:
+      "1":
+        name: "keyword.query.where.apex"
+  "orderby-clause":
+    match: "\\b(ORDER BY)\\b\\s*"
+    captures:
+      "1":
+        name: "keyword.query.orderby.apex"
+    patterns: [
+      {
+        include: "#ordering-direction"
+      }
+      {
+        include: "#ordering-nulls"
+      }
+    ]
+  "ordering-direction":
+    match: "\\b(?:(ASC)|(DESC))\\b"
+    captures:
+      "1":
+        name: "keyword.query.ascending.apex"
+      "2":
+        name: "keyword.query.descending.apex"
+  "ordering-nulls":
+    match: "\\b(?:(NULLS first)|(NULLS last))\\b"
+    captures:
+      "1":
+        name: "keyword.query.nullsfirst.apex"
+      "2":
+        name: "keyword.query.nullslast.apex"
   "type-parameter-list":
     begin: "\\<"
     beginCaptures:
@@ -2329,6 +2444,9 @@ repository:
         name: "punctuation.squarebracket.close.apex"
     patterns: [
       {
+        include: "#soql-query-expression"
+      }
+      {
         include: "#named-argument"
       }
       {
@@ -2364,262 +2482,6 @@ repository:
         include: "#expression"
       }
     ]
-  "query-expression":
-    begin: '''
-      (?x)
-      \\b(from)\\b\\s*
-      (?<type-name>
-        (?:
-          (?:
-            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
-              \\g<identifier>\\s*
-              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-            )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-          )
-          (?:\\s*\\?\\s*)? # nullable suffix?
-          (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-        )
-      )?
-      \\s+(\\g<identifier>)\\b\\s*
-      \\b(in)\\b\\s*
-    '''
-    beginCaptures:
-      "1":
-        name: "keyword.query.from.apex"
-      "2":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-      "7":
-        name: "entity.name.variable.range-variable.apex"
-      "8":
-        name: "keyword.query.in.apex"
-    end: "(?=;|\\))"
-    patterns: [
-      {
-        include: "#query-body"
-      }
-      {
-        include: "#expression"
-      }
-    ]
-  "query-body":
-    patterns: [
-      {
-        include: "#let-clause"
-      }
-      {
-        include: "#where-clause"
-      }
-      {
-        include: "#join-clause"
-      }
-      {
-        include: "#orderby-clause"
-      }
-      {
-        include: "#select-clause"
-      }
-      {
-        include: "#group-clause"
-      }
-    ]
-  "let-clause":
-    begin: '''
-      (?x)
-      \\b(let)\\b\\s*
-      (@?[_[:alpha:]][_[:alnum:]]*)\\b\\s*
-      (=)\\s*
-    '''
-    beginCaptures:
-      "1":
-        name: "keyword.query.let.apex"
-      "2":
-        name: "entity.name.variable.range-variable.apex"
-      "3":
-        name: "keyword.operator.assignment.apex"
-    end: "(?=;|\\))"
-    patterns: [
-      {
-        include: "#query-body"
-      }
-      {
-        include: "#expression"
-      }
-    ]
-  "where-clause":
-    begin: '''
-      (?x)
-      \\b(where)\\b\\s*
-    '''
-    beginCaptures:
-      "1":
-        name: "keyword.query.where.apex"
-    end: "(?=;|\\))"
-    patterns: [
-      {
-        include: "#query-body"
-      }
-      {
-        include: "#expression"
-      }
-    ]
-  "join-clause":
-    begin: '''
-      (?x)
-      \\b(join)\\b\\s*
-      (?<type-name>
-        (?:
-          (?:
-            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
-              \\g<identifier>\\s*
-              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-            )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-          )
-          (?:\\s*\\?\\s*)? # nullable suffix?
-          (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-        )
-      )?
-      \\s+(\\g<identifier>)\\b\\s*
-      \\b(in)\\b\\s*
-    '''
-    beginCaptures:
-      "1":
-        name: "keyword.query.join.apex"
-      "2":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-      "7":
-        name: "entity.name.variable.range-variable.apex"
-      "8":
-        name: "keyword.query.in.apex"
-    end: "(?=;|\\))"
-    patterns: [
-      {
-        include: "#join-on"
-      }
-      {
-        include: "#join-equals"
-      }
-      {
-        include: "#join-into"
-      }
-      {
-        include: "#query-body"
-      }
-      {
-        include: "#expression"
-      }
-    ]
-  "join-on":
-    match: "\\b(on)\\b\\s*"
-    captures:
-      "1":
-        name: "keyword.query.on.apex"
-  "join-equals":
-    match: "\\b(equals)\\b\\s*"
-    captures:
-      "1":
-        name: "keyword.query.equals.apex"
-  "join-into":
-    match: '''
-      (?x)
-      \\b(into)\\b\\s*
-      (@?[_[:alpha:]][_[:alnum:]]*)\\b\\s*
-    '''
-    captures:
-      "1":
-        name: "keyword.query.into.apex"
-      "2":
-        name: "entity.name.variable.range-variable.apex"
-  "orderby-clause":
-    begin: "\\b(orderby)\\b\\s*"
-    beginCaptures:
-      "1":
-        name: "keyword.query.orderby.apex"
-    end: "(?=;|\\))"
-    patterns: [
-      {
-        include: "#ordering-direction"
-      }
-      {
-        include: "#query-body"
-      }
-      {
-        include: "#expression"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-    ]
-  "ordering-direction":
-    match: "\\b(?:(ascending)|(descending))\\b"
-    captures:
-      "1":
-        name: "keyword.query.ascending.apex"
-      "2":
-        name: "keyword.query.descending.apex"
-  "select-clause":
-    begin: "\\b(select)\\b\\s*"
-    beginCaptures:
-      "1":
-        name: "keyword.query.select.apex"
-    end: "(?=;|\\))"
-    patterns: [
-      {
-        include: "#query-body"
-      }
-      {
-        include: "#expression"
-      }
-    ]
-  "group-clause":
-    begin: "\\b(group)\\b\\s*"
-    beginCaptures:
-      "1":
-        name: "keyword.query.group.apex"
-    end: "(?=;|\\))"
-    patterns: [
-      {
-        include: "#group-by"
-      }
-      {
-        include: "#group-into"
-      }
-      {
-        include: "#query-body"
-      }
-      {
-        include: "#expression"
-      }
-    ]
-  "group-by":
-    match: "\\b(by)\\b\\s*"
-    captures:
-      "1":
-        name: "keyword.query.by.apex"
-  "group-into":
-    match: '''
-      (?x)
-      \\b(into)\\b\\s*
-      (@?[_[:alpha:]][_[:alnum:]]*)\\b\\s*
-    '''
-    captures:
-      "1":
-        name: "keyword.query.into.apex"
-      "2":
-        name: "entity.name.variable.range-variable.apex"
   "anonymous-method-expression":
     patterns: [
       {
