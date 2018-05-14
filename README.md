@@ -1,3 +1,13 @@
+# Salesforce Language Grammar
+
+## Introduction
+
+This repository contains the source code for generating the grammar language files for Salesforce's Apex.
+
+## Disclaimer
+
+Development and setup of this project has not been tested for Windows OS. You may see a node-gyp error - [follow the instrutions here to resolve it](https://github.com/nodejs/node-gyp/blob/master/README.md).
+
 ## Development
 
 To **build and test** install Node.js do the following:
@@ -6,8 +16,6 @@ To **build and test** install Node.js do the following:
 * Run `gulp` to build and run tests.
 
 Output grammars are output in the `grammars\` dirctory.
-
-On Windows you may see a node-gyp error - [follow the instrutions here to resolve it](https://github.com/nodejs/node-gyp/blob/master/README.md).
 
 ### Adding grammas rules
 
