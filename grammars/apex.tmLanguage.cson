@@ -24,9 +24,6 @@ repository:
   directives:
     patterns: [
       {
-        include: "#attribute-section"
-      }
-      {
         include: "#punctuation-semicolon"
       }
     ]
@@ -72,9 +69,6 @@ repository:
         include: "#interface-declaration"
       }
       {
-        include: "#attribute-section"
-      }
-      {
         include: "#punctuation-semicolon"
       }
     ]
@@ -111,9 +105,6 @@ repository:
         include: "#method-declaration"
       }
       {
-        include: "#attribute-section"
-      }
-      {
         include: "#punctuation-semicolon"
       }
     ]
@@ -130,9 +121,6 @@ repository:
       }
       {
         include: "#method-declaration"
-      }
-      {
-        include: "#attribute-section"
       }
       {
         include: "#punctuation-semicolon"
@@ -174,13 +162,7 @@ repository:
         include: "#throw-statement"
       }
       {
-        include: "#await-statement"
-      }
-      {
         include: "#try-statement"
-      }
-      {
-        include: "#labeled-statement"
       }
       {
         include: "#local-declaration"
@@ -201,13 +183,10 @@ repository:
         include: "#comment"
       }
       {
-        include: "#nameof-expression"
-      }
-      {
         include: "#throw-expression"
       }
       {
-        include: "#this-or-base-expression"
+        include: "#this-expression"
       }
       {
         include: "#conditional-operator"
@@ -216,28 +195,13 @@ repository:
         include: "#expression-operators"
       }
       {
-        include: "#await-expression"
-      }
-      {
         include: "#soql-query-expression"
-      }
-      {
-        include: "#as-expression"
-      }
-      {
-        include: "#is-expression"
-      }
-      {
-        include: "#anonymous-method-expression"
       }
       {
         include: "#object-creation-expression"
       }
       {
         include: "#array-creation-expression"
-      }
-      {
-        include: "#anonymous-object-creation-expression"
       }
       {
         include: "#invocation-expression"
@@ -258,80 +222,10 @@ repository:
         include: "#parenthesized-expression"
       }
       {
-        include: "#tuple-deconstruction-assignment"
-      }
-      {
         include: "#initializer-expression"
       }
       {
         include: "#identifier"
-      }
-    ]
-  "attribute-section":
-    begin: "(\\[)(assembly|module|field|method|param|property|return|type)?(\\:)?"
-    beginCaptures:
-      "1":
-        name: "punctuation.squarebracket.open.apex"
-      "2":
-        name: "keyword.other.attribute-specifier.apex"
-      "3":
-        name: "punctuation.separator.colon.apex"
-    end: "(\\])"
-    endCaptures:
-      "1":
-        name: "punctuation.squarebracket.close.apex"
-    patterns: [
-      {
-        include: "#comment"
-      }
-      {
-        include: "#attribute"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-    ]
-  attribute:
-    patterns: [
-      {
-        include: "#type-name"
-      }
-      {
-        include: "#attribute-arguments"
-      }
-    ]
-  "attribute-arguments":
-    begin: "(\\()"
-    beginCaptures:
-      "1":
-        name: "punctuation.parenthesis.open.apex"
-    end: "(\\))"
-    endCaptures:
-      "1":
-        name: "punctuation.parenthesis.close.apex"
-    patterns: [
-      {
-        include: "#attribute-named-argument"
-      }
-      {
-        include: "#expression"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-    ]
-  "attribute-named-argument":
-    begin: "(@?[_[:alpha:]][_[:alnum:]]*)\\s*(?==)"
-    beginCaptures:
-      "1":
-        name: "entity.name.variable.property.apex"
-    end: "(?=(,|\\)))"
-    patterns: [
-      {
-        include: "#operator-assignment"
-      }
-      {
-        include: "#expression"
       }
     ]
   "sharing-modifier":
@@ -339,7 +233,7 @@ repository:
     match: "(?<!\\.)\\b(with sharing|without sharing)\\b"
   "storage-modifier":
     name: "storage.modifier.apex"
-    match: "(?<!\\.)\\b(new|public|protected|internal|private|abstract|virtual|override|global|static|partial|final|async)\\b"
+    match: "(?<!\\.)\\b(new|public|protected|private|abstract|virtual|override|global|static|final)\\b"
   "class-declaration":
     begin: "(?=\\bclass\\b)"
     end: "(?<=\\})"
@@ -362,12 +256,6 @@ repository:
           }
           {
             include: "#type-parameter-list"
-          }
-          {
-            include: "#base-types"
-          }
-          {
-            include: "#generic-constraints"
           }
           {
             include: "#extends-class"
@@ -415,18 +303,6 @@ repository:
               "2":
                 name: "entity.name.type.enum.apex"
           }
-          {
-            begin: ":"
-            beginCaptures:
-              "0":
-                name: "punctuation.separator.colon.apex"
-            end: "(?=\\{)"
-            patterns: [
-              {
-                include: "#type"
-              }
-            ]
-          }
         ]
       }
       {
@@ -441,9 +317,6 @@ repository:
         patterns: [
           {
             include: "#comment"
-          }
-          {
-            include: "#attribute-section"
           }
           {
             include: "#punctuation-comma"
@@ -491,12 +364,6 @@ repository:
           }
           {
             include: "#type-parameter-list"
-          }
-          {
-            include: "#base-types"
-          }
-          {
-            include: "#generic-constraints"
           }
           {
             include: "#extends-class"
@@ -639,12 +506,6 @@ repository:
         name: "punctuation.definition.typeparameters.end.apex"
     patterns: [
       {
-        match: "\\b(in|out)\\b"
-        captures:
-          "1":
-            name: "storage.modifier.apex"
-      }
-      {
         match: "(@?[_[:alpha:]][_[:alnum:]]*)\\b"
         captures:
           "1":
@@ -655,58 +516,6 @@ repository:
       }
       {
         include: "#punctuation-comma"
-      }
-      {
-        include: "#attribute-section"
-      }
-    ]
-  "base-types":
-    begin: ":"
-    beginCaptures:
-      "0":
-        name: "punctuation.separator.colon.apex"
-    end: "(?=\\{|where)"
-    patterns: [
-      {
-        include: "#type"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-    ]
-  "generic-constraints":
-    begin: "(where)\\s+(@?[_[:alpha:]][_[:alnum:]]*)\\s*(:)"
-    beginCaptures:
-      "1":
-        name: "keyword.other.where.apex"
-      "2":
-        name: "storage.type.apex"
-      "3":
-        name: "punctuation.separator.colon.apex"
-    end: "(?=\\{|where|;|=>)"
-    patterns: [
-      {
-        name: "keyword.other.class.apex"
-        match: "\\bclass\\b"
-      }
-      {
-        match: "(new)\\s*(\\()\\s*(\\))"
-        captures:
-          "1":
-            name: "keyword.control.new.apex"
-          "2":
-            name: "punctuation.parenthesis.open.apex"
-          "3":
-            name: "punctuation.parenthesis.close.apex"
-      }
-      {
-        include: "#type"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-      {
-        include: "#generic-constraints"
       }
     ]
   "field-declaration":
@@ -720,8 +529,7 @@ repository:
               \\g<identifier>\\s*
               (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)*
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
           (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -737,7 +545,7 @@ repository:
             include: "#type"
           }
         ]
-      "6":
+      "5":
         name: "entity.name.variable.field.apex"
     end: "(?=;)"
     patterns: [
@@ -772,8 +580,7 @@ repository:
                 \\g<identifier>\\s*
                 (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-              (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)*
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
             (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -791,7 +598,7 @@ repository:
             include: "#type"
           }
         ]
-      "7":
+      "6":
         patterns: [
           {
             include: "#type"
@@ -800,7 +607,7 @@ repository:
             include: "#punctuation-accessor"
           }
         ]
-      "8":
+      "7":
         name: "entity.name.variable.property.apex"
     end: "(?<=\\})|(?=;)"
     patterns: [
@@ -833,8 +640,7 @@ repository:
                 \\g<identifier>\\s*
                 (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-              (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)*
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
             (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -852,7 +658,7 @@ repository:
             include: "#type"
           }
         ]
-      "7":
+      "6":
         patterns: [
           {
             include: "#type"
@@ -861,15 +667,12 @@ repository:
             include: "#punctuation-accessor"
           }
         ]
-      "8":
+      "7":
         name: "keyword.other.this.apex"
     end: "(?<=\\})|(?=;)"
     patterns: [
       {
         include: "#comment"
-      }
-      {
-        include: "#bracketed-parameter-list"
       }
       {
         include: "#property-accessors"
@@ -893,7 +696,7 @@ repository:
     patterns: [
       {
         name: "storage.modifier.apex"
-        match: "\\b(private|protected|internal)\\b"
+        match: "\\b(private|protected)\\b"
       }
       {
         name: "keyword.other.get.apex"
@@ -905,9 +708,6 @@ repository:
       }
       {
         include: "#comment"
-      }
-      {
-        include: "#attribute-section"
       }
       {
         include: "#expression-body"
@@ -932,8 +732,7 @@ repository:
                 \\g<identifier>\\s*
                 (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-              (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)*
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
             (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -952,7 +751,7 @@ repository:
             include: "#type"
           }
         ]
-      "7":
+      "6":
         patterns: [
           {
             include: "#type"
@@ -961,9 +760,9 @@ repository:
             include: "#punctuation-accessor"
           }
         ]
-      "8":
+      "7":
         name: "entity.name.function.apex"
-      "9":
+      "8":
         patterns: [
           {
             include: "#type-parameter-list"
@@ -976,9 +775,6 @@ repository:
       }
       {
         include: "#parenthesized-parameter-list"
-      }
-      {
-        include: "#generic-constraints"
       }
       {
         include: "#expression-body"
@@ -1023,11 +819,9 @@ repository:
       }
     ]
   "constructor-initializer":
-    begin: "\\b(?:(base)|(this))\\b\\s*(?=\\()"
+    begin: "\\b(?:(this))\\b\\s*(?=\\()"
     beginCaptures:
       "1":
-        name: "keyword.other.base.apex"
-      "2":
         name: "keyword.other.this.apex"
     end: "(?<=\\))"
     patterns: [
@@ -1124,17 +918,6 @@ repository:
     beginCaptures:
       "1":
         name: "keyword.control.flow.throw.apex"
-    end: "(?=;)"
-    patterns: [
-      {
-        include: "#expression"
-      }
-    ]
-  "await-statement":
-    begin: "(?<!\\.)\\b(await)\\b"
-    beginCaptures:
-      "1":
-        name: "keyword.other.await.apex"
     end: "(?=;)"
     patterns: [
       {
@@ -1388,8 +1171,7 @@ repository:
                       \\g<identifier>\\s*
                       (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
                     )
-                    (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-                    (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+                    (?:\\s*\\.\\s*\\g<name-and-type-args>)*
                   )
                   (?:\\s*\\?\\s*)? # nullable suffix?
                   (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -1404,7 +1186,7 @@ repository:
                     include: "#type"
                   }
                 ]
-              "6":
+              "5":
                 name: "entity.name.variable.local.apex"
           }
         ]
@@ -1438,13 +1220,6 @@ repository:
         include: "#comment"
       }
     ]
-  "labeled-statement":
-    match: "(@?[_[:alpha:]][_[:alnum:]]*)\\s*(:)"
-    captures:
-      "1":
-        name: "entity.name.label.apex"
-      "2":
-        name: "punctuation.separator.colon.apex"
   "local-declaration":
     patterns: [
       {
@@ -1452,9 +1227,6 @@ repository:
       }
       {
         include: "#local-variable-declaration"
-      }
-      {
-        include: "#local-tuple-var-deconstruction"
       }
     ]
   "local-variable-declaration":
@@ -1471,8 +1243,7 @@ repository:
                 \\g<identifier>\\s*
                 (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-              (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)*
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
             (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -1493,7 +1264,7 @@ repository:
             include: "#type"
           }
         ]
-      "8":
+      "7":
         name: "entity.name.variable.local.apex"
     end: "(?=;|\\))"
     patterns: [
@@ -1523,8 +1294,7 @@ repository:
               \\g<identifier>\\s*
               (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)*
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
           (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -1542,7 +1312,7 @@ repository:
             include: "#type"
           }
         ]
-      "7":
+      "6":
         name: "entity.name.variable.local.apex"
     end: "(?=;)"
     patterns: [
@@ -1558,196 +1328,6 @@ repository:
       }
       {
         include: "#variable-initializer"
-      }
-    ]
-  "local-tuple-var-deconstruction":
-    begin: '''
-      (?x) # e.g. var (x, y) = GetPoint();
-      (?:\\b(var)\\b\\s*)
-      (?<tuple>\\((?:[^\\(\\)]|\\g<tuple>)+\\))\\s*
-      (?=;|=|\\))
-    '''
-    beginCaptures:
-      "1":
-        name: "keyword.other.var.apex"
-      "2":
-        patterns: [
-          {
-            include: "#tuple-declaration-deconstruction-element-list"
-          }
-        ]
-    end: "(?=;|\\))"
-    patterns: [
-      {
-        include: "#comment"
-      }
-      {
-        include: "#variable-initializer"
-      }
-    ]
-  "tuple-deconstruction-assignment":
-    match: '''
-      (?x)
-      (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))\\s*
-      (?!=>|==)(?==)
-    '''
-    captures:
-      "1":
-        patterns: [
-          {
-            include: "#tuple-deconstruction-element-list"
-          }
-        ]
-  "tuple-declaration-deconstruction-element-list":
-    begin: "\\("
-    beginCaptures:
-      "0":
-        name: "punctuation.parenthesis.open.apex"
-    end: "\\)"
-    endCaptures:
-      "0":
-        name: "punctuation.parenthesis.close.apex"
-    patterns: [
-      {
-        include: "#comment"
-      }
-      {
-        include: "#tuple-declaration-deconstruction-element-list"
-      }
-      {
-        include: "#declaration-expression-tuple"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-      {
-        match: '''
-          (?x) # e.g. x
-          (@?[_[:alpha:]][_[:alnum:]]*)\\b\\s*
-          (?=[,)])
-        '''
-        captures:
-          "1":
-            name: "entity.name.variable.tuple-element.apex"
-      }
-    ]
-  "tuple-deconstruction-element-list":
-    begin: "\\("
-    beginCaptures:
-      "0":
-        name: "punctuation.parenthesis.open.apex"
-    end: "\\)"
-    endCaptures:
-      "0":
-        name: "punctuation.parenthesis.close.apex"
-    patterns: [
-      {
-        include: "#comment"
-      }
-      {
-        include: "#tuple-deconstruction-element-list"
-      }
-      {
-        include: "#declaration-expression-tuple"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-      {
-        match: '''
-          (?x) # e.g. x
-          (@?[_[:alpha:]][_[:alnum:]]*)\\b\\s*
-          (?=[,)])
-        '''
-        captures:
-          "1":
-            name: "variable.other.readwrite.apex"
-      }
-    ]
-  "declaration-expression-local":
-    match: '''
-      (?x) # e.g. int x OR var x
-      (?:
-        \\b(var)\\b|
-        (?<type-name>
-          (?:
-            (?:
-              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<name-and-type-args> # identifier + type arguments (if any)
-                \\g<identifier>\\s*
-                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-              )
-              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-              (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-            )
-            (?:\\s*\\?\\s*)? # nullable suffix?
-            (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-          )
-        )
-      )\\s+
-      (\\g<identifier>)\\b\\s*
-      (?=[,)\\]])
-    '''
-    captures:
-      "1":
-        name: "keyword.other.var.apex"
-      "2":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-      "7":
-        name: "entity.name.variable.local.apex"
-  "declaration-expression-tuple":
-    match: '''
-      (?x) # e.g. int x OR var x
-      (?:
-        \\b(var)\\b|
-        (?<type-name>
-          (?:
-            (?:
-              (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<name-and-type-args> # identifier + type arguments (if any)
-                \\g<identifier>\\s*
-                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-              )
-              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-              (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-            )
-            (?:\\s*\\?\\s*)? # nullable suffix?
-            (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-          )
-        )
-      )\\s+
-      (\\g<identifier>)\\b\\s*
-      (?=[,)])
-    '''
-    captures:
-      "1":
-        name: "keyword.other.var.apex"
-      "2":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-      "7":
-        name: "entity.name.variable.tuple-element.apex"
-  "nameof-expression":
-    begin: "(?<!\\.)\\b(nameof)\\b\\s*(\\()"
-    beginCaptures:
-      "1":
-        name: "keyword.other.nameof.apex"
-      "2":
-        name: "punctuation.parenthesis.open.apex"
-    end: "\\)"
-    endCaptures:
-      "0":
-        name: "punctuation.parenthesis.close.apex"
-    patterns: [
-      {
-        include: "#expression"
       }
     ]
   "throw-expression":
@@ -1768,12 +1348,6 @@ repository:
       }
       {
         include: "#string-literal"
-      }
-      {
-        include: "#string-double-quote-literal"
-      }
-      {
-        include: "#tuple-literal"
       }
     ]
   "boolean-literal":
@@ -1834,63 +1408,9 @@ repository:
         include: "#string-character-escape"
       }
     ]
-  "string-double-quote-literal":
-    name: "string.quoted.double.apex"
-    begin: "(?<!@)\""
-    beginCaptures:
-      "0":
-        name: "punctuation.definition.stringdoublequote.begin.apex"
-    end: "(\")|((?:[^\\\\\\n])$)"
-    endCaptures:
-      "1":
-        name: "punctuation.definition.stringdoublequote.end.apex"
-      "2":
-        name: "invalid.illegal.newline.apex"
-    patterns: [
-      {
-        include: "#string-character-escape"
-      }
-    ]
   "string-character-escape":
     name: "constant.character.escape.apex"
     match: "\\\\."
-  "tuple-literal":
-    begin: "(\\()(?=.*[:,])"
-    beginCaptures:
-      "1":
-        name: "punctuation.parenthesis.open.apex"
-    end: "\\)"
-    endCaptures:
-      "0":
-        name: "punctuation.parenthesis.close.apex"
-    patterns: [
-      {
-        include: "#comment"
-      }
-      {
-        include: "#tuple-literal-element"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-    ]
-  "tuple-literal-element":
-    begin: '''
-      (?x)
-      (?:(@?[_[:alpha:]][_[:alnum:]]*)\\s*(:)\\s*)?
-      (?![,)])
-    '''
-    beginCaptures:
-      "0":
-        name: "entity.name.variable.tuple-element.apex"
-      "1":
-        name: "punctuation.separator.colon.apex"
-    end: "(?=[,)])"
-    patterns: [
-      {
-        include: "#expression"
-      }
-    ]
   "expression-operators":
     patterns: [
       {
@@ -1937,10 +1457,6 @@ repository:
         name: "keyword.operator.arithmetic.apex"
         match: "%|\\*|/|-|\\+"
       }
-      {
-        name: "keyword.operator.null-coalescing.apex"
-        match: "\\?\\?"
-      }
     ]
   "conditional-operator":
     begin: "(?<!\\?)\\?(?!\\?|\\.|\\[)"
@@ -1959,9 +1475,6 @@ repository:
   "colon-expression":
     name: "keyword.operator.conditional.colon.apex"
     match: ":"
-  "await-expression":
-    name: "keyword.other.await.apex"
-    match: "(?!\\.)\\b(await)\\b"
   "parenthesized-expression":
     begin: "\\("
     beginCaptures:
@@ -2008,8 +1521,7 @@ repository:
               \\g<identifier>\\s*
               (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)*
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
           (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -2026,72 +1538,12 @@ repository:
             include: "#type"
           }
         ]
-      "7":
+      "6":
         name: "punctuation.parenthesis.close.apex"
-  "as-expression":
-    match: '''
-      (?x)
-      (?<!\\.)\\b(as)\\b\\s*
-      (?<type-name>
-        (?:
-          (?:
-            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
-              \\g<identifier>\\s*
-              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-            )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-          )
-          (?:\\s*\\?\\s*)? # nullable suffix?
-          (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-        )
-      )?
-    '''
+  "this-expression":
+    match: "\\b(?:(this))\\b"
     captures:
       "1":
-        name: "keyword.other.as.apex"
-      "2":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-  "is-expression":
-    match: '''
-      (?x)
-      (?<!\\.)\\b(is)\\b\\s*
-      (?<type-name>
-        (?:
-          (?:
-            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
-              \\g<identifier>\\s*
-              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-            )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-          )
-          (?:\\s*\\?\\s*)? # nullable suffix?
-          (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-        )
-      )?
-    '''
-    captures:
-      "1":
-        name: "keyword.other.is.apex"
-      "2":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-  "this-or-base-expression":
-    match: "\\b(?:(base)|(this))\\b"
-    captures:
-      "1":
-        name: "keyword.other.base.apex"
-      "2":
         name: "keyword.other.this.apex"
   "invocation-expression":
     begin: '''
@@ -2221,8 +1673,7 @@ repository:
               \\g<identifier>\\s*
               (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)*
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
           (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -2257,8 +1708,7 @@ repository:
               \\g<identifier>\\s*
               (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)*
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
           (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -2287,8 +1737,7 @@ repository:
               \\g<identifier>\\s*
               (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)*
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
           (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -2311,49 +1760,6 @@ repository:
         include: "#bracketed-argument-list"
       }
     ]
-  "anonymous-object-creation-expression":
-    begin: "\\b(new)\\b\\s*(?=\\{|$)"
-    beginCaptures:
-      "1":
-        name: "keyword.control.new.apex"
-    end: "(?<=\\})"
-    patterns: [
-      {
-        include: "#initializer-expression"
-      }
-    ]
-  "bracketed-parameter-list":
-    begin: "(?=(\\[))"
-    beginCaptures:
-      "1":
-        name: "punctuation.squarebracket.open.apex"
-    end: "(?=(\\]))"
-    endCaptures:
-      "1":
-        name: "punctuation.squarebracket.close.apex"
-    patterns: [
-      {
-        begin: "(?<=\\[)"
-        end: "(?=\\])"
-        patterns: [
-          {
-            include: "#comment"
-          }
-          {
-            include: "#attribute-section"
-          }
-          {
-            include: "#parameter"
-          }
-          {
-            include: "#punctuation-comma"
-          }
-          {
-            include: "#variable-initializer"
-          }
-        ]
-      }
-    ]
   "parenthesized-parameter-list":
     begin: "(\\()"
     beginCaptures:
@@ -2368,9 +1774,6 @@ repository:
         include: "#comment"
       }
       {
-        include: "#attribute-section"
-      }
-      {
         include: "#parameter"
       }
       {
@@ -2383,7 +1786,7 @@ repository:
   parameter:
     match: '''
       (?x)
-      (?:(?:\\b(ref|params|out|in|this)\\b)\\s+)?
+      (?:(?:\\b(this)\\b)\\s+)?
       (?<type-name>
         (?:
           (?:ref\\s+)?   # ref return
@@ -2393,8 +1796,7 @@ repository:
               \\g<identifier>\\s*
               (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)*
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
           (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
@@ -2411,7 +1813,7 @@ repository:
             include: "#type"
           }
         ]
-      "7":
+      "6":
         name: "entity.name.variable.parameter.apex"
   "argument-list":
     begin: "\\("
@@ -2427,7 +1829,7 @@ repository:
         include: "#named-argument"
       }
       {
-        include: "#argument"
+        include: "#expression"
       }
       {
         include: "#punctuation-comma"
@@ -2450,7 +1852,7 @@ repository:
         include: "#named-argument"
       }
       {
-        include: "#argument"
+        include: "#expression"
       }
       {
         include: "#punctuation-comma"
@@ -2466,141 +1868,14 @@ repository:
     end: "(?=(,|\\)|\\]))"
     patterns: [
       {
-        include: "#argument"
-      }
-    ]
-  argument:
-    patterns: [
-      {
-        name: "storage.modifier.apex"
-        match: "\\b(ref|out|in)\\b"
-      }
-      {
-        include: "#declaration-expression-local"
-      }
-      {
         include: "#expression"
       }
     ]
-  "anonymous-method-expression":
-    patterns: [
-      {
-        begin: '''
-          (?x)
-          (?:\\b(async)\\b\\s*)?
-          (@?[_[:alpha:]][_[:alnum:]]*)\\b\\s*
-          (=>)
-        '''
-        beginCaptures:
-          "1":
-            name: "storage.modifier.apex"
-          "2":
-            name: "entity.name.variable.parameter.apex"
-          "3":
-            name: "keyword.operator.arrow.apex"
-        end: "(?=\\)|;|}|,)"
-        patterns: [
-          {
-            include: "#block"
-          }
-          {
-            include: "#expression"
-          }
-        ]
-      }
-      {
-        begin: '''
-          (?x)
-          (?:\\b(async)\\b\\s*)?
-          (\\(.*?\\))\\s*
-          (=>)
-        '''
-        beginCaptures:
-          "1":
-            name: "storage.modifier.apex"
-          "2":
-            patterns: [
-              {
-                include: "#lambda-parameter-list"
-              }
-            ]
-          "3":
-            name: "keyword.operator.arrow.apex"
-        end: "(?=\\)|;|}|,)"
-        patterns: [
-          {
-            include: "#block"
-          }
-          {
-            include: "#expression"
-          }
-        ]
-      }
-    ]
-  "lambda-parameter-list":
-    begin: "\\("
-    beginCaptures:
-      "0":
-        name: "punctuation.parenthesis.open.apex"
-    end: "\\)"
-    endCaptures:
-      "0":
-        name: "punctuation.parenthesis.close.apex"
-    patterns: [
-      {
-        include: "#comment"
-      }
-      {
-        include: "#attribute-section"
-      }
-      {
-        include: "#lambda-parameter"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-    ]
-  "lambda-parameter":
-    match: '''
-      (?x)
-      (?:\\b(ref|out|in)\\b)?\\s*
-      (?<type-name>
-        (?:
-          (?:
-            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
-              \\g<identifier>\\s*
-              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-            )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-          )
-          (?:\\s*\\?\\s*)? # nullable suffix?
-          (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-        )
-      )?
-      (\\g<identifier>)\\b\\s*
-      (?=[,)])
-    '''
-    captures:
-      "1":
-        name: "storage.modifier.apex"
-      "2":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-      "7":
-        name: "entity.name.variable.parameter.apex"
   type:
     name: "meta.type.apex"
     patterns: [
       {
         include: "#comment"
-      }
-      {
-        include: "#tuple-type"
       }
       {
         include: "#type-builtin"
@@ -2618,52 +1893,6 @@ repository:
         include: "#type-nullable-suffix"
       }
     ]
-  "tuple-type":
-    begin: "\\("
-    beginCaptures:
-      "0":
-        name: "punctuation.parenthesis.open.apex"
-    end: "\\)"
-    endCaptures:
-      "0":
-        name: "punctuation.parenthesis.close.apex"
-    patterns: [
-      {
-        include: "#tuple-element"
-      }
-      {
-        include: "#punctuation-comma"
-      }
-    ]
-  "tuple-element":
-    match: '''
-      (?x)
-      (?<type-name>
-        (?:
-          (?:
-            (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
-              \\g<identifier>\\s*
-              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
-            )
-            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
-            (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
-          )
-          (?:\\s*\\?\\s*)? # nullable suffix?
-          (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
-        )
-      )
-      (?:(?<tuple-name>\\g<identifier>)\\b)?
-    '''
-    captures:
-      "1":
-        patterns: [
-          {
-            include: "#type"
-          }
-        ]
-      "6":
-        name: "entity.name.variable.tuple-element.apex"
   "type-builtin":
     match: "\\b(Blob|Boolean|byte|Date|Datetime|Decimal|Double|ID|Integer|Long|Object|String|Time|void)\\b"
     captures:

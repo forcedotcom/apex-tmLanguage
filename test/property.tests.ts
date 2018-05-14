@@ -103,26 +103,6 @@ public IBooom Property
       ]);
     });
 
-    it('auto-property single line (protected internal)', function() {
-      const input = Input.InClass(
-        `protected internal IBooom Property { get; set; }`
-      );
-      const tokens = tokenize(input);
-
-      tokens.should.deep.equal([
-        Token.Keywords.Modifiers.Protected,
-        Token.Keywords.Modifiers.Internal,
-        Token.Type('IBooom'),
-        Token.Identifiers.PropertyName('Property'),
-        Token.Punctuation.OpenBrace,
-        Token.Keywords.Get,
-        Token.Punctuation.Semicolon,
-        Token.Keywords.Set,
-        Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
-      ]);
-    });
-
     it('auto-property', () => {
       const input = Input.InClass(`
 public IBooom Property

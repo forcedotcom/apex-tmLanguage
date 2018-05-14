@@ -129,68 +129,15 @@ private String field = 'hello';
       ]);
     });
 
-    it('tuple type with no names and no modifiers', () => {
-      const input = Input.InClass(`(Integer, Integer) x;`);
+    it('type with no names and no modifiers', () => {
+      const input = Input.InClass(`public static Integer x;`);
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
-        Token.Punctuation.OpenParen,
+        Token.Keywords.Modifiers.Public,
+        Token.Keywords.Modifiers.Static,
         Token.PrimitiveType.Integer,
-        Token.Punctuation.Comma,
-        Token.PrimitiveType.Integer,
-        Token.Punctuation.CloseParen,
         Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
-      ]);
-    });
-
-    it('tuple type with no names and private modifier', () => {
-      const input = Input.InClass(`private (Integer, Integer) x;`);
-      const tokens = tokenize(input);
-
-      tokens.should.deep.equal([
-        Token.Keywords.Modifiers.Private,
-        Token.Punctuation.OpenParen,
-        Token.PrimitiveType.Integer,
-        Token.Punctuation.Comma,
-        Token.PrimitiveType.Integer,
-        Token.Punctuation.CloseParen,
-        Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
-      ]);
-    });
-
-    it('tuple type with names and no modifiers', () => {
-      const input = Input.InClass(`(Integer x, Integer y) z;`);
-      const tokens = tokenize(input);
-
-      tokens.should.deep.equal([
-        Token.Punctuation.OpenParen,
-        Token.PrimitiveType.Integer,
-        Token.Identifiers.TupleElementName('x'),
-        Token.Punctuation.Comma,
-        Token.PrimitiveType.Integer,
-        Token.Identifiers.TupleElementName('y'),
-        Token.Punctuation.CloseParen,
-        Token.Identifiers.FieldName('z'),
-        Token.Punctuation.Semicolon
-      ]);
-    });
-
-    it('tuple type with names and private modifier', () => {
-      const input = Input.InClass(`private (Integer x, Integer y) z;`);
-      const tokens = tokenize(input);
-
-      tokens.should.deep.equal([
-        Token.Keywords.Modifiers.Private,
-        Token.Punctuation.OpenParen,
-        Token.PrimitiveType.Integer,
-        Token.Identifiers.TupleElementName('x'),
-        Token.Punctuation.Comma,
-        Token.PrimitiveType.Integer,
-        Token.Identifiers.TupleElementName('y'),
-        Token.Punctuation.CloseParen,
-        Token.Identifiers.FieldName('z'),
         Token.Punctuation.Semicolon
       ]);
     });

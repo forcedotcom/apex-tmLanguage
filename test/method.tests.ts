@@ -85,7 +85,7 @@ Integer Add(Integer x, Integer y)
 
     it('declaration in interface with parameters', () => {
       const input = Input.InInterface(
-        `String GetString(String format, params Object[] args);`
+        `String GetString(String format, Object[] args);`
       );
       const tokens = tokenize(input);
 
@@ -96,7 +96,6 @@ Integer Add(Integer x, Integer y)
         Token.PrimitiveType.String,
         Token.Identifiers.ParameterName('format'),
         Token.Punctuation.Comma,
-        Token.Keywords.Modifiers.Params,
         Token.PrimitiveType.Object,
         Token.Punctuation.OpenBracket,
         Token.Punctuation.CloseBracket,

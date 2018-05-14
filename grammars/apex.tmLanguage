@@ -41,10 +41,6 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#attribute-section</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#punctuation-semicolon</string>
           </dict>
         </array>
@@ -111,10 +107,6 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#attribute-section</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#punctuation-semicolon</string>
           </dict>
         </array>
@@ -165,10 +157,6 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#attribute-section</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#punctuation-semicolon</string>
           </dict>
         </array>
@@ -192,10 +180,6 @@
           <dict>
             <key>include</key>
             <string>#method-declaration</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#attribute-section</string>
           </dict>
           <dict>
             <key>include</key>
@@ -253,15 +237,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#await-statement</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#try-statement</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#labeled-statement</string>
           </dict>
           <dict>
             <key>include</key>
@@ -291,15 +267,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#nameof-expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#throw-expression</string>
           </dict>
           <dict>
             <key>include</key>
-            <string>#this-or-base-expression</string>
+            <string>#this-expression</string>
           </dict>
           <dict>
             <key>include</key>
@@ -311,23 +283,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#await-expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#soql-query-expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#as-expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#is-expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#anonymous-method-expression</string>
           </dict>
           <dict>
             <key>include</key>
@@ -336,10 +292,6 @@
           <dict>
             <key>include</key>
             <string>#array-creation-expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#anonymous-object-creation-expression</string>
           </dict>
           <dict>
             <key>include</key>
@@ -367,141 +319,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#tuple-deconstruction-assignment</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#initializer-expression</string>
           </dict>
           <dict>
             <key>include</key>
             <string>#identifier</string>
-          </dict>
-        </array>
-      </dict>
-      <key>attribute-section</key>
-      <dict>
-        <key>begin</key>
-        <string>(\[)(assembly|module|field|method|param|property|return|type)?(\:)?</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.squarebracket.open.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.attribute-specifier.apex</string>
-          </dict>
-          <key>3</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.separator.colon.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(\])</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.squarebracket.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#comment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#attribute</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-        </array>
-      </dict>
-      <key>attribute</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#type-name</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#attribute-arguments</string>
-          </dict>
-        </array>
-      </dict>
-      <key>attribute-arguments</key>
-      <dict>
-        <key>begin</key>
-        <string>(\()</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.open.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(\))</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#attribute-named-argument</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-        </array>
-      </dict>
-      <key>attribute-named-argument</key>
-      <dict>
-        <key>begin</key>
-        <string>(@?[_[:alpha:]][_[:alnum:]]*)\s*(?==)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.property.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=(,|\)))</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#operator-assignment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
           </dict>
         </array>
       </dict>
@@ -517,7 +339,7 @@
         <key>name</key>
         <string>storage.modifier.apex</string>
         <key>match</key>
-        <string>(?&lt;!\.)\b(new|public|protected|internal|private|abstract|virtual|override|global|static|partial|final|async)\b</string>
+        <string>(?&lt;!\.)\b(new|public|protected|private|abstract|virtual|override|global|static|final)\b</string>
       </dict>
       <key>class-declaration</key>
       <dict>
@@ -556,14 +378,6 @@
               <dict>
                 <key>include</key>
                 <string>#type-parameter-list</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#base-types</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#generic-constraints</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -646,27 +460,6 @@
                   </dict>
                 </dict>
               </dict>
-              <dict>
-                <key>begin</key>
-                <string>:</string>
-                <key>beginCaptures</key>
-                <dict>
-                  <key>0</key>
-                  <dict>
-                    <key>name</key>
-                    <string>punctuation.separator.colon.apex</string>
-                  </dict>
-                </dict>
-                <key>end</key>
-                <string>(?=\{)</string>
-                <key>patterns</key>
-                <array>
-                  <dict>
-                    <key>include</key>
-                    <string>#type</string>
-                  </dict>
-                </array>
-              </dict>
             </array>
           </dict>
           <dict>
@@ -695,10 +488,6 @@
               <dict>
                 <key>include</key>
                 <string>#comment</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#attribute-section</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -774,14 +563,6 @@
               <dict>
                 <key>include</key>
                 <string>#type-parameter-list</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#base-types</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#generic-constraints</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -1059,18 +840,6 @@
         <array>
           <dict>
             <key>match</key>
-            <string>\b(in|out)\b</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>storage.modifier.apex</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>match</key>
             <string>(@?[_[:alpha:]][_[:alnum:]]*)\b</string>
             <key>captures</key>
             <dict>
@@ -1089,104 +858,6 @@
             <key>include</key>
             <string>#punctuation-comma</string>
           </dict>
-          <dict>
-            <key>include</key>
-            <string>#attribute-section</string>
-          </dict>
-        </array>
-      </dict>
-      <key>base-types</key>
-      <dict>
-        <key>begin</key>
-        <string>:</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.separator.colon.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=\{|where)</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#type</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-        </array>
-      </dict>
-      <key>generic-constraints</key>
-      <dict>
-        <key>begin</key>
-        <string>(where)\s+(@?[_[:alpha:]][_[:alnum:]]*)\s*(:)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.where.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>storage.type.apex</string>
-          </dict>
-          <key>3</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.separator.colon.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=\{|where|;|=&gt;)</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.class.apex</string>
-            <key>match</key>
-            <string>\bclass\b</string>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>(new)\s*(\()\s*(\))</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.control.new.apex</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.parenthesis.open.apex</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.parenthesis.close.apex</string>
-              </dict>
-            </dict>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#type</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generic-constraints</string>
-          </dict>
         </array>
       </dict>
       <key>field-declaration</key>
@@ -1201,8 +872,7 @@
         \g&lt;identifier&gt;\s*
         (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1222,7 +892,7 @@
               </dict>
             </array>
           </dict>
-          <key>6</key>
+          <key>5</key>
           <dict>
             <key>name</key>
             <string>entity.name.variable.field.apex</string>
@@ -1271,8 +941,7 @@
           \g&lt;identifier&gt;\s*
           (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
         )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-        (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
       )
       (?:\s*\?\s*)? # nullable suffix?
       (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1294,7 +963,7 @@
               </dict>
             </array>
           </dict>
-          <key>7</key>
+          <key>6</key>
           <dict>
             <key>patterns</key>
             <array>
@@ -1308,7 +977,7 @@
               </dict>
             </array>
           </dict>
-          <key>8</key>
+          <key>7</key>
           <dict>
             <key>name</key>
             <string>entity.name.variable.property.apex</string>
@@ -1354,8 +1023,7 @@
           \g&lt;identifier&gt;\s*
           (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
         )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-        (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
       )
       (?:\s*\?\s*)? # nullable suffix?
       (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1377,7 +1045,7 @@
               </dict>
             </array>
           </dict>
-          <key>7</key>
+          <key>6</key>
           <dict>
             <key>patterns</key>
             <array>
@@ -1391,7 +1059,7 @@
               </dict>
             </array>
           </dict>
-          <key>8</key>
+          <key>7</key>
           <dict>
             <key>name</key>
             <string>keyword.other.this.apex</string>
@@ -1404,10 +1072,6 @@
           <dict>
             <key>include</key>
             <string>#comment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#bracketed-parameter-list</string>
           </dict>
           <dict>
             <key>include</key>
@@ -1451,7 +1115,7 @@
             <key>name</key>
             <string>storage.modifier.apex</string>
             <key>match</key>
-            <string>\b(private|protected|internal)\b</string>
+            <string>\b(private|protected)\b</string>
           </dict>
           <dict>
             <key>name</key>
@@ -1468,10 +1132,6 @@
           <dict>
             <key>include</key>
             <string>#comment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#attribute-section</string>
           </dict>
           <dict>
             <key>include</key>
@@ -1501,8 +1161,7 @@
           \g&lt;identifier&gt;\s*
           (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
         )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-        (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
       )
       (?:\s*\?\s*)? # nullable suffix?
       (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1525,7 +1184,7 @@
               </dict>
             </array>
           </dict>
-          <key>7</key>
+          <key>6</key>
           <dict>
             <key>patterns</key>
             <array>
@@ -1539,12 +1198,12 @@
               </dict>
             </array>
           </dict>
-          <key>8</key>
+          <key>7</key>
           <dict>
             <key>name</key>
             <string>entity.name.function.apex</string>
           </dict>
-          <key>9</key>
+          <key>8</key>
           <dict>
             <key>patterns</key>
             <array>
@@ -1566,10 +1225,6 @@
           <dict>
             <key>include</key>
             <string>#parenthesized-parameter-list</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#generic-constraints</string>
           </dict>
           <dict>
             <key>include</key>
@@ -1643,15 +1298,10 @@
       <key>constructor-initializer</key>
       <dict>
         <key>begin</key>
-        <string>\b(?:(base)|(this))\b\s*(?=\()</string>
+        <string>\b(?:(this))\b\s*(?=\()</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.base.apex</string>
-          </dict>
-          <key>2</key>
           <dict>
             <key>name</key>
             <string>keyword.other.this.apex</string>
@@ -1848,28 +1498,6 @@
           <dict>
             <key>name</key>
             <string>keyword.control.flow.throw.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=;)</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-        </array>
-      </dict>
-      <key>await-statement</key>
-      <dict>
-        <key>begin</key>
-        <string>(?&lt;!\.)\b(await)\b</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.await.apex</string>
           </dict>
         </dict>
         <key>end</key>
@@ -2347,8 +1975,7 @@
         \g&lt;identifier&gt;\s*
         (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -2367,7 +1994,7 @@
                       </dict>
                     </array>
                   </dict>
-                  <key>6</key>
+                  <key>5</key>
                   <dict>
                     <key>name</key>
                     <string>entity.name.variable.local.apex</string>
@@ -2429,24 +2056,6 @@
           </dict>
         </array>
       </dict>
-      <key>labeled-statement</key>
-      <dict>
-        <key>match</key>
-        <string>(@?[_[:alpha:]][_[:alnum:]]*)\s*(:)</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.label.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.separator.colon.apex</string>
-          </dict>
-        </dict>
-      </dict>
       <key>local-declaration</key>
       <dict>
         <key>patterns</key>
@@ -2458,10 +2067,6 @@
           <dict>
             <key>include</key>
             <string>#local-variable-declaration</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#local-tuple-var-deconstruction</string>
           </dict>
         </array>
       </dict>
@@ -2480,8 +2085,7 @@
           \g&lt;identifier&gt;\s*
           (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
         )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-        (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
       )
       (?:\s*\?\s*)? # nullable suffix?
       (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -2512,7 +2116,7 @@
               </dict>
             </array>
           </dict>
-          <key>8</key>
+          <key>7</key>
           <dict>
             <key>name</key>
             <string>entity.name.variable.local.apex</string>
@@ -2555,8 +2159,7 @@
         \g&lt;identifier&gt;\s*
         (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -2581,7 +2184,7 @@
               </dict>
             </array>
           </dict>
-          <key>7</key>
+          <key>6</key>
           <dict>
             <key>name</key>
             <string>entity.name.variable.local.apex</string>
@@ -2608,308 +2211,6 @@
           <dict>
             <key>include</key>
             <string>#variable-initializer</string>
-          </dict>
-        </array>
-      </dict>
-      <key>local-tuple-var-deconstruction</key>
-      <dict>
-        <key>begin</key>
-        <string>(?x) # e.g. var (x, y) = GetPoint();
-(?:\b(var)\b\s*)
-(?&lt;tuple&gt;\((?:[^\(\)]|\g&lt;tuple&gt;)+\))\s*
-(?=;|=|\))</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.var.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#tuple-declaration-deconstruction-element-list</string>
-              </dict>
-            </array>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=;|\))</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#comment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#variable-initializer</string>
-          </dict>
-        </array>
-      </dict>
-      <key>tuple-deconstruction-assignment</key>
-      <dict>
-        <key>match</key>
-        <string>(?x)
-(?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))\s*
-(?!=&gt;|==)(?==)</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#tuple-deconstruction-element-list</string>
-              </dict>
-            </array>
-          </dict>
-        </dict>
-      </dict>
-      <key>tuple-declaration-deconstruction-element-list</key>
-      <dict>
-        <key>begin</key>
-        <string>\(</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.open.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>\)</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#comment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#tuple-declaration-deconstruction-element-list</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#declaration-expression-tuple</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>(?x) # e.g. x
-(@?[_[:alpha:]][_[:alnum:]]*)\b\s*
-(?=[,)])</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>entity.name.variable.tuple-element.apex</string>
-              </dict>
-            </dict>
-          </dict>
-        </array>
-      </dict>
-      <key>tuple-deconstruction-element-list</key>
-      <dict>
-        <key>begin</key>
-        <string>\(</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.open.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>\)</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#comment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#tuple-deconstruction-element-list</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#declaration-expression-tuple</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>(?x) # e.g. x
-(@?[_[:alpha:]][_[:alnum:]]*)\b\s*
-(?=[,)])</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>variable.other.readwrite.apex</string>
-              </dict>
-            </dict>
-          </dict>
-        </array>
-      </dict>
-      <key>declaration-expression-local</key>
-      <dict>
-        <key>match</key>
-        <string>(?x) # e.g. int x OR var x
-(?:
-  \b(var)\b|
-  (?&lt;type-name&gt;
-    (?:
-      (?:
-        (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-        (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
-          \g&lt;identifier&gt;\s*
-          (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
-        )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-        (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
-      )
-      (?:\s*\?\s*)? # nullable suffix?
-      (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-    )
-  )
-)\s+
-(\g&lt;identifier&gt;)\b\s*
-(?=[,)\]])</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.var.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#type</string>
-              </dict>
-            </array>
-          </dict>
-          <key>7</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.local.apex</string>
-          </dict>
-        </dict>
-      </dict>
-      <key>declaration-expression-tuple</key>
-      <dict>
-        <key>match</key>
-        <string>(?x) # e.g. int x OR var x
-(?:
-  \b(var)\b|
-  (?&lt;type-name&gt;
-    (?:
-      (?:
-        (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-        (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
-          \g&lt;identifier&gt;\s*
-          (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
-        )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-        (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
-      )
-      (?:\s*\?\s*)? # nullable suffix?
-      (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-    )
-  )
-)\s+
-(\g&lt;identifier&gt;)\b\s*
-(?=[,)])</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.var.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#type</string>
-              </dict>
-            </array>
-          </dict>
-          <key>7</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.tuple-element.apex</string>
-          </dict>
-        </dict>
-      </dict>
-      <key>nameof-expression</key>
-      <dict>
-        <key>begin</key>
-        <string>(?&lt;!\.)\b(nameof)\b\s*(\()</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.nameof.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.open.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>\)</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
           </dict>
         </array>
       </dict>
@@ -2945,14 +2246,6 @@
           <dict>
             <key>include</key>
             <string>#string-literal</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#string-double-quote-literal</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#tuple-literal</string>
           </dict>
         </array>
       </dict>
@@ -3060,116 +2353,12 @@
           </dict>
         </array>
       </dict>
-      <key>string-double-quote-literal</key>
-      <dict>
-        <key>name</key>
-        <string>string.quoted.double.apex</string>
-        <key>begin</key>
-        <string>(?&lt;!@)"</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.definition.stringdoublequote.begin.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(")|((?:[^\\\n])$)</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.definition.stringdoublequote.end.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>invalid.illegal.newline.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#string-character-escape</string>
-          </dict>
-        </array>
-      </dict>
       <key>string-character-escape</key>
       <dict>
         <key>name</key>
         <string>constant.character.escape.apex</string>
         <key>match</key>
         <string>\\.</string>
-      </dict>
-      <key>tuple-literal</key>
-      <dict>
-        <key>begin</key>
-        <string>(\()(?=.*[:,])</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.open.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>\)</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#comment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#tuple-literal-element</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-        </array>
-      </dict>
-      <key>tuple-literal-element</key>
-      <dict>
-        <key>begin</key>
-        <string>(?x)
-(?:(@?[_[:alpha:]][_[:alnum:]]*)\s*(:)\s*)?
-(?![,)])</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.tuple-element.apex</string>
-          </dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.separator.colon.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=[,)])</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-        </array>
       </dict>
       <key>expression-operators</key>
       <dict>
@@ -3241,12 +2430,6 @@
             <key>match</key>
             <string>%|\*|/|-|\+</string>
           </dict>
-          <dict>
-            <key>name</key>
-            <string>keyword.operator.null-coalescing.apex</string>
-            <key>match</key>
-            <string>\?\?</string>
-          </dict>
         </array>
       </dict>
       <key>conditional-operator</key>
@@ -3285,13 +2468,6 @@
         <string>keyword.operator.conditional.colon.apex</string>
         <key>match</key>
         <string>:</string>
-      </dict>
-      <key>await-expression</key>
-      <dict>
-        <key>name</key>
-        <string>keyword.other.await.apex</string>
-        <key>match</key>
-        <string>(?!\.)\b(await)\b</string>
       </dict>
       <key>parenthesized-expression</key>
       <dict>
@@ -3377,8 +2553,7 @@
         \g&lt;identifier&gt;\s*
         (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -3402,103 +2577,20 @@
               </dict>
             </array>
           </dict>
-          <key>7</key>
+          <key>6</key>
           <dict>
             <key>name</key>
             <string>punctuation.parenthesis.close.apex</string>
           </dict>
         </dict>
       </dict>
-      <key>as-expression</key>
+      <key>this-expression</key>
       <dict>
         <key>match</key>
-        <string>(?x)
-(?&lt;!\.)\b(as)\b\s*
-(?&lt;type-name&gt;
-  (?:
-    (?:
-      (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
-        \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
-      )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
-    )
-    (?:\s*\?\s*)? # nullable suffix?
-    (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-  )
-)?</string>
+        <string>\b(?:(this))\b</string>
         <key>captures</key>
         <dict>
           <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.as.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#type</string>
-              </dict>
-            </array>
-          </dict>
-        </dict>
-      </dict>
-      <key>is-expression</key>
-      <dict>
-        <key>match</key>
-        <string>(?x)
-(?&lt;!\.)\b(is)\b\s*
-(?&lt;type-name&gt;
-  (?:
-    (?:
-      (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
-        \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
-      )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
-    )
-    (?:\s*\?\s*)? # nullable suffix?
-    (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-  )
-)?</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.is.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#type</string>
-              </dict>
-            </array>
-          </dict>
-        </dict>
-      </dict>
-      <key>this-or-base-expression</key>
-      <dict>
-        <key>match</key>
-        <string>\b(?:(base)|(this))\b</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.other.base.apex</string>
-          </dict>
-          <key>2</key>
           <dict>
             <key>name</key>
             <string>keyword.other.this.apex</string>
@@ -3704,8 +2796,7 @@
         \g&lt;identifier&gt;\s*
         (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -3753,8 +2844,7 @@
         \g&lt;identifier&gt;\s*
         (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -3793,8 +2883,7 @@
         \g&lt;identifier&gt;\s*
         (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -3829,83 +2918,6 @@
           </dict>
         </array>
       </dict>
-      <key>anonymous-object-creation-expression</key>
-      <dict>
-        <key>begin</key>
-        <string>\b(new)\b\s*(?=\{|$)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.control.new.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?&lt;=\})</string>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#initializer-expression</string>
-          </dict>
-        </array>
-      </dict>
-      <key>bracketed-parameter-list</key>
-      <dict>
-        <key>begin</key>
-        <string>(?=(\[))</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.squarebracket.open.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(?=(\]))</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.squarebracket.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>begin</key>
-            <string>(?&lt;=\[)</string>
-            <key>end</key>
-            <string>(?=\])</string>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#comment</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#attribute-section</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#parameter</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#punctuation-comma</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#variable-initializer</string>
-              </dict>
-            </array>
-          </dict>
-        </array>
-      </dict>
       <key>parenthesized-parameter-list</key>
       <dict>
         <key>begin</key>
@@ -3936,10 +2948,6 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#attribute-section</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#parameter</string>
           </dict>
           <dict>
@@ -3956,7 +2964,7 @@
       <dict>
         <key>match</key>
         <string>(?x)
-(?:(?:\b(ref|params|out|in|this)\b)\s+)?
+(?:(?:\b(this)\b)\s+)?
 (?&lt;type-name&gt;
   (?:
     (?:ref\s+)?   # ref return
@@ -3966,8 +2974,7 @@
         \g&lt;identifier&gt;\s*
         (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
+      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -3991,7 +2998,7 @@
               </dict>
             </array>
           </dict>
-          <key>7</key>
+          <key>6</key>
           <dict>
             <key>name</key>
             <string>entity.name.variable.parameter.apex</string>
@@ -4028,7 +3035,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#argument</string>
+            <string>#expression</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4070,7 +3077,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#argument</string>
+            <string>#expression</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4101,204 +3108,9 @@
         <array>
           <dict>
             <key>include</key>
-            <string>#argument</string>
-          </dict>
-        </array>
-      </dict>
-      <key>argument</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>name</key>
-            <string>storage.modifier.apex</string>
-            <key>match</key>
-            <string>\b(ref|out|in)\b</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#declaration-expression-local</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#expression</string>
           </dict>
         </array>
-      </dict>
-      <key>anonymous-method-expression</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>begin</key>
-            <string>(?x)
-(?:\b(async)\b\s*)?
-(@?[_[:alpha:]][_[:alnum:]]*)\b\s*
-(=&gt;)</string>
-            <key>beginCaptures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>storage.modifier.apex</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>entity.name.variable.parameter.apex</string>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.operator.arrow.apex</string>
-              </dict>
-            </dict>
-            <key>end</key>
-            <string>(?=\)|;|}|,)</string>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#block</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#expression</string>
-              </dict>
-            </array>
-          </dict>
-          <dict>
-            <key>begin</key>
-            <string>(?x)
-(?:\b(async)\b\s*)?
-(\(.*?\))\s*
-(=&gt;)</string>
-            <key>beginCaptures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>storage.modifier.apex</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>patterns</key>
-                <array>
-                  <dict>
-                    <key>include</key>
-                    <string>#lambda-parameter-list</string>
-                  </dict>
-                </array>
-              </dict>
-              <key>3</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.operator.arrow.apex</string>
-              </dict>
-            </dict>
-            <key>end</key>
-            <string>(?=\)|;|}|,)</string>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#block</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#expression</string>
-              </dict>
-            </array>
-          </dict>
-        </array>
-      </dict>
-      <key>lambda-parameter-list</key>
-      <dict>
-        <key>begin</key>
-        <string>\(</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.open.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>\)</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#comment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#attribute-section</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#lambda-parameter</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-        </array>
-      </dict>
-      <key>lambda-parameter</key>
-      <dict>
-        <key>match</key>
-        <string>(?x)
-(?:\b(ref|out|in)\b)?\s*
-(?&lt;type-name&gt;
-  (?:
-    (?:
-      (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
-        \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
-      )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
-    )
-    (?:\s*\?\s*)? # nullable suffix?
-    (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-  )
-)?
-(\g&lt;identifier&gt;)\b\s*
-(?=[,)])</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>storage.modifier.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#type</string>
-              </dict>
-            </array>
-          </dict>
-          <key>7</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.parameter.apex</string>
-          </dict>
-        </dict>
       </dict>
       <key>type</key>
       <dict>
@@ -4309,10 +3121,6 @@
           <dict>
             <key>include</key>
             <string>#comment</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#tuple-type</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4335,79 +3143,6 @@
             <string>#type-nullable-suffix</string>
           </dict>
         </array>
-      </dict>
-      <key>tuple-type</key>
-      <dict>
-        <key>begin</key>
-        <string>\(</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.open.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>\)</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#tuple-element</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#punctuation-comma</string>
-          </dict>
-        </array>
-      </dict>
-      <key>tuple-element</key>
-      <dict>
-        <key>match</key>
-        <string>(?x)
-(?&lt;type-name&gt;
-  (?:
-    (?:
-      (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
-        \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
-      )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)* | # Are there any more names being dotted into?
-      (?&lt;tuple&gt;\s*\((?:[^\(\)]|\g&lt;tuple&gt;)+\))
-    )
-    (?:\s*\?\s*)? # nullable suffix?
-    (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
-  )
-)
-(?:(?&lt;tuple-name&gt;\g&lt;identifier&gt;)\b)?</string>
-        <key>captures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#type</string>
-              </dict>
-            </array>
-          </dict>
-          <key>6</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.variable.tuple-element.apex</string>
-          </dict>
-        </dict>
       </dict>
       <key>type-builtin</key>
       <dict>

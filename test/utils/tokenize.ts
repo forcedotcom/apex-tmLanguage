@@ -290,16 +290,10 @@ export namespace Token {
 
     export namespace Modifiers {
       export const Abstract = createToken('abstract', 'storage.modifier.apex');
-      export const Async = createToken('async', 'storage.modifier.apex');
       export const Final = createToken('final', 'storage.modifier.apex');
       export const Global = createToken('global', 'storage.modifier.apex');
-      export const In = createToken('in', 'storage.modifier.apex');
-      export const Internal = createToken('internal', 'storage.modifier.apex');
       export const New = createToken('new', 'storage.modifier.apex');
-      export const Out = createToken('out', 'storage.modifier.apex');
       export const Override = createToken('override', 'storage.modifier.apex');
-      export const Params = createToken('params', 'storage.modifier.apex');
-      export const Partial = createToken('partial', 'storage.modifier.apex');
       export const Private = createToken('private', 'storage.modifier.apex');
       export const Protected = createToken(
         'protected',
@@ -341,7 +335,6 @@ export namespace Token {
         'group',
         'keyword.operator.query.group.apex'
       );
-      export const In = createToken('in', 'keyword.operator.query.in.apex');
       export const Into = createToken(
         'into',
         'keyword.operator.query.into.apex'
@@ -381,8 +374,6 @@ export namespace Token {
     export const Add = createToken('add', 'keyword.other.add.apex');
     export const AttributeSpecifier = (text: string) =>
       createToken(text, 'keyword.other.attribute-specifier.apex');
-    export const Await = createToken('await', 'keyword.other.await.apex');
-    export const As = createToken('as', 'keyword.other.as.apex');
     export const Base = createToken('base', 'keyword.other.base.apex');
     export const Class = createToken('class', 'keyword.other.class.apex');
     export const Default = createToken('default', 'keyword.other.default.apex');
@@ -397,8 +388,6 @@ export namespace Token {
       'interface',
       'keyword.other.interface.apex'
     );
-    export const Is = createToken('is', 'keyword.other.is.apex');
-    export const NameOf = createToken('nameof', 'keyword.other.nameof.apex');
     export const Remove = createToken('remove', 'keyword.other.remove.apex');
     export const Set = createToken('set', 'keyword.other.set.apex');
     export const Static = createToken('static', 'keyword.other.static.apex');
@@ -575,10 +564,6 @@ export namespace Token {
       '++',
       'keyword.operator.increment.apex'
     );
-    export const NullCoalescing = createToken(
-      '??',
-      'keyword.operator.null-coalescing.apex'
-    );
     export const NullConditional = createToken(
       '?',
       'keyword.operator.null-conditional.apex'
@@ -611,17 +596,6 @@ export namespace Token {
       export const End = createToken(
         "'",
         'punctuation.definition.string.end.apex'
-      );
-    }
-
-    export namespace StringDoubleQuote {
-      export const Begin = createToken(
-        '"',
-        'punctuation.definition.stringdoublequote.begin.apex'
-      );
-      export const End = createToken(
-        '"',
-        'punctuation.definition.stringdoublequote.end.apex'
       );
     }
 

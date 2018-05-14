@@ -1,4 +1,4 @@
-# Salesforce Language Grammar
+# Salesforce Apex Language Grammar
 
 ## Introduction
 

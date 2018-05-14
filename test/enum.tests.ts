@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { should } from 'chai';
-import { tokenize, Token } from './utils/tokenize';
+import { tokenize, Input, Token } from './utils/tokenize';
 
 describe('Grammar', () => {
   before(() => should());
@@ -22,16 +22,44 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('enum with base type', () => {
-      const input = `enum E : byte { }`;
+    it('simple public enum', () => {
+      const input = `public enum Season {WINTER, SPRING, SUMMER, FALL}`;
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
+        Token.Keywords.Modifiers.Public,
         Token.Keywords.Enum,
-        Token.Identifiers.EnumName('E'),
-        Token.Punctuation.Colon,
-        Token.PrimitiveType.Byte,
+        Token.Identifiers.EnumName('Season'),
         Token.Punctuation.OpenBrace,
+        Token.Identifiers.EnumMemberName('WINTER'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.EnumMemberName('SPRING'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.EnumMemberName('SUMMER'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.EnumMemberName('FALL'),
+        Token.Punctuation.CloseBrace
+      ]);
+    });
+
+    it('internal public enum', () => {
+      const input = Input.InClass(
+        `public enum Season {WINTER, SPRING, SUMMER, FALL}`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Modifiers.Public,
+        Token.Keywords.Enum,
+        Token.Identifiers.EnumName('Season'),
+        Token.Punctuation.OpenBrace,
+        Token.Identifiers.EnumMemberName('WINTER'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.EnumMemberName('SPRING'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.EnumMemberName('SUMMER'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.EnumMemberName('FALL'),
         Token.Punctuation.CloseBrace
       ]);
     });
