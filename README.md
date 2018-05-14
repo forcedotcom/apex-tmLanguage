@@ -18,10 +18,10 @@ Token structure is based off of [Textmate's Language Grammar guidelines](https:/
 * `grammars\apex.tmLanguage.cson` - for Atom
 * `grammars\apex.tmLanguage` - TextMate grammar (XML plist)
 
-
 ## Releasing
 
 Tags on this repo get automatically published as a GitHub release and an NPM package through Travis CI.
 
 ## Attribution
+
 This repository was copied from [https://github.com/dotnet/csharp-tmLanguage](https://github.com/dotnet/csharp-tmLanguage)

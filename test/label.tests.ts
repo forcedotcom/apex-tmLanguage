@@ -6,18 +6,18 @@
 import { should } from 'chai';
 import { tokenize, Input, Token } from './utils/tokenize';
 
-describe("Grammar", () => {
-    before(() => should());
+describe('Grammar', () => {
+  before(() => should());
 
-    describe("Labels", () => {
-        it("declaration", () => {
-            const input = Input.InMethod(`Foo:`);
-            const tokens = tokenize(input);
+  describe('Labels', () => {
+    it('declaration', () => {
+      const input = Input.InMethod(`Foo:`);
+      const tokens = tokenize(input);
 
-            tokens.should.deep.equal([
-                Token.Identifiers.LabelName("Foo"),
-                Token.Punctuation.Colon
-            ]);
-        });
+      tokens.should.deep.equal([
+        Token.Identifiers.LabelName('Foo'),
+        Token.Punctuation.Colon
+      ]);
     });
+  });
 });

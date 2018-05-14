@@ -1,13 +1,10 @@
 {
   "name": "apex-tmlanguage",
   "version": "0.1.0",
-  "description": "Textmate grammar for Apex with outputs for VSCode, Atom and TextMate.",
+  "description":
+    "Textmate grammar for Apex with outputs for VSCode, Atom and TextMate.",
   "displayName": "apex-tmLanguage",
-  "keywords": [
-    "salesforce-dx",
-    "salesforce",
-    "apex"
-  ],
+  "keywords": ["salesforce-dx", "salesforce", "apex"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/forcedotcom/apex-tmLanguage/issues"
@@ -22,7 +19,9 @@
     "watch": "node ./node_modules/typescript/bin/tsc -w -p .",
     "test": "gulp test",
     "prepublish": "gulp",
-    "build:default": "gulp default"
+    "build:default": "gulp default",
+    "format":
+      "prettier --config .prettierrc.json --write './**/*.{ts,js,json,md}'"
   },
   "dependencies": {},
   "devDependencies": {
@@ -38,6 +37,7 @@
     "js-yaml": "^3.7.0",
     "mocha": "^3.2.0",
     "plist": "^2.0.1",
+    "prettier": "^1.12.1",
     "typescript": "^2.5.2",
     "vscode-textmate": "^2.3.2"
   }
