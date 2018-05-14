@@ -542,7 +542,7 @@ repository:
     begin: "\\b(SELECT)\\b\\s*"
     beginCaptures:
       "1":
-        name: "keyword.query.select.apex"
+        name: "keyword.operator.query.select.apex"
     end: "(?=;)|(?=\\])|(?=\\))"
     patterns: [
       {
@@ -593,19 +593,19 @@ repository:
     match: "(FROM)\\b\\s*([_\\.[:alnum:]]+)\\b\\s*"
     captures:
       "1":
-        name: "keyword.query.from.apex"
+        name: "keyword.operator.query.from.apex"
       "2":
-        name: "keyword.query.type.apex"
+        name: "storage.type.apex"
   "where-clause":
     match: "\\b(WHERE)\\b\\s*"
     captures:
       "1":
-        name: "keyword.query.where.apex"
+        name: "keyword.operator.query.where.apex"
   "orderby-clause":
     match: "\\b(ORDER BY)\\b\\s*"
     captures:
       "1":
-        name: "keyword.query.orderby.apex"
+        name: "keyword.operator.query.orderby.apex"
     patterns: [
       {
         include: "#ordering-direction"
@@ -618,16 +618,16 @@ repository:
     match: "\\b(?:(ASC)|(DESC))\\b"
     captures:
       "1":
-        name: "keyword.query.ascending.apex"
+        name: "keyword.operator.query.ascending.apex"
       "2":
-        name: "keyword.query.descending.apex"
+        name: "keyword.operator.query.descending.apex"
   "ordering-nulls":
     match: "\\b(?:(NULLS first)|(NULLS last))\\b"
     captures:
       "1":
-        name: "keyword.query.nullsfirst.apex"
+        name: "keyword.operator.query.nullsfirst.apex"
       "2":
-        name: "keyword.query.nullslast.apex"
+        name: "keyword.operator.query.nullslast.apex"
   "type-parameter-list":
     begin: "\\<"
     beginCaptures:
@@ -693,7 +693,7 @@ repository:
         match: "(new)\\s*(\\()\\s*(\\))"
         captures:
           "1":
-            name: "keyword.other.new.apex"
+            name: "keyword.control.new.apex"
           "2":
             name: "punctuation.parenthesis.open.apex"
           "3":
@@ -2232,7 +2232,7 @@ repository:
     '''
     beginCaptures:
       "1":
-        name: "keyword.other.new.apex"
+        name: "keyword.control.new.apex"
       "2":
         patterns: [
           {
@@ -2268,7 +2268,7 @@ repository:
     '''
     captures:
       "1":
-        name: "keyword.other.new.apex"
+        name: "keyword.control.new.apex"
       "2":
         patterns: [
           {
@@ -2298,7 +2298,7 @@ repository:
     '''
     beginCaptures:
       "1":
-        name: "keyword.other.new.apex"
+        name: "keyword.control.new.apex"
       "2":
         patterns: [
           {
@@ -2315,7 +2315,7 @@ repository:
     begin: "\\b(new)\\b\\s*(?=\\{|$)"
     beginCaptures:
       "1":
-        name: "keyword.other.new.apex"
+        name: "keyword.control.new.apex"
     end: "(?<=\\})"
     patterns: [
       {

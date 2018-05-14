@@ -9,6 +9,10 @@ Output grammars are output in the `grammars\` dirctory.
 
 On Windows you may see a node-gyp error - [follow the instrutions here to resolve it](https://github.com/nodejs/node-gyp/blob/master/README.md).
 
+### Adding grammas rules
+
+Token structure is based off of [Textmate's Language Grammar guidelines](https://manual.macromates.com/en/language_grammars)
+
 ## Supported outputs
 
 * `grammars\apex.tmLanguage.cson` - for Atom

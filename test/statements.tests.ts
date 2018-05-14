@@ -624,7 +624,7 @@ catch when (true)
                     Token.Keywords.Control.Try,
                     Token.Punctuation.OpenBrace,
                     Token.Keywords.Control.Throw,
-                    Token.Keywords.New,
+                    Token.Keywords.Control.New,
                     Token.Type("Exception"),
                     Token.Punctuation.OpenParen,
                     Token.Punctuation.CloseParen,

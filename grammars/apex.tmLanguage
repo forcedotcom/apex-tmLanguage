@@ -873,7 +873,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.query.select.apex</string>
+            <string>keyword.operator.query.select.apex</string>
           </dict>
         </dict>
         <key>end</key>
@@ -951,12 +951,12 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.query.from.apex</string>
+            <string>keyword.operator.query.from.apex</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>keyword.query.type.apex</string>
+            <string>storage.type.apex</string>
           </dict>
         </dict>
       </dict>
@@ -969,7 +969,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.query.where.apex</string>
+            <string>keyword.operator.query.where.apex</string>
           </dict>
         </dict>
       </dict>
@@ -982,7 +982,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.query.orderby.apex</string>
+            <string>keyword.operator.query.orderby.apex</string>
           </dict>
         </dict>
         <key>patterns</key>
@@ -1006,12 +1006,12 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.query.ascending.apex</string>
+            <string>keyword.operator.query.ascending.apex</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>keyword.query.descending.apex</string>
+            <string>keyword.operator.query.descending.apex</string>
           </dict>
         </dict>
       </dict>
@@ -1024,12 +1024,12 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.query.nullsfirst.apex</string>
+            <string>keyword.operator.query.nullsfirst.apex</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>keyword.query.nullslast.apex</string>
+            <string>keyword.operator.query.nullslast.apex</string>
           </dict>
         </dict>
       </dict>
@@ -1161,7 +1161,7 @@
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.other.new.apex</string>
+                <string>keyword.control.new.apex</string>
               </dict>
               <key>2</key>
               <dict>
@@ -3717,7 +3717,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.other.new.apex</string>
+            <string>keyword.control.new.apex</string>
           </dict>
           <key>2</key>
           <dict>
@@ -3766,7 +3766,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.other.new.apex</string>
+            <string>keyword.control.new.apex</string>
           </dict>
           <key>2</key>
           <dict>
@@ -3806,7 +3806,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.other.new.apex</string>
+            <string>keyword.control.new.apex</string>
           </dict>
           <key>2</key>
           <dict>
@@ -3838,7 +3838,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.other.new.apex</string>
+            <string>keyword.control.new.apex</string>
           </dict>
         </dict>
         <key>end</key>

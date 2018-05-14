@@ -184,7 +184,7 @@ public IBooom Property
                 Token.Punctuation.Semicolon,
                 Token.Punctuation.CloseBrace,
                 Token.Operators.Assignment,
-                Token.Keywords.New,
+                Token.Keywords.Control.New,
                 Token.Type("Dictionary"),
                 Token.Punctuation.TypeParameters.Begin,
                 Token.PrimitiveType.String,

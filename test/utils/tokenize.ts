@@ -181,6 +181,7 @@ export namespace Token {
             export const Goto = createToken('goto', 'keyword.control.goto.apex');
             export const If = createToken('if', 'keyword.control.conditional.if.apex');
             export const In = createToken('in', 'keyword.control.loop.in.apex');
+            export const New = createToken('new', 'keyword.control.new.apex');
             export const Return = createToken('return', 'keyword.control.flow.return.apex');
             export const Switch = createToken('switch', 'keyword.control.switch.apex');
             export const Throw = createToken('throw', 'keyword.control.flow.throw.apex');
@@ -212,24 +213,24 @@ export namespace Token {
         }
 
         export namespace Queries {
-            export const Ascending = createToken('ASC', 'keyword.query.ascending.apex');
-            export const By = createToken('by', 'keyword.query.by.apex');
-            export const Descending = createToken('DESC', 'keyword.query.descending.apex');
-            export const Equals = createToken('equals', 'keyword.query.equals.apex');
-            export const From = createToken('FROM', 'keyword.query.from.apex');
-            export const Group = createToken('group', 'keyword.query.group.apex');
-            export const In = createToken('in', 'keyword.query.in.apex');
-            export const Into = createToken('into', 'keyword.query.into.apex');
-            export const Join = createToken('join', 'keyword.query.join.apex');
-            export const Let = createToken('let', 'keyword.query.let.apex');
-            export const NullsFirst = createToken('NULLS first', 'keyword.query.nullsfirst.apex');
-            export const NullsLast = createToken('NULLS last', 'keyword.query.nullslast.apex');
-            export const On = createToken('on', 'keyword.query.on.apex');
-            export const OrderBy = createToken('ORDER BY', 'keyword.query.orderby.apex');
+            export const Ascending = createToken('ASC', 'keyword.operator.query.ascending.apex');
+            export const By = createToken('by', 'keyword.operator.query.by.apex');
+            export const Descending = createToken('DESC', 'keyword.operator.query.descending.apex');
+            export const Equals = createToken('equals', 'keyword.operator.query.equals.apex');
+            export const From = createToken('FROM', 'keyword.operator.query.from.apex');
+            export const Group = createToken('group', 'keyword.operator.query.group.apex');
+            export const In = createToken('in', 'keyword.operator.query.in.apex');
+            export const Into = createToken('into', 'keyword.operator.query.into.apex');
+            export const Join = createToken('join', 'keyword.operator.query.join.apex');
+            export const Let = createToken('let', 'keyword.operator.query.let.apex');
+            export const NullsFirst = createToken('NULLS first', 'keyword.operator.query.nullsfirst.apex');
+            export const NullsLast = createToken('NULLS last', 'keyword.operator.query.nullslast.apex');
+            export const On = createToken('on', 'keyword.operator.query.on.apex');
+            export const OrderBy = createToken('ORDER BY', 'keyword.operator.query.orderby.apex');
             export const FieldName = (text: string) => createToken(text, 'keyword.query.field.apex');
-            export const Select = createToken('SELECT', 'keyword.query.select.apex');
-            export const TypeName = (text: string) => createToken(text, 'keyword.query.type.apex');
-            export const Where = createToken('WHERE', 'keyword.query.where.apex');
+            export const Select = createToken('SELECT', 'keyword.operator.query.select.apex');
+            export const TypeName = (text: string) => createToken(text, 'storage.type.apex');
+            export const Where = createToken('WHERE', 'keyword.operator.query.where.apex');
         }
 
         export const Add = createToken('add', 'keyword.other.add.apex');
@@ -246,7 +247,6 @@ export namespace Token {
         export const Interface = createToken('interface', 'keyword.other.interface.apex');
         export const Is = createToken('is', 'keyword.other.is.apex');
         export const NameOf = createToken('nameof', 'keyword.other.nameof.apex');
-        export const New = createToken('new', 'keyword.other.new.apex');
         export const Remove = createToken('remove', 'keyword.other.remove.apex');
         export const Set = createToken('set', 'keyword.other.set.apex');
         export const Static = createToken('static', 'keyword.other.static.apex');
@@ -442,6 +442,22 @@ export namespace Token {
         export const Colon = createToken(':', 'punctuation.separator.colon.apex');
         export const Equals = createToken('=', 'punctuation.separator.equals.apex');
         export const Text = (text: string) => createToken(text, 'comment.block.documentation.apex');
+    }
+
+    export namespace Support {
+        export namespace Class {
+          export const Date = createToken('Date', 'support.class.apex');
+          export const Datetime = createToken('Datetime', 'support.class.apex');
+          export const Database = createToken('Database', 'support.class.apex');
+          export const Exception = createToken('Exception', 'support.class.apex');
+          export const System = createToken('System', 'support.class.apex');
+          export const Text = (text: string) => createToken(text, 'support.class.apex');
+        }
+
+        export namespace Function {
+          export const Text = (text: string) => createToken(text, 'support.function.apex');
+          export const Insert = createToken('insert', 'support.function.apex');
+        }
     }
 
     export const IllegalNewLine = (text: string) => createToken(text, 'invalid.illegal.newline.apex');

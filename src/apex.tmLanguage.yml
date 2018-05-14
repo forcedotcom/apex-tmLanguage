@@ -269,7 +269,7 @@ repository:
   soql-query-expression:
     begin: \b(SELECT)\b\s*
     beginCaptures:
-      '1': { name: keyword.query.select.apex }
+      '1': { name: keyword.operator.query.select.apex }
     end: (?=;)|(?=\])|(?=\))
     patterns:
     - include: '#soql-query-body'
@@ -293,18 +293,18 @@ repository:
   from-clause:
     match: (FROM)\b\s*([_\.[:alnum:]]+)\b\s*
     captures:
-      '1': { name: keyword.query.from.apex }
-      '2': { name: keyword.query.type.apex }
+      '1': { name: keyword.operator.query.from.apex }
+      '2': { name: storage.type.apex }
 
   where-clause:
     match: \b(WHERE)\b\s*
     captures:
-      '1': { name: keyword.query.where.apex }
+      '1': { name: keyword.operator.query.where.apex }
 
   orderby-clause:
     match: \b(ORDER BY)\b\s*
     captures:
-      '1': { name: keyword.query.orderby.apex }
+      '1': { name: keyword.operator.query.orderby.apex }
     patterns:
     - include: '#ordering-direction'
     - include: '#ordering-nulls'
@@ -312,14 +312,14 @@ repository:
   ordering-direction:
     match: \b(?:(ASC)|(DESC))\b
     captures:
-      '1': { name: keyword.query.ascending.apex }
-      '2': { name: keyword.query.descending.apex }
+      '1': { name: keyword.operator.query.ascending.apex }
+      '2': { name: keyword.operator.query.descending.apex }
 
   ordering-nulls:
     match: \b(?:(NULLS first)|(NULLS last))\b
     captures:
-      '1': { name: keyword.query.nullsfirst.apex }
-      '2': { name: keyword.query.nullslast.apex }
+      '1': { name: keyword.operator.query.nullsfirst.apex }
+      '2': { name: keyword.operator.query.nullslast.apex }
 
   type-parameter-list:
     begin: \<
@@ -360,7 +360,7 @@ repository:
       match: \bclass\b
     - match: (new)\s*(\()\s*(\))
       captures:
-        '1': { name: keyword.other.new.apex }
+        '1': { name: keyword.control.new.apex }
         '2': { name: punctuation.parenthesis.open.apex }
         '3': { name: punctuation.parenthesis.close.apex }
     - include: '#type'
@@ -1458,7 +1458,7 @@ repository:
       )\s*
       (?=\()
     beginCaptures:
-      '1': { name: keyword.other.new.apex }
+      '1': { name: keyword.control.new.apex }
       '2':
         patterns:
         - include: '#type'
@@ -1487,7 +1487,7 @@ repository:
       )\s*
       (?=\{|$)
     captures:
-      '1': { name: keyword.other.new.apex }
+      '1': { name: keyword.control.new.apex }
       '2':
         patterns:
         - include: '#type'
@@ -1513,7 +1513,7 @@ repository:
       )?\s*
       (?=\[)
     beginCaptures:
-      '1': { name: keyword.other.new.apex }
+      '1': { name: keyword.control.new.apex }
       '2':
         patterns:
         - include: '#type'
@@ -1524,7 +1524,7 @@ repository:
   anonymous-object-creation-expression:
     begin: \b(new)\b\s*(?=\{|$)
     beginCaptures:
-      '1': { name: keyword.other.new.apex }
+      '1': { name: keyword.control.new.apex }
     end: (?<=\})
     patterns:
     - include: '#initializer-expression'
