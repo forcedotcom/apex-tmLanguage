@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repository contains the source code for generating the grammar language files for Salesforce's Apex.
+This repository contains the source code for generating the language grammar files for Salesforce's Apex.
 
 ## Disclaimer
 
@@ -17,7 +17,7 @@ To **build and test** install Node.js do the following:
 
 Output grammars are output in the `grammars\` dirctory.
 
-### Adding grammas rules
+### Adding grammar rules
 
 Token structure is based off of [Textmate's Language Grammar guidelines](https://manual.macromates.com/en/language_grammars)
 
