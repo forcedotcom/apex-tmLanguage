@@ -1,0 +1,4 @@
+// .prettierignore
+**/*.yml
+node_modules
+out

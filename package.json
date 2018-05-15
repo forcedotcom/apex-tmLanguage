@@ -18,7 +18,10 @@
     "compile": "node ./node_modules/typescript/bin/tsc -p .",
     "watch": "node ./node_modules/typescript/bin/tsc -w -p .",
     "test": "gulp test",
-    "prepublish": "gulp"
+    "prepublish": "gulp",
+    "build:default": "gulp default",
+    "format":
+      "prettier --config .prettierrc.json --write './**/*.{ts,js,json,md}'"
   },
   "dependencies": {},
   "devDependencies": {
@@ -34,6 +37,7 @@
     "js-yaml": "^3.7.0",
     "mocha": "^3.2.0",
     "plist": "^2.0.1",
+    "prettier": "^1.12.1",
     "typescript": "^2.5.2",
     "vscode-textmate": "^2.3.2"
   }
