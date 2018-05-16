@@ -87,6 +87,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#annotation-declaration</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#storage-modifier</string>
           </dict>
           <dict>
@@ -324,6 +328,57 @@
           <dict>
             <key>include</key>
             <string>#identifier</string>
+          </dict>
+        </array>
+      </dict>
+      <key>annotation-declaration</key>
+      <dict>
+        <key>begin</key>
+        <string>([@][_[:alpha:]]+)\b</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>storage.type.annotation.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?&lt;=\)|$)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>\(</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.open.apex</string>
+              </dict>
+            </dict>
+            <key>end</key>
+            <string>\)</string>
+            <key>endCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.close.apex</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#expression</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#statement</string>
           </dict>
         </array>
       </dict>

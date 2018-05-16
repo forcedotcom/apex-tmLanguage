@@ -290,6 +290,8 @@ export namespace Token {
 
     export namespace Modifiers {
       export const Abstract = createToken('abstract', 'storage.modifier.apex');
+      export const AnnotationName = (text: string) =>
+        createToken(text, 'storage.type.annotation.apex');
       export const Final = createToken('final', 'storage.modifier.apex');
       export const Global = createToken('global', 'storage.modifier.apex');
       export const New = createToken('new', 'storage.modifier.apex');
