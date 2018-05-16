@@ -3,7 +3,7 @@
 name: Apex
 scopeName: source.apex
 fileTypes: [apex, cls, trigger]
-uuid: C4D3A5F4-B1DE-48C5-84CE-AC99DDA78292
+uuid: F5FC6824-F257-43B1-B53A-14E1CCD18631
 
 patterns:
 - include: '#comment'
