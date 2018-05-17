@@ -54,6 +54,9 @@ repository:
         include: "#comment"
       }
       {
+        include: "#annotation-declaration"
+      }
+      {
         include: "#storage-modifier"
       }
       {
@@ -226,6 +229,32 @@ repository:
       }
       {
         include: "#identifier"
+      }
+    ]
+  "annotation-declaration":
+    begin: "([@][_[:alpha:]]+)\\b"
+    beginCaptures:
+      "1":
+        name: "storage.type.annotation.apex"
+    end: "(?<=\\)|$)"
+    patterns: [
+      {
+        begin: "\\("
+        beginCaptures:
+          "0":
+            name: "punctuation.parenthesis.open.apex"
+        end: "\\)"
+        endCaptures:
+          "0":
+            name: "punctuation.parenthesis.close.apex"
+        patterns: [
+          {
+            include: "#expression"
+          }
+        ]
+      }
+      {
+        include: "#statement"
       }
     ]
   "sharing-modifier":

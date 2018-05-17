@@ -30,6 +30,7 @@ repository:
   type-declarations:
     patterns:
     - include: '#comment'
+    - include: '#annotation-declaration'
     - include: '#storage-modifier'
     - include: '#sharing-modifier'
     - include: '#class-declaration'
@@ -96,6 +97,22 @@ repository:
     - include: '#parenthesized-expression'
     - include: '#initializer-expression'
     - include: '#identifier'
+
+  annotation-declaration:
+    begin: ([@][_[:alpha:]]+)\b
+    beginCaptures:
+      '1': { name: storage.type.annotation.apex }
+    end: (?<=\)|$)
+    patterns:
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - include: '#expression'
+    - include: '#statement'
 
   sharing-modifier:
     name: 'sharing.modifier.apex'
