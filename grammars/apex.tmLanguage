@@ -119,7 +119,7 @@
           </dict>
         </array>
       </dict>
-      <key>class-or-struct-members</key>
+      <key>class-or-trigger-members</key>
       <dict>
         <key>patterns</key>
         <array>
@@ -280,6 +280,10 @@
           <dict>
             <key>include</key>
             <string>#this-expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#trigger-context-declaration</string>
           </dict>
           <dict>
             <key>include</key>
@@ -473,7 +477,7 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#class-or-struct-members</string>
+                <string>#class-or-trigger-members</string>
               </dict>
             </array>
           </dict>
@@ -554,6 +558,14 @@
                   </dict>
                   <dict>
                     <key>include</key>
+                    <string>#trigger-operator-statement</string>
+                  </dict>
+                  <dict>
+                    <key>include</key>
+                    <string>#punctuation-comma</string>
+                  </dict>
+                  <dict>
+                    <key>include</key>
                     <string>#expression</string>
                   </dict>
                 </array>
@@ -593,7 +605,11 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#class-or-struct-members</string>
+                <string>#statement</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#class-or-trigger-members</string>
               </dict>
             </array>
           </dict>
@@ -620,6 +636,104 @@
             <string>keyword.control.trigger.after.apex</string>
           </dict>
         </dict>
+      </dict>
+      <key>trigger-operator-statement</key>
+      <dict>
+        <key>name</key>
+        <string>keyword.operator.trigger.apex</string>
+        <key>match</key>
+        <string>\b(insert|update|delete|merge|upsert|undelete)\b</string>
+      </dict>
+      <key>trigger-context-declaration</key>
+      <dict>
+        <key>begin</key>
+        <string>\b(?:(Trigger))\b(\.)\b</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>support.class.trigger.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.accessor.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?=\})|(?=;)|(?=\)|(?=\]))</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>support.type.trigger.apex</string>
+            <key>match</key>
+            <string>\b(isExecuting|isInsert|isUpdate|isDelete|isBefore|isAfter|isUndelete|new|newMap|old|oldMap|size)\b</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(?:(\.))([[:alpha:]]+)(?=\()</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.accessor.apex</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.function.trigger.apex</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>\(</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.open.apex</string>
+              </dict>
+            </dict>
+            <key>end</key>
+            <string>\)</string>
+            <key>endCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.close.apex</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#trigger-type-statement</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#comment</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#punctuation-comma</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#expression</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#expression</string>
+          </dict>
+        </array>
       </dict>
       <key>enum-declaration</key>
       <dict>
@@ -900,7 +1014,15 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#trigger-context-declaration</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#from-clause</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#in-clause</string>
           </dict>
           <dict>
             <key>include</key>
@@ -935,6 +1057,19 @@
           <dict>
             <key>name</key>
             <string>storage.type.apex</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>in-clause</key>
+      <dict>
+        <key>match</key>
+        <string>(IN)\b\s*</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.operator.query.in.apex</string>
           </dict>
         </dict>
       </dict>
@@ -1119,7 +1254,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#class-or-struct-members</string>
+            <string>#class-or-trigger-members</string>
           </dict>
         </array>
       </dict>
@@ -1202,7 +1337,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#class-or-struct-members</string>
+            <string>#class-or-trigger-members</string>
           </dict>
         </array>
       </dict>

@@ -78,7 +78,7 @@ repository:
         include: "#punctuation-semicolon"
       }
     ]
-  "class-or-struct-members":
+  "class-or-trigger-members":
     patterns: [
       {
         include: "#comment"
@@ -195,6 +195,9 @@ repository:
         include: "#this-expression"
       }
       {
+        include: "#trigger-context-declaration"
+      }
+      {
         include: "#conditional-operator"
       }
       {
@@ -308,7 +311,7 @@ repository:
             name: "punctuation.curlybrace.close.apex"
         patterns: [
           {
-            include: "#class-or-struct-members"
+            include: "#class-or-trigger-members"
           }
         ]
       }
@@ -353,6 +356,12 @@ repository:
                 include: "#trigger-type-statement"
               }
               {
+                include: "#trigger-operator-statement"
+              }
+              {
+                include: "#punctuation-comma"
+              }
+              {
                 include: "#expression"
               }
             ]
@@ -376,7 +385,10 @@ repository:
             name: "punctuation.curlybrace.close.apex"
         patterns: [
           {
-            include: "#class-or-struct-members"
+            include: "#statement"
+          }
+          {
+            include: "#class-or-trigger-members"
           }
         ]
       }
@@ -391,6 +403,58 @@ repository:
         name: "keyword.control.trigger.before.apex"
       "2":
         name: "keyword.control.trigger.after.apex"
+  "trigger-operator-statement":
+    name: "keyword.operator.trigger.apex"
+    match: "\\b(insert|update|delete|merge|upsert|undelete)\\b"
+  "trigger-context-declaration":
+    begin: "\\b(?:(Trigger))\\b(\\.)\\b"
+    beginCaptures:
+      "1":
+        name: "support.class.trigger.apex"
+      "2":
+        name: "punctuation.accessor.apex"
+    end: "(?=\\})|(?=;)|(?=\\)|(?=\\]))"
+    patterns: [
+      {
+        name: "support.type.trigger.apex"
+        match: "\\b(isExecuting|isInsert|isUpdate|isDelete|isBefore|isAfter|isUndelete|new|newMap|old|oldMap|size)\\b"
+      }
+      {
+        match: "(?:(\\.))([[:alpha:]]+)(?=\\()"
+        captures:
+          "1":
+            name: "punctuation.accessor.apex"
+          "2":
+            name: "support.function.trigger.apex"
+      }
+      {
+        begin: "\\("
+        beginCaptures:
+          "0":
+            name: "punctuation.parenthesis.open.apex"
+        end: "\\)"
+        endCaptures:
+          "0":
+            name: "punctuation.parenthesis.close.apex"
+        patterns: [
+          {
+            include: "#trigger-type-statement"
+          }
+          {
+            include: "#comment"
+          }
+          {
+            include: "#punctuation-comma"
+          }
+          {
+            include: "#expression"
+          }
+        ]
+      }
+      {
+        include: "#expression"
+      }
+    ]
   "enum-declaration":
     begin: "(?=\\benum\\b)"
     end: "(?<=\\})"
@@ -548,7 +612,13 @@ repository:
   "soql-query-body":
     patterns: [
       {
+        include: "#trigger-context-declaration"
+      }
+      {
         include: "#from-clause"
+      }
+      {
+        include: "#in-clause"
       }
       {
         include: "#where-clause"
@@ -570,6 +640,11 @@ repository:
         name: "keyword.operator.query.from.apex"
       "2":
         name: "storage.type.apex"
+  "in-clause":
+    match: "(IN)\\b\\s*"
+    captures:
+      "1":
+        name: "keyword.operator.query.in.apex"
   "where-clause":
     match: "\\b(WHERE)\\b\\s*"
     captures:
@@ -670,7 +745,7 @@ repository:
         include: "#variable-initializer"
       }
       {
-        include: "#class-or-struct-members"
+        include: "#class-or-trigger-members"
       }
     ]
   "property-declaration":
@@ -731,7 +806,7 @@ repository:
         include: "#variable-initializer"
       }
       {
-        include: "#class-or-struct-members"
+        include: "#class-or-trigger-members"
       }
     ]
   "indexer-declaration":

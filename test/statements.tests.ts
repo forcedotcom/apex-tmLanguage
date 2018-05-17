@@ -168,6 +168,24 @@ for (Integer i : listOfIntegers)
         ]);
       });
 
+      it('single-line if with operator and statement', () => {
+        const input = Input.InMethod(`if (true || Trigger.isBefore) return;`);
+        const tokens = tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.Keywords.Control.If,
+          Token.Punctuation.OpenParen,
+          Token.Literals.Boolean.True,
+          Token.Operators.Logical.Or,
+          Token.Support.Class.Trigger,
+          Token.Punctuation.Accessor,
+          Token.Support.Type.TriggerText('isBefore'),
+          Token.Punctuation.CloseParen,
+          Token.Keywords.Control.Return,
+          Token.Punctuation.Semicolon
+        ]);
+      });
+
       it('single-line if with embedded method call', () => {
         const input = Input.InMethod(`if (true) Do();`);
         const tokens = tokenize(input);

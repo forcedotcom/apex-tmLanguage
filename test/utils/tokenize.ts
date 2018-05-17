@@ -115,6 +115,24 @@ class TestClass {
     });
   }
 
+  public static InTrigger(input: string) {
+    let text = `
+trigger TestTrigger on Account (before insert, after update) {
+    ${input}
+}`;
+
+    // ensure consistent line-endings irrelevant of OS
+    text = text.replace('\r\n', '\n');
+    let lines = text.split('\n');
+
+    return new Input(lines, {
+      startLine: 2,
+      startIndex: 4,
+      endLine: lines.length - 1,
+      endIndex: 0
+    });
+  }
+
   public static InInterface(input: string) {
     let text = `
 interface TestInterface {
@@ -335,6 +353,7 @@ export namespace Token {
         'group',
         'keyword.operator.query.group.apex'
       );
+      export const In = createToken('IN', 'keyword.operator.query.in.apex');
       export const Into = createToken(
         'into',
         'keyword.operator.query.into.apex'
@@ -372,9 +391,17 @@ export namespace Token {
     }
 
     export namespace Triggers {
-      export const After = createToken('after', 'keyword.control.trigger.after.apex');
-      export const Before = createToken('before', 'keyword.control.trigger.before.apex');
+      export const After = createToken(
+        'after',
+        'keyword.control.trigger.after.apex'
+      );
+      export const Before = createToken(
+        'before',
+        'keyword.control.trigger.before.apex'
+      );
       export const On = createToken('on', 'keyword.operator.trigger.on.apex');
+      export const OperatorName = (text: string) =>
+        createToken(text, 'keyword.operator.trigger.apex');
     }
 
     export const Add = createToken('add', 'keyword.other.add.apex');
@@ -790,13 +817,24 @@ export namespace Token {
       export const Database = createToken('Database', 'support.class.apex');
       export const Exception = createToken('Exception', 'support.class.apex');
       export const System = createToken('System', 'support.class.apex');
+      export const Trigger = createToken(
+        'Trigger',
+        'support.class.trigger.apex'
+      );
       export const Text = (text: string) =>
         createToken(text, 'support.class.apex');
+    }
+
+    export namespace Type {
+      export const TriggerText = (text: string) =>
+        createToken(text, 'support.type.trigger.apex');
     }
 
     export namespace Function {
       export const Text = (text: string) =>
         createToken(text, 'support.function.apex');
+      export const TriggerText = (text: string) =>
+        createToken(text, 'support.function.trigger.apex');
       export const Insert = createToken('insert', 'support.function.apex');
     }
   }
