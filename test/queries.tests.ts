@@ -213,5 +213,33 @@ describe('Grammar', () => {
         Token.Punctuation.Semicolon
       ]);
     });
+
+    it('simple query inside of brackets with where & in clause', () => {
+      const input = Input.InMethod(
+        `List<User> lUsers = [SELECT Id FROM User WHERE Id IN :variable];`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Type('List'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Type('User'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Identifiers.LocalName('lUsers'),
+        Token.Operators.Assignment,
+        Token.Punctuation.OpenBracket,
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('User'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.In,
+        Token.Operators.Conditional.Colon,
+        Token.Keywords.Queries.FieldName('variable'),
+        Token.Punctuation.CloseBracket,
+        Token.Punctuation.Semicolon
+      ]);
+    });
   });
 });
