@@ -111,6 +111,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#trigger-declaration</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#punctuation-semicolon</string>
           </dict>
         </array>
@@ -478,6 +482,144 @@
             <string>#comment</string>
           </dict>
         </array>
+      </dict>
+      <key>trigger-declaration</key>
+      <dict>
+        <key>begin</key>
+        <string>(?=\btrigger\b)</string>
+        <key>end</key>
+        <string>(?&lt;=\})</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(?x)
+\b(trigger)\b\s+
+(@?[_[:alpha:]][_[:alnum:]]*)\s*
+\b(on)\b\s+
+([_[:alpha:]][_[:alnum:]]*)\s*</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.other.trigger.apex</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.type.trigger.apex</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.operator.trigger.on.apex</string>
+              </dict>
+              <key>4</key>
+              <dict>
+                <key>name</key>
+                <string>storage.type.apex</string>
+              </dict>
+            </dict>
+            <key>end</key>
+            <string>(?=\{)</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>begin</key>
+                <string>\(</string>
+                <key>beginCaptures</key>
+                <dict>
+                  <key>0</key>
+                  <dict>
+                    <key>name</key>
+                    <string>punctuation.parenthesis.open.apex</string>
+                  </dict>
+                </dict>
+                <key>end</key>
+                <string>\)</string>
+                <key>endCaptures</key>
+                <dict>
+                  <key>0</key>
+                  <dict>
+                    <key>name</key>
+                    <string>punctuation.parenthesis.close.apex</string>
+                  </dict>
+                </dict>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#trigger-type-statement</string>
+                  </dict>
+                  <dict>
+                    <key>include</key>
+                    <string>#expression</string>
+                  </dict>
+                </array>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#comment</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#type-parameter-list</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>\{</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.curlybrace.open.apex</string>
+              </dict>
+            </dict>
+            <key>end</key>
+            <string>\}</string>
+            <key>endCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.curlybrace.close.apex</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#class-or-struct-members</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#comment</string>
+          </dict>
+        </array>
+      </dict>
+      <key>trigger-type-statement</key>
+      <dict>
+        <key>match</key>
+        <string>\b(?:(before)|(after))\b</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control.trigger.before.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control.trigger.after.apex</string>
+          </dict>
+        </dict>
       </dict>
       <key>enum-declaration</key>
       <dict>

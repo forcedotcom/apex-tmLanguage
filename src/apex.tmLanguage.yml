@@ -36,6 +36,7 @@ repository:
     - include: '#class-declaration'
     - include: '#enum-declaration'
     - include: '#interface-declaration'
+    - include: '#trigger-declaration'
     - include: '#punctuation-semicolon'
 
   class-or-struct-members:
@@ -148,6 +149,50 @@ repository:
       patterns:
       - include: '#class-or-struct-members'
     - include: '#comment'
+
+  trigger-declaration:
+    begin: (?=\btrigger\b)
+    end: (?<=\})
+    patterns:
+    - begin: |-
+        (?x)
+        \b(trigger)\b\s+
+        (@?[_[:alpha:]][_[:alnum:]]*)\s*
+        \b(on)\b\s+
+        ([_[:alpha:]][_[:alnum:]]*)\s*
+      beginCaptures:
+        '1': { name: keyword.other.trigger.apex }
+        '2': { name: entity.name.type.trigger.apex }
+        '3': { name: keyword.operator.trigger.on.apex }
+        '4': { name: storage.type.apex }
+      end: (?=\{)
+      patterns:
+      - begin: \(
+        beginCaptures:
+          '0': { name: punctuation.parenthesis.open.apex }
+        end: \)
+        endCaptures:
+          '0': { name: punctuation.parenthesis.close.apex }
+        patterns:
+        - include: '#trigger-type-statement'
+        - include: '#expression'
+      - include: '#comment'
+      - include: '#type-parameter-list'
+    - begin: \{
+      beginCaptures:
+        '0': { name: punctuation.curlybrace.open.apex }
+      end: \}
+      endCaptures:
+        '0': { name: punctuation.curlybrace.close.apex }
+      patterns:
+      - include: '#class-or-struct-members'
+    - include: '#comment'
+
+  trigger-type-statement:
+    match: \b(?:(before)|(after))\b
+    captures:
+      '1': { name: keyword.control.trigger.before.apex }
+      '2': { name: keyword.control.trigger.after.apex }
 
   enum-declaration:
     begin: (?=\benum\b)

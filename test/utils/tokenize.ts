@@ -224,10 +224,8 @@ export namespace Token {
       createToken(text, 'entity.name.variable.property.apex');
     export const RangeVariableName = (text: string) =>
       createToken(text, 'entity.name.variable.range-variable.apex');
-    export const StructName = (text: string) =>
-      createToken(text, 'entity.name.type.struct.apex');
-    export const TupleElementName = (text: string) =>
-      createToken(text, 'entity.name.variable.tuple-element.apex');
+    export const TriggerName = (text: string) =>
+      createToken(text, 'entity.name.type.trigger.apex');
     export const TypeParameterName = (text: string) =>
       createToken(text, 'entity.name.type.type-parameter.apex');
   }
@@ -373,6 +371,12 @@ export namespace Token {
       );
     }
 
+    export namespace Triggers {
+      export const After = createToken('after', 'keyword.control.trigger.after.apex');
+      export const Before = createToken('before', 'keyword.control.trigger.before.apex');
+      export const On = createToken('on', 'keyword.operator.trigger.on.apex');
+    }
+
     export const Add = createToken('add', 'keyword.other.add.apex');
     export const AttributeSpecifier = (text: string) =>
       createToken(text, 'keyword.other.attribute-specifier.apex');
@@ -394,6 +398,7 @@ export namespace Token {
     export const Set = createToken('set', 'keyword.other.set.apex');
     export const Static = createToken('static', 'keyword.other.static.apex');
     export const This = createToken('this', 'keyword.other.this.apex');
+    export const Trigger = createToken('trigger', 'keyword.other.trigger.apex');
     export const Where = createToken('where', 'keyword.other.where.apex');
   }
 
