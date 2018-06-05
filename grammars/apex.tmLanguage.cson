@@ -189,6 +189,9 @@ repository:
         include: "#comment"
       }
       {
+        include: "#support"
+      }
+      {
         include: "#throw-expression"
       }
       {
@@ -261,6 +264,129 @@ repository:
       }
       {
         include: "#statement"
+      }
+    ]
+  support:
+    begin: "(System|Database|Savepoint|insert)\\b"
+    beginCaptures:
+      "1":
+        name: "support.class.apex"
+    end: "(?<=\\)|$)|(?=\\})|(?=;)|(?=\\)|(?=\\]))|(?=\\,)"
+    patterns: [
+      {
+        match: "(?:(\\.))([[:alpha:]]+)(?=\\()"
+        captures:
+          "1":
+            name: "punctuation.accessor.apex"
+          "2":
+            name: "support.function.apex"
+      }
+      {
+        match: "(?:(\\.))([[:alpha:]]+)"
+        captures:
+          "1":
+            name: "punctuation.accessor.apex"
+          "2":
+            name: "support.type.apex"
+      }
+      {
+        begin: "\\("
+        beginCaptures:
+          "0":
+            name: "punctuation.parenthesis.open.apex"
+        end: "\\)"
+        endCaptures:
+          "0":
+            name: "punctuation.parenthesis.close.apex"
+        patterns: [
+          {
+            include: "#expression"
+          }
+          {
+            include: "#punctuation-comma"
+          }
+        ]
+      }
+      {
+        include: "#comment"
+      }
+      {
+        include: "#statement"
+      }
+    ]
+  "support-type":
+    name: "support.apex"
+    patterns: [
+      {
+        include: "#comment"
+      }
+      {
+        include: "#support-builtin"
+      }
+      {
+        include: "#support-name"
+      }
+    ]
+  "support-builtin":
+    match: "\\b(System|Database|Savepoint|insert)\\b"
+    captures:
+      "1":
+        name: "support.class.apex"
+  "support-name":
+    patterns: [
+      {
+        match: "(?:(\\.))([[:alpha:]]+)(?=\\()"
+        captures:
+          "1":
+            name: "punctuation.accessor.apex"
+          "2":
+            name: "support.function.apex"
+      }
+      {
+        begin: "\\("
+        beginCaptures:
+          "0":
+            name: "punctuation.parenthesis.open.apex"
+        end: "\\)"
+        endCaptures:
+          "0":
+            name: "punctuation.parenthesis.close.apex"
+        patterns: [
+          {
+            include: "#expression"
+          }
+          {
+            include: "#punctuation-comma"
+          }
+        ]
+      }
+      {
+        match: "(\\.)\\s*([_[:alpha:]]*)"
+        captures:
+          "1":
+            name: "punctuation.accessor.apex"
+          "2":
+            name: "support.type.apex"
+      }
+    ]
+  "support-arguments":
+    begin: "<"
+    beginCaptures:
+      "0":
+        name: "punctuation.definition.typeparameters.begin.apex"
+    end: ">"
+    endCaptures:
+      "0":
+        name: "punctuation.definition.typeparameters.end.apex"
+    patterns: [
+      {
+        include: "#comment"
+      }
+      {
+        include: "#support-type"
+      }
+      {
+        include: "#punctuation-comma"
       }
     ]
   "sharing-modifier":
@@ -723,6 +849,9 @@ repository:
     beginCaptures:
       "1":
         patterns: [
+          {
+            include: "#support-type"
+          }
           {
             include: "#type"
           }
@@ -1443,6 +1572,9 @@ repository:
       "3":
         patterns: [
           {
+            include: "#support-type"
+          }
+          {
             include: "#type"
           }
         ]
@@ -1992,6 +2124,9 @@ repository:
       "2":
         patterns: [
           {
+            include: "#support-type"
+          }
+          {
             include: "#type"
           }
         ]
@@ -2115,6 +2250,9 @@ repository:
     patterns: [
       {
         include: "#comment"
+      }
+      {
+        include: "#support-type"
       }
       {
         include: "#type"

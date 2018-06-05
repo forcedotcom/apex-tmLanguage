@@ -83,6 +83,7 @@ repository:
   expression:
     patterns:
     - include: '#comment'
+    - include: '#support'
     - include: '#throw-expression'
     - include: '#this-expression'
     - include: '#trigger-context-declaration'
@@ -115,6 +116,76 @@ repository:
       patterns:
       - include: '#expression'
     - include: '#statement'
+
+  support:
+    begin: (System|Database|Savepoint|insert)\b
+    beginCaptures:
+      '1': { name: support.class.apex }
+    end: (?<=\)|$)|(?=\})|(?=;)|(?=\)|(?=\]))|(?=\,)
+    patterns:
+    - match: '(?:(\.))([[:alpha:]]+)(?=\()'
+      captures:
+        '1': { name: punctuation.accessor.apex }
+        '2': { name: support.function.apex}
+    - match: '(?:(\.))([[:alpha:]]+)'
+      captures:
+        '1': { name: punctuation.accessor.apex }
+        '2': { name: support.type.apex}
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - include: '#expression'
+      - include: '#punctuation-comma'
+    - include: '#comment'
+    - include: '#statement'
+
+  support-type:
+    name: support.apex
+    patterns:
+    - include: '#comment'
+    - include: '#support-builtin'
+    - include: '#support-name'
+
+  support-builtin:
+    match: \b(System|Database|Savepoint|insert)\b
+    captures:
+      '1': { name: support.class.apex }
+
+  support-name:
+    patterns:
+    - match: '(?:(\.))([[:alpha:]]+)(?=\()'
+      captures:
+        '1': { name: punctuation.accessor.apex }
+        '2': { name: support.function.apex}
+    - begin: \(
+      beginCaptures:
+        '0': { name: punctuation.parenthesis.open.apex }
+      end: \)
+      endCaptures:
+        '0': { name: punctuation.parenthesis.close.apex }
+      patterns:
+      - include: '#expression'
+      - include: '#punctuation-comma'
+    - match: (\.)\s*([_[:alpha:]]*)
+      captures:
+        '1': { name: punctuation.accessor.apex }
+        '2': { name: support.type.apex }
+
+  support-arguments:
+    begin: '<'
+    beginCaptures:
+      '0': { name: punctuation.definition.typeparameters.begin.apex }
+    end: '>'
+    endCaptures:
+      '0': { name: punctuation.definition.typeparameters.end.apex }
+    patterns:
+    - include: '#comment'
+    - include: '#support-type'
+    - include: '#punctuation-comma'
 
   sharing-modifier:
     name: 'sharing.modifier.apex'
@@ -396,6 +467,7 @@ repository:
     beginCaptures:
       '1':
         patterns:
+        - include: '#support-type'
         - include: '#type'
       # '2': ?<identifier> is a sub-expression. It's final value is not considered.
       # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
@@ -437,6 +509,7 @@ repository:
     beginCaptures:
       '1':
         patterns:
+        # - include: '#support-type'
         - include: '#type'
       # '2': ?<type-name> is a sub-expression. It's final value is not considered.
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
@@ -875,6 +948,7 @@ repository:
       '2': { name: keyword.other.var.apex }
       '3':
         patterns:
+        - include: '#support-type'
         - include: '#type'
       # '4': ?<identifier> is a sub-expression. It's final value is not considered.
       # '5': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
@@ -1288,6 +1362,7 @@ repository:
       '1': { name: storage.modifier.apex }
       '2':
         patterns:
+        - include: '#support-type'
         - include: '#type'
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
       # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
@@ -1365,6 +1440,7 @@ repository:
       '0': { name: punctuation.definition.typeparameters.end.apex }
     patterns:
     - include: '#comment'
+    - include: '#support-type'
     - include: '#type'
     - include: '#punctuation-comma'
 
