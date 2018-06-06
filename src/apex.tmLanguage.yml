@@ -83,7 +83,7 @@ repository:
   expression:
     patterns:
     - include: '#comment'
-    - include: '#support'
+    - include: '#support-expression'
     - include: '#throw-expression'
     - include: '#this-expression'
     - include: '#trigger-context-declaration'
@@ -117,13 +117,18 @@ repository:
       - include: '#expression'
     - include: '#statement'
 
-  support:
-    begin: (System|Database|Savepoint|insert)\b
+  # This rule applies exclusively for namespace situations
+  # i.e. System.debug(), Database.insert()
+  support-expression:
+    begin: |-
+      (?x)
+      (System|Database|Savepoint|Exception|DMLException|ApexPages|Test)\s* # supported apex namespaces
     beginCaptures:
       '1': { name: support.class.apex }
     end: (?<=\)|$)|(?=\})|(?=;)|(?=\)|(?=\]))|(?=\,)
     patterns:
-    - match: '(?:(\.))([[:alpha:]]+)(?=\()'
+    - include: '#support-type'
+    - match: '(?:(\.))([[:alpha:]]*)(?=\()'
       captures:
         '1': { name: punctuation.accessor.apex }
         '2': { name: support.function.apex}
@@ -143,21 +148,29 @@ repository:
     - include: '#comment'
     - include: '#statement'
 
+  # This rule applies exclusively for type situations
+  # i.e. System.LoggingLevel varName = ..., insert records;, etc.
   support-type:
     name: support.apex
     patterns:
     - include: '#comment'
-    - include: '#support-builtin'
+    - include: '#support-class'
+    - include: '#support-functions'
     - include: '#support-name'
 
-  support-builtin:
-    match: \b(System|Database|Savepoint|insert)\b
+  support-class:
+    match: \b(System|Database|Savepoint|Exception|DMLException|ApexPages|Test)\b
     captures:
       '1': { name: support.class.apex }
 
+  support-functions:
+    match: \b(start|execute|finish|insert|update|upsert|delete)\b
+    captures:
+      '1': { name: support.function.apex }
+
   support-name:
     patterns:
-    - match: '(?:(\.))([[:alpha:]]+)(?=\()'
+    - match: '(?:(\.))([[:alpha:]]*)(?=\()'
       captures:
         '1': { name: punctuation.accessor.apex }
         '2': { name: support.function.apex}
@@ -618,6 +631,7 @@ repository:
     beginCaptures:
       '1':
         patterns:
+        - include: '#support-type'
         - include: '#type'
       # '2': ?<type-name> is a sub-expression. It's final value is not considered.
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
@@ -627,7 +641,11 @@ repository:
         patterns:
         - include: '#type'
         - include: '#punctuation-accessor'
-      '7': { name: entity.name.function.apex }
+      # '7': { name: entity.name.function.apex }
+      '7':
+        patterns:
+        - include: '#support-type'
+        - include: '#method-name-custom'
       '8':
         patterns:
         - include: '#type-parameter-list'
@@ -637,6 +655,10 @@ repository:
     - include: '#parenthesized-parameter-list'
     - include: '#expression-body'
     - include: '#block'
+
+  method-name-custom:
+    name: entity.name.function.apex
+    match: '@?[_[:alpha:]][_[:alnum:]]*'
 
   constructor-declaration:
     begin: (?=@?[_[:alpha:]][_[:alnum:]]*\s*\()
@@ -894,6 +916,7 @@ repository:
         captures:
           '1':
             patterns:
+            - include: '#support-type'
             - include: '#type'
           # '2': ?<identifier> is a sub-expression. It's final value is not considered.
           # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
@@ -1267,6 +1290,7 @@ repository:
       '1': { name: keyword.control.new.apex }
       '2':
         patterns:
+        - include: '#support-type'
         - include: '#type'
     end: (?<=\))
     patterns:
@@ -1295,6 +1319,7 @@ repository:
       '1': { name: keyword.control.new.apex }
       '2':
         patterns:
+        - include: '#support-type'
         - include: '#type'
 
   array-creation-expression:
@@ -1320,6 +1345,7 @@ repository:
       '1': { name: keyword.control.new.apex }
       '2':
         patterns:
+        - include: '#support-type'
         - include: '#type'
     end: (?<=\])
     patterns:

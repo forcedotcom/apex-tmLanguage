@@ -206,8 +206,117 @@ describe('Grammar', () => {
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
-        Token.Support.Class.Text('insert'),
+        Token.Support.Class.FunctionText('insert'),
         Token.Identifiers.LocalName('lResults'),
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('Test namespace simple methods', () => {
+      const input = Input.InMethod(`Test.startTest();`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.Text('Test'),
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('startTest'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('Test namespace complex methods', () => {
+      const input = Input.InMethod(`Test.setCreatedDate(a.Id, DateTime.newInstance(2012,12,12));`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.Text('Test'),
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('setCreatedDate'),
+        Token.Punctuation.OpenParen,
+        Token.Variables.Object('a'),
+        Token.Punctuation.Accessor,
+        Token.Variables.Property('Id'),
+        Token.Punctuation.Comma,
+        Token.Variables.Object('DateTime'),
+        Token.Punctuation.Accessor,
+        Token.Identifiers.MethodName('newInstance'),
+        Token.Punctuation.OpenParen,
+        Token.Literals.Numeric.Decimal('2012'),
+        Token.Punctuation.Comma,
+        Token.Literals.Numeric.Decimal('12'),
+        Token.Punctuation.Comma,
+        Token.Literals.Numeric.Decimal('12'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('DMLException usage in try catch', () => {
+      const input = Input.InMethod(`try{} catch (DMLException e) {}`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Control.Try,
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Control.Catch,
+        Token.Punctuation.OpenParen,
+        Token.Support.Class.Text('DMLException'),
+        Token.Identifiers.LocalName('e'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
+
+    it('Database usage for Apex Batch', () => {
+      const input = Input.InClass(`global Database.QueryLocator start(Database.BatchableContext BC){}`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Modifiers.Global,
+        Token.Support.Class.Database,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('QueryLocator'),
+        Token.Support.Class.FunctionText('start'),
+        Token.Punctuation.OpenParen,
+        Token.Support.Class.Database,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('BatchableContext'),
+        Token.Identifiers.ParameterName('BC'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
+
+    it('Database usage for Apex Batch', () => {
+      const input = Input.InMethod(`ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, message));`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.Text('ApexPages'),
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('addMessage'),
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Control.New,
+        Token.Support.Class.Text('ApexPages'),
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('Message'),
+        Token.Punctuation.OpenParen,
+        Token.Support.Class.Text('ApexPages'),
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('Severity'),
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('CONFIRM'),
+        Token.Punctuation.Comma,
+
+        Token.Variables.ReadWrite('message'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon
       ]);
     });

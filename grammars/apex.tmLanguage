@@ -275,7 +275,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#support</string>
+            <string>#support-expression</string>
           </dict>
           <dict>
             <key>include</key>
@@ -394,10 +394,11 @@
           </dict>
         </array>
       </dict>
-      <key>support</key>
+      <key>support-expression</key>
       <dict>
         <key>begin</key>
-        <string>(System|Database|Savepoint|insert)\b</string>
+        <string>(?x)
+(System|Database|Savepoint|Exception|DMLException|ApexPages|Test)\s* # supported apex namespaces</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -411,8 +412,12 @@
         <key>patterns</key>
         <array>
           <dict>
+            <key>include</key>
+            <string>#support-type</string>
+          </dict>
+          <dict>
             <key>match</key>
-            <string>(?:(\.))([[:alpha:]]+)(?=\()</string>
+            <string>(?:(\.))([[:alpha:]]*)(?=\()</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -499,7 +504,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#support-builtin</string>
+            <string>#support-class</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#support-functions</string>
           </dict>
           <dict>
             <key>include</key>
@@ -507,10 +516,10 @@
           </dict>
         </array>
       </dict>
-      <key>support-builtin</key>
+      <key>support-class</key>
       <dict>
         <key>match</key>
-        <string>\b(System|Database|Savepoint|insert)\b</string>
+        <string>\b(System|Database|Savepoint|Exception|DMLException|ApexPages|Test)\b</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -520,13 +529,26 @@
           </dict>
         </dict>
       </dict>
+      <key>support-functions</key>
+      <dict>
+        <key>match</key>
+        <string>\b(start|execute|finish|insert|update|upsert|delete)\b</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>support.function.apex</string>
+          </dict>
+        </dict>
+      </dict>
       <key>support-name</key>
       <dict>
         <key>patterns</key>
         <array>
           <dict>
             <key>match</key>
-            <string>(?:(\.))([[:alpha:]]+)(?=\()</string>
+            <string>(?:(\.))([[:alpha:]]*)(?=\()</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1757,6 +1779,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#type</string>
               </dict>
             </array>
@@ -1777,8 +1803,17 @@
           </dict>
           <key>7</key>
           <dict>
-            <key>name</key>
-            <string>entity.name.function.apex</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#method-name-custom</string>
+              </dict>
+            </array>
           </dict>
           <key>8</key>
           <dict>
@@ -1812,6 +1847,13 @@
             <string>#block</string>
           </dict>
         </array>
+      </dict>
+      <key>method-name-custom</key>
+      <dict>
+        <key>name</key>
+        <string>entity.name.function.apex</string>
+        <key>match</key>
+        <string>@?[_[:alpha:]][_[:alnum:]]*</string>
       </dict>
       <key>constructor-declaration</key>
       <dict>
@@ -2565,6 +2607,10 @@
                   <dict>
                     <key>patterns</key>
                     <array>
+                      <dict>
+                        <key>include</key>
+                        <string>#support-type</string>
+                      </dict>
                       <dict>
                         <key>include</key>
                         <string>#type</string>
@@ -3397,6 +3443,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#type</string>
               </dict>
             </array>
@@ -3445,6 +3495,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#type</string>
               </dict>
             </array>
@@ -3482,6 +3536,10 @@
           <dict>
             <key>patterns</key>
             <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
               <dict>
                 <key>include</key>
                 <string>#type</string>

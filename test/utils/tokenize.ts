@@ -815,7 +815,6 @@ export namespace Token {
       export const Date = createToken('Date', 'support.class.apex');
       export const Datetime = createToken('Datetime', 'support.class.apex');
       export const Database = createToken('Database', 'support.class.apex');
-      export const Exception = createToken('Exception', 'support.class.apex');
       export const FunctionText = (text: string) => createToken(text, 'support.function.apex');
       export const System = createToken('System', 'support.class.apex');
       export const Trigger = createToken(

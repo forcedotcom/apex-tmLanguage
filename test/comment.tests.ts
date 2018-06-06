@@ -356,7 +356,7 @@ catch (Exception) //comment
         Token.Punctuation.CloseBrace,
         Token.Keywords.Control.Catch,
         Token.Punctuation.OpenParen,
-        Token.Type('Exception'),
+        Token.Support.Class.Text('Exception'),
         Token.Punctuation.CloseParen,
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text('comment'),
