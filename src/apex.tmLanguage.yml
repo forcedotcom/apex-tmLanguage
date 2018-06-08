@@ -122,7 +122,7 @@ repository:
   support-expression:
     begin: |-
       (?x)
-      (System|Database|Savepoint|Exception|DMLException|ApexPages|Test)\s* # supported apex namespaces
+      (ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\s* # supported apex namespaces
     beginCaptures:
       '1': { name: support.class.apex }
     end: (?<=\)|$)|(?=\})|(?=;)|(?=\)|(?=\]))|(?=\,)
@@ -159,18 +159,18 @@ repository:
     - include: '#support-name'
 
   support-class:
-    match: \b(System|Database|Savepoint|Exception|DMLException|ApexPages|Test)\b
+    match: \b(ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\b
     captures:
       '1': { name: support.class.apex }
 
   support-functions:
-    match: \b(start|execute|finish|insert|update|upsert|delete)\b
+    match: \b(delete|execute|finish|insert|start|undelete|update|upsert)\b
     captures:
       '1': { name: support.function.apex }
 
   support-name:
     patterns:
-    - match: '(?:(\.))([[:alpha:]]*)(?=\()'
+    - match: '(\.)\s*([[:alpha:]]*)(?=\()'
       captures:
         '1': { name: punctuation.accessor.apex }
         '2': { name: support.function.apex}
@@ -1172,6 +1172,7 @@ repository:
       '1': { name: punctuation.parenthesis.open.apex }
       '2':
         patterns:
+        - include: '#support-type'
         - include: '#type'
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
       # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.

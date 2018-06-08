@@ -293,7 +293,7 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Database usage for Apex Batch', () => {
+    it('create new support object', () => {
       const input = Input.InMethod(`ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, message));`);
       const tokens = tokenize(input);
 
@@ -305,7 +305,7 @@ describe('Grammar', () => {
         Token.Keywords.Control.New,
         Token.Support.Class.Text('ApexPages'),
         Token.Punctuation.Accessor,
-        Token.Support.Class.FunctionText('Message'),
+        Token.Support.Class.TypeText('Message'),
         Token.Punctuation.OpenParen,
         Token.Support.Class.Text('ApexPages'),
         Token.Punctuation.Accessor,
@@ -317,6 +317,22 @@ describe('Grammar', () => {
         Token.Variables.ReadWrite('message'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('Usage for casting in a method', () => {
+      const input = Input.InMethod(`SObject sp = (SObject)Something;`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.Text('SObject'),
+        Token.Identifiers.LocalName('sp'),
+        Token.Operators.Assignment,
+        Token.Punctuation.OpenParen,
+        Token.Support.Class.Text('SObject'),
+        Token.Punctuation.CloseParen,
+        Token.Variables.ReadWrite('Something'),
         Token.Punctuation.Semicolon
       ]);
     });

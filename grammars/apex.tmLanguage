@@ -398,7 +398,7 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(System|Database|Savepoint|Exception|DMLException|ApexPages|Test)\s* # supported apex namespaces</string>
+(ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\s* # supported apex namespaces</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -519,7 +519,7 @@
       <key>support-class</key>
       <dict>
         <key>match</key>
-        <string>\b(System|Database|Savepoint|Exception|DMLException|ApexPages|Test)\b</string>
+        <string>\b(ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\b</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -532,7 +532,7 @@
       <key>support-functions</key>
       <dict>
         <key>match</key>
-        <string>\b(start|execute|finish|insert|update|upsert|delete)\b</string>
+        <string>\b(delete|execute|finish|insert|start|undelete|update|upsert)\b</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -548,7 +548,7 @@
         <array>
           <dict>
             <key>match</key>
-            <string>(?:(\.))([[:alpha:]]*)(?=\()</string>
+            <string>(\.)\s*([[:alpha:]]*)(?=\()</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -3198,6 +3198,10 @@
           <dict>
             <key>patterns</key>
             <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
               <dict>
                 <key>include</key>
                 <string>#type</string>
