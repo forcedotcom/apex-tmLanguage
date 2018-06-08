@@ -449,9 +449,7 @@ describe('Grammar', () => {
     });
 
     it('USING SCOPE: Get all account that belong to you', () => {
-      const input = Input.InMethod(
-        `SELECT Id FROM Account USING SCOPE Mine`
-      );
+      const input = Input.InMethod(`SELECT Id FROM Account USING SCOPE Mine`);
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -530,7 +528,5 @@ describe('Grammar', () => {
         Token.Punctuation.CloseParen
       ]);
     });
-
-
   });
 });

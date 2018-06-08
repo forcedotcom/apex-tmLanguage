@@ -338,7 +338,8 @@ export namespace Token {
         'keyword.operator.query.ascending.apex'
       );
       export const By = createToken('by', 'keyword.operator.query.by.apex');
-      export const DateLiteral = (text: string) => createToken(text, 'keyword.operator.query.date.apex');
+      export const DateLiteral = (text: string) =>
+        createToken(text, 'keyword.operator.query.date.apex');
       export const Descending = createToken(
         'DESC',
         'keyword.operator.query.descending.apex'
@@ -388,12 +389,13 @@ export namespace Token {
       export const TypeName = (text: string) =>
         createToken(text, 'storage.type.apex');
       export const UsingScope = (text: string) =>
-          createToken(text, 'keyword.operator.query.using.apex');
+        createToken(text, 'keyword.operator.query.using.apex');
       export const Where = createToken(
         'WHERE',
         'keyword.operator.query.where.apex'
       );
-      export const QueryMethod = (text: string) => createToken(text, 'support.function.query.apex');
+      export const QueryMethod = (text: string) =>
+        createToken(text, 'support.function.query.apex');
     }
 
     export namespace Triggers {
@@ -453,7 +455,7 @@ export namespace Token {
       export const Binary = (text: string) =>
         createToken(text, 'constant.numeric.binary.apex');
       export const DateTimeUTC = (text: string) =>
-          createToken(text, 'constant.numeric.datetime.apex');
+        createToken(text, 'constant.numeric.datetime.apex');
       export const Decimal = (text: string) =>
         createToken(text, 'constant.numeric.decimal.apex');
       export const Hexadecimal = (text: string) =>
