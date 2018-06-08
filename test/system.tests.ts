@@ -51,7 +51,9 @@ describe('Grammar', () => {
     });
 
     it('System method with two parameter', () => {
-      const input = Input.InMethod(`System.debug(System.LoggingLevel.INFO, 'This is a test');`);
+      const input = Input.InMethod(
+        `System.debug(System.LoggingLevel.INFO, 'This is a test');`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -74,7 +76,9 @@ describe('Grammar', () => {
     });
 
     it('System method with two parameter usage in trigger', () => {
-      const input = Input.InTrigger(`System.debug(System.LoggingLevel.INFO, 'This is a test');`);
+      const input = Input.InTrigger(
+        `System.debug(System.LoggingLevel.INFO, 'This is a test');`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -97,7 +101,9 @@ describe('Grammar', () => {
     });
 
     it('System type - local variable declaration', () => {
-      const input = Input.InMethod(`System.LoggingLevel wa = 'This is a test';`);
+      const input = Input.InMethod(
+        `System.LoggingLevel wa = 'This is a test';`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -140,7 +146,9 @@ describe('Grammar', () => {
     });
 
     it('System.<something> as parameter on method signature', () => {
-      const input = Input.InClass(`public static void runAssignmentRules(System.LoggingLevel lUsers){}`);
+      const input = Input.InClass(
+        `public static void runAssignmentRules(System.LoggingLevel lUsers){}`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -177,7 +185,9 @@ describe('Grammar', () => {
     });
 
     it('Database usage in trigger', () => {
-      const input = Input.InTrigger(`List<Database.SaveResult> saveResults = Database.insert(lnewPermSets, false);`);
+      const input = Input.InTrigger(
+        `List<Database.SaveResult> saveResults = Database.insert(lnewPermSets, false);`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -227,7 +237,9 @@ describe('Grammar', () => {
     });
 
     it('Test namespace complex methods', () => {
-      const input = Input.InMethod(`Test.setCreatedDate(a.Id, DateTime.newInstance(2012,12,12));`);
+      const input = Input.InMethod(
+        `Test.setCreatedDate(a.Id, DateTime.newInstance(2012,12,12));`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -273,7 +285,9 @@ describe('Grammar', () => {
     });
 
     it('Database usage for Apex Batch', () => {
-      const input = Input.InClass(`global Database.QueryLocator start(Database.BatchableContext BC){}`);
+      const input = Input.InClass(
+        `global Database.QueryLocator start(Database.BatchableContext BC){}`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -294,7 +308,9 @@ describe('Grammar', () => {
     });
 
     it('create new support object', () => {
-      const input = Input.InMethod(`ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, message));`);
+      const input = Input.InMethod(
+        `ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, message));`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
