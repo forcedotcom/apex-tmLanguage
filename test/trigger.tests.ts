@@ -150,7 +150,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.TypeName('Contact'),
         Token.Keywords.Queries.Where,
         Token.Keywords.Queries.FieldName('AccountId'),
-        Token.Keywords.Queries.In,
+        Token.Keywords.Queries.OperatorName('IN'),
         Token.Operators.Conditional.Colon,
         Token.Support.Class.Trigger,
         Token.Punctuation.Accessor,

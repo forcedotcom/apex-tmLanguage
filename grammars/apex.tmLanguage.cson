@@ -171,6 +171,9 @@ repository:
         include: "#try-statement"
       }
       {
+        include: "#soql-query-expression"
+      }
+      {
         include: "#local-declaration"
       }
       {
@@ -727,10 +730,6 @@ repository:
         include: "#soql-query-body"
       }
       {
-        name: "keyword.query.field.apex"
-        match: "[_.[:alpha:]][_.[:alnum:]]*"
-      }
-      {
         include: "#comment"
       }
       {
@@ -746,7 +745,18 @@ repository:
         include: "#parenthesized-expression"
       }
       {
+        include: "#expression-operators"
+      }
+      {
         include: "#literal"
+      }
+      {
+        match: "([_.[:alpha:]][_.[:alnum:]]*)\\s*(\\,)?"
+        captures:
+          "1":
+            name: "keyword.query.field.apex"
+          "2":
+            name: "punctuation.separator.comma.apex"
       }
     ]
   "soql-query-body":
@@ -755,13 +765,28 @@ repository:
         include: "#trigger-context-declaration"
       }
       {
+        include: "#soql-functions"
+      }
+      {
         include: "#from-clause"
       }
       {
-        include: "#in-clause"
+        include: "#where-clause"
       }
       {
-        include: "#where-clause"
+        include: "#query-operators"
+      }
+      {
+        include: "#date-literals"
+      }
+      {
+        include: "#date-literal-with-params"
+      }
+      {
+        include: "#using-scope"
+      }
+      {
+        include: "#soql-group-clauses"
       }
       {
         include: "#orderby-clause"
@@ -773,6 +798,74 @@ repository:
         include: "#ordering-nulls"
       }
     ]
+  "soql-group-clauses":
+    begin: "\\("
+    beginCaptures:
+      "0":
+        name: "punctuation.parenthesis.open.apex"
+    end: "\\)"
+    endCaptures:
+      "0":
+        name: "punctuation.parenthesis.close.apex"
+    patterns: [
+      {
+        include: "#soql-query-expression"
+      }
+      {
+        include: "#colon-expression"
+      }
+      {
+        include: "#punctuation-comma"
+      }
+      {
+        include: "#operator-assignment"
+      }
+      {
+        include: "#literal"
+      }
+      {
+        include: "#query-operators"
+      }
+      {
+        include: "#date-literals"
+      }
+      {
+        include: "#date-literal-with-params"
+      }
+      {
+        include: "#using-scope"
+      }
+      {
+        name: "keyword.query.field.apex"
+        match: "[_.[:alpha:]][_.[:alnum:]]*"
+      }
+    ]
+  "soql-functions":
+    begin: "\\b(AVG|CALENDAR_MONTH|CALENDAR_QUARTER|CALENDAR_YEAR|convertCurrency|convertTimezone|COUNT|DAY_IN_MONTH|DAY_IN_WEEK|DAY_IN_YEAR|DAY_ONLY|toLabel|INCLUDES|EXCLUDES|FISCAL_MONTH|FISCAL_QUARTER|FISCAL_YEAR|FORMAT|GROUPING|GROUP BY CUBE|GROUP BY ROLLUP|HOUR_IN_DAY|MAX|MIN|SUM|WEEK_IN_MONTH|WEEK_IN_YEAR)\\s*(\\()"
+    beginCaptures:
+      "1":
+        name: "support.function.query.apex"
+      "2":
+        name: "punctuation.parenthesis.open.apex"
+    end: "\\)"
+    endCaptures:
+      "0":
+        name: "punctuation.parenthesis.close.apex"
+    patterns: [
+      {
+        include: "#literal"
+      }
+      {
+        include: "#punctuation-comma"
+      }
+      {
+        include: "#soql-functions"
+      }
+      {
+        name: "keyword.query.field.apex"
+        match: "[_.[:alpha:]][_.[:alnum:]]*"
+      }
+    ]
   "from-clause":
     match: "(FROM)\\b\\s*([_\\.[:alnum:]]+)\\b\\s*"
     captures:
@@ -780,11 +873,6 @@ repository:
         name: "keyword.operator.query.from.apex"
       "2":
         name: "storage.type.apex"
-  "in-clause":
-    match: "(IN)\\b\\s*"
-    captures:
-      "1":
-        name: "keyword.operator.query.in.apex"
   "where-clause":
     match: "\\b(WHERE)\\b\\s*"
     captures:
@@ -817,6 +905,26 @@ repository:
         name: "keyword.operator.query.nullsfirst.apex"
       "2":
         name: "keyword.operator.query.nullslast.apex"
+  "query-operators":
+    match: "\\b(ABOVE|AND|AT|FOR REFERENCE|FOR UPDATE|FOR VIEW|GROUP BY|HAVING|IN|LIKE|LIMIT|NOT IN|NOT|OFFSET|OR|TYPEOF|UPDATE TRACKING|UPDATE VIEWSTAT|WITH DATA CATEGORY|WITH)\\b\\s*"
+    captures:
+      "1":
+        name: "keyword.operator.query.apex"
+  "date-literals":
+    match: "\\b(YESTERDAY|TODAY|TOMORROW|LAST_WEEK|THIS_WEEK|NEXT_WEEK|LAST_MONTH|THIS_MONTH|NEXT_MONTH|LAST_90_DAYS|NEXT_90_DAYS|THIS_QUARTER|LAST_QUARTER|NEXT_QUARTER|THIS_YEAR|LAST_YEAR|NEXT_YEAR|THIS_FISCAL_QUARTER|LAST_FISCAL_QUARTER|NEXT_FISCAL_QUARTER|THIS_FISCAL_YEAR|LAST_FISCAL_YEAR|NEXT_FISCAL_YEAR)\\b\\s*"
+    captures:
+      "1":
+        name: "keyword.operator.query.date.apex"
+  "date-literal-with-params":
+    match: "\\b((LAST_N_DAYS|NEXT_N_DAYS|NEXT_N_WEEKS|LAST_N_WEEKS|NEXT_N_MONTHS|LAST_N_MONTHS|NEXT_N_QUARTERS|LAST_N_QUARTERS|NEXT_N_YEARS|LAST_N_YEARS|NEXT_N_FISCAL_QUARTERS|LAST_N_FISCAL_QUARTERS|NEXT_N_FISCAL_YEARS|LAST_N_FISCAL_YEARS)\\s*\\:\\d+)\\b"
+    captures:
+      "1":
+        name: "keyword.operator.query.date.apex"
+  "using-scope":
+    match: "((USING SCOPE)\\b\\s*(Delegated|Everything|Mine|My_Territory|My_Team_Territory|Team))\\b\\s*"
+    captures:
+      "1":
+        name: "keyword.operator.query.using.apex"
   "type-parameter-list":
     begin: "\\<"
     beginCaptures:
@@ -1710,6 +1818,18 @@ repository:
     match: "(?<!\\.)\\bnull\\b"
   "numeric-literal":
     patterns: [
+      {
+        name: "constant.numeric.datetime.apex"
+        match: "\\b(\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}\\:\\d{2}\\:\\d{2}(\\-|\\+)\\d{2}\\:\\d{2})\\b"
+      }
+      {
+        name: "constant.numeric.datetime.apex"
+        match: "\\b(\\d{4}\\-\\d{2}\\-\\d{2}T\\d{2}\\:\\d{2}\\:\\d{2}(Z)?)\\b"
+      }
+      {
+        name: "constant.numeric.date.apex"
+        match: "\\b(\\d{4}\\-\\d{2}\\-\\d{2})\\b"
+      }
       {
         name: "constant.numeric.hex.apex"
         match: "\\b0(x|X)[0-9a-fA-F_]+(U|u|L|l|UL|Ul|uL|ul|LU|Lu|lU|lu)?\\b"

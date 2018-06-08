@@ -239,12 +239,298 @@ describe('Grammar', () => {
         Token.Keywords.Queries.TypeName('User'),
         Token.Keywords.Queries.Where,
         Token.Keywords.Queries.FieldName('Id'),
-        Token.Keywords.Queries.In,
+        Token.Keywords.Queries.OperatorName('IN'),
         Token.Operators.Conditional.Colon,
         Token.Keywords.Queries.FieldName('variable'),
         Token.Punctuation.CloseBracket,
         Token.Punctuation.Semicolon
       ]);
     });
+
+    it('where clause with parameter grouping', () => {
+      const input = Input.InMethod(
+        `SELECT Id FROM Subscription__c WHERE (Contract__c IN :contractIds OR Contract__c = 'Name')`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Subscription__c'),
+        Token.Keywords.Queries.Where,
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Queries.FieldName('Contract__c'),
+        Token.Keywords.Queries.OperatorName('IN'),
+        Token.Operators.Conditional.Colon,
+        Token.Keywords.Queries.FieldName('contractIds'),
+        Token.Keywords.Queries.OperatorName('OR'),
+        Token.Keywords.Queries.FieldName('Contract__c'),
+        Token.Operators.Assignment,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('Name'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen
+      ]);
+    });
+
+    it('query with multiple operators after where clause', () => {
+      const input = Input.InMethod(
+        `SELECT Id FROM Contact WHERE Name LIKE 'A%' AND MailingState='California'`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Contact'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('Name'),
+        Token.Keywords.Queries.OperatorName('LIKE'),
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('A%'),
+        Token.Punctuation.String.End,
+        Token.Keywords.Queries.OperatorName('AND'),
+        Token.Keywords.Queries.FieldName('MailingState'),
+        Token.Operators.Assignment,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('California'),
+        Token.Punctuation.String.End
+      ]);
+    });
+
+    it('query with datetime constant usage', () => {
+      const input = Input.InMethod(
+        `SELECT Name FROM Account WHERE CreatedDate > 2011-04-26T10:00:00-08:00`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Name'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Account'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('CreatedDate'),
+        Token.Operators.Relational.GreaterThan,
+        Token.Literals.Numeric.DateTimeUTC('2011-04-26T10:00:00-08:00')
+      ]);
+    });
+
+    it('query using soql methods on conditional syntax', () => {
+      const input = Input.InMethod(
+        `SELECT Amount FROM Opportunity WHERE CALENDAR_YEAR(CreatedDate) = 2011`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Amount'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Opportunity'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.QueryMethod('CALENDAR_YEAR'),
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Queries.FieldName('CreatedDate'),
+        Token.Punctuation.CloseParen,
+        Token.Operators.Assignment,
+        Token.Literals.Numeric.Decimal('2011')
+      ]);
+    });
+
+    it('query using soql methods for translation', () => {
+      const input = Input.InMethod(
+        `SELECT Company, toLabel(Recordtype.Name) FROM Lead`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Company'),
+        Token.Punctuation.Comma,
+        Token.Keywords.Queries.QueryMethod('toLabel'),
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Queries.FieldName('Recordtype.Name'),
+        Token.Punctuation.CloseParen,
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Lead')
+      ]);
+    });
+
+    it('query using soql methods for translation', () => {
+      const input = Input.InMethod(
+        `SELECT Id, MSP1__c FROM CustObj__c WHERE MSP1__c INCLUDES ('AAA;BBB','CCC')`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Punctuation.Comma,
+        Token.Keywords.Queries.FieldName('MSP1__c'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('CustObj__c'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('MSP1__c'),
+        Token.Keywords.Queries.QueryMethod('INCLUDES'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('AAA;BBB'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.Comma,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('CCC'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen
+      ]);
+    });
+
+    it('Filtering on Polymorphic Relationship Fields', () => {
+      const input = Input.InMethod(
+        `SELECT Id FROM Event WHERE What.Type NOT IN ('Account', 'Opportunity')`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Event'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('What.Type'),
+        Token.Keywords.Queries.OperatorName('NOT IN'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('Account'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.Comma,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('Opportunity'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen
+      ]);
+    });
+
+    it('Filtering using date literals', () => {
+      const input = Input.InMethod(
+        `SELECT Id FROM Account WHERE CreatedDate = LAST_90_DAYS`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Account'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('CreatedDate'),
+        Token.Operators.Assignment,
+        Token.Keywords.Queries.DateLiteral('LAST_90_DAYS')
+      ]);
+    });
+
+    it('Filtering using date literals', () => {
+      const input = Input.InMethod(
+        `SELECT Id FROM Opportunity WHERE CloseDate > LAST_N_FISCAL_YEARS:3`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Opportunity'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('CloseDate'),
+        Token.Operators.Relational.GreaterThan,
+        Token.Keywords.Queries.DateLiteral('LAST_N_FISCAL_YEARS:3')
+      ]);
+    });
+
+    it('USING SCOPE: Get all account that belong to you', () => {
+      const input = Input.InMethod(
+        `SELECT Id FROM Account USING SCOPE Mine`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Account'),
+        Token.Keywords.Queries.UsingScope('USING SCOPE Mine')
+      ]);
+    });
+
+    it('filter using LIMIT & OFFSET', () => {
+      const input = Input.InMethod(
+        `SELECT Id FROM Discontinued_Merchandise__c LIMIT 100 OFFSET 20`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Discontinued_Merchandise__c'),
+        Token.Keywords.Queries.OperatorName('LIMIT'),
+        Token.Literals.Numeric.Decimal('100'),
+        Token.Keywords.Queries.OperatorName('OFFSET'),
+        Token.Literals.Numeric.Decimal('20')
+      ]);
+    });
+
+    it('group by rollup', () => {
+      const input = Input.InMethod(
+        `SELECT Status, LeadSource, COUNT(Name) cnt FROM Lead GROUP BY ROLLUP(Status, LeadSource)`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Status'),
+        Token.Punctuation.Comma,
+        Token.Keywords.Queries.FieldName('LeadSource'),
+        Token.Punctuation.Comma,
+        Token.Keywords.Queries.QueryMethod('COUNT'),
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Queries.FieldName('Name'),
+        Token.Punctuation.CloseParen,
+        Token.Keywords.Queries.FieldName('cnt'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Lead'),
+        Token.Keywords.Queries.QueryMethod('GROUP BY ROLLUP'),
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Queries.FieldName('Status'),
+        Token.Punctuation.Comma,
+        Token.Keywords.Queries.FieldName('LeadSource'),
+        Token.Punctuation.CloseParen
+      ]);
+    });
+
+    it('soql function has another soql function as parameter', () => {
+      const input = Input.InMethod(
+        `SELECT CreatedDate FROM Opportunity GROUP BY HOUR_IN_DAY(convertTimezone(CreatedDate))`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('CreatedDate'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Opportunity'),
+        Token.Keywords.Queries.OperatorName('GROUP BY'),
+        Token.Keywords.Queries.QueryMethod('HOUR_IN_DAY'),
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Queries.QueryMethod('convertTimezone'),
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Queries.FieldName('CreatedDate'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.CloseParen
+      ]);
+    });
+
+
   });
 });
