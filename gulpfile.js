@@ -17,9 +17,7 @@ function handleError(err) {
   process.exit(-1);
 }
 
-gulp.task('default', ['buildAtom', 'buildTmLanguage']);
-
-gulp.task('buildTmLanguage', function() {
+gulp.task('buildTmLanguage', function(done) {
   const text = fs.readFileSync(inputGrammar);
   const jsonData = js_yaml.safeLoad(text);
   const plistData = plist.build(jsonData);
@@ -29,6 +27,7 @@ gulp.task('buildTmLanguage', function() {
   }
 
   fs.writeFileSync(path.join(grammarsDirectory, 'apex.tmLanguage'), plistData);
+  done();
 });
 
 gulp.task('buildAtom', function() {
@@ -48,9 +47,11 @@ gulp.task('compile', function() {
     .pipe(gulp.dest(jsOut));
 });
 
-gulp.task('test', ['compile'], () => {
+gulp.task('test', gulp.series(['compile'], () => {
   return gulp
     .src(jsOut + 'test/**/*.tests.js')
     .pipe(mocha())
     .on('error', handleError);
-});
+}));
+
+gulp.task('default', gulp.series(['buildAtom', 'buildTmLanguage'], function(done) { done() }));

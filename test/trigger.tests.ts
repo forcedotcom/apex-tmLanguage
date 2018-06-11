@@ -7,7 +7,7 @@ import { should } from 'chai';
 import { tokenize, Input, Token } from './utils/tokenize';
 
 describe('Grammar', () => {
-  before(() => should());
+  before(() => { should(); });
 
   describe('Apex Trigger', () => {
     it('before insert before update Account trigger', () => {
