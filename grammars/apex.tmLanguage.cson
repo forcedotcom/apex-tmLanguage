@@ -736,9 +736,6 @@ repository:
         include: "#punctuation-comma"
       }
       {
-        include: "#colon-expression"
-      }
-      {
         include: "#operator-assignment"
       }
       {
@@ -763,6 +760,9 @@ repository:
     patterns: [
       {
         include: "#trigger-context-declaration"
+      }
+      {
+        include: "#soql-colon-vars"
       }
       {
         include: "#soql-functions"
@@ -796,6 +796,56 @@ repository:
       }
       {
         include: "#ordering-nulls"
+      }
+    ]
+  "soql-colon-vars":
+    begin: "(\\:)\\s*"
+    beginCaptures:
+      "0":
+        name: "keyword.operator.conditional.colon.apex"
+    end: "(?![_[:alnum:]]|\\(|(\\?)?\\[|<)"
+    patterns: [
+      {
+        include: "#trigger-context-declaration"
+      }
+      {
+        name: "variable.other.object.apex"
+        match: "([_[:alpha:]][_[:alnum:]]*)(?=\\.)"
+      }
+      {
+        include: "#soql-colon-method-statement"
+      }
+      {
+        name: "entity.name.variable.local.apex"
+        match: "[_[:alpha:]][_[:alnum:]]*"
+      }
+    ]
+  "soql-colon-method-statement":
+    begin: "(:?\\.)?([_[:alpha:]][_[:alnum:]]*)(?=\\()"
+    beginCaptures:
+      "1":
+        name: "entity.name.function.apex"
+      "2":
+        name: "entity.name.function.apex"
+    end: "(?<=\\))"
+    patterns: [
+      {
+        begin: "\\("
+        beginCaptures:
+          "0":
+            name: "punctuation.parenthesis.open.apex"
+        end: "\\)"
+        endCaptures:
+          "0":
+            name: "punctuation.parenthesis.close.apex"
+        patterns: [
+          {
+            include: "#expression"
+          }
+        ]
+      }
+      {
+        include: "#statement"
       }
     ]
   "soql-group-clauses":

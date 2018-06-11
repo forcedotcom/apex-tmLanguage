@@ -1253,10 +1253,6 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#colon-expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#operator-assignment</string>
           </dict>
           <dict>
@@ -1297,6 +1293,10 @@
           <dict>
             <key>include</key>
             <string>#trigger-context-declaration</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#soql-colon-vars</string>
           </dict>
           <dict>
             <key>include</key>
@@ -1341,6 +1341,100 @@
           <dict>
             <key>include</key>
             <string>#ordering-nulls</string>
+          </dict>
+        </array>
+      </dict>
+      <key>soql-colon-vars</key>
+      <dict>
+        <key>begin</key>
+        <string>(\:)\s*</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.operator.conditional.colon.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?![_[:alnum:]]|\(|(\?)?\[|&lt;)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#trigger-context-declaration</string>
+          </dict>
+          <dict>
+            <key>name</key>
+            <string>variable.other.object.apex</string>
+            <key>match</key>
+            <string>([_[:alpha:]][_[:alnum:]]*)(?=\.)</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#soql-colon-method-statement</string>
+          </dict>
+          <dict>
+            <key>name</key>
+            <string>entity.name.variable.local.apex</string>
+            <key>match</key>
+            <string>[_[:alpha:]][_[:alnum:]]*</string>
+          </dict>
+        </array>
+      </dict>
+      <key>soql-colon-method-statement</key>
+      <dict>
+        <key>begin</key>
+        <string>(:?\.)?([_[:alpha:]][_[:alnum:]]*)(?=\()</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.function.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.function.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?&lt;=\))</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>\(</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.open.apex</string>
+              </dict>
+            </dict>
+            <key>end</key>
+            <string>\)</string>
+            <key>endCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.close.apex</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#expression</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#statement</string>
           </dict>
         </array>
       </dict>

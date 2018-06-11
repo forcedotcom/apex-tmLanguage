@@ -159,5 +159,71 @@ describe('Grammar', () => {
         Token.Punctuation.Semicolon
       ]);
     });
+
+    it('SOQL in triggers using methods in clauses', () => {
+      const input = Input.InTrigger(
+        `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :keys('w')];`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Type('Contact'),
+        Token.Punctuation.OpenBracket,
+        Token.Punctuation.CloseBracket,
+        Token.Identifiers.LocalName('cons'),
+        Token.Operators.Assignment,
+        Token.Punctuation.OpenBracket,
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('LastName'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Contact'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('AccountId'),
+        Token.Keywords.Queries.OperatorName('IN'),
+        Token.Operators.Conditional.Colon,
+        Token.Identifiers.MethodName('keys'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('w'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.CloseBracket,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    /*it('SOQL in triggers using objects in clauses', () => {
+      const input = Input.InTrigger(
+        `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :myObject.keys('w')];`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Type('Contact'),
+        Token.Punctuation.OpenBracket,
+        Token.Punctuation.CloseBracket,
+        Token.Identifiers.LocalName('cons'),
+        Token.Operators.Assignment,
+        Token.Punctuation.OpenBracket,
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('LastName'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Contact'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('AccountId'),
+        Token.Keywords.Queries.OperatorName('IN'),
+        Token.Operators.Conditional.Colon,
+        Token.Variables.Object('myObject'),
+        Token.Punctuation.Accessor,
+
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('w'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.CloseBracket,
+        Token.Punctuation.Semicolon
+      ]);
+    }); */
   });
 });

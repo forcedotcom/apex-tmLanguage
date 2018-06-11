@@ -241,7 +241,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('Id'),
         Token.Keywords.Queries.OperatorName('IN'),
         Token.Operators.Conditional.Colon,
-        Token.Keywords.Queries.FieldName('variable'),
+        Token.Identifiers.LocalName('variable'),
         Token.Punctuation.CloseBracket,
         Token.Punctuation.Semicolon
       ]);
@@ -526,6 +526,26 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('CreatedDate'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.CloseParen
+      ]);
+    });
+
+    it('simple query inside of brackets with where & in clause', () => {
+      const input = Input.InMethod(
+        `SELECT Id FROM User WHERE Id IN :variable`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('User'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.OperatorName('IN'),
+        Token.Operators.Conditional.Colon,
+        Token.Identifiers.LocalName('variable')
       ]);
     });
   });
