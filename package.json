@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/apex-tmlanguage",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Textmate grammar for Apex with outputs for VSCode, Atom and TextMate.",
   "displayName": "apex-tmLanguage",
   "keywords": [
@@ -14,7 +14,16 @@
   },
   "contributors": [
     {
-      "name": "Nathan Totten"
+      "name": "Nathan Totten",
+      "url": "https://github.com/ntotten"
+    },
+    {
+      "name": "Luis Campos-Guajardo",
+      "url": "https://github.com/lcampos"
+    },
+    {
+      "name": "Nick Chen",
+      "url": "https://github.com/vazexqi"
     }
   ],
   "scripts": {

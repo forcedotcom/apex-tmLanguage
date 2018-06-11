@@ -2,7 +2,7 @@ import { should } from 'chai';
 import { tokenize, Input, Token } from './utils/tokenize';
 
 describe('Grammar', () => {
-  before(() => should());
+  before(() => { should(); });
 
   describe('Apex System Class', () => {
     it('System method used in trigger', () => {
