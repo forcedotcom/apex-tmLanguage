@@ -1,5 +1,7 @@
 # Salesforce Apex Language Grammar
 
+[![CircleCI](https://circleci.com/gh/forcedotcom/apex-tmLanguage.svg?style=svg)](https://circleci.com/gh/forcedotcom/apex-tmLanguage)
+
 ## Introduction
 
 This repository contains the source code for generating the language grammar files for Salesforce's Apex.
