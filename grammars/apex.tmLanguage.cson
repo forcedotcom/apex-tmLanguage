@@ -189,6 +189,9 @@ repository:
         include: "#comment"
       }
       {
+        include: "#support-expression"
+      }
+      {
         include: "#throw-expression"
       }
       {
@@ -261,6 +264,143 @@ repository:
       }
       {
         include: "#statement"
+      }
+    ]
+  "support-expression":
+    begin: '''
+      (?x)
+      (ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\\s* # supported apex namespaces
+    '''
+    beginCaptures:
+      "1":
+        name: "support.class.apex"
+    end: "(?<=\\)|$)|(?=\\})|(?=;)|(?=\\)|(?=\\]))|(?=\\,)"
+    patterns: [
+      {
+        include: "#support-type"
+      }
+      {
+        match: "(?:(\\.))([[:alpha:]]*)(?=\\()"
+        captures:
+          "1":
+            name: "punctuation.accessor.apex"
+          "2":
+            name: "support.function.apex"
+      }
+      {
+        match: "(?:(\\.))([[:alpha:]]+)"
+        captures:
+          "1":
+            name: "punctuation.accessor.apex"
+          "2":
+            name: "support.type.apex"
+      }
+      {
+        begin: "\\("
+        beginCaptures:
+          "0":
+            name: "punctuation.parenthesis.open.apex"
+        end: "\\)"
+        endCaptures:
+          "0":
+            name: "punctuation.parenthesis.close.apex"
+        patterns: [
+          {
+            include: "#expression"
+          }
+          {
+            include: "#punctuation-comma"
+          }
+        ]
+      }
+      {
+        include: "#comment"
+      }
+      {
+        include: "#statement"
+      }
+    ]
+  "support-type":
+    name: "support.apex"
+    patterns: [
+      {
+        include: "#comment"
+      }
+      {
+        include: "#support-class"
+      }
+      {
+        include: "#support-functions"
+      }
+      {
+        include: "#support-name"
+      }
+    ]
+  "support-class":
+    match: "\\b(ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\\b"
+    captures:
+      "1":
+        name: "support.class.apex"
+  "support-functions":
+    match: "\\b(delete|execute|finish|insert|start|undelete|update|upsert)\\b"
+    captures:
+      "1":
+        name: "support.function.apex"
+  "support-name":
+    patterns: [
+      {
+        match: "(\\.)\\s*([[:alpha:]]*)(?=\\()"
+        captures:
+          "1":
+            name: "punctuation.accessor.apex"
+          "2":
+            name: "support.function.apex"
+      }
+      {
+        begin: "\\("
+        beginCaptures:
+          "0":
+            name: "punctuation.parenthesis.open.apex"
+        end: "\\)"
+        endCaptures:
+          "0":
+            name: "punctuation.parenthesis.close.apex"
+        patterns: [
+          {
+            include: "#expression"
+          }
+          {
+            include: "#punctuation-comma"
+          }
+        ]
+      }
+      {
+        match: "(\\.)\\s*([_[:alpha:]]*)"
+        captures:
+          "1":
+            name: "punctuation.accessor.apex"
+          "2":
+            name: "support.type.apex"
+      }
+    ]
+  "support-arguments":
+    begin: "<"
+    beginCaptures:
+      "0":
+        name: "punctuation.definition.typeparameters.begin.apex"
+    end: ">"
+    endCaptures:
+      "0":
+        name: "punctuation.definition.typeparameters.end.apex"
+    patterns: [
+      {
+        include: "#comment"
+      }
+      {
+        include: "#support-type"
+      }
+      {
+        include: "#punctuation-comma"
       }
     ]
   "sharing-modifier":
@@ -724,6 +864,9 @@ repository:
       "1":
         patterns: [
           {
+            include: "#support-type"
+          }
+          {
             include: "#type"
           }
         ]
@@ -930,6 +1073,9 @@ repository:
       "1":
         patterns: [
           {
+            include: "#support-type"
+          }
+          {
             include: "#type"
           }
         ]
@@ -943,7 +1089,14 @@ repository:
           }
         ]
       "7":
-        name: "entity.name.function.apex"
+        patterns: [
+          {
+            include: "#support-type"
+          }
+          {
+            include: "#method-name-custom"
+          }
+        ]
       "8":
         patterns: [
           {
@@ -965,6 +1118,9 @@ repository:
         include: "#block"
       }
     ]
+  "method-name-custom":
+    name: "entity.name.function.apex"
+    match: "@?[_[:alpha:]][_[:alnum:]]*"
   "constructor-declaration":
     begin: "(?=@?[_[:alpha:]][_[:alnum:]]*\\s*\\()"
     end: "(?<=\\})|(?=;)"
@@ -1365,6 +1521,9 @@ repository:
               "1":
                 patterns: [
                   {
+                    include: "#support-type"
+                  }
+                  {
                     include: "#type"
                   }
                 ]
@@ -1442,6 +1601,9 @@ repository:
         name: "keyword.other.var.apex"
       "3":
         patterns: [
+          {
+            include: "#support-type"
+          }
           {
             include: "#type"
           }
@@ -1717,6 +1879,9 @@ repository:
       "2":
         patterns: [
           {
+            include: "#support-type"
+          }
+          {
             include: "#type"
           }
         ]
@@ -1869,6 +2034,9 @@ repository:
       "2":
         patterns: [
           {
+            include: "#support-type"
+          }
+          {
             include: "#type"
           }
         ]
@@ -1904,6 +2072,9 @@ repository:
       "2":
         patterns: [
           {
+            include: "#support-type"
+          }
+          {
             include: "#type"
           }
         ]
@@ -1932,6 +2103,9 @@ repository:
         name: "keyword.control.new.apex"
       "2":
         patterns: [
+          {
+            include: "#support-type"
+          }
           {
             include: "#type"
           }
@@ -1991,6 +2165,9 @@ repository:
         name: "storage.modifier.apex"
       "2":
         patterns: [
+          {
+            include: "#support-type"
+          }
           {
             include: "#type"
           }
@@ -2115,6 +2292,9 @@ repository:
     patterns: [
       {
         include: "#comment"
+      }
+      {
+        include: "#support-type"
       }
       {
         include: "#type"

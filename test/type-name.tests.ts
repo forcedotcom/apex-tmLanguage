@@ -22,19 +22,6 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('qualified name - System.Object', () => {
-      const input = Input.InClass(`System.Object x;`);
-      const tokens = tokenize(input);
-
-      tokens.should.deep.equal([
-        Token.Type('System'),
-        Token.Punctuation.Accessor,
-        Token.PrimitiveType.Object,
-        Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
-      ]);
-    });
-
     it('generic type - List<Integer>', () => {
       const input = Input.InClass(`List<Integer> x;`);
       const tokens = tokenize(input);
@@ -72,32 +59,16 @@ describe('Grammar', () => {
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
-        Token.Type('System'),
+        Token.Support.Class.System,
         Token.Punctuation.Accessor,
-        Token.Type('Collections'),
+        Token.Support.Class.TypeText('Collections'),
         Token.Punctuation.Accessor,
-        Token.Type('Generic'),
+        Token.Support.Class.TypeText('Generic'),
         Token.Punctuation.Accessor,
-        Token.Type('List'),
+        Token.Support.Class.TypeText('List'),
         Token.Punctuation.TypeParameters.Begin,
         Token.PrimitiveType.Integer,
         Token.Punctuation.TypeParameters.End,
-        Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
-      ]);
-    });
-
-    it('generic type with nested type - List<Integer>.Enumerator', () => {
-      const input = Input.InClass(`List<Integer>.Enumerator x;`);
-      const tokens = tokenize(input);
-
-      tokens.should.deep.equal([
-        Token.Type('List'),
-        Token.Punctuation.TypeParameters.Begin,
-        Token.PrimitiveType.Integer,
-        Token.Punctuation.TypeParameters.End,
-        Token.Punctuation.Accessor,
-        Token.Type('Enumerator'),
         Token.Identifiers.FieldName('x'),
         Token.Punctuation.Semicolon
       ]);

@@ -275,6 +275,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#support-expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#throw-expression</string>
           </dict>
           <dict>
@@ -387,6 +391,265 @@
           <dict>
             <key>include</key>
             <string>#statement</string>
+          </dict>
+        </array>
+      </dict>
+      <key>support-expression</key>
+      <dict>
+        <key>begin</key>
+        <string>(?x)
+(ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\s* # supported apex namespaces</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>support.class.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?&lt;=\)|$)|(?=\})|(?=;)|(?=\)|(?=\]))|(?=\,)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#support-type</string>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(?:(\.))([[:alpha:]]*)(?=\()</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.accessor.apex</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.function.apex</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(?:(\.))([[:alpha:]]+)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.accessor.apex</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.type.apex</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>\(</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.open.apex</string>
+              </dict>
+            </dict>
+            <key>end</key>
+            <string>\)</string>
+            <key>endCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.close.apex</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#expression</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#punctuation-comma</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#comment</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#statement</string>
+          </dict>
+        </array>
+      </dict>
+      <key>support-type</key>
+      <dict>
+        <key>name</key>
+        <string>support.apex</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#comment</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#support-class</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#support-functions</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#support-name</string>
+          </dict>
+        </array>
+      </dict>
+      <key>support-class</key>
+      <dict>
+        <key>match</key>
+        <string>\b(ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\b</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>support.class.apex</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>support-functions</key>
+      <dict>
+        <key>match</key>
+        <string>\b(delete|execute|finish|insert|start|undelete|update|upsert)\b</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>support.function.apex</string>
+          </dict>
+        </dict>
+      </dict>
+      <key>support-name</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>(\.)\s*([[:alpha:]]*)(?=\()</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.accessor.apex</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.function.apex</string>
+              </dict>
+            </dict>
+          </dict>
+          <dict>
+            <key>begin</key>
+            <string>\(</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.open.apex</string>
+              </dict>
+            </dict>
+            <key>end</key>
+            <string>\)</string>
+            <key>endCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.parenthesis.close.apex</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#expression</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#punctuation-comma</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>(\.)\s*([_[:alpha:]]*)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.accessor.apex</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>support.type.apex</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
+      </dict>
+      <key>support-arguments</key>
+      <dict>
+        <key>begin</key>
+        <string>&lt;</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.typeparameters.begin.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>&gt;</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.typeparameters.end.apex</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#comment</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#support-type</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#punctuation-comma</string>
           </dict>
         </array>
       </dict>
@@ -1220,6 +1483,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#type</string>
               </dict>
             </array>
@@ -1512,6 +1779,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#type</string>
               </dict>
             </array>
@@ -1532,8 +1803,17 @@
           </dict>
           <key>7</key>
           <dict>
-            <key>name</key>
-            <string>entity.name.function.apex</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#method-name-custom</string>
+              </dict>
+            </array>
           </dict>
           <key>8</key>
           <dict>
@@ -1567,6 +1847,13 @@
             <string>#block</string>
           </dict>
         </array>
+      </dict>
+      <key>method-name-custom</key>
+      <dict>
+        <key>name</key>
+        <string>entity.name.function.apex</string>
+        <key>match</key>
+        <string>@?[_[:alpha:]][_[:alnum:]]*</string>
       </dict>
       <key>constructor-declaration</key>
       <dict>
@@ -2322,6 +2609,10 @@
                     <array>
                       <dict>
                         <key>include</key>
+                        <string>#support-type</string>
+                      </dict>
+                      <dict>
+                        <key>include</key>
                         <string>#type</string>
                       </dict>
                     </array>
@@ -2442,6 +2733,10 @@
           <dict>
             <key>patterns</key>
             <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
               <dict>
                 <key>include</key>
                 <string>#type</string>
@@ -2905,6 +3200,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#type</string>
               </dict>
             </array>
@@ -3148,6 +3447,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#type</string>
               </dict>
             </array>
@@ -3196,6 +3499,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#type</string>
               </dict>
             </array>
@@ -3233,6 +3540,10 @@
           <dict>
             <key>patterns</key>
             <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
               <dict>
                 <key>include</key>
                 <string>#type</string>
@@ -3324,6 +3635,10 @@
           <dict>
             <key>patterns</key>
             <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
               <dict>
                 <key>include</key>
                 <string>#type</string>
@@ -3562,6 +3877,10 @@
           <dict>
             <key>include</key>
             <string>#comment</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#support-type</string>
           </dict>
           <dict>
             <key>include</key>
