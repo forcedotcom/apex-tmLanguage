@@ -1,5 +1,5 @@
 {
-  "name": "apex-tmlanguage",
+  "name": "@salesforce/apex-tmlanguage",
   "version": "0.1.0",
   "description": "Textmate grammar for Apex with outputs for VSCode, Atom and TextMate.",
   "displayName": "apex-tmLanguage",
