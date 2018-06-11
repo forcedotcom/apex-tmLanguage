@@ -1,0 +1,32 @@
+#
+version: 2
+jobs:
+   build:
+     docker:
+       - image: circleci/node:8.9.4
+
+     steps:
+       - checkout
+       - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+       - run: npm install
+       - run: npm run test
+       - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+workflows:
+  version: 2
+  commit-workflow:
+    jobs:
+      - build
+  scheduled-workflow:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build
