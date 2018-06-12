@@ -943,7 +943,7 @@ repository:
       endCaptures:
         '0': { name: punctuation.parenthesis.close.apex }
       patterns:
-      - include: '#for-apex-wa'
+      - include: '#for-apex-syntax'
       - include: '#local-variable-declaration'
       - include: '#expression'
       - include: '#punctuation-comma'
@@ -951,7 +951,7 @@ repository:
       - include: '#colon-expression'
     - include: '#statement'
 
-  for-apex-wa:
+  for-apex-syntax:
     match: ([_.[:alpha:]][_.[:alnum:]]+)\s+([_.[:alpha:]][_.[:alnum:]]*)\s*(\:)
     captures:
       '1':

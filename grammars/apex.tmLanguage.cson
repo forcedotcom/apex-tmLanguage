@@ -1583,7 +1583,7 @@ repository:
             name: "punctuation.parenthesis.close.apex"
         patterns: [
           {
-            include: "#for-apex-wa"
+            include: "#for-apex-syntax"
           }
           {
             include: "#local-variable-declaration"
@@ -1606,7 +1606,7 @@ repository:
         include: "#statement"
       }
     ]
-  "for-apex-wa":
+  "for-apex-syntax":
     match: "([_.[:alpha:]][_.[:alnum:]]+)\\s+([_.[:alpha:]][_.[:alnum:]]*)\\s*(\\:)"
     captures:
       "1":

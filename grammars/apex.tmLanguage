@@ -2748,7 +2748,7 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#for-apex-wa</string>
+                <string>#for-apex-syntax</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -2778,7 +2778,7 @@
           </dict>
         </array>
       </dict>
-      <key>for-apex-wa</key>
+      <key>for-apex-syntax</key>
       <dict>
         <key>match</key>
         <string>([_.[:alpha:]][_.[:alnum:]]+)\s+([_.[:alpha:]][_.[:alnum:]]*)\s*(\:)</string>
