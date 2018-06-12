@@ -47,11 +47,19 @@ gulp.task('compile', function() {
     .pipe(gulp.dest(jsOut));
 });
 
-gulp.task('test', gulp.series(['compile'], () => {
-  return gulp
-    .src(jsOut + 'test/**/*.tests.js')
-    .pipe(mocha())
-    .on('error', handleError);
-}));
+gulp.task(
+  'test',
+  gulp.series(['compile'], () => {
+    return gulp
+      .src(jsOut + 'test/**/*.tests.js')
+      .pipe(mocha())
+      .on('error', handleError);
+  })
+);
 
-gulp.task('default', gulp.series(['buildAtom', 'buildTmLanguage'], function(done) { done() }));
+gulp.task(
+  'default',
+  gulp.series(['buildAtom', 'buildTmLanguage'], function(done) {
+    done();
+  })
+);

@@ -2,8 +2,8 @@
 
 #### Identifier
 
-* Expression: `[_[:alpha:]][_[:alnum:]]*`
-* Matches: `_`, `Ident42`
+- Expression: `[_[:alpha:]][_[:alnum:]]*`
+- Matches: `_`, `Ident42`
 
 #### Type name
 

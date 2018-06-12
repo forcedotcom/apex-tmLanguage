@@ -7,7 +7,9 @@ import { should } from 'chai';
 import { tokenize, Input, Token } from './utils/tokenize';
 
 describe('Grammar', () => {
-  before(() => { should(); });
+  before(() => {
+    should();
+  });
 
   describe('Queries', () => {
     it('simple query inside of brackets', () => {
@@ -530,13 +532,10 @@ describe('Grammar', () => {
     });
 
     it('simple query inside of brackets with where & in clause', () => {
-      const input = Input.InMethod(
-        `SELECT Id FROM User WHERE Id IN :variable`
-      );
+      const input = Input.InMethod(`SELECT Id FROM User WHERE Id IN :variable`);
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
-
         Token.Keywords.Queries.Select,
         Token.Keywords.Queries.FieldName('Id'),
         Token.Keywords.Queries.From,

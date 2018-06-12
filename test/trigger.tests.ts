@@ -7,7 +7,9 @@ import { should } from 'chai';
 import { tokenize, Input, Token } from './utils/tokenize';
 
 describe('Grammar', () => {
-  before(() => { should(); });
+  before(() => {
+    should();
+  });
 
   describe('Apex Trigger', () => {
     it('before insert before update Account trigger', () => {
@@ -181,7 +183,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('AccountId'),
         Token.Keywords.Queries.OperatorName('IN'),
         Token.Operators.Conditional.Colon,
-          Token.Identifiers.MethodName('keys'),
+        Token.Identifiers.MethodName('keys'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.String.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('w'),
