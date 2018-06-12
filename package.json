@@ -12,6 +12,10 @@
   "bugs": {
     "url": "https://github.com/forcedotcom/apex-tmLanguage/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forcedotcom/apex-tmLanguage.git"
+  },
   "contributors": [
     {
       "name": "Nathan Totten",
@@ -30,7 +34,7 @@
     "compile": "node ./node_modules/typescript/bin/tsc -p .",
     "watch": "node ./node_modules/typescript/bin/tsc -w -p .",
     "test": "gulp test",
-    "prepublish": "gulp",
+    "prepare": "gulp",
     "build:default": "gulp default",
     "format": "prettier --config .prettierrc.json --write './**/*.{ts,js,json,md}'"
   },
