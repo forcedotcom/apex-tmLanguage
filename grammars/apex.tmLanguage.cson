@@ -1583,6 +1583,9 @@ repository:
             name: "punctuation.parenthesis.close.apex"
         patterns: [
           {
+            include: "#for-apex-wa"
+          }
+          {
             include: "#local-variable-declaration"
           }
           {
@@ -1603,6 +1606,22 @@ repository:
         include: "#statement"
       }
     ]
+  "for-apex-wa":
+    match: "([_.[:alpha:]][_.[:alnum:]]+)\\s+([_.[:alpha:]][_.[:alnum:]]*)\\s*(\\:)"
+    captures:
+      "1":
+        patterns: [
+          {
+            include: "#support-type"
+          }
+          {
+            include: "#type"
+          }
+        ]
+      "2":
+        name: "entity.name.variable.local.apex"
+      "3":
+        name: "keyword.operator.conditional.colon.apex"
   "try-statement":
     patterns: [
       {
