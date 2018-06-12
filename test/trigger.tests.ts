@@ -181,7 +181,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('AccountId'),
         Token.Keywords.Queries.OperatorName('IN'),
         Token.Operators.Conditional.Colon,
-        Token.Identifiers.MethodName('keys'),
+          Token.Identifiers.MethodName('keys'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.String.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('w'),
@@ -192,7 +192,7 @@ describe('Grammar', () => {
       ]);
     });
 
-    /*it('SOQL in triggers using objects in clauses', () => {
+    it('SOQL in triggers using objects in clauses', () => {
       const input = Input.InTrigger(
         `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :myObject.keys('w')];`
       );
@@ -215,7 +215,7 @@ describe('Grammar', () => {
         Token.Operators.Conditional.Colon,
         Token.Variables.Object('myObject'),
         Token.Punctuation.Accessor,
-
+        Token.Identifiers.MethodName('keys'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.String.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('w'),
@@ -224,6 +224,6 @@ describe('Grammar', () => {
         Token.Punctuation.CloseBracket,
         Token.Punctuation.Semicolon
       ]);
-    }); */
+    });
   });
 });

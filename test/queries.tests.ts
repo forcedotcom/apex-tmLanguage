@@ -263,7 +263,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('Contract__c'),
         Token.Keywords.Queries.OperatorName('IN'),
         Token.Operators.Conditional.Colon,
-        Token.Keywords.Queries.FieldName('contractIds'),
+        Token.Identifiers.LocalName('contractIds'),
         Token.Keywords.Queries.OperatorName('OR'),
         Token.Keywords.Queries.FieldName('Contract__c'),
         Token.Operators.Assignment,

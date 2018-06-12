@@ -1365,10 +1365,21 @@
             <string>#trigger-context-declaration</string>
           </dict>
           <dict>
-            <key>name</key>
-            <string>variable.other.object.apex</string>
             <key>match</key>
-            <string>([_[:alpha:]][_[:alnum:]]*)(?=\.)</string>
+            <string>([_[:alpha:]][_[:alnum:]]*)(\.)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>variable.other.object.apex</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.accessor.apex</string>
+              </dict>
+            </dict>
           </dict>
           <dict>
             <key>include</key>
@@ -1391,7 +1402,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>entity.name.function.apex</string>
+            <string>punctuation.accessor.apex</string>
           </dict>
           <key>2</key>
           <dict>
@@ -1468,7 +1479,7 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#colon-expression</string>
+            <string>#soql-colon-vars</string>
           </dict>
           <dict>
             <key>include</key>
