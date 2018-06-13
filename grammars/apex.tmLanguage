@@ -3766,13 +3766,18 @@
             <key>include</key>
             <string>#object-creation-expression-with-no-parameters</string>
           </dict>
+          <dict>
+            <key>include</key>
+            <string>#punctuation-comma</string>
+          </dict>
         </array>
       </dict>
       <key>object-creation-expression-with-parameters</key>
       <dict>
         <key>begin</key>
         <string>(?x)
-(new)\s+
+(delete|insert|undelete|update|upsert)?
+\s*(new)\s+
 (?&lt;type-name&gt;
   (?:
     (?:
@@ -3793,9 +3798,14 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.control.new.apex</string>
+            <string>support.function.apex</string>
           </dict>
           <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control.new.apex</string>
+          </dict>
+          <key>3</key>
           <dict>
             <key>patterns</key>
             <array>
@@ -3824,7 +3834,8 @@
       <dict>
         <key>match</key>
         <string>(?x)
-(new)\s+
+(delete|insert|undelete|update|upsert)?
+\s*(new)\s+
 (?&lt;type-name&gt;
   (?:
     (?:
@@ -3845,9 +3856,14 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>keyword.control.new.apex</string>
+            <string>support.function.apex</string>
           </dict>
           <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control.new.apex</string>
+          </dict>
+          <key>3</key>
           <dict>
             <key>patterns</key>
             <array>

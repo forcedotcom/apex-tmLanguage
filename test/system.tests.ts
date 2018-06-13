@@ -354,5 +354,66 @@ describe('Grammar', () => {
         Token.Punctuation.Semicolon
       ]);
     });
+
+    it('insert a new object with parameters', () => {
+      const input = Input.InMethod(
+        `insert new MyObject__c(Name='Test', Meaning__c='Bad');`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.FunctionText('insert'),
+        Token.Keywords.Control.New,
+        Token.Type('MyObject__c'),
+        Token.Punctuation.OpenParen,
+        Token.Variables.ReadWrite('Name'),
+        Token.Operators.Assignment,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('Test'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.Comma,
+        Token.Variables.ReadWrite('Meaning__c'),
+        Token.Operators.Assignment,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('Bad'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('delete a new object with no parameters', () => {
+      const input = Input.InMethod(`delete new MyObjectWrapper());`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.FunctionText('delete'),
+        Token.Keywords.Control.New,
+        Token.Type('MyObjectWrapper'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('upsert a new list of objects', () => {
+      const input = Input.InMethod(`upsert new List<User>{User1, User2});`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.FunctionText('upsert'),
+        Token.Keywords.Control.New,
+        Token.Type('List'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Type('User'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Punctuation.OpenBrace,
+        Token.Variables.ReadWrite('User1'),
+        Token.Punctuation.Comma,
+        Token.Variables.ReadWrite('User2'),
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.Semicolon
+      ]);
+    });
   });
 });

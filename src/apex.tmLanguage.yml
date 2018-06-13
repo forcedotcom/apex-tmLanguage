@@ -1379,11 +1379,13 @@ repository:
     patterns:
     - include: '#object-creation-expression-with-parameters'
     - include: '#object-creation-expression-with-no-parameters'
+    - include: '#punctuation-comma'
 
   object-creation-expression-with-parameters:
     begin: |-
       (?x)
-      (new)\s+
+      (delete|insert|undelete|update|upsert)?
+      \s*(new)\s+
       (?<type-name>
         (?:
           (?:
@@ -1400,8 +1402,9 @@ repository:
       )\s*
       (?=\()
     beginCaptures:
-      '1': { name: keyword.control.new.apex }
-      '2':
+      '1': { name: support.function.apex }
+      '2': { name: keyword.control.new.apex }
+      '3':
         patterns:
         - include: '#support-type'
         - include: '#type'
@@ -1412,7 +1415,8 @@ repository:
   object-creation-expression-with-no-parameters:
     match: |-
       (?x)
-      (new)\s+
+      (delete|insert|undelete|update|upsert)?
+      \s*(new)\s+
       (?<type-name>
         (?:
           (?:
@@ -1429,8 +1433,9 @@ repository:
       )\s*
       (?=\{|$)
     captures:
-      '1': { name: keyword.control.new.apex }
-      '2':
+      '1': { name: support.function.apex }
+      '2': { name: keyword.control.new.apex }
+      '3':
         patterns:
         - include: '#support-type'
         - include: '#type'
