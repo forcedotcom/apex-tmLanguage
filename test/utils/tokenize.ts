@@ -264,6 +264,10 @@ export namespace Token {
         'continue',
         'keyword.control.flow.continue.apex'
       );
+      export const ColonIterator = createToken(
+        ':',
+        'keyword.operator.iterator.colon.apex'
+      );
       export const Default = createToken(
         'default',
         'keyword.control.default.apex'

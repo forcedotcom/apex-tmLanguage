@@ -2806,7 +2806,7 @@
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>keyword.operator.conditional.colon.apex</string>
+            <string>keyword.operator.iterator.colon.apex</string>
           </dict>
         </dict>
       </dict>

@@ -959,7 +959,7 @@ repository:
         - include: '#support-type'
         - include: '#type'
       '2': { name: entity.name.variable.local.apex}
-      '3': { name: keyword.operator.conditional.colon.apex }
+      '3': { name: keyword.operator.iterator.colon.apex }
 
 
   try-statement:
