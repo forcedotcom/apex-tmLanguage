@@ -338,6 +338,8 @@ export namespace Token {
         'keyword.operator.query.ascending.apex'
       );
       export const By = createToken('by', 'keyword.operator.query.by.apex');
+      export const DateLiteral = (text: string) =>
+        createToken(text, 'keyword.operator.query.date.apex');
       export const Descending = createToken(
         'DESC',
         'keyword.operator.query.descending.apex'
@@ -354,7 +356,6 @@ export namespace Token {
         'group',
         'keyword.operator.query.group.apex'
       );
-      export const In = createToken('IN', 'keyword.operator.query.in.apex');
       export const Into = createToken(
         'into',
         'keyword.operator.query.into.apex'
@@ -373,6 +374,8 @@ export namespace Token {
         'keyword.operator.query.nullslast.apex'
       );
       export const On = createToken('on', 'keyword.operator.query.on.apex');
+      export const OperatorName = (text: string) =>
+        createToken(text, 'keyword.operator.query.apex');
       export const OrderBy = createToken(
         'ORDER BY',
         'keyword.operator.query.orderby.apex'
@@ -385,10 +388,14 @@ export namespace Token {
       );
       export const TypeName = (text: string) =>
         createToken(text, 'storage.type.apex');
+      export const UsingScope = (text: string) =>
+        createToken(text, 'keyword.operator.query.using.apex');
       export const Where = createToken(
         'WHERE',
         'keyword.operator.query.where.apex'
       );
+      export const QueryMethod = (text: string) =>
+        createToken(text, 'support.function.query.apex');
     }
 
     export namespace Triggers {
@@ -447,6 +454,8 @@ export namespace Token {
     export namespace Numeric {
       export const Binary = (text: string) =>
         createToken(text, 'constant.numeric.binary.apex');
+      export const DateTimeUTC = (text: string) =>
+        createToken(text, 'constant.numeric.datetime.apex');
       export const Decimal = (text: string) =>
         createToken(text, 'constant.numeric.decimal.apex');
       export const Hexadecimal = (text: string) =>

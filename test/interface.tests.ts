@@ -8,7 +8,9 @@ import { should } from 'chai';
 import { tokenize, Token } from './utils/tokenize';
 
 describe('Grammar', () => {
-  before(() => { should(); });
+  before(() => {
+    should();
+  });
 
   describe('Interfaces', () => {
     it('simple interface', () => {

@@ -7,7 +7,9 @@ import { should } from 'chai';
 import { tokenize, Input, Token } from './utils/tokenize';
 
 describe('Grammar', () => {
-  before(() => { should(); });
+  before(() => {
+    should();
+  });
 
   describe('Apex Trigger', () => {
     it('before insert before update Account trigger', () => {
@@ -150,11 +152,77 @@ describe('Grammar', () => {
         Token.Keywords.Queries.TypeName('Contact'),
         Token.Keywords.Queries.Where,
         Token.Keywords.Queries.FieldName('AccountId'),
-        Token.Keywords.Queries.In,
+        Token.Keywords.Queries.OperatorName('IN'),
         Token.Operators.Conditional.Colon,
         Token.Support.Class.Trigger,
         Token.Punctuation.Accessor,
         Token.Support.Type.TriggerText('new'),
+        Token.Punctuation.CloseBracket,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('SOQL in triggers using methods in clauses', () => {
+      const input = Input.InTrigger(
+        `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :keys('w')];`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Type('Contact'),
+        Token.Punctuation.OpenBracket,
+        Token.Punctuation.CloseBracket,
+        Token.Identifiers.LocalName('cons'),
+        Token.Operators.Assignment,
+        Token.Punctuation.OpenBracket,
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('LastName'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Contact'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('AccountId'),
+        Token.Keywords.Queries.OperatorName('IN'),
+        Token.Operators.Conditional.Colon,
+        Token.Identifiers.MethodName('keys'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('w'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.CloseBracket,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('SOQL in triggers using objects in clauses', () => {
+      const input = Input.InTrigger(
+        `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :myObject.keys('w')];`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Type('Contact'),
+        Token.Punctuation.OpenBracket,
+        Token.Punctuation.CloseBracket,
+        Token.Identifiers.LocalName('cons'),
+        Token.Operators.Assignment,
+        Token.Punctuation.OpenBracket,
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('LastName'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Contact'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('AccountId'),
+        Token.Keywords.Queries.OperatorName('IN'),
+        Token.Operators.Conditional.Colon,
+        Token.Variables.Object('myObject'),
+        Token.Punctuation.Accessor,
+        Token.Identifiers.MethodName('keys'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('w'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen,
         Token.Punctuation.CloseBracket,
         Token.Punctuation.Semicolon
       ]);

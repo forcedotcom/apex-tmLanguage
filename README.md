@@ -14,8 +14,8 @@ Development and setup of this project has not been tested for Windows OS. You ma
 
 To **build and test** install Node.js do the following:
 
-* Run `npm install` to install any dependencies.
-* Run `gulp` to build and run tests.
+- Run `npm install` to install any dependencies.
+- Run `gulp` to build and run tests.
 
 Output grammars are output in the `grammars\` dirctory.
 
@@ -25,8 +25,8 @@ Token structure is based off of [Textmate's Language Grammar guidelines](https:/
 
 ## Supported outputs
 
-* `grammars\apex.tmLanguage.cson` - for Atom
-* `grammars\apex.tmLanguage` - TextMate grammar (XML plist)
+- `grammars\apex.tmLanguage.cson` - for Atom
+- `grammars\apex.tmLanguage` - TextMate grammar (XML plist)
 
 ## Releasing
 
