@@ -2748,6 +2748,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#for-apex-syntax</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#local-variable-declaration</string>
               </dict>
               <dict>
@@ -2773,6 +2777,38 @@
             <string>#statement</string>
           </dict>
         </array>
+      </dict>
+      <key>for-apex-syntax</key>
+      <dict>
+        <key>match</key>
+        <string>([_.[:alpha:]][_.[:alnum:]]+)\s+([_.[:alpha:]][_.[:alnum:]]*)\s*(\:)</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#type</string>
+              </dict>
+            </array>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.variable.local.apex</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.operator.iterator.colon.apex</string>
+          </dict>
+        </dict>
       </dict>
       <key>try-statement</key>
       <dict>
