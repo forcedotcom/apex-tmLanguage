@@ -51,7 +51,7 @@ gulp.task(
   'test',
   gulp.series(['compile'], () => {
     return gulp
-      .src(jsOut + 'test/**/*.tests.js')
+      .src(jsOut + 'test/**/switch.tests.js')
       .pipe(mocha())
       .on('error', handleError);
   })

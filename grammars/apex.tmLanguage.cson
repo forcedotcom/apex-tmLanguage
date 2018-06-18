@@ -147,13 +147,13 @@ repository:
         include: "#for-statement"
       }
       {
+        include: "#switch-statement"
+      }
+      {
         include: "#if-statement"
       }
       {
         include: "#else-part"
-      }
-      {
-        include: "#switch-statement"
       }
       {
         include: "#goto-statement"
@@ -1494,10 +1494,12 @@ repository:
       }
     ]
   "switch-statement":
-    begin: "(?<!\\.)\\b(switch)\\b\\s*(?=\\()"
+    begin: "(?<!\\.)\\b(switch)\\b\\s*(on)\\b\\s*"
     beginCaptures:
       "1":
         name: "keyword.control.switch.apex"
+      "2":
+        name: "keyword.control.switch.on.apex"
     end: "(?<=\\})"
     patterns: [
       {
@@ -1505,9 +1507,9 @@ repository:
         beginCaptures:
           "0":
             name: "punctuation.parenthesis.open.apex"
-        end: "\\)"
+        end: "(\\))\\s*(?=\\{)"
         endCaptures:
-          "0":
+          "1":
             name: "punctuation.parenthesis.close.apex"
         patterns: [
           {
@@ -1520,44 +1522,50 @@ repository:
         beginCaptures:
           "0":
             name: "punctuation.curlybrace.open.apex"
-        end: "\\}"
-        endCaptures:
-          "0":
-            name: "punctuation.curlybrace.close.apex"
+        end: "(?<=\\})"
         patterns: [
           {
-            include: "#switch-label"
-          }
-          {
-            include: "#statement"
+            include: "#whenwhen"
           }
         ]
+      }
+    ]
+  whenwhen:
+    begin: "(\\})?\\s*(when)\\b\\s*"
+    beginCaptures:
+      "1":
+        name: "brace.apex"
+      "2":
+        name: "keyword.control.switch.when.apex"
+    end: "\\}"
+    endCaptures:
+      "0":
+        name: "punctuation.curlybrace.closeeee.apex"
+    patterns: [
+      {
+        include: "#expression"
       }
     ]
   "switch-label":
     patterns: [
       {
-        begin: "(?<!\\.)\\b(case)\\b\\s+"
+        begin: "(?<!\\.)(\\})?\\s*(when)\\b\\s+(else)?"
         beginCaptures:
           "1":
-            name: "keyword.control.case.apex"
-        end: ":"
+            name: "punctuation.curlybrace.close.apex"
+          "2":
+            name: "keyword.control.switch.when.apex"
+          "3":
+            name: "keyword.control.switch.else.apex"
+        end: "\\{"
         endCaptures:
           "0":
-            name: "punctuation.separator.colon.apex"
+            name: "punctuation.curlybrace.open.apex"
         patterns: [
           {
             include: "#expression"
           }
         ]
-      }
-      {
-        match: "(?<!\\.)\\b(default)\\b\\s*(:)"
-        captures:
-          "1":
-            name: "keyword.control.default.apex"
-          "2":
-            name: "punctuation.separator.colon.apex"
       }
     ]
   "do-statement":

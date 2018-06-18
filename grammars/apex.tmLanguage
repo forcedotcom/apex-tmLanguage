@@ -217,15 +217,15 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#switch-statement</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#if-statement</string>
           </dict>
           <dict>
             <key>include</key>
             <string>#else-part</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#switch-statement</string>
           </dict>
           <dict>
             <key>include</key>
@@ -2566,13 +2566,18 @@
       <key>switch-statement</key>
       <dict>
         <key>begin</key>
-        <string>(?&lt;!\.)\b(switch)\b\s*(?=\()</string>
+        <string>(?&lt;!\.)\b(switch)\b\s*(on)\b\s*</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
           <dict>
             <key>name</key>
             <string>keyword.control.switch.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control.switch.on.apex</string>
           </dict>
         </dict>
         <key>end</key>
@@ -2591,10 +2596,10 @@
               </dict>
             </dict>
             <key>end</key>
-            <string>\)</string>
+            <string>(\))\s*(?=\{)</string>
             <key>endCaptures</key>
             <dict>
-              <key>0</key>
+              <key>1</key>
               <dict>
                 <key>name</key>
                 <string>punctuation.parenthesis.close.apex</string>
@@ -2620,26 +2625,49 @@
               </dict>
             </dict>
             <key>end</key>
-            <string>\}</string>
-            <key>endCaptures</key>
-            <dict>
-              <key>0</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.curlybrace.close.apex</string>
-              </dict>
-            </dict>
+            <string>(?&lt;=\})</string>
             <key>patterns</key>
             <array>
               <dict>
                 <key>include</key>
-                <string>#switch-label</string>
-              </dict>
-              <dict>
-                <key>include</key>
-                <string>#statement</string>
+                <string>#whenwhen</string>
               </dict>
             </array>
+          </dict>
+        </array>
+      </dict>
+      <key>whenwhen</key>
+      <dict>
+        <key>begin</key>
+        <string>(\})?\s*(when)\b\s*</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>brace.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control.switch.when.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\}</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.curlybrace.closeeee.apex</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#expression</string>
           </dict>
         </array>
       </dict>
@@ -2649,23 +2677,33 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(?&lt;!\.)\b(case)\b\s+</string>
+            <string>(?&lt;!\.)(\})?\s*(when)\b\s+(else)?</string>
             <key>beginCaptures</key>
             <dict>
               <key>1</key>
               <dict>
                 <key>name</key>
-                <string>keyword.control.case.apex</string>
+                <string>punctuation.curlybrace.close.apex</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control.switch.when.apex</string>
+              </dict>
+              <key>3</key>
+              <dict>
+                <key>name</key>
+                <string>keyword.control.switch.else.apex</string>
               </dict>
             </dict>
             <key>end</key>
-            <string>:</string>
+            <string>\{</string>
             <key>endCaptures</key>
             <dict>
               <key>0</key>
               <dict>
                 <key>name</key>
-                <string>punctuation.separator.colon.apex</string>
+                <string>punctuation.curlybrace.open.apex</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -2675,23 +2713,6 @@
                 <string>#expression</string>
               </dict>
             </array>
-          </dict>
-          <dict>
-            <key>match</key>
-            <string>(?&lt;!\.)\b(default)\b\s*(:)</string>
-            <key>captures</key>
-            <dict>
-              <key>1</key>
-              <dict>
-                <key>name</key>
-                <string>keyword.control.default.apex</string>
-              </dict>
-              <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.separator.colon.apex</string>
-              </dict>
-            </dict>
           </dict>
         </array>
       </dict>
