@@ -2621,18 +2621,113 @@
               <key>0</key>
               <dict>
                 <key>name</key>
-                <string>punctuation.curlybrace.open.apex</string>
+                <string>first.curlybrace.apex</string>
               </dict>
             </dict>
             <key>end</key>
-            <string>(?&lt;=\})</string>
+            <string>\}</string>
+            <key>endCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>thisistheend.apex</string>
+              </dict>
+            </dict>
             <key>patterns</key>
             <array>
               <dict>
                 <key>include</key>
-                <string>#whenwhen</string>
+                <string>#when-else</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#when-expression</string>
               </dict>
             </array>
+          </dict>
+        </array>
+      </dict>
+      <key>when-expression</key>
+      <dict>
+        <key>begin</key>
+        <string>(?x)
+(when)\b\s+
+(?:([_\'[:alpha:]][\'_[:alnum:]]*)\s*)?
+(\{)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>normal.when.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#expression</string>
+              </dict>
+            </array>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>curly.open.NORMALWHEN.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\}</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.curlybrace.closeNORMALWHEN.apex</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#expression</string>
+          </dict>
+        </array>
+      </dict>
+      <key>when-else</key>
+      <dict>
+        <key>begin</key>
+        <string>(when else)\s*(\{)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>when.else.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>curly.open.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\}</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.curlybrace.closeWHENELSE.apex</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#expression</string>
           </dict>
         </array>
       </dict>

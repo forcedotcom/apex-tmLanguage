@@ -903,10 +903,42 @@ repository:
       - include: '#expression'
     - begin: \{
       beginCaptures:
-        '0': { name: punctuation.curlybrace.open.apex }
-      end: (?<=\})
+        '0': { name: first.curlybrace.apex }
+      end: \}
+      endCaptures:
+        '0': { name: thisistheend.apex }
       patterns:
-      - include: '#whenwhen'
+      - include: '#when-else'
+      - include: '#when-expression'
+
+  when-expression:
+    begin: |-
+      (?x)
+      (when)\b\s+
+      (?:([_\'[:alpha:]][\'_[:alnum:]]*)\s*)?
+      (\{)
+    beginCaptures:
+      '1': { name: normal.when.apex }
+      '2':
+        patterns:
+        - include: '#expression'
+      '3': { name: curly.open.NORMALWHEN.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.curlybrace.closeNORMALWHEN.apex }
+    patterns:
+    - include: '#expression'
+
+  when-else:
+    begin: (when else)\s*(\{)
+    beginCaptures:
+      '1': { name: when.else.apex}
+      '2': { name: curly.open.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.curlybrace.closeWHENELSE.apex }
+    patterns:
+    - include: '#expression'
 
   whenwhen:
     begin: (\})?\s*(when)\b\s*
