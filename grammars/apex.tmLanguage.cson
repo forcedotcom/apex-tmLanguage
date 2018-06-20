@@ -150,6 +150,12 @@ repository:
         include: "#switch-statement"
       }
       {
+        include: "#when-else"
+      }
+      {
+        include: "#when-expression"
+      }
+      {
         include: "#if-statement"
       }
       {
@@ -1494,53 +1500,43 @@ repository:
       }
     ]
   "switch-statement":
-    begin: "(?<!\\.)\\b(switch)\\b\\s*(on)\\b\\s*"
+    begin: '''
+      (?x)
+      (switch)\\b\\s+
+      (on)\\b\\s+
+      (?:([_.\\'\\(\\)[:alpha:]]*[_.\\'\\(\\)[:alnum:]]*)\\s*)?
+      (\\{)
+    '''
     beginCaptures:
       "1":
         name: "keyword.control.switch.apex"
       "2":
         name: "keyword.control.switch.on.apex"
+      "3":
+        patterns: [
+          {
+            include: "#statement"
+          }
+          {
+            include: "#parenthesized-expression"
+          }
+        ]
+      "4":
+        name: "punctuation.curlybrace.open.apex"
     end: "(?<=\\})"
     patterns: [
       {
-        begin: "\\("
-        beginCaptures:
-          "0":
-            name: "punctuation.parenthesis.open.apex"
-        end: "(\\))\\s*(?=\\{)"
-        endCaptures:
-          "1":
-            name: "punctuation.parenthesis.close.apex"
-        patterns: [
-          {
-            include: "#expression"
-          }
-        ]
+        include: "#when-else"
       }
       {
-        begin: "\\{"
-        beginCaptures:
-          "0":
-            name: "punctuation.curlybrace.open.apex"
-        end: "\\}"
-        endCaptures:
-          "0":
-            name: "punctuation.curlybrace.close.apex"
-        patterns: [
-          {
-            include: "#when-else"
-          }
-          {
-            include: "#when-expression"
-          }
-        ]
+        include: "#when-expression"
       }
     ]
   "when-expression":
     begin: '''
       (?x)
       (when)\\b\\s+
-      (?:([_\\'[:alpha:]][\\'_[:alnum:]]*)\\s*)?
+      (?:([_\\'[:alpha:]]*[\\'_\\-[:alnum:]]*)\\s*)?
       (\\{)
     '''
     beginCaptures:
@@ -1567,7 +1563,12 @@ repository:
       }
     ]
   "when-else":
-    begin: "(when)\\s+(else)\\s*(\\{)"
+    begin: '''
+      (?x)
+      (when)\\b\\s+
+      (else)\\b\\s*
+      (\\{)
+    '''
     beginCaptures:
       "1":
         name: "keyword.control.switch.when.apex"
@@ -1585,44 +1586,6 @@ repository:
       }
       {
         include: "#punctuation-semicolon"
-      }
-    ]
-  whenwhen:
-    begin: "(\\})?\\s*(when)\\b\\s*"
-    beginCaptures:
-      "1":
-        name: "brace.apex"
-      "2":
-        name: "keyword.control.switch.when.apex"
-    end: "\\}"
-    endCaptures:
-      "0":
-        name: "punctuation.curlybrace.closeeee.apex"
-    patterns: [
-      {
-        include: "#expression"
-      }
-    ]
-  "switch-label":
-    patterns: [
-      {
-        begin: "(?<!\\.)(\\})?\\s*(when)\\b\\s+(else)?"
-        beginCaptures:
-          "1":
-            name: "punctuation.curlybrace.close.apex"
-          "2":
-            name: "keyword.control.switch.when.apex"
-          "3":
-            name: "keyword.control.switch.else.apex"
-        end: "\\{"
-        endCaptures:
-          "0":
-            name: "punctuation.curlybrace.open.apex"
-        patterns: [
-          {
-            include: "#expression"
-          }
-        ]
       }
     ]
   "do-statement":
