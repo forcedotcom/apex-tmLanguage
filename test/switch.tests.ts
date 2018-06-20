@@ -242,5 +242,69 @@ when else {
         Token.Punctuation.CloseBrace
       ]);
     });
+
+    it('simple - method example', () => {
+      const input = Input.InMethod(`
+        switch on someInteger(i) {
+   when 2,3,4 {
+       System.debug('when block 2 and 3 and 4');
+   }
+   when 7 {
+       System.debug('when block 7');
+   }
+   when else {
+       // @TODO.
+   }
+}`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Identifiers.MethodName('someInteger'),
+        Token.Punctuation.OpenParen,
+        Token.Variables.ReadWrite('i'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Literals.Numeric.Decimal('2'),
+        Token.Punctuation.Comma,
+        Token.Literals.Numeric.Decimal('3'),
+        Token.Punctuation.Comma,
+        Token.Literals.Numeric.Decimal('4'),
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('when block 2 and 3 and 4'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Literals.Numeric.Decimal('7'),
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('when block 7'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Keywords.Switch.Else,
+        Token.Punctuation.OpenBrace,
+        Token.Comment.LeadingWhitespace('       '),
+        Token.Comment.SingleLine.Start,
+        Token.Comment.SingleLine.Text(' @TODO.'),
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
   });
 });
