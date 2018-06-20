@@ -1521,11 +1521,11 @@ repository:
         begin: "\\{"
         beginCaptures:
           "0":
-            name: "first.curlybrace.apex"
+            name: "punctuation.curlybrace.open.apex"
         end: "\\}"
         endCaptures:
           "0":
-            name: "thisistheend.apex"
+            name: "punctuation.curlybrace.close.apex"
         patterns: [
           {
             include: "#when-else"
@@ -1545,7 +1545,7 @@ repository:
     '''
     beginCaptures:
       "1":
-        name: "normal.when.apex"
+        name: "keyword.control.switch.when.apex"
       "2":
         patterns: [
           {
@@ -1553,30 +1553,38 @@ repository:
           }
         ]
       "3":
-        name: "curly.open.NORMALWHEN.apex"
+        name: "punctuation.curlybrace.open.apex"
     end: "\\}"
     endCaptures:
       "0":
-        name: "punctuation.curlybrace.closeNORMALWHEN.apex"
+        name: "punctuation.curlybrace.close.apex"
     patterns: [
       {
         include: "#expression"
       }
+      {
+        include: "#punctuation-semicolon"
+      }
     ]
   "when-else":
-    begin: "(when else)\\s*(\\{)"
+    begin: "(when)\\s+(else)\\s*(\\{)"
     beginCaptures:
       "1":
-        name: "when.else.apex"
+        name: "keyword.control.switch.when.apex"
       "2":
-        name: "curly.open.apex"
+        name: "keyword.control.switch.else.apex"
+      "3":
+        name: "punctuation.curlybrace.open.apex"
     end: "\\}"
     endCaptures:
       "0":
-        name: "punctuation.curlybrace.closeWHENELSE.apex"
+        name: "punctuation.curlybrace.close.apex"
     patterns: [
       {
         include: "#expression"
+      }
+      {
+        include: "#punctuation-semicolon"
       }
     ]
   whenwhen:

@@ -2621,7 +2621,7 @@
               <key>0</key>
               <dict>
                 <key>name</key>
-                <string>first.curlybrace.apex</string>
+                <string>punctuation.curlybrace.open.apex</string>
               </dict>
             </dict>
             <key>end</key>
@@ -2631,7 +2631,7 @@
               <key>0</key>
               <dict>
                 <key>name</key>
-                <string>thisistheend.apex</string>
+                <string>punctuation.curlybrace.close.apex</string>
               </dict>
             </dict>
             <key>patterns</key>
@@ -2660,7 +2660,7 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>normal.when.apex</string>
+            <string>keyword.control.switch.when.apex</string>
           </dict>
           <key>2</key>
           <dict>
@@ -2675,7 +2675,7 @@
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>curly.open.NORMALWHEN.apex</string>
+            <string>punctuation.curlybrace.open.apex</string>
           </dict>
         </dict>
         <key>end</key>
@@ -2685,7 +2685,7 @@
           <key>0</key>
           <dict>
             <key>name</key>
-            <string>punctuation.curlybrace.closeNORMALWHEN.apex</string>
+            <string>punctuation.curlybrace.close.apex</string>
           </dict>
         </dict>
         <key>patterns</key>
@@ -2693,24 +2693,33 @@
           <dict>
             <key>include</key>
             <string>#expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#punctuation-semicolon</string>
           </dict>
         </array>
       </dict>
       <key>when-else</key>
       <dict>
         <key>begin</key>
-        <string>(when else)\s*(\{)</string>
+        <string>(when)\s+(else)\s*(\{)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>when.else.apex</string>
+            <string>keyword.control.switch.when.apex</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>curly.open.apex</string>
+            <string>keyword.control.switch.else.apex</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.curlybrace.open.apex</string>
           </dict>
         </dict>
         <key>end</key>
@@ -2720,7 +2729,7 @@
           <key>0</key>
           <dict>
             <key>name</key>
-            <string>punctuation.curlybrace.closeWHENELSE.apex</string>
+            <string>punctuation.curlybrace.close.apex</string>
           </dict>
         </dict>
         <key>patterns</key>
@@ -2728,6 +2737,10 @@
           <dict>
             <key>include</key>
             <string>#expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#punctuation-semicolon</string>
           </dict>
         </array>
       </dict>

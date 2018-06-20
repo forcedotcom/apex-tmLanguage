@@ -339,6 +339,7 @@ export namespace Token {
       );
       export const On = createToken('on', 'keyword.control.switch.on.apex');
       export const When = createToken('when', 'keyword.control.switch.when.apex');
+      export const Else = createToken('else', 'keyword.control.switch.else.apex');
     }
 
     export namespace Queries {
