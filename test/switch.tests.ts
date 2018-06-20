@@ -175,5 +175,72 @@ when else {
         Token.Punctuation.CloseBrace
       ]);
     });
+
+    it('simple - multiple value', () => {
+      const input = Input.InMethod(`
+        switch on i {
+   when 2, 3, 4 {
+       System.debug('when block 2 and 3 and 4');
+   }
+   when 5 {
+       System.debug('when block 5');
+   }
+   when else {
+       System.debug('default');
+   }
+}`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Variables.ReadWrite('i'),
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Literals.Numeric.Decimal('2'),
+        Token.Punctuation.Comma,
+        Token.Literals.Numeric.Decimal('3'),
+        Token.Punctuation.Comma,
+        Token.Literals.Numeric.Decimal('4'),
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('when block 2 and 3 and 4'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Literals.Numeric.Decimal('5'),
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('when block 5'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Keywords.Switch.Else,
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('default'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
   });
 });

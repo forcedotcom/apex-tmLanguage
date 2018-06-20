@@ -150,10 +150,10 @@ repository:
         include: "#switch-statement"
       }
       {
-        include: "#when-else"
+        include: "#when-else-statement"
       }
       {
-        include: "#when-expression"
+        include: "#when-statement"
       }
       {
         include: "#if-statement"
@@ -1526,19 +1526,26 @@ repository:
     end: "(?<=\\})"
     patterns: [
       {
-        include: "#when-else"
+        include: "#when-else-statement"
       }
       {
-        include: "#when-expression"
+        include: "#when-statement"
+      }
+      {
+        include: "#when-multiple-statement"
+      }
+      {
+        include: "#expression"
+      }
+      {
+        include: "#punctuation-comma"
+      }
+      {
+        include: "#punctuation-semicolon"
       }
     ]
-  "when-expression":
-    begin: '''
-      (?x)
-      (when)\\b\\s+
-      (?:([_\\'[:alpha:]]*[\\'_\\-[:alnum:]]*)\\s*)?
-      (\\{)
-    '''
+  "when-statement":
+    begin: "(when)\\b\\s+([_\\'[:alpha:]]*[\\'_\\-[:alnum:]]*)\\s*"
     beginCaptures:
       "1":
         name: "keyword.control.switch.when.apex"
@@ -1548,44 +1555,43 @@ repository:
             include: "#expression"
           }
         ]
-      "3":
-        name: "punctuation.curlybrace.open.apex"
-    end: "\\}"
-    endCaptures:
-      "0":
-        name: "punctuation.curlybrace.close.apex"
+    end: "(?<=\\})"
     patterns: [
+      {
+        include: "#block"
+      }
       {
         include: "#expression"
       }
-      {
-        include: "#punctuation-semicolon"
-      }
     ]
-  "when-else":
-    begin: '''
-      (?x)
-      (when)\\b\\s+
-      (else)\\b\\s*
-      (\\{)
-    '''
+  "when-else-statement":
+    begin: "(when)\\b\\s+(else)\\b\\s*"
     beginCaptures:
       "1":
         name: "keyword.control.switch.when.apex"
       "2":
         name: "keyword.control.switch.else.apex"
-      "3":
-        name: "punctuation.curlybrace.open.apex"
-    end: "\\}"
-    endCaptures:
-      "0":
-        name: "punctuation.curlybrace.close.apex"
+    end: "(?<=\\})"
     patterns: [
+      {
+        include: "#block"
+      }
       {
         include: "#expression"
       }
+    ]
+  "when-multiple-statement":
+    begin: "(when)\\b\\s*"
+    beginCaptures:
+      "1":
+        name: "keyword.control.switch.when.apex"
+    end: "(?<=\\})"
+    patterns: [
       {
-        include: "#punctuation-semicolon"
+        include: "#block"
+      }
+      {
+        include: "#expression"
       }
     ]
   "do-statement":
