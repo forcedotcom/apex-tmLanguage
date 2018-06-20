@@ -2577,7 +2577,7 @@
         <string>(?x)
 (switch)\b\s+
 (on)\b\s+
-(?:([_.\'\(\)[:alpha:]]*[_.\'\(\)[:alnum:]]*)\s*)?
+(?:([_.\'\(\)[:alnum:]]+)\s*)?
 (\{)</string>
         <key>beginCaptures</key>
         <dict>
@@ -2621,6 +2621,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#when-sobject-statement</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#when-statement</string>
           </dict>
           <dict>
@@ -2644,7 +2648,7 @@
       <key>when-statement</key>
       <dict>
         <key>begin</key>
-        <string>(when)\b\s+([_\'[:alpha:]]*[\'_\-[:alnum:]]*)\s*</string>
+        <string>(when)\b\s+([\'_\-[:alnum:]]+)\s*</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -2718,6 +2722,42 @@
           <dict>
             <key>name</key>
             <string>keyword.control.switch.when.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?&lt;=\})</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#block</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#expression</string>
+          </dict>
+        </array>
+      </dict>
+      <key>when-sobject-statement</key>
+      <dict>
+        <key>begin</key>
+        <string>(when)\b\s+([_[:alnum:]]+)\s+([_[:alnum:]]+)\s*</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control.switch.when.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>storage.type.apex</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>entity.name.variable.local.apex</string>
           </dict>
         </dict>
         <key>end</key>

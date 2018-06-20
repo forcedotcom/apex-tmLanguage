@@ -306,5 +306,71 @@ when else {
         Token.Punctuation.CloseBrace
       ]);
     });
+
+    it('simple - sobject usage', () => {
+      const input = Input.InMethod(`
+        switch on sobject {
+   when Account a {
+       System.debug('account ' + a);
+   }
+   when null {
+       System.debug('null');
+   }
+   when else {
+       System.debug('default');
+   }
+}`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Variables.ReadWrite('sobject'),
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Type('Account'),
+        Token.Identifiers.LocalName('a'),
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('account '),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Operators.Arithmetic.Addition,
+        Token.Variables.ReadWrite('a'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Literals.Null,
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('null'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Keywords.Switch.Else,
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('default'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
   });
 });

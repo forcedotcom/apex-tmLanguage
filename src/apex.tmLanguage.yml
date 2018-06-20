@@ -893,7 +893,7 @@ repository:
       (?x)
       (switch)\b\s+
       (on)\b\s+
-      (?:([_.\'\(\)[:alpha:]]*[_.\'\(\)[:alnum:]]*)\s*)?
+      (?:([_.\'\(\)[:alnum:]]+)\s*)?
       (\{)
     beginCaptures:
       '1': { name: keyword.control.switch.apex }
@@ -906,6 +906,7 @@ repository:
     end: (?<=\})
     patterns:
     - include: '#when-else-statement'
+    - include: '#when-sobject-statement'
     - include: '#when-statement'
     - include: '#when-multiple-statement'
     - include: '#expression'
@@ -913,7 +914,7 @@ repository:
     - include: '#punctuation-semicolon'
 
   when-statement:
-    begin: (when)\b\s+([_\'[:alpha:]]*[\'_\-[:alnum:]]*)\s*
+    begin: (when)\b\s+([\'_\-[:alnum:]]+)\s*
     beginCaptures:
       '1': { name: keyword.control.switch.when.apex }
       '2':
@@ -938,6 +939,17 @@ repository:
     begin: (when)\b\s*
     beginCaptures:
       '1': { name: keyword.control.switch.when.apex }
+    end: (?<=\})
+    patterns:
+      - include: '#block'
+      - include: '#expression'
+
+  when-sobject-statement:
+    begin: (when)\b\s+([_[:alnum:]]+)\s+([_[:alnum:]]+)\s*
+    beginCaptures:
+      '1': { name: keyword.control.switch.when.apex }
+      '2': { name: storage.type.apex }
+      '3': { name: entity.name.variable.local.apex }
     end: (?<=\})
     patterns:
       - include: '#block'
