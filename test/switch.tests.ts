@@ -208,7 +208,9 @@ when else {
         Token.Support.Class.FunctionText('debug'),
         Token.Punctuation.OpenParen,
         Token.XmlDocComments.String.SingleQuoted.Begin,
-        Token.XmlDocComments.String.SingleQuoted.Text('when block 2 and 3 and 4'),
+        Token.XmlDocComments.String.SingleQuoted.Text(
+          'when block 2 and 3 and 4'
+        ),
         Token.XmlDocComments.String.SingleQuoted.End,
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
@@ -278,7 +280,9 @@ when else {
         Token.Support.Class.FunctionText('debug'),
         Token.Punctuation.OpenParen,
         Token.XmlDocComments.String.SingleQuoted.Begin,
-        Token.XmlDocComments.String.SingleQuoted.Text('when block 2 and 3 and 4'),
+        Token.XmlDocComments.String.SingleQuoted.Text(
+          'when block 2 and 3 and 4'
+        ),
         Token.XmlDocComments.String.SingleQuoted.End,
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
@@ -365,6 +369,71 @@ when else {
         Token.Punctuation.OpenParen,
         Token.XmlDocComments.String.SingleQuoted.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('default'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
+
+    it('simple - enum usage', () => {
+      const input = Input.InMethod(`
+        switch on season {
+   when WINTER {
+       System.debug('boots');
+   }
+   when SPRING, SUMMER {
+       System.debug('shoes');
+   }
+   when else {
+       System.debug('none of the above');
+   }
+}`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Variables.ReadWrite('season'),
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Variables.ReadWrite('WINTER'),
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('boots'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Variables.ReadWrite('SPRING'),
+        Token.Punctuation.Comma,
+        Token.Variables.ReadWrite('SUMMER'),
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('shoes'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Keywords.Switch.Else,
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('none of the above'),
         Token.XmlDocComments.String.SingleQuoted.End,
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
