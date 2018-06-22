@@ -397,7 +397,7 @@ describe('Grammar', () => {
     });
 
     it('upsert a new list of objects', () => {
-      const input = Input.InMethod(`upsert new List<User>{User1, User2});`);
+      const input = Input.InMethod(`upsert new List<User>{User1, User2};`);
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -411,6 +411,67 @@ describe('Grammar', () => {
         Token.Variables.ReadWrite('User1'),
         Token.Punctuation.Comma,
         Token.Variables.ReadWrite('User2'),
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('merge method usage in method', () => {
+      const input = Input.InMethod(`merge masterAcct mergeAcct;`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.FunctionText('merge'),
+        Token.Variables.ReadWrite('masterAcct'),
+        Token.Variables.ReadWrite('mergeAcct'),
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('merge 2', () => {
+      const input = Input.InMethod(`merge masterAcct new Account(name='Master');`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.FunctionText('merge'),
+        Token.Variables.ReadWrite('masterAcct'),
+        Token.Keywords.Control.New,
+        Token.Type('Account'),
+        Token.Punctuation.OpenParen,
+        Token.Variables.ReadWrite('name'),
+        Token.Operators.Assignment,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('Master'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('merge 2', () => {
+      const input = Input.InMethod(`merge new Account(name='Master') new List<Account>{acc1, acc2};`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.FunctionText('merge'),
+        Token.Keywords.Control.New,
+        Token.Type('Account'),
+        Token.Punctuation.OpenParen,
+        Token.Variables.ReadWrite('name'),
+        Token.Operators.Assignment,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('Master'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen,
+        Token.Keywords.Control.New,
+        Token.Type('List'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Type('Account'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Punctuation.OpenBrace,
+        Token.Variables.ReadWrite('acc1'),
+        Token.Punctuation.Comma,
+        Token.Variables.ReadWrite('acc2'),
         Token.Punctuation.CloseBrace,
         Token.Punctuation.Semicolon
       ]);

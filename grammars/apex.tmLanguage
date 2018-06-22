@@ -279,6 +279,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#merge-expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#support-expression</string>
           </dict>
           <dict>
@@ -656,6 +660,63 @@
             <string>#punctuation-comma</string>
           </dict>
         </array>
+      </dict>
+      <key>merge-expression</key>
+      <dict>
+        <key>begin</key>
+        <string>(merge)\b\s+</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>support.function.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?&lt;=\;)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#object-creation-expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#merge-type-statement</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#punctuation-semicolon</string>
+          </dict>
+        </array>
+      </dict>
+      <key>merge-type-statement</key>
+      <dict>
+        <key>match</key>
+        <string>([_[:alpha:]]*)\b\s+([_[:alpha:]]*)\b\s*(\;)</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>variable.other.readwrite.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>variable.other.readwrite.apex</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.terminator.statement.apex</string>
+          </dict>
+        </dict>
       </dict>
       <key>sharing-modifier</key>
       <dict>
