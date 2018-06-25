@@ -225,7 +225,15 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#when-sobject-statement</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#when-statement</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#when-multiple-statement</string>
           </dict>
           <dict>
             <key>include</key>
@@ -3104,54 +3112,11 @@
           </dict>
           <dict>
             <key>include</key>
-            <string>#when-clause</string>
-          </dict>
-          <dict>
-            <key>include</key>
             <string>#comment</string>
           </dict>
           <dict>
             <key>include</key>
             <string>#block</string>
-          </dict>
-        </array>
-      </dict>
-      <key>when-clause</key>
-      <dict>
-        <key>begin</key>
-        <string>(?&lt;!\.)\b(when)\b\s*(\()</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>keyword.control.try.when.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.open.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>\)</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>0</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.parenthesis.close.apex</string>
-          </dict>
-        </dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>include</key>
-            <string>#expression</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#comment</string>
           </dict>
         </array>
       </dict>

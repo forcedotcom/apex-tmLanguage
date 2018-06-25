@@ -153,7 +153,13 @@ repository:
         include: "#when-else-statement"
       }
       {
+        include: "#when-sobject-statement"
+      }
+      {
         include: "#when-statement"
+      }
+      {
+        include: "#when-multiple-statement"
       }
       {
         include: "#if-statement"
@@ -1801,32 +1807,10 @@ repository:
         ]
       }
       {
-        include: "#when-clause"
-      }
-      {
         include: "#comment"
       }
       {
         include: "#block"
-      }
-    ]
-  "when-clause":
-    begin: "(?<!\\.)\\b(when)\\b\\s*(\\()"
-    beginCaptures:
-      "1":
-        name: "keyword.control.try.when.apex"
-      "2":
-        name: "punctuation.parenthesis.open.apex"
-    end: "\\)"
-    endCaptures:
-      "0":
-        name: "punctuation.parenthesis.close.apex"
-    patterns: [
-      {
-        include: "#expression"
-      }
-      {
-        include: "#comment"
       }
     ]
   "local-declaration":

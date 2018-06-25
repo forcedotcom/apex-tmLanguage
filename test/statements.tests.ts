@@ -429,64 +429,6 @@ catch (Exception ex)
         ]);
       });
 
-      it('try-catch with exception filter', () => {
-        const input = Input.InMethod(`
-try
-{
-    throw new Exception();
-}
-catch when (true)
-{
-}`);
-        const tokens = tokenize(input);
-
-        tokens.should.deep.equal([
-          Token.Keywords.Control.Try,
-          Token.Punctuation.OpenBrace,
-          Token.Keywords.Control.Throw,
-          Token.Keywords.Control.New,
-          Token.Support.Class.Text('Exception'),
-          Token.Punctuation.OpenParen,
-          Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon,
-          Token.Punctuation.CloseBrace,
-          Token.Keywords.Control.Catch,
-          Token.Keywords.Control.When,
-          Token.Punctuation.OpenParen,
-          Token.Literals.Boolean.True,
-          Token.Punctuation.CloseParen,
-          Token.Punctuation.OpenBrace,
-          Token.Punctuation.CloseBrace
-        ]);
-      });
-
-      it('try-catch with exception type and filter', () => {
-        const input = Input.InMethod(`
-try
-{
-}
-catch (Exception) when (true)
-{
-}`);
-        const tokens = tokenize(input);
-
-        tokens.should.deep.equal([
-          Token.Keywords.Control.Try,
-          Token.Punctuation.OpenBrace,
-          Token.Punctuation.CloseBrace,
-          Token.Keywords.Control.Catch,
-          Token.Punctuation.OpenParen,
-          Token.Support.Class.Text('Exception'),
-          Token.Punctuation.CloseParen,
-          Token.Keywords.Control.When,
-          Token.Punctuation.OpenParen,
-          Token.Literals.Boolean.True,
-          Token.Punctuation.CloseParen,
-          Token.Punctuation.OpenBrace,
-          Token.Punctuation.CloseBrace
-        ]);
-      });
-
       it('try-finally followed by statement', () => {
         const input = Input.InMethod(`
 try

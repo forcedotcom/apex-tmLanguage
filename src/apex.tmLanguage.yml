@@ -69,7 +69,9 @@ repository:
     - include: '#for-statement'
     - include: '#switch-statement'
     - include: '#when-else-statement'
+    - include: '#when-sobject-statement'
     - include: '#when-statement'
+    - include: '#when-multiple-statement'
     - include: '#if-statement'
     - include: '#else-part'
     - include: '#goto-statement'
@@ -932,8 +934,8 @@ repository:
       '2': { name: keyword.control.switch.else.apex }
     end: (?<=\})
     patterns:
-      - include: '#block'
-      - include: '#expression'
+    - include: '#block'
+    - include: '#expression'
 
   when-multiple-statement:
     begin: (when)\b\s*
@@ -941,8 +943,8 @@ repository:
       '1': { name: keyword.control.switch.when.apex }
     end: (?<=\})
     patterns:
-      - include: '#block'
-      - include: '#expression'
+    - include: '#block'
+    - include: '#expression'
 
   when-sobject-statement:
     begin: (when)\b\s+([_[:alnum:]]+)\s+([_[:alnum:]]+)\s*
@@ -952,8 +954,8 @@ repository:
       '3': { name: entity.name.variable.local.apex }
     end: (?<=\})
     patterns:
-      - include: '#block'
-      - include: '#expression'
+    - include: '#block'
+    - include: '#expression'
 
   do-statement:
     begin: (?<!\.)\b(do)\b
@@ -1073,21 +1075,8 @@ repository:
           # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
           # '4': ?<type-args> is a sub-expression. It's final value is not considered.
           '5': { name: entity.name.variable.local.apex }
-    - include: '#when-clause'
     - include: '#comment'
     - include: '#block'
-
-  when-clause:
-    begin: (?<!\.)\b(when)\b\s*(\()
-    beginCaptures:
-      '1': { name: keyword.control.try.when.apex }
-      '2': { name: punctuation.parenthesis.open.apex }
-    end: \)
-    endCaptures:
-      '0': { name: punctuation.parenthesis.close.apex }
-    patterns:
-    - include: '#expression'
-    - include: '#comment'
 
   local-declaration:
     patterns:
