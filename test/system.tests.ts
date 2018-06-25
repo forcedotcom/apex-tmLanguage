@@ -428,7 +428,7 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('merge 2', () => {
+    it('merge using new object statement', () => {
       const input = Input.InMethod(`merge masterAcct new Account(name='Master');`);
       const tokens = tokenize(input);
 
@@ -448,7 +448,7 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('merge 2', () => {
+    it('merge using only new statements', () => {
       const input = Input.InMethod(`merge new Account(name='Master') new List<Account>{acc1, acc2};`);
       const tokens = tokenize(input);
 
