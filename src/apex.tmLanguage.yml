@@ -67,9 +67,13 @@ repository:
     - include: '#while-statement'
     - include: '#do-statement'
     - include: '#for-statement'
+    - include: '#switch-statement'
+    - include: '#when-else-statement'
+    - include: '#when-sobject-statement'
+    - include: '#when-statement'
+    - include: '#when-multiple-statement'
     - include: '#if-statement'
     - include: '#else-part'
-    - include: '#switch-statement'
     - include: '#goto-statement'
     - include: '#return-statement'
     - include: '#break-or-continue-statement'
@@ -887,43 +891,71 @@ repository:
     - include: '#statement'
 
   switch-statement:
-    begin: (?<!\.)\b(switch)\b\s*(?=\()
+    begin: |-
+      (?x)
+      (switch)\b\s+
+      (on)\b\s+
+      (?:([_.\'\(\)[:alnum:]]+)\s*)?
+      (\{)
     beginCaptures:
       '1': { name: keyword.control.switch.apex }
+      '2': { name: keyword.control.switch.on.apex }
+      '3':
+        patterns:
+        - include: '#statement'
+        - include: '#parenthesized-expression'
+      '4': { name: punctuation.curlybrace.open.apex }
     end: (?<=\})
     patterns:
-    - begin: \(
-      beginCaptures:
-        '0': { name: punctuation.parenthesis.open.apex }
-      end: \)
-      endCaptures:
-        '0': { name: punctuation.parenthesis.close.apex }
-      patterns:
-      - include: '#expression'
-    - begin: \{
-      beginCaptures:
-        '0': { name: punctuation.curlybrace.open.apex }
-      end: \}
-      endCaptures:
-        '0': { name: punctuation.curlybrace.close.apex }
-      patterns:
-      - include: '#switch-label'
-      - include: '#statement'
+    - include: '#when-else-statement'
+    - include: '#when-sobject-statement'
+    - include: '#when-statement'
+    - include: '#when-multiple-statement'
+    - include: '#expression'
+    - include: '#punctuation-comma'
+    - include: '#punctuation-semicolon'
 
-  switch-label:
+  when-statement:
+    begin: (when)\b\s+([\'_\-[:alnum:]]+)\s*
+    beginCaptures:
+      '1': { name: keyword.control.switch.when.apex }
+      '2':
+        patterns:
+        - include: '#expression'
+    end: (?<=\})
     patterns:
-    - begin: (?<!\.)\b(case)\b\s+
-      beginCaptures:
-        '1': { name: keyword.control.case.apex }
-      end: ':'
-      endCaptures:
-        '0': { name: punctuation.separator.colon.apex }
-      patterns:
-      - include: '#expression'
-    - match: (?<!\.)\b(default)\b\s*(:)
-      captures:
-        '1': { name: keyword.control.default.apex }
-        '2': { name: punctuation.separator.colon.apex }
+    - include: '#block'
+    - include: '#expression'
+
+  when-else-statement:
+    begin: (when)\b\s+(else)\b\s*
+    beginCaptures:
+      '1': { name: keyword.control.switch.when.apex }
+      '2': { name: keyword.control.switch.else.apex }
+    end: (?<=\})
+    patterns:
+    - include: '#block'
+    - include: '#expression'
+
+  when-multiple-statement:
+    begin: (when)\b\s*
+    beginCaptures:
+      '1': { name: keyword.control.switch.when.apex }
+    end: (?<=\})
+    patterns:
+    - include: '#block'
+    - include: '#expression'
+
+  when-sobject-statement:
+    begin: (when)\b\s+([_[:alnum:]]+)\s+([_[:alnum:]]+)\s*
+    beginCaptures:
+      '1': { name: keyword.control.switch.when.apex }
+      '2': { name: storage.type.apex }
+      '3': { name: entity.name.variable.local.apex }
+    end: (?<=\})
+    patterns:
+    - include: '#block'
+    - include: '#expression'
 
   do-statement:
     begin: (?<!\.)\b(do)\b
@@ -979,7 +1011,6 @@ repository:
         - include: '#type'
       '2': { name: entity.name.variable.local.apex}
       '3': { name: keyword.operator.iterator.colon.apex }
-
 
   try-statement:
     patterns:
@@ -1044,21 +1075,8 @@ repository:
           # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
           # '4': ?<type-args> is a sub-expression. It's final value is not considered.
           '5': { name: entity.name.variable.local.apex }
-    - include: '#when-clause'
     - include: '#comment'
     - include: '#block'
-
-  when-clause:
-    begin: (?<!\.)\b(when)\b\s*(\()
-    beginCaptures:
-      '1': { name: keyword.control.try.when.apex }
-      '2': { name: punctuation.parenthesis.open.apex }
-    end: \)
-    endCaptures:
-      '0': { name: punctuation.parenthesis.close.apex }
-    patterns:
-    - include: '#expression'
-    - include: '#comment'
 
   local-declaration:
     patterns:

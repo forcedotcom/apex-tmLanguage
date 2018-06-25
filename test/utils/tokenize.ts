@@ -293,10 +293,6 @@ export namespace Token {
         'return',
         'keyword.control.flow.return.apex'
       );
-      export const Switch = createToken(
-        'switch',
-        'keyword.control.switch.apex'
-      );
       export const Throw = createToken(
         'throw',
         'keyword.control.flow.throw.apex'
@@ -333,6 +329,22 @@ export namespace Token {
       export const WithSharing = createToken(
         'with sharing',
         'sharing.modifier.apex'
+      );
+    }
+
+    export namespace Switch {
+      export const Switch = createToken(
+        'switch',
+        'keyword.control.switch.apex'
+      );
+      export const On = createToken('on', 'keyword.control.switch.on.apex');
+      export const When = createToken(
+        'when',
+        'keyword.control.switch.when.apex'
+      );
+      export const Else = createToken(
+        'else',
+        'keyword.control.switch.else.apex'
       );
     }
 
