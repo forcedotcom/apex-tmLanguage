@@ -128,7 +128,7 @@ repository:
   support-expression:
     begin: |-
       (?x)
-      (ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\s* # supported apex namespaces
+      (ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test\.)\s* # supported apex namespaces
     beginCaptures:
       '1': { name: support.class.apex }
     end: (?<=\)|$)|(?=\})|(?=;)|(?=\)|(?=\]))|(?=\,)
@@ -1659,7 +1659,7 @@ repository:
   comment:
     patterns:
     - name: comment.block.apex
-      begin: /\*+
+      begin: /\*(\*)?
       beginCaptures:
         '0': { name: punctuation.definition.comment.apex }
       end: \*/

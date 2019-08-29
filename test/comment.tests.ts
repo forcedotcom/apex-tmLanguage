@@ -55,6 +55,38 @@ describe('Grammar', () => {
       ]);
     });
 
+    it('multi-line comment with no content', () => {
+      const input = `/***********/`;
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Comment.MultiLine.JavaDocStart,
+        Token.Comment.MultiLine.Text('********'),
+        Token.Comment.MultiLine.End
+      ]);
+    });
+
+    it('multi-line comment with content', () => {
+      const input = Input.FromText(`
+/*************/
+/***** foo ***/
+/*************/
+`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Comment.MultiLine.JavaDocStart,
+        Token.Comment.MultiLine.Text('**********'),
+        Token.Comment.MultiLine.End,
+        Token.Comment.MultiLine.JavaDocStart,
+        Token.Comment.MultiLine.Text('*** foo **'),
+        Token.Comment.MultiLine.End,
+        Token.Comment.MultiLine.JavaDocStart,
+        Token.Comment.MultiLine.Text('**********'),
+        Token.Comment.MultiLine.End
+      ]);
+    });
+
     it('in class', () => {
       const input = Input.InClass(`// foo`);
       const tokens = tokenize(input);

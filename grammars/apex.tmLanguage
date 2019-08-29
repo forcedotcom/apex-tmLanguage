@@ -4446,7 +4446,7 @@
             <key>name</key>
             <string>comment.block.apex</string>
             <key>begin</key>
-            <string>/\*+</string>
+            <string>/\*(\*)?</string>
             <key>beginCaptures</key>
             <dict>
               <key>0</key>

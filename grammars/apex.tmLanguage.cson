@@ -2611,7 +2611,7 @@ repository:
     patterns: [
       {
         name: "comment.block.apex"
-        begin: "/\\*+"
+        begin: "/\\*(\\*)?"
         beginCaptures:
           "0":
             name: "punctuation.definition.comment.apex"
