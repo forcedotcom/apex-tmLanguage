@@ -484,6 +484,8 @@ export namespace Token {
       createToken(text, 'constant.character.escape.apex');
     export const StringDoubleQuote = (text: string) =>
       createToken(text, 'string.quoted.double.apex');
+    export const Whitespace = (text: string) =>
+      createToken(text, 'punctuation.whitespace.apex');
   }
 
   export namespace Operators {

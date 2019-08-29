@@ -422,7 +422,7 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\s* # supported apex namespaces</string>
+(ApexPages(?=\.)|Database(?=\.)|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System(?=\.)|Test(?=\.))\s* # supported apex namespaces</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -2620,9 +2620,21 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(?&lt;=\})</string>
+        <string>(\})</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.curlybrace.close.apex</string>
+          </dict>
+        </dict>
         <key>patterns</key>
         <array>
+          <dict>
+            <key>include</key>
+            <string>#when-string</string>
+          </dict>
           <dict>
             <key>include</key>
             <string>#when-else-statement</string>
@@ -2679,6 +2691,56 @@
         <string>(?&lt;=\})</string>
         <key>patterns</key>
         <array>
+          <dict>
+            <key>include</key>
+            <string>#block</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#expression</string>
+          </dict>
+        </array>
+      </dict>
+      <key>when-string</key>
+      <dict>
+        <key>begin</key>
+        <string>(when)(\b\s+)(\')([\s_.[:alnum:]]*)(\')</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>keyword.control.switch.when.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.whitespace.apex</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.string.begin.apex</string>
+          </dict>
+          <key>4</key>
+          <dict>
+            <key>name</key>
+            <string>string.quoted.single.apex</string>
+          </dict>
+          <key>5</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.string.end.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?&lt;=\})</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#string-character-escape</string>
+          </dict>
           <dict>
             <key>include</key>
             <string>#block</string>
