@@ -27,8 +27,9 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
         Token.Keywords.Switch.When,
+        Token.Literals.Whitespace(' '),
         Token.Punctuation.String.Begin,
-        Token.Literals.String('A'),
+        Token.XmlDocComments.String.SingleQuoted.Text('A'),
         Token.Punctuation.String.End,
         Token.Punctuation.OpenBrace,
         Token.Support.Class.System,
@@ -50,6 +51,64 @@ when else {
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
         Token.Punctuation.CloseBrace
+      ]);
+    });
+
+    it('simple switch with complex string', () => {
+      const input = Input.InMethod(`
+switch on (param) {
+when 'this IS a test' {
+  System.debug('test');
+}
+when else {
+  callExternalMethod();
+}
+}
+
+System.debug('test');`);
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Punctuation.OpenParen,
+        Token.Variables.ReadWrite('param'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Literals.Whitespace(' '),
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('this IS a test'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('test'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Keywords.Switch.Else,
+        Token.Punctuation.OpenBrace,
+        Token.Identifiers.MethodName('callExternalMethod'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('test'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon
       ]);
     });
 

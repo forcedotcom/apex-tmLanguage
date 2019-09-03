@@ -44,7 +44,7 @@
     "@types/gulp": "^4.0.5",
     "@types/mocha": "^5.2.1",
     "chai": "^4.1.2",
-    "gulp": "^4.0.0",
+    "gulp": "4.0.2",
     "gulp-json2cson": "^2.0.0",
     "gulp-mocha": "^6.0.0",
     "gulp-typescript": "^4.0.2",

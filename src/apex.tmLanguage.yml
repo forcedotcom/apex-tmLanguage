@@ -128,7 +128,7 @@ repository:
   support-expression:
     begin: |-
       (?x)
-      (ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)\s* # supported apex namespaces
+      (ApexPages(?=\.)|Database(?=\.)|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System(?=\.)|Test(?=\.))\s* # supported apex namespaces
     beginCaptures:
       '1': { name: support.class.apex }
     end: (?<=\)|$)|(?=\})|(?=;)|(?=\)|(?=\]))|(?=\,)
@@ -905,8 +905,11 @@ repository:
         - include: '#statement'
         - include: '#parenthesized-expression'
       '4': { name: punctuation.curlybrace.open.apex }
-    end: (?<=\})
+    end: (\})
+    endCaptures:
+      '0': { name: punctuation.curlybrace.close.apex }
     patterns:
+    - include: '#when-string'
     - include: '#when-else-statement'
     - include: '#when-sobject-statement'
     - include: '#when-statement'
@@ -924,6 +927,20 @@ repository:
         - include: '#expression'
     end: (?<=\})
     patterns:
+    - include: '#block'
+    - include: '#expression'
+  
+  when-string:
+    begin: (when)(\b\s+)(\')([\s_.[:alnum:]]*)(\')
+    beginCaptures:
+      '1': { name: keyword.control.switch.when.apex }
+      '2': { name: punctuation.whitespace.apex }
+      '3': { name: punctuation.definition.string.begin.apex }
+      '4': { name: string.quoted.single.apex }
+      '5': { name: punctuation.definition.string.end.apex }
+    end: (?<=\})
+    patterns:
+    - include: '#string-character-escape'
     - include: '#block'
     - include: '#expression'
 
@@ -1659,7 +1676,7 @@ repository:
   comment:
     patterns:
     - name: comment.block.apex
-      begin: /\*+
+      begin: /\*(\*)?
       beginCaptures:
         '0': { name: punctuation.definition.comment.apex }
       end: \*/
