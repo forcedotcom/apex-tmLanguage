@@ -1,6 +1,30 @@
-node_modules/
-out/
+# VS Code
 .vscode/
-#grammars/
+
+# TypeScript generated files
+dist/
+out/
+
+# Logs
+logs
+*.log
 npm-debug.log*
-.DS_Store
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Output of 'npm pack'
+*.tgz
+
+# Eclipse
+.project
+
+# MacOS folder atttribute tracking
+**/.DS_Store
