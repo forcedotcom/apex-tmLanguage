@@ -1,0 +1,13 @@
+#folders
+.circleci
+docs
+src
+test
+
+#files
+.editorconfig
+.prettierignore
+.prettierrc.json
+gulpfile.js
+ISSUE_TEMPLATE
+tsconfig.json

@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/apex-tmlanguage",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Textmate grammar for Apex with outputs for VSCode, Atom and TextMate.",
   "displayName": "apex-tmLanguage",
   "keywords": [
@@ -38,6 +38,11 @@
     "build:default": "gulp default",
     "format": "prettier --config .prettierrc.json --write './**/*.{ts,js,json,md}'"
   },
+  "files": [
+    "grammars/**",
+    "LICENSE.md",
+    "README.md"
+  ],
   "dependencies": {},
   "devDependencies": {
     "@types/chai": "^4.1.3",
