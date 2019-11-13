@@ -18,6 +18,10 @@
     <array>
       <dict>
         <key>include</key>
+        <string>#javadoc-comment</string>
+      </dict>
+      <dict>
+        <key>include</key>
         <string>#comment</string>
       </dict>
       <dict>
@@ -83,6 +87,10 @@
         <array>
           <dict>
             <key>include</key>
+            <string>#javadoc-comment</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#comment</string>
           </dict>
           <dict>
@@ -123,6 +131,10 @@
       <dict>
         <key>patterns</key>
         <array>
+          <dict>
+            <key>include</key>
+            <string>#javadoc-comment</string>
+          </dict>
           <dict>
             <key>include</key>
             <string>#comment</string>
@@ -173,6 +185,10 @@
       <dict>
         <key>patterns</key>
         <array>
+          <dict>
+            <key>include</key>
+            <string>#javadoc-comment</string>
+          </dict>
           <dict>
             <key>include</key>
             <string>#comment</string>
@@ -739,14 +755,14 @@
         <key>name</key>
         <string>sharing.modifier.apex</string>
         <key>match</key>
-        <string>(?&lt;!\.)\b(with sharing|without sharing)\b</string>
+        <string>(?&lt;!\.)\b(with sharing|without sharing|inherited sharing)\b</string>
       </dict>
       <key>storage-modifier</key>
       <dict>
         <key>name</key>
         <string>storage.modifier.apex</string>
         <key>match</key>
-        <string>(?&lt;!\.)\b(new|public|protected|private|abstract|virtual|override|global|static|final)\b</string>
+        <string>(?&lt;!\.)\b(new|public|protected|private|abstract|virtual|override|global|static|final|transient)\b</string>
       </dict>
       <key>class-declaration</key>
       <dict>
@@ -778,6 +794,10 @@
             <string>(?=\{)</string>
             <key>patterns</key>
             <array>
+              <dict>
+                <key>include</key>
+                <string>#javadoc-comment</string>
+              </dict>
               <dict>
                 <key>include</key>
                 <string>#comment</string>
@@ -824,6 +844,10 @@
                 <string>#class-or-trigger-members</string>
               </dict>
             </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#javadoc-comment</string>
           </dict>
           <dict>
             <key>include</key>
@@ -916,6 +940,10 @@
               </dict>
               <dict>
                 <key>include</key>
+                <string>#javadoc-comment</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#comment</string>
               </dict>
               <dict>
@@ -956,6 +984,10 @@
                 <string>#class-or-trigger-members</string>
               </dict>
             </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#javadoc-comment</string>
           </dict>
           <dict>
             <key>include</key>
@@ -1061,11 +1093,11 @@
               </dict>
               <dict>
                 <key>include</key>
-                <string>#comment</string>
+                <string>#javadoc-comment</string>
               </dict>
               <dict>
                 <key>include</key>
-                <string>#punctuation-comma</string>
+                <string>#comment</string>
               </dict>
               <dict>
                 <key>include</key>
@@ -1094,6 +1126,10 @@
             <string>(?=\{)</string>
             <key>patterns</key>
             <array>
+              <dict>
+                <key>include</key>
+                <string>#javadoc-comment</string>
+              </dict>
               <dict>
                 <key>include</key>
                 <string>#comment</string>
@@ -1142,6 +1178,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#javadoc-comment</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#comment</string>
               </dict>
               <dict>
@@ -1165,6 +1205,10 @@
                 <array>
                   <dict>
                     <key>include</key>
+                    <string>#javadoc-comment</string>
+                  </dict>
+                  <dict>
+                    <key>include</key>
                     <string>#comment</string>
                   </dict>
                   <dict>
@@ -1174,6 +1218,10 @@
                 </array>
               </dict>
             </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#javadoc-comment</string>
           </dict>
           <dict>
             <key>include</key>
@@ -1211,6 +1259,10 @@
             <string>(?=\{)</string>
             <key>patterns</key>
             <array>
+              <dict>
+                <key>include</key>
+                <string>#javadoc-comment</string>
+              </dict>
               <dict>
                 <key>include</key>
                 <string>#comment</string>
@@ -1253,6 +1305,10 @@
                 <string>#interface-members</string>
               </dict>
             </array>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#javadoc-comment</string>
           </dict>
           <dict>
             <key>include</key>
@@ -4581,6 +4637,113 @@
                 </dict>
                 <key>end</key>
                 <string>(?=$)</string>
+              </dict>
+            </array>
+          </dict>
+        </array>
+      </dict>
+      <key>javadoc-comment</key>
+      <dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>comment.block.javadoc.apex</string>
+            <key>begin</key>
+            <string>^\s*(/\*\*)(?!/)</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.definition.comment.apex</string>
+              </dict>
+            </dict>
+            <key>end</key>
+            <string>\*/</string>
+            <key>endCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.definition.comment.apex</string>
+              </dict>
+            </dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>match</key>
+                <string>@(deprecated|return|see|serial|since|version|usage|name|link)\b</string>
+                <key>name</key>
+                <string>keyword.other.documentation.javadoc.apex</string>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(@param)\s+(\S+)</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>keyword.other.documentation.javadoc.apex</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>entity.name.variable.parameter.apex</string>
+                  </dict>
+                </dict>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(@(?:exception|throws))\s+(\S+)</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>keyword.other.documentation.javadoc.apex</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>entity.name.type.class.apex</string>
+                  </dict>
+                </dict>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(@author)\s*([^&lt;]*)((&lt;)(\S+)(&gt;))?</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>keyword.other.documentation.javadoc.apex</string>
+                  </dict>
+                  <key>2</key>
+                  <dict>
+                    <key>name</key>
+                    <string>punctuation.definition.comment.apex</string>
+                  </dict>
+                  <key>3</key>
+                  <dict>
+                    <key>name</key>
+                    <string>keyword.other.documentation.javadoc.link.email</string>
+                  </dict>
+                </dict>
+              </dict>
+              <dict>
+                <key>match</key>
+                <string>(`([^`]+?)`)</string>
+                <key>captures</key>
+                <dict>
+                  <key>1</key>
+                  <dict>
+                    <key>name</key>
+                    <string>string.quoted.single.apex</string>
+                  </dict>
+                </dict>
               </dict>
             </array>
           </dict>

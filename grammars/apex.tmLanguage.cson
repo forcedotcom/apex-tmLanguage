@@ -8,6 +8,9 @@ fileTypes: [
 uuid: "F5FC6824-F257-43B1-B53A-14E1CCD18631"
 patterns: [
   {
+    include: "#javadoc-comment"
+  }
+  {
     include: "#comment"
   }
   {
@@ -51,6 +54,9 @@ repository:
   "type-declarations":
     patterns: [
       {
+        include: "#javadoc-comment"
+      }
+      {
         include: "#comment"
       }
       {
@@ -80,6 +86,9 @@ repository:
     ]
   "class-or-trigger-members":
     patterns: [
+      {
+        include: "#javadoc-comment"
+      }
       {
         include: "#comment"
       }
@@ -116,6 +125,9 @@ repository:
     ]
   "interface-members":
     patterns: [
+      {
+        include: "#javadoc-comment"
+      }
       {
         include: "#comment"
       }
@@ -452,10 +464,10 @@ repository:
         name: "punctuation.terminator.statement.apex"
   "sharing-modifier":
     name: "sharing.modifier.apex"
-    match: "(?<!\\.)\\b(with sharing|without sharing)\\b"
+    match: "(?<!\\.)\\b(with sharing|without sharing|inherited sharing)\\b"
   "storage-modifier":
     name: "storage.modifier.apex"
-    match: "(?<!\\.)\\b(new|public|protected|private|abstract|virtual|override|global|static|final)\\b"
+    match: "(?<!\\.)\\b(new|public|protected|private|abstract|virtual|override|global|static|final|transient)\\b"
   "class-declaration":
     begin: "(?=\\bclass\\b)"
     end: "(?<=\\})"
@@ -473,6 +485,9 @@ repository:
             name: "entity.name.type.class.apex"
         end: "(?=\\{)"
         patterns: [
+          {
+            include: "#javadoc-comment"
+          }
           {
             include: "#comment"
           }
@@ -501,6 +516,9 @@ repository:
             include: "#class-or-trigger-members"
           }
         ]
+      }
+      {
+        include: "#javadoc-comment"
       }
       {
         include: "#comment"
@@ -554,6 +572,9 @@ repository:
             ]
           }
           {
+            include: "#javadoc-comment"
+          }
+          {
             include: "#comment"
           }
           {
@@ -578,6 +599,9 @@ repository:
             include: "#class-or-trigger-members"
           }
         ]
+      }
+      {
+        include: "#javadoc-comment"
       }
       {
         include: "#comment"
@@ -628,10 +652,10 @@ repository:
             include: "#trigger-type-statement"
           }
           {
-            include: "#comment"
+            include: "#javadoc-comment"
           }
           {
-            include: "#punctuation-comma"
+            include: "#comment"
           }
           {
             include: "#expression"
@@ -650,6 +674,9 @@ repository:
         begin: "(?=enum)"
         end: "(?=\\{)"
         patterns: [
+          {
+            include: "#javadoc-comment"
+          }
           {
             include: "#comment"
           }
@@ -674,6 +701,9 @@ repository:
             name: "punctuation.curlybrace.close.apex"
         patterns: [
           {
+            include: "#javadoc-comment"
+          }
+          {
             include: "#comment"
           }
           {
@@ -687,6 +717,9 @@ repository:
             end: "(?=(,|\\}))"
             patterns: [
               {
+                include: "#javadoc-comment"
+              }
+              {
                 include: "#comment"
               }
               {
@@ -695,6 +728,9 @@ repository:
             ]
           }
         ]
+      }
+      {
+        include: "#javadoc-comment"
       }
       {
         include: "#comment"
@@ -717,6 +753,9 @@ repository:
             name: "entity.name.type.interface.apex"
         end: "(?=\\{)"
         patterns: [
+          {
+            include: "#javadoc-comment"
+          }
           {
             include: "#comment"
           }
@@ -742,6 +781,9 @@ repository:
             include: "#interface-members"
           }
         ]
+      }
+      {
+        include: "#javadoc-comment"
       }
       {
         include: "#comment"
@@ -2678,6 +2720,58 @@ repository:
               "0":
                 name: "punctuation.definition.comment.apex"
             end: "(?=$)"
+          }
+        ]
+      }
+    ]
+  "javadoc-comment":
+    patterns: [
+      {
+        name: "comment.block.javadoc.apex"
+        begin: "^\\s*(/\\*\\*)(?!/)"
+        beginCaptures:
+          "1":
+            name: "punctuation.definition.comment.apex"
+        end: "\\*/"
+        endCaptures:
+          "0":
+            name: "punctuation.definition.comment.apex"
+        patterns: [
+          {
+            match: "@(deprecated|return|see|serial|since|version|usage|name|link)\\b"
+            name: "keyword.other.documentation.javadoc.apex"
+          }
+          {
+            match: "(@param)\\s+(\\S+)"
+            captures:
+              "1":
+                name: "keyword.other.documentation.javadoc.apex"
+              "2":
+                name: "entity.name.variable.parameter.apex"
+          }
+          {
+            match: "(@(?:exception|throws))\\s+(\\S+)"
+            captures:
+              "1":
+                name: "keyword.other.documentation.javadoc.apex"
+              "2":
+                name: "entity.name.type.class.apex"
+          }
+          {
+            match: "(@author)\\s*([^<]*)((<)(\\S+)(>))?"
+            captures:
+              "1":
+                name: "keyword.other.documentation.javadoc.apex"
+              "2":
+                name: "punctuation.definition.comment.apex"
+              "3":
+                name: "keyword.other.documentation.javadoc.link.email"
+          }
+          {
+            match: "(`([^`]+?)`)"
+            captures:
+              "1":
+                name: "string.quoted.single.apex"
           }
         ]
       }
