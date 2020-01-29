@@ -482,6 +482,7 @@ repository:
     patterns:
     - include: '#soql-query-expression'
     - include: '#soql-colon-vars'
+    - include: '#soql-group-clauses'
     - include: '#punctuation-comma'
     - include: '#operator-assignment'
     - include: '#literal'
@@ -542,7 +543,7 @@ repository:
     match: \b(ABOVE|AND|AT|FOR REFERENCE|FOR UPDATE|FOR VIEW|GROUP BY|HAVING|IN|LIKE|LIMIT|NOT IN|NOT|OFFSET|OR|TYPEOF|UPDATE TRACKING|UPDATE VIEWSTAT|WITH DATA CATEGORY|WITH)\b\s*
     captures:
       '1': { name: keyword.operator.query.apex }
-
+  
   date-literals:
     match: \b(YESTERDAY|TODAY|TOMORROW|LAST_WEEK|THIS_WEEK|NEXT_WEEK|LAST_MONTH|THIS_MONTH|NEXT_MONTH|LAST_90_DAYS|NEXT_90_DAYS|THIS_QUARTER|LAST_QUARTER|NEXT_QUARTER|THIS_YEAR|LAST_YEAR|NEXT_YEAR|THIS_FISCAL_QUARTER|LAST_FISCAL_QUARTER|NEXT_FISCAL_QUARTER|THIS_FISCAL_YEAR|LAST_FISCAL_YEAR|NEXT_FISCAL_YEAR)\b\s*
     captures:

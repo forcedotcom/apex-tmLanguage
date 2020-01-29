@@ -1560,6 +1560,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#soql-group-clauses</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#punctuation-comma</string>
           </dict>
           <dict>
