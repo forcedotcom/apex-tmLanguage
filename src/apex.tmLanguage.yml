@@ -482,6 +482,7 @@ repository:
     patterns:
     - include: '#soql-query-expression'
     - include: '#soql-colon-vars'
+    - include: '#soql-group-clauses'
     - include: '#punctuation-comma'
     - include: '#operator-assignment'
     - include: '#literal'

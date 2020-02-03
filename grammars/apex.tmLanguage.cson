@@ -913,6 +913,9 @@ repository:
         include: "#soql-colon-vars"
       }
       {
+        include: "#soql-group-clauses"
+      }
+      {
         include: "#punctuation-comma"
       }
       {

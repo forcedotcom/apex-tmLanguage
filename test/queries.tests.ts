@@ -276,6 +276,39 @@ describe('Grammar', () => {
       ]);
     });
 
+    it('where clause with nested parameter grouping', () => {
+      const input = Input.InMethod(
+        `SELECT Id FROM Subscription__c WHERE (Contract__c IN :contractIds OR (Contract__c = 'Name' AND Price__c = 20))`
+      );
+      const tokens = tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('Id'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Subscription__c'),
+        Token.Keywords.Queries.Where,
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Queries.FieldName('Contract__c'),
+        Token.Keywords.Queries.OperatorName('IN'),
+        Token.Operators.Conditional.Colon,
+        Token.Identifiers.LocalName('contractIds'),
+        Token.Keywords.Queries.OperatorName('OR'),
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Queries.FieldName('Contract__c'),
+        Token.Operators.Assignment,
+        Token.Punctuation.String.Begin,
+        Token.Literals.String('Name'),
+        Token.Punctuation.String.End,
+        Token.Keywords.Queries.OperatorName('AND'),
+        Token.Keywords.Queries.FieldName('Price__c'),
+        Token.Operators.Assignment,
+        Token.Literals.Numeric.Decimal('20'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.CloseParen
+      ]);
+    });
+
     it('query with multiple operators after where clause', () => {
       const input = Input.InMethod(
         `SELECT Id FROM Contact WHERE Name LIKE 'A%' AND MailingState='California'`
