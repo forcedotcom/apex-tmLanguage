@@ -44,7 +44,7 @@ gulp.task('compile', function() {
   return tsProject
     .src()
     .pipe(tsProject())
-    .pipe(gulp.dest(jsOut));
+    .pipe(gulp.dest(jsOut + 'test'));
 });
 
 gulp.task(

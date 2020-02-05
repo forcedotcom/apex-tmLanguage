@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "target": "es5",
-    "lib": ["es5", "dom"],
+    "target": "es6",
+    "lib": ["es6", "dom"],
     "sourceMap": true,
     "declaration": true,
     "moduleResolution": "node",
     "noImplicitAny": false,
-    "outDir": "./out",
+    "outDir": "./out/test",
     "preserveConstEnums": true,
     "strict": true,
     "noImplicitReturns": true
-  },
-  "include": ["./test/**/*"]
+  }
 }
