@@ -429,7 +429,9 @@ describe('Grammar', () => {
     });
 
     it('merge using new object statement', () => {
-      const input = Input.InMethod(`merge masterAcct new Account(name='Master');`);
+      const input = Input.InMethod(
+        `merge masterAcct new Account(name='Master');`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([
@@ -449,7 +451,9 @@ describe('Grammar', () => {
     });
 
     it('merge using only new statements', () => {
-      const input = Input.InMethod(`merge new Account(name='Master') new List<Account>{acc1, acc2};`);
+      const input = Input.InMethod(
+        `merge new Account(name='Master') new List<Account>{acc1, acc2};`
+      );
       const tokens = tokenize(input);
 
       tokens.should.deep.equal([

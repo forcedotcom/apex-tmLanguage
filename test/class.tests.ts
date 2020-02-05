@@ -13,7 +13,7 @@ describe('Grammar', () => {
   });
 
   describe('Apex Class', () => {
-    it('class keyword and storage modifiers', async() => {
+    it('class keyword and storage modifiers', async () => {
       const input = Input.FromText(`
 public             class PublicClass { }
                   class DefaultClass { }

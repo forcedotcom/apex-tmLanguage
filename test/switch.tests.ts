@@ -501,7 +501,7 @@ System.debug('test');`);
       ]);
     });
 
-/*    it('switch usage in triggers', () => {
+    /*    it('switch usage in triggers', () => {
       const input = Input.InTrigger(`
         switch on sobject {
    when Account a {
