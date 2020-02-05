@@ -4,10 +4,10 @@
  *  See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITokenizeLineResult, Registry, StackElement } from 'vscode-textmate';
+import { INITIAL, Registry, StackElement } from 'vscode-textmate';
 
 const registry = new Registry();
-const grammar = registry.loadGrammarFromPathSync('grammars/apex.tmLanguage');
+// const grammar = registry.loadGrammar('grammars/apex.tmLanguage').then(grammar => { return grammar; });
 const excludedTypes = [
   'source.apex',
   'meta.tag.apex',
@@ -23,12 +23,21 @@ export function tokenize(
   }
 
   let tokens: Token[] = [];
-  let previousStack: StackElement = null;
+  let previousStack: StackElement = INITIAL;
 
   for (let lineIndex = 0; lineIndex < input.lines.length; lineIndex++) {
     const line = input.lines[lineIndex];
+    let lineResult;
+    registry.loadGrammar('grammars/apex.tmLanguage').then(grammar => {
+      if (grammar !== null) {
+        lineResult = grammar.tokenizeLine(line, previousStack);
+      }
+    });
+    // const lineTokens = grammar.tokenizeLine(line, ruleStack);
+     // grammar.tokenizeLine(line, previousStack);
 
-    let lineResult = grammar.tokenizeLine(line, previousStack);
+
+
     previousStack = lineResult.ruleStack;
 
     if (lineIndex < input.span.startLine || lineIndex > input.span.endLine) {
