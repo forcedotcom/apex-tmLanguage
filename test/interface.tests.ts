@@ -13,9 +13,9 @@ describe('Grammar', () => {
   });
 
   describe('Interfaces', () => {
-    it('simple interface', () => {
+    it('simple interface', async () => {
       const input = `interface IFoo { }`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Interface,
@@ -25,13 +25,13 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('interface inheritance', () => {
+    it('interface inheritance', async () => {
       const input = `
 interface IFoo { }
 interface IBar extends IFoo { }
 `;
 
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Interface,
@@ -47,9 +47,9 @@ interface IBar extends IFoo { }
       ]);
     });
 
-    it('generic interface', () => {
+    it('generic interface', async () => {
       const input = `interface IFoo<T1, T2> { }`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Interface,
@@ -64,9 +64,9 @@ interface IBar extends IFoo { }
       ]);
     });
 
-    it('interface extends another interface', () => {
+    it('interface extends another interface', async () => {
       const input = `public interface MyInterface2 extends MyInterface {}`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,

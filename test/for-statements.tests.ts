@@ -7,9 +7,9 @@ describe('Grammar', () => {
   });
 
   describe('For-Statements', () => {
-    it('single-line for loop', () => {
+    it('single-line for loop', async () => {
       const input = Input.InMethod(`for (Integer i = 0; i < 42; i++) { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.For,
@@ -31,13 +31,13 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('for loop with break', () => {
+    it('for loop with break', async () => {
       const input = Input.InMethod(`
 for (Integer i = 0; i < 42; i++)
 {
   break;
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.For,
@@ -61,13 +61,13 @@ for (Integer i = 0; i < 42; i++)
       ]);
     });
 
-    it('for loop with continue', () => {
+    it('for loop with continue', async () => {
       const input = Input.InMethod(`
 for (Integer i = 0; i < 42; i++)
 {
   continue;
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.For,
@@ -91,13 +91,13 @@ for (Integer i = 0; i < 42; i++)
       ]);
     });
 
-    it('for loop on collection', () => {
+    it('for loop on collection', async () => {
       const input = Input.InMethod(`
 for (Integer i : listOfIntegers)
 {
   continue;
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.For,
@@ -114,12 +114,12 @@ for (Integer i : listOfIntegers)
       ]);
     });
 
-    it('for loop with a type, a query and a comment', () => {
+    it('for loop with a type, a query and a comment', async () => {
       const input = Input.InMethod(`
   for (Account a : [SELECT Id, Name FROM Account]){
     // break;
   }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.For,
@@ -144,12 +144,12 @@ for (Integer i : listOfIntegers)
       ]);
     });
 
-    it('for loop with support types', () => {
+    it('for loop with support types', async () => {
       const input = Input.InMethod(`
   for (SObject myFancyObject : [SELECT Id, Name FROM Account]){
     break;
   }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.For,
@@ -174,12 +174,12 @@ for (Integer i : listOfIntegers)
       ]);
     });
 
-    it('for loop of an array or set', () => {
+    it('for loop of an array or set', async () => {
       const input = Input.InMethod(`
   for (SObject myFancyObject : SomeArrayOrMap){
     break;
   }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.For,
@@ -196,12 +196,12 @@ for (Integer i : listOfIntegers)
       ]);
     });
 
-    it('for loop or an object', () => {
+    it('for loop or an object', async () => {
       const input = Input.InMethod(`
   for (SObject myFancyObject : myObject.WithMethod()){
     break;
   }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.For,
@@ -222,12 +222,12 @@ for (Integer i : listOfIntegers)
       ]);
     });
 
-    it('for loop a query that uses local variables', () => {
+    it('for loop a query that uses local variables', async () => {
       const input = Input.InMethod(`
   for (SObject myFancyObject : [SELECT Id, Name FROM User WHERE Id IN :variable]){
     System.debug('This is a test' + myFancyObject);
   }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.For,

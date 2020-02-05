@@ -14,9 +14,9 @@ describe('Grammar', () => {
 
   describe('Literals', () => {
     describe('Booleans', () => {
-      it('true', () => {
+      it('true', async () => {
         const input = Input.InClass(`Boolean x = true;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Boolean,
@@ -27,9 +27,9 @@ describe('Grammar', () => {
         ]);
       });
 
-      it('false', () => {
+      it('false', async () => {
         const input = Input.InClass(`Boolean x = false;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Boolean,
@@ -42,9 +42,9 @@ describe('Grammar', () => {
     });
 
     describe('Chars', () => {
-      it('empty', () => {
+      it('empty', async () => {
         const input = Input.InMethod(`String x = '';`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.String,
@@ -56,9 +56,9 @@ describe('Grammar', () => {
         ]);
       });
 
-      it('letter', () => {
+      it('letter', async () => {
         const input = Input.InMethod(`String x = 'a';`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.String,
@@ -71,9 +71,9 @@ describe('Grammar', () => {
         ]);
       });
 
-      it('escaped single quote', () => {
+      it('escaped single quote', async () => {
         const input = Input.InMethod(`String x = '\\'';`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.String,
@@ -88,9 +88,9 @@ describe('Grammar', () => {
     });
 
     describe('Numbers', () => {
-      it('decimal zero', () => {
+      it('decimal zero', async () => {
         const input = Input.InClass(`Integer x = 0;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Integer,
@@ -101,9 +101,9 @@ describe('Grammar', () => {
         ]);
       });
 
-      it('hexadecimal zero', () => {
+      it('hexadecimal zero', async () => {
         const input = Input.InClass(`Integer x = 0x0;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Integer,
@@ -114,9 +114,9 @@ describe('Grammar', () => {
         ]);
       });
 
-      it('binary zero', () => {
+      it('binary zero', async () => {
         const input = Input.InClass(`Integer x = 0b0;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Integer,
@@ -127,9 +127,9 @@ describe('Grammar', () => {
         ]);
       });
 
-      it('Double zero', () => {
+      it('Double zero', async () => {
         const input = Input.InClass(`Double x = 0.0;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Double,
@@ -142,9 +142,9 @@ describe('Grammar', () => {
     });
 
     describe('Strings', () => {
-      it('simple', () => {
+      it('simple', async () => {
         const input = Input.InClass(`String test = 'hello world!';`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.String,
@@ -157,9 +157,9 @@ describe('Grammar', () => {
         ]);
       });
 
-      it('escaped double-quote', () => {
+      it('escaped double-quote', async () => {
         const input = Input.InClass(`String test = 'hello \\"world!\\"';`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.String,

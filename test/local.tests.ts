@@ -13,9 +13,9 @@ describe('Grammar', () => {
   });
 
   describe('Locals', () => {
-    it('declaration', () => {
+    it('declaration', async () => {
       const input = Input.InMethod(`Integer x;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Integer,
@@ -24,9 +24,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('declaration with initializer', () => {
+    it('declaration with initializer', async () => {
       const input = Input.InMethod(`Integer x = 42;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Integer,
@@ -37,9 +37,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('multiple declarators', () => {
+    it('multiple declarators', async () => {
       const input = Input.InMethod(`Integer x, y;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Integer,
@@ -50,9 +50,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('multiple declarators with initializers', () => {
+    it('multiple declarators with initializers', async () => {
       const input = Input.InMethod(`Integer x = 19, y = 23;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Integer,

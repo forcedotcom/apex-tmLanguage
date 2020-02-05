@@ -12,12 +12,12 @@ describe('Grammar', () => {
   });
 
   describe('Apex Trigger', () => {
-    it('before insert before update Account trigger', () => {
+    it('before insert before update Account trigger', async () => {
       const input = Input.FromText(`trigger myAccountTrigger on Account (before insert, after update) {
         // Your code here
         if(true) {}
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Trigger,
@@ -45,11 +45,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('context variables specific to triggers used in methods', () => {
+    it('context variables specific to triggers used in methods', async () => {
       const input = Input.InMethod(
         `if (Trigger.isBefore && Trigger.isInsert) {}`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.If,
@@ -67,11 +67,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('context variables specific to triggers', () => {
+    it('context variables specific to triggers', async () => {
       const input = Input.InTrigger(
         `if (Trigger.isBefore && Trigger.isInsert) {}`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.If,
@@ -89,9 +89,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('triggers language specific functions', () => {
+    it('triggers language specific functions', async () => {
       const input = Input.InTrigger(`Trigger.newMap.keySet();`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.Trigger,
@@ -105,11 +105,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('triggers language specific functions - complex scenario', () => {
+    it('triggers language specific functions - complex scenario', async () => {
       const input = Input.InTrigger(
         `Trigger.newMap.get(q.opportunity__c).addError('Cannot delete quote');`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.Trigger,
@@ -133,11 +133,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('SOQL in triggers', () => {
+    it('SOQL in triggers', async () => {
       const input = Input.InTrigger(
         `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :Trigger.new];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('Contact'),
@@ -162,11 +162,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('SOQL in triggers using methods in clauses', () => {
+    it('SOQL in triggers using methods in clauses', async () => {
       const input = Input.InTrigger(
         `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :keys('w')];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('Contact'),
@@ -194,11 +194,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('SOQL in triggers using objects in clauses', () => {
+    it('SOQL in triggers using objects in clauses', async () => {
       const input = Input.InTrigger(
         `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :myObject.keys('w')];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('Contact'),
