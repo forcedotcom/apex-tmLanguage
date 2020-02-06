@@ -13,9 +13,9 @@ describe('Grammar', () => {
   });
 
   describe('Methods', () => {
-    it('single-line declaration with no parameters', () => {
+    it('single-line declaration with no parameters', async () => {
       const input = Input.InClass(`void Foo() { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Void,
@@ -27,13 +27,13 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('declaration with two parameters', () => {
+    it('declaration with two parameters', async () => {
       const input = Input.InClass(`
 Integer Add(Integer x, Integer y)
 {
     return x + y;
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Integer,
@@ -55,9 +55,9 @@ Integer Add(Integer x, Integer y)
       ]);
     });
 
-    it('explicitly-implemented interface member', () => {
+    it('explicitly-implemented interface member', async () => {
       const input = Input.InClass(`String IFoo<String>.toString();`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.String,
@@ -73,9 +73,9 @@ Integer Add(Integer x, Integer y)
       ]);
     });
 
-    it('declaration in interface', () => {
+    it('declaration in interface', async () => {
       const input = Input.InInterface(`String GetString();`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.String,
@@ -86,11 +86,11 @@ Integer Add(Integer x, Integer y)
       ]);
     });
 
-    it('declaration in interface with parameters', () => {
+    it('declaration in interface with parameters', async () => {
       const input = Input.InInterface(
         `String GetString(String format, Object[] args);`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.String,
@@ -108,9 +108,9 @@ Integer Add(Integer x, Integer y)
       ]);
     });
 
-    it('public override', () => {
+    it('public override', async () => {
       const input = Input.InClass(`public override M() { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -123,9 +123,9 @@ Integer Add(Integer x, Integer y)
       ]);
     });
 
-    it('public virtual', () => {
+    it('public virtual', async () => {
       const input = Input.InClass(`public virtual M() { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -138,9 +138,9 @@ Integer Add(Integer x, Integer y)
       ]);
     });
 
-    it('extension method', () => {
+    it('extension method', async () => {
       const input = Input.InClass(`public void M(this Object o) { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -156,11 +156,11 @@ Integer Add(Integer x, Integer y)
       ]);
     });
 
-    it('commented parameters are highlighted properly (issue omnisharp-vscode#802)', () => {
+    it('commented parameters are highlighted properly (issue omnisharp-vscode#802)', async () => {
       const input = Input.InClass(
         `public void methodWithParametersCommented(Integer p1, /*Integer p2*/, Integer p3) {}`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -182,14 +182,14 @@ Integer Add(Integer x, Integer y)
       ]);
     });
 
-    it('return type is highlighted properly in interface (issue omnisharp-vscode#830)', () => {
+    it('return type is highlighted properly in interface (issue omnisharp-vscode#830)', async () => {
       const input = `
 public interface test
 {
     Task test1(List<String> blah);
     Task test<T>(List<T> blah);
 }`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -223,7 +223,7 @@ public interface test
       ]);
     });
 
-    it('shadowed methods are highlighted properly (issue omnisharp-vscode#1084)', () => {
+    it('shadowed methods are highlighted properly (issue omnisharp-vscode#1084)', async () => {
       const input = Input.InClass(`
 private new void foo1() //Correct highlight
 {
@@ -233,7 +233,7 @@ new void foo2() //Function name not highlighted
 {
 }
 `);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Private,
@@ -258,11 +258,11 @@ new void foo2() //Function name not highlighted
       ]);
     });
 
-    it('comment at end of line does not change highlights - 1 (issue omnisharp-vscode#1091)', () => {
+    it('comment at end of line does not change highlights - 1 (issue omnisharp-vscode#1091)', async () => {
       const input = Input.InClass(`
 public abstract void Notify(PlayerId playerId, ISessionResponse response); //the
 `);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -282,11 +282,11 @@ public abstract void Notify(PlayerId playerId, ISessionResponse response); //the
       ]);
     });
 
-    it('comment at end of line does not change highlights - 2 (issue omnisharp-vscode#1091)', () => {
+    it('comment at end of line does not change highlights - 2 (issue omnisharp-vscode#1091)', async () => {
       const input = Input.InClass(`
 public abstract void Notify(PlayerId playerId, ISessionResponse response); //the
 `);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -306,11 +306,11 @@ public abstract void Notify(PlayerId playerId, ISessionResponse response); //the
       ]);
     });
 
-    it('comment at end of line does not change highlights - 3 (issue omnisharp-vscode#1091)', () => {
+    it('comment at end of line does not change highlights - 3 (issue omnisharp-vscode#1091)', async () => {
       const input = Input.InClass(`
 public abstract void Notify(PlayerId playerId, ISessionResponse response); //the a
 `);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -330,11 +330,11 @@ public abstract void Notify(PlayerId playerId, ISessionResponse response); //the
       ]);
     });
 
-    it('parameters with default values (issue #30)', () => {
+    it('parameters with default values (issue #30)', async () => {
       const input = Input.InClass(`
 void M(String p = null) { }
 `);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Void,
@@ -350,14 +350,14 @@ void M(String p = null) { }
       ]);
     });
 
-    it('closing parenthesis of parameter list on next line', () => {
+    it('closing parenthesis of parameter list on next line', async () => {
       const input = Input.InClass(`
 void M(
     String s
     )
 {
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Void,
@@ -373,13 +373,13 @@ void M(
       ]);
     });
 
-    it('parameters with multi-dimensional arrays (issue #86)', () => {
+    it('parameters with multi-dimensional arrays (issue #86)', async () => {
       const input = Input.InClass(`
 public void LinearRegression(Double[,] samples, Double[] standardDeviations, Integer variables){
     Integer info;
     alglib.linearmodel linearmodel;
     alglib.lrreport ar;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,

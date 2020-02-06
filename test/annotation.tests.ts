@@ -12,12 +12,12 @@ describe('Grammar', () => {
   });
 
   describe('Annotation', () => {
-    it('annotation on methods', () => {
+    it('annotation on methods', async () => {
       const input = Input.InClass(`@deprecated
   // This method is deprecated. Use myOptimizedMethod(String a, String b) instead.
   global void myMethod(String a) {
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.AnnotationName('@deprecated'),
@@ -38,11 +38,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('annotation with one parameter', () => {
+    it('annotation with one parameter', async () => {
       const input = Input.InClass(`@future (callout=true)
 public static void doCalloutFromFuture() {
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.AnnotationName('@future'),
@@ -62,11 +62,11 @@ public static void doCalloutFromFuture() {
       ]);
     });
 
-    it('annotation on class', () => {
+    it('annotation on class', async () => {
       const input = Input.FromText(`@isTest
 public             class MyTestClass { }`);
 
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.AnnotationName('@isTest'),
@@ -78,11 +78,11 @@ public             class MyTestClass { }`);
       ]);
     });
 
-    it('annotation with multiple parameters', () => {
+    it('annotation with multiple parameters', async () => {
       const input = Input.FromText(
         `@InvocableMethod(label='Insert Accounts' description='Inserts new accounts.')`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.AnnotationName('@InvocableMethod'),
@@ -101,11 +101,11 @@ public             class MyTestClass { }`);
       ]);
     });
 
-    it('annotation with multiple parameters on field', () => {
+    it('annotation with multiple parameters on field', async () => {
       const input = Input.InClass(`@InvocableMethod(label='Insert Accounts' description='Inserts new accounts.' required=false)
       global ID leadId;
 `);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.AnnotationName('@InvocableMethod'),

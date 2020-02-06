@@ -13,11 +13,11 @@ describe('Grammar', () => {
   });
 
   describe('Operators', () => {
-    it('unary +', () => {
+    it('unary +', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer value) { return +value; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -37,11 +37,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('unary -', () => {
+    it('unary -', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer value) { return -value; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -61,11 +61,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('unary !', () => {
+    it('unary !', async () => {
       const input = Input.InClass(
         `public static Boolean opMethodName(Integer value) { return !(value == 0); }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -89,11 +89,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('unary ++', () => {
+    it('unary ++', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer value) { return ++value; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -113,11 +113,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('unary --', () => {
+    it('unary --', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer value) { return --value; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -137,11 +137,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary not equal', () => {
+    it('binary not equal', async () => {
       const input = Input.InClass(
         `public static Boolean opMethodName(Integer value) { return value != 0; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -162,11 +162,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary equals', () => {
+    it('binary equals', async () => {
       const input = Input.InClass(
         `public static Boolean opMethodName(Integer value) { return value == 0; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -187,11 +187,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary +', () => {
+    it('binary +', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer x, Integer y) { return x + y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -215,11 +215,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary -', () => {
+    it('binary -', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer x, Integer y) { return x - y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -243,11 +243,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary *', () => {
+    it('binary *', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer x, Integer y) { return x * y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -271,11 +271,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary /', () => {
+    it('binary /', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer x, Integer y) { return x / y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -299,11 +299,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary &', () => {
+    it('binary &', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer x, Integer y) { return x & y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -327,11 +327,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary |', () => {
+    it('binary |', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer x, Integer y) { return x | y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -355,11 +355,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary <<', () => {
+    it('binary <<', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer x, Integer y) { return x << y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -383,11 +383,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary >>', () => {
+    it('binary >>', async () => {
       const input = Input.InClass(
         `public static Integer opMethodName(Integer x, Integer y) { return x >> y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -411,11 +411,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary >', () => {
+    it('binary >', async () => {
       const input = Input.InClass(
         `public static Boolean opMethodName(Integer x, Integer y) { return x > y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -439,11 +439,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary <', () => {
+    it('binary <', async () => {
       const input = Input.InClass(
         `public static Boolean opMethodName(Integer x, Integer y) { return x < y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -467,11 +467,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary >=', () => {
+    it('binary >=', async () => {
       const input = Input.InClass(
         `public static Boolean opMethodName(Integer x, Integer y) { return x >= y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -495,11 +495,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('binary <=', () => {
+    it('binary <=', async () => {
       const input = Input.InClass(
         `public static Boolean opMethodName(Integer x, Integer y) { return x <= y; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,

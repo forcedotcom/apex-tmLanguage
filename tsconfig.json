@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es5",
     "module": "commonjs",
-    "outDir": "out",
+    "target": "es6",
+    "lib": ["es6", "dom"],
     "sourceMap": true,
-    "rootDir": ".",
+    "declaration": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "./out/test",
+    "preserveConstEnums": true,
+    "strict": true,
     "noImplicitReturns": true
-  },
-  "compileOnSave": true,
-  "exclude": ["node_modules"]
+  }
 }

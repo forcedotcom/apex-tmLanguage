@@ -12,11 +12,11 @@ describe('Grammar', () => {
   });
 
   describe('Queries', () => {
-    it('simple query inside of brackets', () => {
+    it('simple query inside of brackets', async () => {
       const input = Input.InMethod(
         `List<User> lUsers = [SELECT Id, Name  FROM User ];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -37,11 +37,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('simple query inside of brackets with multiple fields', () => {
+    it('simple query inside of brackets with multiple fields', async () => {
       const input = Input.InMethod(
         `List<User> lUsers = [SELECT Id, Custom_Field__c, Profile.Id, CreatedDate FROM User];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -66,11 +66,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('simple query inside of brackets with multiple fields and where clause', () => {
+    it('simple query inside of brackets with multiple fields and where clause', async () => {
       const input = Input.InMethod(
         `List<User> lUsers = [SELECT Id, Custom_Field__c, Profile.Id, CreatedDate FROM User WHERE Id = '10'];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -101,11 +101,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('complex query', () => {
+    it('complex query', async () => {
       const input = Input.InMethod(
         `List<User> lUsers = [SELECT Id, Custom_Field__c, (SELECT Id FROM account), Profile.Id, CreatedDate FROM User WHERE Id = '10'];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -143,11 +143,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('order by', () => {
+    it('order by', async () => {
       const input = Input.InMethod(
         `List<User> lUsers = [SELECT Id FROM account ORDER BY SomeField__c];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -168,11 +168,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('order by ascending', () => {
+    it('order by ascending', async () => {
       const input = Input.InMethod(
         `List<User> lUsers = [SELECT Id FROM account ORDER BY SomeField__c ASC];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -194,11 +194,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('order by descending nulls last', () => {
+    it('order by descending nulls last', async () => {
       const input = Input.InMethod(
         `List<User> lUsers = [SELECT Id FROM account ORDER BY Name DESC NULLS last];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -221,11 +221,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('simple query inside of brackets with where & in clause', () => {
+    it('simple query inside of brackets with where & in clause', async () => {
       const input = Input.InMethod(
         `List<User> lUsers = [SELECT Id FROM User WHERE Id IN :variable];`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -249,11 +249,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('where clause with parameter grouping', () => {
+    it('where clause with parameter grouping', async () => {
       const input = Input.InMethod(
         `SELECT Id FROM Subscription__c WHERE (Contract__c IN :contractIds OR Contract__c = 'Name')`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -276,11 +276,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('where clause with nested parameter grouping', () => {
+    it('where clause with nested parameter grouping', async () => {
       const input = Input.InMethod(
         `SELECT Id FROM Subscription__c WHERE (Contract__c IN :contractIds OR (Contract__c = 'Name' AND Price__c = 20))`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -309,11 +309,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('query with multiple operators after where clause', () => {
+    it('query with multiple operators after where clause', async () => {
       const input = Input.InMethod(
         `SELECT Id FROM Contact WHERE Name LIKE 'A%' AND MailingState='California'`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -335,11 +335,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('query with datetime constant usage', () => {
+    it('query with datetime constant usage', async () => {
       const input = Input.InMethod(
         `SELECT Name FROM Account WHERE CreatedDate > 2011-04-26T10:00:00-08:00`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -353,11 +353,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('query using soql methods on conditional syntax', () => {
+    it('query using soql methods on conditional syntax', async () => {
       const input = Input.InMethod(
         `SELECT Amount FROM Opportunity WHERE CALENDAR_YEAR(CreatedDate) = 2011`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -374,11 +374,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('query using soql methods for translation', () => {
+    it('query using soql methods for translation', async () => {
       const input = Input.InMethod(
         `SELECT Company, toLabel(Recordtype.Name) FROM Lead`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -393,11 +393,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('query using soql methods for translation', () => {
+    it('query using soql methods for translation', async () => {
       const input = Input.InMethod(
         `SELECT Id, MSP1__c FROM CustObj__c WHERE MSP1__c INCLUDES ('AAA;BBB','CCC')`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -421,11 +421,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Filtering on Polymorphic Relationship Fields', () => {
+    it('Filtering on Polymorphic Relationship Fields', async () => {
       const input = Input.InMethod(
         `SELECT Id FROM Event WHERE What.Type NOT IN ('Account', 'Opportunity')`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -447,11 +447,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Filtering using date literals', () => {
+    it('Filtering using date literals', async () => {
       const input = Input.InMethod(
         `SELECT Id FROM Account WHERE CreatedDate = LAST_90_DAYS`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -465,11 +465,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Filtering using date literals', () => {
+    it('Filtering using date literals', async () => {
       const input = Input.InMethod(
         `SELECT Id FROM Opportunity WHERE CloseDate > LAST_N_FISCAL_YEARS:3`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -483,9 +483,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('USING SCOPE: Get all account that belong to you', () => {
+    it('USING SCOPE: Get all account that belong to you', async () => {
       const input = Input.InMethod(`SELECT Id FROM Account USING SCOPE Mine`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -496,11 +496,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('filter using LIMIT & OFFSET', () => {
+    it('filter using LIMIT & OFFSET', async () => {
       const input = Input.InMethod(
         `SELECT Id FROM Discontinued_Merchandise__c LIMIT 100 OFFSET 20`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -514,11 +514,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('group by rollup', () => {
+    it('group by rollup', async () => {
       const input = Input.InMethod(
         `SELECT Status, LeadSource, COUNT(Name) cnt FROM Lead GROUP BY ROLLUP(Status, LeadSource)`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -542,11 +542,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('soql function has another soql function as parameter', () => {
+    it('soql function has another soql function as parameter', async () => {
       const input = Input.InMethod(
         `SELECT CreatedDate FROM Opportunity GROUP BY HOUR_IN_DAY(convertTimezone(CreatedDate))`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,
@@ -564,9 +564,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('simple query inside of brackets with where & in clause', () => {
+    it('simple query inside of brackets with where & in clause', async () => {
       const input = Input.InMethod(`SELECT Id FROM User WHERE Id IN :variable`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Queries.Select,

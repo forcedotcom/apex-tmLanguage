@@ -13,9 +13,9 @@ describe('Grammar', () => {
   });
 
   describe('XML Doc Comments', () => {
-    it('start tag', () => {
+    it('start tag', async () => {
       const input = `/// <summary>`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -26,9 +26,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('end tag', () => {
+    it('end tag', async () => {
       const input = `/// </summary>`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -39,9 +39,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('empty tag', () => {
+    it('empty tag', async () => {
       const input = `/// <summary />`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -52,9 +52,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('start tag with attribute and single-quoted string', () => {
+    it('start tag with attribute and single-quoted string', async () => {
       const input = `/// <param name='x'>`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -70,9 +70,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('start tag with attribute and double-quoted string', () => {
+    it('start tag with attribute and double-quoted string', async () => {
       const input = `/// <param name="x">`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -88,9 +88,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('comment', () => {
+    it('comment', async () => {
       const input = `/// <!-- comment -->`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -101,9 +101,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('cdata', () => {
+    it('cdata', async () => {
       const input = `/// <![CDATA[c]]>`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -114,9 +114,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('character entity - name', () => {
+    it('character entity - name', async () => {
       const input = `/// &amp;`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -127,9 +127,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('character entity - decimal', () => {
+    it('character entity - decimal', async () => {
       const input = `/// &#0038;`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -140,9 +140,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('character entity - hdex', () => {
+    it('character entity - hdex', async () => {
       const input = `/// &#x0026;`;
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,
@@ -153,7 +153,7 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('XML doc comments are highlighted properly on enum members (issue omnisharp-vscode#706)', () => {
+    it('XML doc comments are highlighted properly on enum members (issue omnisharp-vscode#706)', async () => {
       const input = `
 /// <summary> This is a test Enum </summary>
 public enum TestEnum
@@ -164,7 +164,7 @@ public enum TestEnum
     TestValueTwo = 1
 }`;
 
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.XmlDocComments.Begin,

@@ -3,16 +3,16 @@ version: 2
 jobs:
    build:
      docker:
-       - image: circleci/node:8.9.4
+       - image: circleci/node:12.4.0
 
      steps:
        - checkout
        - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-v1-{{ checksum "package.json" }}
        - run: npm install
        - run: npm run test
        - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
 workflows:

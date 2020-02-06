@@ -13,13 +13,13 @@ describe('Grammar', () => {
   });
 
   describe('Field', () => {
-    it('declaration', () => {
+    it('declaration', async () => {
       const input = Input.InClass(`
 private List _field;
 private List field;
 private List field123;`);
 
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Private,
@@ -39,11 +39,11 @@ private List field123;`);
       ]);
     });
 
-    it('generic', () => {
+    it('generic', async () => {
       const input = Input.InClass(
         `private Dictionary< List<T>, Dictionary<T, D>> _field;`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Private,
@@ -66,12 +66,12 @@ private List field123;`);
       ]);
     });
 
-    it('types', () => {
+    it('types', async () => {
       const input = Input.InClass(`
 String field123;
 String[] field123;`);
 
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.String,
@@ -86,12 +86,12 @@ String[] field123;`);
       ]);
     });
 
-    it('assignment', () => {
+    it('assignment', async () => {
       const input = Input.InClass(`
 private String field = 'hello';
    Boolean   field = true;`);
 
-      let tokens = tokenize(input);
+      let tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Private,
@@ -111,9 +111,9 @@ private String field = 'hello';
       ]);
     });
 
-    it('declaration with multiple declarators', () => {
+    it('declaration with multiple declarators', async () => {
       const input = Input.InClass(`Integer x = 19, y = 23, z = 42;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Integer,
@@ -132,9 +132,9 @@ private String field = 'hello';
       ]);
     });
 
-    it('type with no names and no modifiers', () => {
+    it('type with no names and no modifiers', async () => {
       const input = Input.InClass(`public static Integer x;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -145,12 +145,12 @@ private String field = 'hello';
       ]);
     });
 
-    it('Fields with fully-qualified names are highlighted properly (issue omnisharp-vscode#1097)', () => {
+    it('Fields with fully-qualified names are highlighted properly (issue omnisharp-vscode#1097)', async () => {
       const input = Input.InClass(`
 private CanvasGroup[] groups;
 private UnityEngine.UI.Image[] selectedImages;
 `);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Private,

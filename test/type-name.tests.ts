@@ -13,9 +13,9 @@ describe('Grammar', () => {
   });
 
   describe('Type names', () => {
-    it('built-in type - object', () => {
+    it('built-in type - object', async () => {
       const input = Input.InClass(`Object x;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Object,
@@ -24,9 +24,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('generic type - List<Integer>', () => {
+    it('generic type - List<Integer>', async () => {
       const input = Input.InClass(`List<Integer> x;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -38,9 +38,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('generic type with multiple parameters - Dictionary<Integer, Integer>', () => {
+    it('generic type with multiple parameters - Dictionary<Integer, Integer>', async () => {
       const input = Input.InClass(`Dictionary<Integer, Integer> x;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('Dictionary'),
@@ -54,11 +54,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('qualified generic type - System.Collections.Generic.List<Integer>', () => {
+    it('qualified generic type - System.Collections.Generic.List<Integer>', async () => {
       const input = Input.InClass(
         `System.Collections.Generic.List<Integer> x;`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.System,
@@ -76,9 +76,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('nullable type - int', () => {
+    it('nullable type - int', async () => {
       const input = Input.InClass(`Integer x;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.Integer,

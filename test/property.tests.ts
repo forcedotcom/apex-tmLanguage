@@ -13,14 +13,14 @@ describe('Grammar', () => {
   });
 
   describe('Property', () => {
-    it('declaration', () => {
+    it('declaration', async () => {
       const input = Input.InClass(`
 public IBooom Property
 {
     get { return null; }
     set { something = value; }
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -44,11 +44,11 @@ public IBooom Property
       ]);
     });
 
-    it('declaration single line', () => {
+    it('declaration single line', async () => {
       const input = Input.InClass(
         `public IBooom Property { get { return null; } private set { something = value; } }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -73,9 +73,9 @@ public IBooom Property
       ]);
     });
 
-    it('declaration without modifiers', () => {
+    it('declaration without modifiers', async () => {
       const input = Input.InClass(`IBooom Property {get; set;}`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('IBooom'),
@@ -89,9 +89,9 @@ public IBooom Property
       ]);
     });
 
-    it('auto-property single line', function() {
+    it('auto-property single line', async () => {
       const input = Input.InClass(`public IBooom Property { get; set; }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -106,14 +106,14 @@ public IBooom Property
       ]);
     });
 
-    it('auto-property', () => {
+    it('auto-property', async () => {
       const input = Input.InClass(`
 public IBooom Property
 {
     get;
     set;
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -128,11 +128,11 @@ public IBooom Property
       ]);
     });
 
-    it('generic auto-property', () => {
+    it('generic auto-property', async () => {
       const input = Input.InClass(
         `public Dictionary<String, List<T>[]> Property { get; set; }`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -157,11 +157,11 @@ public IBooom Property
       ]);
     });
 
-    it('auto-property initializer', () => {
+    it('auto-property initializer', async () => {
       const input = Input.InClass(
         `public Dictionary<String, List<T>[]> Property { get; } = new Dictionary<String, List<T>[]>();`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -200,11 +200,11 @@ public IBooom Property
       ]);
     });
 
-    it('expression body', () => {
+    it('expression body', async () => {
       const input = Input.InClass(`
 private String prop1 = 'hello';
 private Boolean   prop2 = true;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Private,
@@ -225,9 +225,9 @@ private Boolean   prop2 = true;`);
       ]);
     });
 
-    it('explicitly-implemented interface member', () => {
+    it('explicitly-implemented interface member', async () => {
       const input = Input.InClass(`String IFoo<String>.Bar { get; set; }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.String,
@@ -246,9 +246,9 @@ private Boolean   prop2 = true;`);
       ]);
     });
 
-    it('declaration in interface', () => {
+    it('declaration in interface', async () => {
       const input = Input.InInterface(`String Bar { get; set; }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.String,
@@ -262,9 +262,9 @@ private Boolean   prop2 = true;`);
       ]);
     });
 
-    it('declaration in interface (read-only)', () => {
+    it('declaration in interface (read-only)', async () => {
       const input = Input.InInterface(`String Bar { get; }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.String,
@@ -276,9 +276,9 @@ private Boolean   prop2 = true;`);
       ]);
     });
 
-    it('declaration in interface (write-only)', () => {
+    it('declaration in interface (write-only)', async () => {
       const input = Input.InInterface(`String Bar { set; }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.PrimitiveType.String,
@@ -290,14 +290,14 @@ private Boolean   prop2 = true;`);
       ]);
     });
 
-    it('declaration with attributes', () => {
+    it('declaration with attributes', async () => {
       const input = Input.InClass(`
 public Integer P1
 {
     get { return 0; }
     set { }
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -323,7 +323,7 @@ public Integer P1
 static {
     DISCOUNT = 50.0;
 }`);
-            const tokens = tokenize(input);
+            const tokens = await tokenize(input);;
 
             tokens.should.deep.equal([
                 Token.Keywords.Modifiers.Public,

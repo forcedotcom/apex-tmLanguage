@@ -4,33 +4,32 @@
  *  See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ITokenizeLineResult, Registry, StackElement } from 'vscode-textmate';
+import { INITIAL, StackElement } from 'vscode-textmate';
+import { TMRegistry } from './registry';
 
-const registry = new Registry();
-const grammar = registry.loadGrammarFromPathSync('grammars/apex.tmLanguage');
+const registry = new TMRegistry();
 const excludedTypes = [
   'source.apex',
   'meta.tag.apex',
   'meta.type.parameters.apex'
 ];
 
-export function tokenize(
+export async function tokenize(
   input: string | Input,
   excludeTypes: boolean = true
-): Token[] {
+): Promise<Token[]> {
   if (typeof input === 'string') {
     input = Input.FromText(input);
   }
 
   let tokens: Token[] = [];
-  let previousStack: StackElement = null;
+  let previousStack: StackElement = INITIAL;
+  const grammar = await registry.loadGrammar('apex');
 
   for (let lineIndex = 0; lineIndex < input.lines.length; lineIndex++) {
     const line = input.lines[lineIndex];
-
     let lineResult = grammar.tokenizeLine(line, previousStack);
     previousStack = lineResult.ruleStack;
-
     if (lineIndex < input.span.startLine || lineIndex > input.span.endLine) {
       continue;
     }

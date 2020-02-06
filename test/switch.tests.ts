@@ -7,7 +7,7 @@ describe('Grammar', () => {
   });
 
   describe('Switch Statements', () => {
-    it('simple switch', () => {
+    it('simple switch', async () => {
       const input = Input.InMethod(`
 switch on (param) {
 when 'A' {
@@ -17,7 +17,7 @@ when else {
   callExternalMethod();
 }
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,
@@ -54,7 +54,7 @@ when else {
       ]);
     });
 
-    it('simple switch with complex string', () => {
+    it('simple switch with complex string', async () => {
       const input = Input.InMethod(`
 switch on (param) {
 when 'this IS a test' {
@@ -66,7 +66,7 @@ when else {
 }
 
 System.debug('test');`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,
@@ -112,7 +112,7 @@ System.debug('test');`);
       ]);
     });
 
-    it('simple - single value', () => {
+    it('simple - single value', async () => {
       const input = Input.InMethod(`
         switch on i {
            when 2 {
@@ -125,7 +125,7 @@ System.debug('test');`);
              // some comment.
            }
         }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,
@@ -170,7 +170,7 @@ System.debug('test');`);
       ]);
     });
 
-    it('simple - null value', () => {
+    it('simple - null value', async () => {
       const input = Input.InMethod(`
         switch on someValue {
    when 2 {
@@ -183,7 +183,7 @@ System.debug('test');`);
        System.debug('default ' + someValue);
    }
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,
@@ -235,7 +235,7 @@ System.debug('test');`);
       ]);
     });
 
-    it('simple - multiple value', () => {
+    it('simple - multiple value', async () => {
       const input = Input.InMethod(`
         switch on i {
    when 2, 3, 4 {
@@ -248,7 +248,7 @@ System.debug('test');`);
        System.debug('default');
    }
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,
@@ -304,7 +304,7 @@ System.debug('test');`);
       ]);
     });
 
-    it('simple - method example', () => {
+    it('simple - method example', async () => {
       const input = Input.InMethod(`
         switch on someInteger(i) {
    when 2,3,4 {
@@ -317,7 +317,7 @@ System.debug('test');`);
        // @TODO.
    }
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,
@@ -370,7 +370,7 @@ System.debug('test');`);
       ]);
     });
 
-    it('simple - sobject usage', () => {
+    it('simple - sobject usage', async () => {
       const input = Input.InMethod(`
         switch on sobject {
    when Account a {
@@ -383,7 +383,7 @@ System.debug('test');`);
        System.debug('default');
    }
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,
@@ -436,7 +436,7 @@ System.debug('test');`);
       ]);
     });
 
-    it('simple - enum usage', () => {
+    it('simple - enum usage', async () => {
       const input = Input.InMethod(`
         switch on season {
    when WINTER {
@@ -449,7 +449,7 @@ System.debug('test');`);
        System.debug('none of the above');
    }
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,
@@ -501,7 +501,7 @@ System.debug('test');`);
       ]);
     });
 
-/*    it('switch usage in triggers', () => {
+    /*    it('switch usage in triggers', () => {
       const input = Input.InTrigger(`
         switch on sobject {
    when Account a {
@@ -514,7 +514,7 @@ System.debug('test');`);
        System.debug('default');
    }
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);;
 
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,

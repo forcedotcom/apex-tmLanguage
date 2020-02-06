@@ -13,7 +13,7 @@ describe('Grammar', () => {
   });
 
   describe('Apex Class', () => {
-    it('class keyword and storage modifiers', () => {
+    it('class keyword and storage modifiers', async () => {
       const input = Input.FromText(`
 public             class PublicClass { }
                   class DefaultClass { }
@@ -25,7 +25,7 @@ public    virtual   class PublicVirtualClass { }
 public    abstract class PublicAbstractClass { }
           abstract class DefaultAbstractClass { }`);
 
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -86,9 +86,9 @@ public    abstract class PublicAbstractClass { }
       ]);
     });
 
-    it('public class with sharing', () => {
+    it('public class with sharing', async () => {
       const input = Input.FromText(`public with sharing class C {}`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -100,9 +100,9 @@ public    abstract class PublicAbstractClass { }
       ]);
     });
 
-    it('public class without sharing', () => {
+    it('public class without sharing', async () => {
       const input = Input.FromText(`public without sharing class Fireburn {}`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -114,9 +114,9 @@ public    abstract class PublicAbstractClass { }
       ]);
     });
 
-    it('simple class', () => {
+    it('simple class', async () => {
       const input = Input.FromText(`private class SimpleClass {}`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Private,
@@ -127,9 +127,9 @@ public    abstract class PublicAbstractClass { }
       ]);
     });
 
-    it('global class', () => {
+    it('global class', async () => {
       const input = Input.FromText(`global class GlobalClass {}`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Global,
@@ -140,9 +140,9 @@ public    abstract class PublicAbstractClass { }
       ]);
     });
 
-    it('private class extends', () => {
+    it('private class extends', async () => {
       const input = Input.FromText(`private class Car extends Vehicle {}`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Private,
@@ -155,11 +155,11 @@ public    abstract class PublicAbstractClass { }
       ]);
     });
 
-    it('class extends implements', () => {
+    it('class extends implements', async () => {
       const input = Input.FromText(
         `public abstract class MySecondException extends Exception implements MyInterface {}`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -175,11 +175,11 @@ public    abstract class PublicAbstractClass { }
       ]);
     });
 
-    it('class implements extends', () => {
+    it('class implements extends', async () => {
       const input = Input.FromText(
         `public abstract class MySecondException implements MyInterface extends Exception {}`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,

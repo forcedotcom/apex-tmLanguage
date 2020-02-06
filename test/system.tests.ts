@@ -7,9 +7,9 @@ describe('Grammar', () => {
   });
 
   describe('Apex System Class', () => {
-    it('System method used in trigger', () => {
+    it('System method used in trigger', async () => {
       const input = Input.InTrigger(`System.isBatch();`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.System,
@@ -21,9 +21,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('System method with no parameters', () => {
+    it('System method with no parameters', async () => {
       const input = Input.InMethod(`System.isBatch();`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.System,
@@ -35,9 +35,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('System method with one parameter', () => {
+    it('System method with one parameter', async () => {
       const input = Input.InMethod(`System.debug('This is a test');`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.System,
@@ -52,11 +52,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('System method with two parameter', () => {
+    it('System method with two parameter', async () => {
       const input = Input.InMethod(
         `System.debug(System.LoggingLevel.INFO, 'This is a test');`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.System,
@@ -77,11 +77,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('System method with two parameter usage in trigger', () => {
+    it('System method with two parameter usage in trigger', async () => {
       const input = Input.InTrigger(
         `System.debug(System.LoggingLevel.INFO, 'This is a test');`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.System,
@@ -102,11 +102,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('System type - local variable declaration', () => {
+    it('System type - local variable declaration', async () => {
       const input = Input.InMethod(
         `System.LoggingLevel wa = 'This is a test';`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.System,
@@ -121,9 +121,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('System type - field declaration in class', () => {
+    it('System type - field declaration in class', async () => {
       const input = Input.InClass(`System.Object x;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.System,
@@ -134,9 +134,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('System type - local declaration in trigger', () => {
+    it('System type - local declaration in trigger', async () => {
       const input = Input.InTrigger(`System.Object x;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.System,
@@ -147,11 +147,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('System.<something> as parameter on method signature', () => {
+    it('System.<something> as parameter on method signature', async () => {
       const input = Input.InClass(
         `public static void runAssignmentRules(System.LoggingLevel lUsers){}`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -169,9 +169,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Database usage in method', () => {
+    it('Database usage in method', async () => {
       const input = Input.InMethod(`Savepoint sp = Database.setSavepoint();`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.Text('Savepoint'),
@@ -186,11 +186,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Database usage in trigger', () => {
+    it('Database usage in trigger', async () => {
       const input = Input.InTrigger(
         `List<Database.SaveResult> saveResults = Database.insert(lnewPermSets, false);`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Type('List'),
@@ -213,9 +213,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('insert method usage in trigger', () => {
+    it('insert method usage in trigger', async () => {
       const input = Input.InTrigger(`insert lResults;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.FunctionText('insert'),
@@ -224,9 +224,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Test namespace simple methods', () => {
+    it('Test namespace simple methods', async () => {
       const input = Input.InMethod(`Test.startTest();`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.Text('Test'),
@@ -238,11 +238,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Test namespace complex methods', () => {
+    it('Test namespace complex methods', async () => {
       const input = Input.InMethod(
         `Test.setCreatedDate(a.Id, DateTime.newInstance(2012,12,12));`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.Text('Test'),
@@ -268,9 +268,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('DMLException usage in try catch', () => {
+    it('DMLException usage in try catch', async () => {
       const input = Input.InMethod(`try{} catch (DMLException e) {}`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Control.Try,
@@ -286,11 +286,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Database usage for Apex Batch', () => {
+    it('Database usage for Apex Batch', async () => {
       const input = Input.InClass(
         `global Database.QueryLocator start(Database.BatchableContext BC){}`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Global,
@@ -309,11 +309,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('create new support object', () => {
+    it('create new support object', async () => {
       const input = Input.InMethod(
         `ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, message));`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.Text('ApexPages'),
@@ -339,9 +339,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('Usage for casting in a method', () => {
+    it('Usage for casting in a method', async () => {
       const input = Input.InMethod(`SObject sp = (SObject)Something;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.Text('SObject'),
@@ -355,11 +355,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('insert a new object with parameters', () => {
+    it('insert a new object with parameters', async () => {
       const input = Input.InMethod(
         `insert new MyObject__c(Name='Test', Meaning__c='Bad');`
       );
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.FunctionText('insert'),
@@ -382,9 +382,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('delete a new object with no parameters', () => {
+    it('delete a new object with no parameters', async () => {
       const input = Input.InMethod(`delete new MyObjectWrapper());`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.FunctionText('delete'),
@@ -396,9 +396,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('upsert a new list of objects', () => {
+    it('upsert a new list of objects', async () => {
       const input = Input.InMethod(`upsert new List<User>{User1, User2};`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.FunctionText('upsert'),
@@ -416,9 +416,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('merge method usage in method', () => {
+    it('merge method usage in method', async () => {
       const input = Input.InMethod(`merge masterAcct mergeAcct;`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.FunctionText('merge'),
@@ -428,9 +428,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('merge using new object statement', () => {
-      const input = Input.InMethod(`merge masterAcct new Account(name='Master');`);
-      const tokens = tokenize(input);
+    it('merge using new object statement', async () => {
+      const input = Input.InMethod(
+        `merge masterAcct new Account(name='Master');`
+      );
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.FunctionText('merge'),
@@ -448,9 +450,11 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('merge using only new statements', () => {
-      const input = Input.InMethod(`merge new Account(name='Master') new List<Account>{acc1, acc2};`);
-      const tokens = tokenize(input);
+    it('merge using only new statements', async () => {
+      const input = Input.InMethod(
+        `merge new Account(name='Master') new List<Account>{acc1, acc2};`
+      );
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Support.Class.FunctionText('merge'),

@@ -13,9 +13,9 @@ describe('Grammar', () => {
   });
 
   describe('Constructors', () => {
-    it('instance constructor with no parameters', () => {
+    it('instance constructor with no parameters', async () => {
       const input = Input.InClass(`TestClass() { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Identifiers.MethodName('TestClass'),
@@ -26,9 +26,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('public instance constructor with no parameters', () => {
+    it('public instance constructor with no parameters', async () => {
       const input = Input.InClass(`public TestClass() { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -40,9 +40,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('public instance constructor with one parameter', () => {
+    it('public instance constructor with one parameter', async () => {
       const input = Input.InClass(`public TestClass(Integer x) { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -56,9 +56,9 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('public instance constructor with one ref parameter', () => {
+    it('public instance constructor with one ref parameter', async () => {
       const input = Input.InClass(`public TestClass(Object x) { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -72,12 +72,12 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('instance constructor with two parameters', () => {
+    it('instance constructor with two parameters', async () => {
       const input = Input.InClass(`
 TestClass(String x, Integer y)
 {
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Identifiers.MethodName('TestClass'),
@@ -93,9 +93,9 @@ TestClass(String x, Integer y)
       ]);
     });
 
-    it('static constructor no parameters', () => {
+    it('static constructor no parameters', async () => {
       const input = Input.InClass(`TestClass() { }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Identifiers.MethodName('TestClass'),
@@ -106,14 +106,14 @@ TestClass(String x, Integer y)
       ]);
     });
 
-    it('Open multiline comment in front of parameter highlights properly (issue omnisharp-vscode#861)', () => {
+    it('Open multiline comment in front of parameter highlights properly (issue omnisharp-vscode#861)', async () => {
       const input = Input.InClass(`
 WaitHandle(Task self)
 {
     this.task = self;
 }
 `);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Identifiers.MethodName('WaitHandle'),
@@ -132,14 +132,14 @@ WaitHandle(Task self)
       ]);
     });
 
-    it('closing parenthesis of parameter list on next line', () => {
+    it('closing parenthesis of parameter list on next line', async () => {
       const input = Input.InClass(`
 public C(
     String s
     )
 {
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,
@@ -155,7 +155,7 @@ public C(
       ]);
     });
 
-    it('closing parenthesis of parameter list on next line (issue #88)', () => {
+    it('closing parenthesis of parameter list on next line (issue #88)', async () => {
       const input = Input.InClass(`
 public AccountController(
     UserManager<User> userManager,
@@ -164,7 +164,7 @@ public AccountController(
     )
 {
 }`);
-      const tokens = tokenize(input);
+      const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
         Token.Keywords.Modifiers.Public,

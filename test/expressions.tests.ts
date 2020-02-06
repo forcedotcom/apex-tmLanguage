@@ -14,10 +14,10 @@ describe('Grammar', () => {
 
   describe('Expressions', () => {
     describe('Object creation', () => {
-      it('with argument multiplication (issue #82)', () => {
+      it('with argument multiplication (issue #82)', async () => {
         const input = Input.InMethod(`
 Object newPoint = new Vector(point.x * z, 0);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -40,9 +40,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
     });
 
     describe('Arithmetic', () => {
-      it('mixed relational and arithmetic operators', () => {
+      it('mixed relational and arithmetic operators', async () => {
         const input = Input.InMethod(`b = this.i != 1 + (2 - 3);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Variables.ReadWrite('b'),
@@ -64,9 +64,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
     });
 
     describe('Casts', () => {
-      it('cast to built-in type in assignment', () => {
+      it('cast to built-in type in assignment', async () => {
         const input = Input.InMethod(`Object o = (Object)42;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -80,9 +80,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('cast to generic type in assignment', () => {
+      it('cast to generic type in assignment', async () => {
         const input = Input.InMethod(`Object o = (C<Integer>)42;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -99,9 +99,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('passed to invocation', () => {
+      it('passed to invocation', async () => {
         const input = Input.InMethod(`M((Integer)42);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -115,9 +115,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('chained cast passed to invocation', () => {
+      it('chained cast passed to invocation', async () => {
         const input = Input.InMethod(`M((Integer)(Object)42);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -136,9 +136,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
     });
 
     describe('Conditional Operator', () => {
-      it('in assignment', () => {
+      it('in assignment', async () => {
         const input = Input.InMethod(`Integer y = x ? 19 : 23;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Integer,
@@ -153,9 +153,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('passed as argument', () => {
+      it('passed as argument', async () => {
         const input = Input.InMethod(`M(x ? 19 : 23);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -172,9 +172,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
     });
 
     describe('Element Access', () => {
-      it('no arguments', () => {
+      it('no arguments', async () => {
         const input = Input.InMethod(`Object o = P[];`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -187,9 +187,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('one argument', () => {
+      it('one argument', async () => {
         const input = Input.InMethod(`Object o = P[42];`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -203,9 +203,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('two arguments', () => {
+      it('two arguments', async () => {
         const input = Input.InMethod(`Object o = P[19, 23];`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -221,9 +221,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('member with element access', () => {
+      it('member with element access', async () => {
         const input = Input.InMethod(`Object a = b.c[0];`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -239,9 +239,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('member with two element accesses', () => {
+      it('member with two element accesses', async () => {
         const input = Input.InMethod(`Object a = b.c[19][23];`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -260,9 +260,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('member with two element accesses and another member', () => {
+      it('member with two element accesses and another member', async () => {
         const input = Input.InMethod(`Object a = b.c[19][23].d;`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -283,9 +283,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('member with two element accesses and an invocation', () => {
+      it('member with two element accesses and an invocation', async () => {
         const input = Input.InMethod(`Object a = b.c[19][23].d();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -308,12 +308,12 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('read/write array element', () => {
+      it('read/write array element', async () => {
         const input = Input.InMethod(`
 Object[] a1 = {(null), (this.a), c};
 a1[1] = ((this.a)); a1[2] = (c); a1[1] = (i);
 `);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -370,11 +370,11 @@ a1[1] = ((this.a)); a1[2] = (c); a1[1] = (i);
         ]);
       });
 
-      it('arithmetic expression with multiple element accesses 1 (issue #37)', () => {
+      it('arithmetic expression with multiple element accesses 1 (issue #37)', async () => {
         const input = Input.InMethod(`
 Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLong;
 `);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Long,
@@ -413,9 +413,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
     });
 
     describe('Invocations', () => {
-      it('no arguments', () => {
+      it('no arguments', async () => {
         const input = Input.InMethod(`M();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -425,9 +425,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('no arguments with space (issue #54)', () => {
+      it('no arguments with space (issue #54)', async () => {
         const input = Input.InMethod(`M ();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -437,9 +437,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('one argument', () => {
+      it('one argument', async () => {
         const input = Input.InMethod(`M(42);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -450,9 +450,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('one argument with space (issue #54)', () => {
+      it('one argument with space (issue #54)', async () => {
         const input = Input.InMethod(`M (42);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -463,9 +463,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('two arguments', () => {
+      it('two arguments', async () => {
         const input = Input.InMethod(`M(19, 23);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -478,9 +478,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('two named arguments', () => {
+      it('two named arguments', async () => {
         const input = Input.InMethod(`M(x: 19, y: 23);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -497,9 +497,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('generic with no arguments', () => {
+      it('generic with no arguments', async () => {
         const input = Input.InMethod(`M<Integer>();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -512,9 +512,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('nested generic with no arguments', () => {
+      it('nested generic with no arguments', async () => {
         const input = Input.InMethod(`M<T<Integer>>();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -530,9 +530,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('double-nested generic with no arguments', () => {
+      it('double-nested generic with no arguments', async () => {
         const input = Input.InMethod(`M<T<U<Integer>>>();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M'),
@@ -551,9 +551,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('member of generic with no arguments', () => {
+      it('member of generic with no arguments', async () => {
         const input = Input.InMethod(`C<Integer>.M();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Variables.Object('C'),
@@ -568,9 +568,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('member of qualified generic with no arguments', () => {
+      it('member of qualified generic with no arguments', async () => {
         const input = Input.InMethod(`N.C<Integer>.M();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Variables.Object('N'),
@@ -587,9 +587,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('store result of qualified method with no arguments', () => {
+      it('store result of qualified method with no arguments', async () => {
         const input = Input.InMethod(`Object o = N.C.M();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -606,9 +606,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('qualified method with no arguments and space 1 (issue #54)', () => {
+      it('qualified method with no arguments and space 1 (issue #54)', async () => {
         const input = Input.InMethod(`N.C.M ();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Variables.Object('N'),
@@ -622,9 +622,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('qualified method with no arguments and space 2 (issue #54)', () => {
+      it('qualified method with no arguments and space 2 (issue #54)', async () => {
         const input = Input.InMethod(`C.M ();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Variables.Object('C'),
@@ -636,9 +636,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('store result of this.qualified method with no arguments', () => {
+      it('store result of this.qualified method with no arguments', async () => {
         const input = Input.InMethod(`Object o = this.C.M();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
@@ -655,9 +655,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('multiplicated parameters (issue #99)', () => {
+      it('multiplicated parameters (issue #99)', async () => {
         const input = Input.InMethod(`Multiply(n1 * n2);`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('Multiply'),
@@ -670,9 +670,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
         ]);
       });
 
-      it('chained method calls', () => {
+      it('chained method calls', async () => {
         const input = Input.InMethod(`M1().M2();`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.Identifiers.MethodName('M1'),
@@ -688,9 +688,9 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
     });
 
     describe('Null-conditional Operator', () => {
-      it('before element access', () => {
+      it('before element access', async () => {
         const input = Input.InMethod(`Object a = b.c[0];`);
-        const tokens = tokenize(input);
+        const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
           Token.PrimitiveType.Object,
