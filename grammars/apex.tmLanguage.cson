@@ -1625,23 +1625,20 @@ repository:
       }
     ]
   "when-string":
-    begin: "(when)(\\b\\s+)(\\')([\\s_.[:alnum:]]*)(\\')"
+    begin: "(when)(\\b\\s*)((\\')[_.\\,\\'\\s*[:alnum:]]+)"
     beginCaptures:
       "1":
         name: "keyword.control.switch.when.apex"
       "2":
         name: "punctuation.whitespace.apex"
       "3":
-        name: "punctuation.definition.string.begin.apex"
-      "4":
-        name: "string.quoted.single.apex"
-      "5":
-        name: "punctuation.definition.string.end.apex"
+        patterns: [
+          {
+            include: "#when-string-statement"
+          }
+        ]
     end: "(?<=\\})"
     patterns: [
-      {
-        include: "#string-character-escape"
-      }
       {
         include: "#block"
       }
@@ -1649,6 +1646,27 @@ repository:
         include: "#expression"
       }
     ]
+  "when-string-statement":
+    begin: "(\\')([_.\\s*[:alnum:]]+)"
+    beginCaptures:
+      "1":
+        name: "punctuation.definition.string.begin.apex"
+      "2":
+        name: "string.quoted.single.apex"
+    end: "(\\')(\\s)*(\\,)*(\\s)*"
+    endCaptures:
+      "1":
+        name: "punctuation.definition.string.end.apex"
+      "2":
+        name: "punctuation.whitespace.apex"
+      "3":
+        patterns: [
+          {
+            include: "#punctuation-comma"
+          }
+        ]
+      "4":
+        name: "punctuation.whitespace.apex"
   "when-else-statement":
     begin: "(when)\\b\\s+(else)\\b\\s*"
     beginCaptures:

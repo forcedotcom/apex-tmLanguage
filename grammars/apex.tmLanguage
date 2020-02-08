@@ -2764,7 +2764,7 @@
       <key>when-string</key>
       <dict>
         <key>begin</key>
-        <string>(when)(\b\s+)(\')([\s_.[:alnum:]]*)(\')</string>
+        <string>(when)(\b\s*)((\')[_.\,\'\s*[:alnum:]]+)</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -2779,28 +2779,19 @@
           </dict>
           <key>3</key>
           <dict>
-            <key>name</key>
-            <string>punctuation.definition.string.begin.apex</string>
-          </dict>
-          <key>4</key>
-          <dict>
-            <key>name</key>
-            <string>string.quoted.single.apex</string>
-          </dict>
-          <key>5</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.definition.string.end.apex</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#when-string-statement</string>
+              </dict>
+            </array>
           </dict>
         </dict>
         <key>end</key>
         <string>(?&lt;=\})</string>
         <key>patterns</key>
         <array>
-          <dict>
-            <key>include</key>
-            <string>#string-character-escape</string>
-          </dict>
           <dict>
             <key>include</key>
             <string>#block</string>
@@ -2810,6 +2801,54 @@
             <string>#expression</string>
           </dict>
         </array>
+      </dict>
+      <key>when-string-statement</key>
+      <dict>
+        <key>begin</key>
+        <string>(\')([_.\s*[:alnum:]]+)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.string.begin.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>string.quoted.single.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(\')(\s)*(\,)*(\s)*</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.string.end.apex</string>
+          </dict>
+          <key>2</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.whitespace.apex</string>
+          </dict>
+          <key>3</key>
+          <dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#punctuation-comma</string>
+              </dict>
+            </array>
+          </dict>
+          <key>4</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.whitespace.apex</string>
+          </dict>
+        </dict>
       </dict>
       <key>when-else-statement</key>
       <dict>
