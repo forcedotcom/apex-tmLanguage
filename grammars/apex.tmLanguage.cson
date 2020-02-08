@@ -299,7 +299,7 @@ repository:
   "support-expression":
     begin: '''
       (?x)
-      (ApexPages(?=\\.)|Database(?=\\.)|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System(?=\\.)|Test(?=\\.))\\s* # supported apex namespaces
+      (ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)(?=\\.|\\s) # supported apex namespaces
     '''
     beginCaptures:
       "1":

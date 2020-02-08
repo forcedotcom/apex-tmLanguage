@@ -480,5 +480,30 @@ describe('Grammar', () => {
         Token.Punctuation.Semicolon
       ]);
     });
+
+    it('Apex support classes are not incorrectly tokenized', async () => {
+      const input = Input.InClass(`public SObjectDomain(List<SObject> sObjectList) {
+        records = SystemList;
+      }`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Modifiers.Public,
+        Token.Identifiers.MethodName('SObjectDomain'),
+        Token.Punctuation.OpenParen,
+        Token.Type('List'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Support.Class.Text('SObject'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Identifiers.ParameterName('sObjectList'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Variables.ReadWrite('records'),
+        Token.Operators.Assignment,
+        Token.Variables.ReadWrite('SystemList'),
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
   });
 });

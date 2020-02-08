@@ -438,7 +438,7 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(ApexPages(?=\.)|Database(?=\.)|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System(?=\.)|Test(?=\.))\s* # supported apex namespaces</string>
+(ApexPages|Database|DMLException|Exception|PageReference|Savepoint|SchedulableContext|Schema|SObject|System|Test)(?=\.|\s) # supported apex namespaces</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
