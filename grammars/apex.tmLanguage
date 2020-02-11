@@ -4677,7 +4677,7 @@
             <array>
               <dict>
                 <key>match</key>
-                <string>@(deprecated|return|see|serial|since|version|usage|name|link)\b</string>
+                <string>@(deprecated|author|return|see|serial|since|version|usage|name|link)\b</string>
                 <key>name</key>
                 <string>keyword.other.documentation.javadoc.apex</string>
               </dict>
@@ -4712,28 +4712,6 @@
                   <dict>
                     <key>name</key>
                     <string>entity.name.type.class.apex</string>
-                  </dict>
-                </dict>
-              </dict>
-              <dict>
-                <key>match</key>
-                <string>(@author)\s*([^&lt;]*)((&lt;)(\S+)(&gt;))?</string>
-                <key>captures</key>
-                <dict>
-                  <key>1</key>
-                  <dict>
-                    <key>name</key>
-                    <string>keyword.other.documentation.javadoc.apex</string>
-                  </dict>
-                  <key>2</key>
-                  <dict>
-                    <key>name</key>
-                    <string>punctuation.definition.comment.apex</string>
-                  </dict>
-                  <key>3</key>
-                  <dict>
-                    <key>name</key>
-                    <string>keyword.other.documentation.javadoc.link.email</string>
                   </dict>
                 </dict>
               </dict>

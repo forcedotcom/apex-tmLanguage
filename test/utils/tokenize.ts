@@ -199,9 +199,12 @@ export namespace Token {
         '/**',
         'punctuation.definition.comment.apex'
       );
-
       export const Text = (text: string) =>
         createToken(text, 'comment.block.apex');
+      export const JavaDocText = (text: string) =>
+        createToken(text, 'comment.block.javadoc.apex');
+      export const JavaDocKeyword = (text: string) =>
+        createToken(text, 'keyword.other.documentation.javadoc.apex');
     }
 
     export namespace SingleLine {

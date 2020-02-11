@@ -1725,7 +1725,7 @@ repository:
       endCaptures:
         '0': { name: punctuation.definition.comment.apex }
       patterns:
-      - match: "@(deprecated|return|see|serial|since|version|usage|name|link)\\b"
+      - match: "@(deprecated|author|return|see|serial|since|version|usage|name|link)\\b"
         name: keyword.other.documentation.javadoc.apex
       - match: (@param)\s+(\S+)
         captures:
@@ -1735,11 +1735,6 @@ repository:
         captures:
           '1': { name: keyword.other.documentation.javadoc.apex }
           '2': { name: entity.name.type.class.apex }
-      - match: (@author)\s*([^<]*)((<)(\S+)(>))?
-        captures:
-          '1': { name: keyword.other.documentation.javadoc.apex }
-          '2': { name: punctuation.definition.comment.apex }
-          '3': { name: keyword.other.documentation.javadoc.link.email }
       - match: (`([^`]+?)`)
         captures:
           '1': { name: string.quoted.single.apex }

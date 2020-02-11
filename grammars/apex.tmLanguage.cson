@@ -2741,7 +2741,7 @@ repository:
             name: "punctuation.definition.comment.apex"
         patterns: [
           {
-            match: "@(deprecated|return|see|serial|since|version|usage|name|link)\\b"
+            match: "@(deprecated|author|return|see|serial|since|version|usage|name|link)\\b"
             name: "keyword.other.documentation.javadoc.apex"
           }
           {
@@ -2759,16 +2759,6 @@ repository:
                 name: "keyword.other.documentation.javadoc.apex"
               "2":
                 name: "entity.name.type.class.apex"
-          }
-          {
-            match: "(@author)\\s*([^<]*)((<)(\\S+)(>))?"
-            captures:
-              "1":
-                name: "keyword.other.documentation.javadoc.apex"
-              "2":
-                name: "punctuation.definition.comment.apex"
-              "3":
-                name: "keyword.other.documentation.javadoc.link.email"
           }
           {
             match: "(`([^`]+?)`)"
