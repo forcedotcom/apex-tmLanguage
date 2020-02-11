@@ -55,38 +55,6 @@ describe('Grammar', () => {
       ]);
     });
 
-    it('multi-line comment with no content', async () => {
-      const input = `/***********/`;
-      const tokens = await tokenize(input);
-
-      tokens.should.deep.equal([
-        Token.Comment.MultiLine.JavaDocStart,
-        Token.Comment.MultiLine.Text('********'),
-        Token.Comment.MultiLine.End
-      ]);
-    });
-
-    it('multi-line comment with content', async () => {
-      const input = Input.FromText(`
-/*************/
-/***** foo ***/
-/*************/
-`);
-      const tokens = await tokenize(input);
-
-      tokens.should.deep.equal([
-        Token.Comment.MultiLine.JavaDocStart,
-        Token.Comment.MultiLine.Text('**********'),
-        Token.Comment.MultiLine.End,
-        Token.Comment.MultiLine.JavaDocStart,
-        Token.Comment.MultiLine.Text('*** foo **'),
-        Token.Comment.MultiLine.End,
-        Token.Comment.MultiLine.JavaDocStart,
-        Token.Comment.MultiLine.Text('**********'),
-        Token.Comment.MultiLine.End
-      ]);
-    });
-
     it('in class', async () => {
       const input = Input.InClass(`// foo`);
       const tokens = await tokenize(input);
@@ -124,21 +92,6 @@ describe('Grammar', () => {
       tokens.should.deep.equal([
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text(' foo')
-      ]);
-    });
-
-    it('multi-line java doc comment', async () => {
-      const input = Input.FromText(`
-/**
-* foo
-*/
-`);
-      const tokens = await tokenize(input);
-
-      tokens.should.deep.equal([
-        Token.Comment.MultiLine.JavaDocStart,
-        Token.Comment.MultiLine.Text('* foo'),
-        Token.Comment.MultiLine.End
       ]);
     });
 
