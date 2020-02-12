@@ -2785,6 +2785,10 @@
                 <key>include</key>
                 <string>#when-string-statement</string>
               </dict>
+              <dict>
+                <key>include</key>
+                <string>#punctuation-comma</string>
+              </dict>
             </array>
           </dict>
         </dict>
@@ -2804,51 +2808,33 @@
       </dict>
       <key>when-string-statement</key>
       <dict>
-        <key>begin</key>
-        <string>(\')([_.\s*[:alnum:]]+)</string>
-        <key>beginCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.definition.string.begin.apex</string>
-          </dict>
-          <key>2</key>
+        <key>patterns</key>
+        <array>
           <dict>
             <key>name</key>
             <string>string.quoted.single.apex</string>
-          </dict>
-        </dict>
-        <key>end</key>
-        <string>(\')(\s)*(\,)*(\s)*</string>
-        <key>endCaptures</key>
-        <dict>
-          <key>1</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.definition.string.end.apex</string>
-          </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.whitespace.apex</string>
-          </dict>
-          <key>3</key>
-          <dict>
-            <key>patterns</key>
-            <array>
+            <key>begin</key>
+            <string>\'</string>
+            <key>beginCaptures</key>
+            <dict>
+              <key>0</key>
               <dict>
-                <key>include</key>
-                <string>#punctuation-comma</string>
+                <key>name</key>
+                <string>punctuation.definition.string.begin.apex</string>
               </dict>
-            </array>
+            </dict>
+            <key>end</key>
+            <string>\'</string>
+            <key>endCaptures</key>
+            <dict>
+              <key>0</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.definition.string.end.apex</string>
+              </dict>
+            </dict>
           </dict>
-          <key>4</key>
-          <dict>
-            <key>name</key>
-            <string>punctuation.whitespace.apex</string>
-          </dict>
-        </dict>
+        </array>
       </dict>
       <key>when-else-statement</key>
       <dict>
