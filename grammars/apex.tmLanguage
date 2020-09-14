@@ -2645,7 +2645,7 @@
         <string>(?x)
 (switch)\b\s+
 (on)\b\s+
-(?:([_.\'\(\)[:alnum:]]+)\s*)?
+(?:([_.?\'\(\)[:alnum:]]+)\s*)?
 (\{)</string>
         <key>beginCaptures</key>
         <dict>
@@ -3838,29 +3838,32 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(?:(\?)\s*)?                                     # preceding null-conditional operator?
-(?:(\.)\s*)?                                     # preceding dot?
-(@?[_[:alpha:]][_[:alnum:]]*)\s*                   # method name
+(?:(\??\.)\s*)?                                  # safe navigation operator or accessor
+(@?[_[:alpha:]][_[:alnum:]]*)\s*                 # method name
 (?&lt;type-args&gt;\s*&lt;([^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?\s* # type arguments
 (?=\()                                           # open paren of argument list</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
           <dict>
-            <key>name</key>
-            <string>keyword.operator.null-conditional.apex</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#operator-safe-navigation</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#punctuation.accessor.apex</string>
+              </dict>
+            </array>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>punctuation.accessor.apex</string>
-          </dict>
-          <key>3</key>
-          <dict>
-            <key>name</key>
             <string>entity.name.function.apex</string>
           </dict>
-          <key>4</key>
+          <key>3</key>
           <dict>
             <key>patterns</key>
             <array>
@@ -3885,29 +3888,32 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(?:(\?)\s*)?                        # preceding null-conditional operator?
-(?:(\.)\s*)?                        # preceding dot?
+(?:(\??\.)\s*)?                       # safe navigation operator or accessor
 (?:(@?[_[:alpha:]][_[:alnum:]]*)\s*)? # property name
-(?:(\?)\s*)?                        # null-conditional operator?
-(?=\[)                              # open bracket of argument list</string>
+(?:(\?)\s*)?                          # null-conditional operator?
+(?=\[)                                # open bracket of argument list</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
           <dict>
-            <key>name</key>
-            <string>keyword.operator.null-conditional.apex</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#operator-safe-navigation</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#punctuation.accessor.apex</string>
+              </dict>
+            </array>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>punctuation.accessor.apex</string>
-          </dict>
-          <key>3</key>
-          <dict>
-            <key>name</key>
             <string>variable.other.object.property.apex</string>
           </dict>
-          <key>4</key>
+          <key>3</key>
           <dict>
             <key>name</key>
             <string>keyword.operator.null-conditional.apex</string>
@@ -3930,23 +3936,26 @@
           <dict>
             <key>match</key>
             <string>(?x)
-(?:(\?)\s*)?                   # preceding null-conditional operator?
-(\.)\s*                        # preceding dot
+(?:(\??\.)\s*)?                  # safe navigation operator or accessor
 (@?[_[:alpha:]][_[:alnum:]]*)\s* # property name
-(?![_[:alnum:]]|\(|(\?)?\[|&lt;)  # next character is not alpha-numeric, nor a (, [, or &lt;. Also, test for ?[</string>
+(?![_[:alnum:]]|\(|(\?)?\[|&lt;)    # next character is not alpha-numeric, nor a (, [, or &lt;. Also, test for ?[</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
-                <key>name</key>
-                <string>keyword.operator.null-conditional.apex</string>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#operator-safe-navigation</string>
+                  </dict>
+                  <dict>
+                    <key>include</key>
+                    <string>#punctuation.accessor.apex</string>
+                  </dict>
+                </array>
               </dict>
               <key>2</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.accessor.apex</string>
-              </dict>
-              <key>3</key>
               <dict>
                 <key>name</key>
                 <string>variable.other.object.property.apex</string>
@@ -3956,7 +3965,7 @@
           <dict>
             <key>match</key>
             <string>(?x)
-(\.)?\s*
+(\??\.)?\s*
 (@?[_[:alpha:]][_[:alnum:]]*)
 (?&lt;type-params&gt;\s*&lt;([^&lt;&gt;]|\g&lt;type-params&gt;)+&gt;\s*)
 (?=
@@ -3967,8 +3976,17 @@
             <dict>
               <key>1</key>
               <dict>
-                <key>name</key>
-                <string>punctuation.accessor.apex</string>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#operator-safe-navigation</string>
+                  </dict>
+                  <dict>
+                    <key>include</key>
+                    <string>#punctuation.accessor.apex</string>
+                  </dict>
+                </array>
               </dict>
               <key>2</key>
               <dict>
@@ -4563,6 +4581,13 @@
         <string>keyword.operator.assignment.apex</string>
         <key>match</key>
         <string>(?&lt;!=|!)(=)(?!=)</string>
+      </dict>
+      <key>operator-safe-navigation</key>
+      <dict>
+        <key>name</key>
+        <string>keyword.operator.safe-navigation.apex</string>
+        <key>match</key>
+        <string>\?\.</string>
       </dict>
       <key>punctuation-comma</key>
       <dict>

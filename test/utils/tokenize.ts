@@ -632,6 +632,10 @@ export namespace Token {
       '?',
       'keyword.operator.null-conditional.apex'
     );
+    export const SafeNavigation = createToken(
+      '?.',
+      'keyword.operator.safe-navigation.apex'
+    );
   }
 
   export namespace PrimitiveType {
