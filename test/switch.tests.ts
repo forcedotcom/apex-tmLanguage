@@ -54,7 +54,7 @@ when else {
       ]);
     });
 
-    it('simple switch with save navigator', async () => {
+    it('simple switch with safe navigator', async () => {
       const input = Input.InMethod(`
 switch on (obj?.param) {
 when 'A' {
@@ -470,7 +470,7 @@ when else {
       ]);
     });
 
-    it('simple - method example with Safe Navigator', async () => {
+    it('simple - method example with safe navigator', async () => {
       const input = Input.InMethod(`
         switch on obj?.someInteger(i) {
    when 2,3,4 {

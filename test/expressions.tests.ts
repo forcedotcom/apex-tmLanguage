@@ -300,7 +300,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
-      it('member with two element accesses with Safe Navigator', async () => {
+      it('member with two element accesses with safe navigator', async () => {
         const input = Input.InMethod(`Object a = b?.c[19][23];`);
         const tokens = await tokenize(input);
 
