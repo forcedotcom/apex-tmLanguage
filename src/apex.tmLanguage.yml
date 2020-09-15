@@ -1431,8 +1431,8 @@ repository:
       captures:
         '1':
           patterns:
-          - include: '#operator-safe-navigation'
           - include: '#punctuation-accessor'
+          - include: '#operator-safe-navigation'
         '2': { name: variable.other.object.property.apex }
       # An identifier with type parameters should be treated as an object,
       # regardless of whether there is a dot to the left.
@@ -1448,8 +1448,8 @@ repository:
       captures:
         '1':
           patterns:
-          - include: '#operator-safe-navigation'
           - include: '#punctuation-accessor'
+          - include: '#operator-safe-navigation'
         '2': { name: variable.other.object.apex }
         '3':
           patterns:

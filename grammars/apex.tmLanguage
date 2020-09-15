@@ -3965,11 +3965,11 @@
                 <array>
                   <dict>
                     <key>include</key>
-                    <string>#operator-safe-navigation</string>
+                    <string>#punctuation-accessor</string>
                   </dict>
                   <dict>
                     <key>include</key>
-                    <string>#punctuation-accessor</string>
+                    <string>#operator-safe-navigation</string>
                   </dict>
                 </array>
               </dict>
@@ -3998,11 +3998,11 @@
                 <array>
                   <dict>
                     <key>include</key>
-                    <string>#operator-safe-navigation</string>
+                    <string>#punctuation-accessor</string>
                   </dict>
                   <dict>
                     <key>include</key>
-                    <string>#punctuation-accessor</string>
+                    <string>#operator-safe-navigation</string>
                   </dict>
                 </array>
               </dict>

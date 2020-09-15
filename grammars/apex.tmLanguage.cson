@@ -2333,10 +2333,10 @@ repository:
           "1":
             patterns: [
               {
-                include: "#operator-safe-navigation"
+                include: "#punctuation-accessor"
               }
               {
-                include: "#punctuation-accessor"
+                include: "#operator-safe-navigation"
               }
             ]
           "2":
@@ -2357,10 +2357,10 @@ repository:
           "1":
             patterns: [
               {
-                include: "#operator-safe-navigation"
+                include: "#punctuation-accessor"
               }
               {
-                include: "#punctuation-accessor"
+                include: "#operator-safe-navigation"
               }
             ]
           "2":
