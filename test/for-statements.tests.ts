@@ -222,6 +222,32 @@ for (Integer i : listOfIntegers)
       ]);
     });
 
+    it('for loop or an object with safe navigator', async () => {
+      const input = Input.InMethod(`
+  for (SObject myFancyObject : myObject?.WithMethod()){
+    break;
+  }`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Control.For,
+        Token.Punctuation.OpenParen,
+        Token.Support.Class.Text('SObject'),
+        Token.Identifiers.LocalName('myFancyObject'),
+        Token.Keywords.Control.ColonIterator,
+        Token.Variables.Object('myObject'),
+        Token.Operators.SafeNavigation,
+        Token.Identifiers.MethodName('WithMethod'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Control.Break,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
+
     it('for loop a query that uses local variables', async () => {
       const input = Input.InMethod(`
   for (SObject myFancyObject : [SELECT Id, Name FROM User WHERE Id IN :variable]){

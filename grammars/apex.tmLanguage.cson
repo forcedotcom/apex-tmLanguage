@@ -631,10 +631,17 @@ repository:
         match: "\\b(isExecuting|isInsert|isUpdate|isDelete|isBefore|isAfter|isUndelete|new|newMap|old|oldMap|size)\\b"
       }
       {
-        match: "(?:(\\.))([[:alpha:]]+)(?=\\()"
+        match: "(?:(\\??\\.))([[:alpha:]]+)(?=\\()"
         captures:
           "1":
-            name: "punctuation.accessor.apex"
+            patterns: [
+              {
+                include: "#punctuation-accessor"
+              }
+              {
+                include: "#operator-safe-navigation"
+              }
+            ]
           "2":
             name: "support.function.trigger.apex"
       }
@@ -889,18 +896,25 @@ repository:
     beginCaptures:
       "0":
         name: "keyword.operator.conditional.colon.apex"
-    end: "(?![_[:alnum:]]|\\(|(\\?)?\\[|<)"
+    end: "(?![_[:alnum:]]|\\(|\\[|<)"
     patterns: [
       {
         include: "#trigger-context-declaration"
       }
       {
-        match: "([_[:alpha:]][_[:alnum:]]*)(\\.)"
+        match: "([_[:alpha:]][_[:alnum:]]*)(\\??\\.)"
         captures:
           "1":
             name: "variable.other.object.apex"
           "2":
-            name: "punctuation.accessor.apex"
+            patterns: [
+              {
+                include: "#punctuation-accessor"
+              }
+              {
+                include: "#operator-safe-navigation"
+              }
+            ]
       }
       {
         include: "#soql-colon-method-statement"
@@ -2249,7 +2263,7 @@ repository:
   "invocation-expression":
     begin: '''
       (?x)
-      (?:(\\??\\.)\\s*)?                                  # safe navigation operator or accessor
+      (?:(\\??\\.)\\s*)?                                  # safe navigator or accessor
       (@?[_[:alpha:]][_[:alnum:]]*)\\s*                 # method name
       (?<type-args>\\s*<([^<>]|\\g<type-args>)+>\\s*)?\\s* # type arguments
       (?=\\()                                           # open paren of argument list
@@ -2258,10 +2272,10 @@ repository:
       "1":
         patterns: [
           {
-            include: "#operator-safe-navigation"
+            include: "#punctuation-accessor"
           }
           {
-            include: "#punctuation.accessor.apex"
+            include: "#operator-safe-navigation"
           }
         ]
       "2":
@@ -2281,7 +2295,7 @@ repository:
   "element-access-expression":
     begin: '''
       (?x)
-      (?:(\\??\\.)\\s*)?                       # safe navigation operator or accessor
+      (?:(\\??\\.)\\s*)?                       # safe navigator or accessor
       (?:(@?[_[:alpha:]][_[:alnum:]]*)\\s*)? # property name
       (?:(\\?)\\s*)?                          # null-conditional operator?
       (?=\\[)                                # open bracket of argument list
@@ -2290,10 +2304,10 @@ repository:
       "1":
         patterns: [
           {
-            include: "#operator-safe-navigation"
+            include: "#punctuation-accessor"
           }
           {
-            include: "#punctuation.accessor.apex"
+            include: "#operator-safe-navigation"
           }
         ]
       "2":
@@ -2311,7 +2325,7 @@ repository:
       {
         match: '''
           (?x)
-          (?:(\\??\\.)\\s*)?                  # safe navigation operator or accessor
+          (\\??\\.)\\s*                       # safe navigator or accessor
           (@?[_[:alpha:]][_[:alnum:]]*)\\s* # property name
           (?![_[:alnum:]]|\\(|(\\?)?\\[|<)    # next character is not alpha-numeric, nor a (, [, or <. Also, test for ?[
         '''
@@ -2322,7 +2336,7 @@ repository:
                 include: "#operator-safe-navigation"
               }
               {
-                include: "#punctuation.accessor.apex"
+                include: "#punctuation-accessor"
               }
             ]
           "2":
@@ -2346,7 +2360,7 @@ repository:
                 include: "#operator-safe-navigation"
               }
               {
-                include: "#punctuation.accessor.apex"
+                include: "#punctuation-accessor"
               }
             ]
           "2":

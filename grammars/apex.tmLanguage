@@ -1049,13 +1049,22 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>(?:(\.))([[:alpha:]]+)(?=\()</string>
+            <string>(?:(\??\.))([[:alpha:]]+)(?=\()</string>
             <key>captures</key>
             <dict>
               <key>1</key>
               <dict>
-                <key>name</key>
-                <string>punctuation.accessor.apex</string>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#punctuation-accessor</string>
+                  </dict>
+                  <dict>
+                    <key>include</key>
+                    <string>#operator-safe-navigation</string>
+                  </dict>
+                </array>
               </dict>
               <key>2</key>
               <dict>
@@ -1490,7 +1499,7 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(?![_[:alnum:]]|\(|(\?)?\[|&lt;)</string>
+        <string>(?![_[:alnum:]]|\(|\[|&lt;)</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -1499,7 +1508,7 @@
           </dict>
           <dict>
             <key>match</key>
-            <string>([_[:alpha:]][_[:alnum:]]*)(\.)</string>
+            <string>([_[:alpha:]][_[:alnum:]]*)(\??\.)</string>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -1509,8 +1518,17 @@
               </dict>
               <key>2</key>
               <dict>
-                <key>name</key>
-                <string>punctuation.accessor.apex</string>
+                <key>patterns</key>
+                <array>
+                  <dict>
+                    <key>include</key>
+                    <string>#punctuation-accessor</string>
+                  </dict>
+                  <dict>
+                    <key>include</key>
+                    <string>#operator-safe-navigation</string>
+                  </dict>
+                </array>
               </dict>
             </dict>
           </dict>
@@ -3838,7 +3856,7 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(?:(\??\.)\s*)?                                  # safe navigation operator or accessor
+(?:(\??\.)\s*)?                                  # safe navigator or accessor
 (@?[_[:alpha:]][_[:alnum:]]*)\s*                 # method name
 (?&lt;type-args&gt;\s*&lt;([^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?\s* # type arguments
 (?=\()                                           # open paren of argument list</string>
@@ -3850,11 +3868,11 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#operator-safe-navigation</string>
+                <string>#punctuation-accessor</string>
               </dict>
               <dict>
                 <key>include</key>
-                <string>#punctuation.accessor.apex</string>
+                <string>#operator-safe-navigation</string>
               </dict>
             </array>
           </dict>
@@ -3888,7 +3906,7 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(?:(\??\.)\s*)?                       # safe navigation operator or accessor
+(?:(\??\.)\s*)?                       # safe navigator or accessor
 (?:(@?[_[:alpha:]][_[:alnum:]]*)\s*)? # property name
 (?:(\?)\s*)?                          # null-conditional operator?
 (?=\[)                                # open bracket of argument list</string>
@@ -3900,11 +3918,11 @@
             <array>
               <dict>
                 <key>include</key>
-                <string>#operator-safe-navigation</string>
+                <string>#punctuation-accessor</string>
               </dict>
               <dict>
                 <key>include</key>
-                <string>#punctuation.accessor.apex</string>
+                <string>#operator-safe-navigation</string>
               </dict>
             </array>
           </dict>
@@ -3936,7 +3954,7 @@
           <dict>
             <key>match</key>
             <string>(?x)
-(?:(\??\.)\s*)?                  # safe navigation operator or accessor
+(\??\.)\s*                       # safe navigator or accessor
 (@?[_[:alpha:]][_[:alnum:]]*)\s* # property name
 (?![_[:alnum:]]|\(|(\?)?\[|&lt;)    # next character is not alpha-numeric, nor a (, [, or &lt;. Also, test for ?[</string>
             <key>captures</key>
@@ -3951,7 +3969,7 @@
                   </dict>
                   <dict>
                     <key>include</key>
-                    <string>#punctuation.accessor.apex</string>
+                    <string>#punctuation-accessor</string>
                   </dict>
                 </array>
               </dict>
@@ -3984,7 +4002,7 @@
                   </dict>
                   <dict>
                     <key>include</key>
-                    <string>#punctuation.accessor.apex</string>
+                    <string>#punctuation-accessor</string>
                   </dict>
                 </array>
               </dict>

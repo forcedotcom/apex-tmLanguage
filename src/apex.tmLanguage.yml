@@ -327,9 +327,12 @@ repository:
     patterns:
     - name: support.type.trigger.apex
       match: '\b(isExecuting|isInsert|isUpdate|isDelete|isBefore|isAfter|isUndelete|new|newMap|old|oldMap|size)\b'
-    - match: '(?:(\.))([[:alpha:]]+)(?=\()'
+    - match: '(?:(\??\.))([[:alpha:]]+)(?=\()'
       captures:
-        '1': { name: punctuation.accessor.apex }
+        '1':
+          patterns:
+          - include: '#punctuation-accessor'
+          - include: '#operator-safe-navigation'
         '2': { name: support.function.trigger.apex}
     - begin: \(
       beginCaptures:
@@ -458,13 +461,16 @@ repository:
     begin: (\:)\s* # preceding colon operator
     beginCaptures:
       '0': { name: keyword.operator.conditional.colon.apex }
-    end: (?![_[:alnum:]]|\(|(\?)?\[|<)  # next character is not alpha-numeric, nor a (, [, or <. Also, test for ?[
+    end: (?![_[:alnum:]]|\(|\[|<)  # next character is not alpha-numeric, nor a (, [, or <.
     patterns:
     - include: '#trigger-context-declaration'
-    - match: ([_[:alpha:]][_[:alnum:]]*)(\.)
+    - match: ([_[:alpha:]][_[:alnum:]]*)(\??\.)
       captures:
         '1': { name: variable.other.object.apex}
-        '2': { name: punctuation.accessor.apex }
+        '2': 
+          patterns:
+          - include: '#punctuation-accessor'
+          - include: '#operator-safe-navigation'
     - include: '#soql-colon-method-statement'
     - name: entity.name.variable.local.apex
       match: '[_[:alpha:]][_[:alnum:]]*'
@@ -1378,15 +1384,15 @@ repository:
   invocation-expression:
     begin: |-
       (?x)
-      (?:(\??\.)\s*)?                                  # safe navigation operator or accessor
+      (?:(\??\.)\s*)?                                  # safe navigator or accessor
       (@?[_[:alpha:]][_[:alnum:]]*)\s*                 # method name
       (?<type-args>\s*<([^<>]|\g<type-args>)+>\s*)?\s* # type arguments
       (?=\()                                           # open paren of argument list
     beginCaptures:
       '1':
         patterns:
-          - include: '#operator-safe-navigation'
-          - include: '#punctuation.accessor.apex'
+        - include: '#punctuation-accessor'
+        - include: '#operator-safe-navigation'
       '2': { name: entity.name.function.apex }
       '3':
         patterns:
@@ -1398,15 +1404,15 @@ repository:
   element-access-expression:
     begin: |-
       (?x)
-      (?:(\??\.)\s*)?                       # safe navigation operator or accessor
+      (?:(\??\.)\s*)?                       # safe navigator or accessor
       (?:(@?[_[:alpha:]][_[:alnum:]]*)\s*)? # property name
       (?:(\?)\s*)?                          # null-conditional operator?
       (?=\[)                                # open bracket of argument list
     beginCaptures:
       '1':
         patterns:
-          - include: '#operator-safe-navigation'
-          - include: '#punctuation.accessor.apex'
+        - include: '#punctuation-accessor'
+        - include: '#operator-safe-navigation'
       '2': { name: variable.other.object.property.apex }
       '3': { name: keyword.operator.null-conditional.apex }
     end: (?<=\])(?!\s*\[)
@@ -1419,14 +1425,14 @@ repository:
       # be treated as a property, so long as it isn't followed by a ( or [.
     - match: |-
         (?x)
-        (?:(\??\.)\s*)?                  # safe navigation operator or accessor
+        (\??\.)\s*                       # safe navigator or accessor
         (@?[_[:alpha:]][_[:alnum:]]*)\s* # property name
         (?![_[:alnum:]]|\(|(\?)?\[|<)    # next character is not alpha-numeric, nor a (, [, or <. Also, test for ?[
       captures:
         '1':
           patterns:
-            - include: '#operator-safe-navigation'
-            - include: '#punctuation.accessor.apex'
+          - include: '#operator-safe-navigation'
+          - include: '#punctuation-accessor'
         '2': { name: variable.other.object.property.apex }
       # An identifier with type parameters should be treated as an object,
       # regardless of whether there is a dot to the left.
@@ -1443,7 +1449,7 @@ repository:
         '1':
           patterns:
           - include: '#operator-safe-navigation'
-          - include: '#punctuation.accessor.apex'
+          - include: '#punctuation-accessor'
         '2': { name: variable.other.object.apex }
         '3':
           patterns:

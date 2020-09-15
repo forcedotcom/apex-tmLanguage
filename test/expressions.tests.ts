@@ -61,6 +61,28 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.Semicolon
         ]);
       });
+
+      it('mixed relational and arithmetic operators with safe navigator', async () => {
+        const input = Input.InMethod(`b = this?.i != 1 + (2 - 3);`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.Variables.ReadWrite('b'),
+          Token.Operators.Assignment,
+          Token.Keywords.This,
+          Token.Operators.SafeNavigation,
+          Token.Variables.Property('i'),
+          Token.Operators.Relational.NotEqual,
+          Token.Literals.Numeric.Decimal('1'),
+          Token.Operators.Arithmetic.Addition,
+          Token.Punctuation.OpenParen,
+          Token.Literals.Numeric.Decimal('2'),
+          Token.Operators.Arithmetic.Subtraction,
+          Token.Literals.Numeric.Decimal('3'),
+          Token.Punctuation.CloseParen,
+          Token.Punctuation.Semicolon
+        ]);
+      });
     });
 
     describe('Casts', () => {
@@ -239,6 +261,24 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
+      it('member with element access with safe navigator', async () => {
+        const input = Input.InMethod(`Object a = b?.c[0];`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.Object,
+          Token.Identifiers.LocalName('a'),
+          Token.Operators.Assignment,
+          Token.Variables.Object('b'),
+          Token.Operators.SafeNavigation,
+          Token.Variables.Property('c'),
+          Token.Punctuation.OpenBracket,
+          Token.Literals.Numeric.Decimal('0'),
+          Token.Punctuation.CloseBracket,
+          Token.Punctuation.Semicolon
+        ]);
+      });
+
       it('member with two element accesses', async () => {
         const input = Input.InMethod(`Object a = b.c[19][23];`);
         const tokens = await tokenize(input);
@@ -249,6 +289,27 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Operators.Assignment,
           Token.Variables.Object('b'),
           Token.Punctuation.Accessor,
+          Token.Variables.Property('c'),
+          Token.Punctuation.OpenBracket,
+          Token.Literals.Numeric.Decimal('19'),
+          Token.Punctuation.CloseBracket,
+          Token.Punctuation.OpenBracket,
+          Token.Literals.Numeric.Decimal('23'),
+          Token.Punctuation.CloseBracket,
+          Token.Punctuation.Semicolon
+        ]);
+      });
+
+      it('member with two element accesses with Safe Navigator', async () => {
+        const input = Input.InMethod(`Object a = b?.c[19][23];`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.Object,
+          Token.Identifiers.LocalName('a'),
+          Token.Operators.Assignment,
+          Token.Variables.Object('b'),
+          Token.Operators.SafeNavigation,
           Token.Variables.Property('c'),
           Token.Punctuation.OpenBracket,
           Token.Literals.Numeric.Decimal('19'),
@@ -283,6 +344,29 @@ Object newPoint = new Vector(point.x * z, 0);`);
         ]);
       });
 
+      it('member with two element accesses and another member with safe navigator', async () => {
+        const input = Input.InMethod(`Object a = b.c[19][23]?.d;`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.Object,
+          Token.Identifiers.LocalName('a'),
+          Token.Operators.Assignment,
+          Token.Variables.Object('b'),
+          Token.Punctuation.Accessor,
+          Token.Variables.Property('c'),
+          Token.Punctuation.OpenBracket,
+          Token.Literals.Numeric.Decimal('19'),
+          Token.Punctuation.CloseBracket,
+          Token.Punctuation.OpenBracket,
+          Token.Literals.Numeric.Decimal('23'),
+          Token.Punctuation.CloseBracket,
+          Token.Operators.SafeNavigation,
+          Token.Variables.Property('d'),
+          Token.Punctuation.Semicolon
+        ]);
+      });
+
       it('member with two element accesses and an invocation', async () => {
         const input = Input.InMethod(`Object a = b.c[19][23].d();`);
         const tokens = await tokenize(input);
@@ -301,6 +385,31 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Literals.Numeric.Decimal('23'),
           Token.Punctuation.CloseBracket,
           Token.Punctuation.Accessor,
+          Token.Identifiers.MethodName('d'),
+          Token.Punctuation.OpenParen,
+          Token.Punctuation.CloseParen,
+          Token.Punctuation.Semicolon
+        ]);
+      });
+
+      it('member with two element accesses and an invocation with safe navigator', async () => {
+        const input = Input.InMethod(`Object a = b.c[19][23]?.d();`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.Object,
+          Token.Identifiers.LocalName('a'),
+          Token.Operators.Assignment,
+          Token.Variables.Object('b'),
+          Token.Punctuation.Accessor,
+          Token.Variables.Property('c'),
+          Token.Punctuation.OpenBracket,
+          Token.Literals.Numeric.Decimal('19'),
+          Token.Punctuation.CloseBracket,
+          Token.Punctuation.OpenBracket,
+          Token.Literals.Numeric.Decimal('23'),
+          Token.Punctuation.CloseBracket,
+          Token.Operators.SafeNavigation,
           Token.Identifiers.MethodName('d'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
@@ -679,6 +788,22 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
           Token.Punctuation.Accessor,
+          Token.Identifiers.MethodName('M2'),
+          Token.Punctuation.OpenParen,
+          Token.Punctuation.CloseParen,
+          Token.Punctuation.Semicolon
+        ]);
+      });
+
+      it('chained method calls with safe navigator', async () => {
+        const input = Input.InMethod(`M1()?.M2();`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.Identifiers.MethodName('M1'),
+          Token.Punctuation.OpenParen,
+          Token.Punctuation.CloseParen,
+          Token.Operators.SafeNavigation,
           Token.Identifiers.MethodName('M2'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
