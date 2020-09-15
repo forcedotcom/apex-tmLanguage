@@ -1499,7 +1499,7 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(?![_[:alnum:]]|\(|\[|&lt;)</string>
+        <string>(?![_[:alnum:]]|\(|(\?)?\[|&lt;)</string>
         <key>patterns</key>
         <array>
           <dict>

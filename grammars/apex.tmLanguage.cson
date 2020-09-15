@@ -896,7 +896,7 @@ repository:
     beginCaptures:
       "0":
         name: "keyword.operator.conditional.colon.apex"
-    end: "(?![_[:alnum:]]|\\(|\\[|<)"
+    end: "(?![_[:alnum:]]|\\(|(\\?)?\\[|<)"
     patterns: [
       {
         include: "#trigger-context-declaration"

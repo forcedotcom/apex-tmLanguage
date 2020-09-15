@@ -461,7 +461,7 @@ repository:
     begin: (\:)\s* # preceding colon operator
     beginCaptures:
       '0': { name: keyword.operator.conditional.colon.apex }
-    end: (?![_[:alnum:]]|\(|\[|<)  # next character is not alpha-numeric, nor a (, [, or <.
+    end: (?![_[:alnum:]]|\(|(\?)?\[|<)  # next character is not alpha-numeric, nor a (, [, or <. Also, test for ?[
     patterns:
     - include: '#trigger-context-declaration'
     - match: ([_[:alpha:]][_[:alnum:]]*)(\??\.)
