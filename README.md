@@ -19,6 +19,11 @@ To **build and test** install Node.js do the following:
 
 Output grammars are output in the `grammars\` dirctory.
 
+To see the token changes from within the Salesforce VS Code Extensions:
+
+1. Copy the `apex.tmLanguage` results into `../salesforcedx-vscode/packages/salesforcedx-vscode-apex/node_modules/@salesforce/apex-tmlanguage/grammars/apex.tmLanguage`.
+2. From the `Command Palette` select `Developer: Inspect Editor Tokens and Scopes`.
+
 ### Adding grammar rules
 
 Token structure is based off of [Textmate's Language Grammar guidelines](https://manual.macromates.com/en/language_grammars)
