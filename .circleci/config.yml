@@ -49,7 +49,7 @@ jobs:
       - checkout
       - restore_cache: *restore_cache
       - run: *install
-      - run: *tests
+      - run: *test
   node-12:
     <<: *node-test
     docker:
