@@ -54,6 +54,55 @@ when else {
       ]);
     });
 
+    it('simple switch with safe navigator', async () => {
+      const input = Input.InMethod(`
+switch on (obj?.param) {
+when 'A' {
+  System.debug('test');
+}
+when else {
+  callExternalMethod();
+}
+}`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Punctuation.OpenParen,
+        Token.Variables.Object('obj'),
+        Token.Operators.SafeNavigation,
+        Token.Variables.Property('param'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Literals.Whitespace(' '),
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('A'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('test'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Keywords.Switch.Else,
+        Token.Punctuation.OpenBrace,
+        Token.Identifiers.MethodName('callExternalMethod'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
+
     it('simple switch with complex string', async () => {
       const input = Input.InMethod(`
 switch on (param) {
@@ -373,6 +422,74 @@ when else {
       tokens.should.deep.equal([
         Token.Keywords.Switch.Switch,
         Token.Keywords.Switch.On,
+        Token.Identifiers.MethodName('someInteger'),
+        Token.Punctuation.OpenParen,
+        Token.Variables.ReadWrite('i'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Literals.Numeric.Decimal('2'),
+        Token.Punctuation.Comma,
+        Token.Literals.Numeric.Decimal('3'),
+        Token.Punctuation.Comma,
+        Token.Literals.Numeric.Decimal('4'),
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text(
+          'when block 2 and 3 and 4'
+        ),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Literals.Numeric.Decimal('7'),
+        Token.Punctuation.OpenBrace,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.FunctionText('debug'),
+        Token.Punctuation.OpenParen,
+        Token.XmlDocComments.String.SingleQuoted.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('when block 7'),
+        Token.XmlDocComments.String.SingleQuoted.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Keywords.Switch.When,
+        Token.Keywords.Switch.Else,
+        Token.Punctuation.OpenBrace,
+        Token.Comment.LeadingWhitespace('       '),
+        Token.Comment.SingleLine.Start,
+        Token.Comment.SingleLine.Text(' @TODO.'),
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace
+      ]);
+    });
+
+    it('simple - method example with safe navigator', async () => {
+      const input = Input.InMethod(`
+        switch on obj?.someInteger(i) {
+   when 2,3,4 {
+       System.debug('when block 2 and 3 and 4');
+   }
+   when 7 {
+       System.debug('when block 7');
+   }
+   when else {
+       // @TODO.
+   }
+}`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Variables.Object('obj'),
+        Token.Operators.SafeNavigation,
         Token.Identifiers.MethodName('someInteger'),
         Token.Punctuation.OpenParen,
         Token.Variables.ReadWrite('i'),

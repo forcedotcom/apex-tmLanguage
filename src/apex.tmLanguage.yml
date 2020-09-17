@@ -327,9 +327,12 @@ repository:
     patterns:
     - name: support.type.trigger.apex
       match: '\b(isExecuting|isInsert|isUpdate|isDelete|isBefore|isAfter|isUndelete|new|newMap|old|oldMap|size)\b'
-    - match: '(?:(\.))([[:alpha:]]+)(?=\()'
+    - match: '(?:(\??\.))([[:alpha:]]+)(?=\()'
       captures:
-        '1': { name: punctuation.accessor.apex }
+        '1':
+          patterns:
+          - include: '#punctuation-accessor'
+          - include: '#operator-safe-navigation'
         '2': { name: support.function.trigger.apex}
     - begin: \(
       beginCaptures:
@@ -461,10 +464,13 @@ repository:
     end: (?![_[:alnum:]]|\(|(\?)?\[|<)  # next character is not alpha-numeric, nor a (, [, or <. Also, test for ?[
     patterns:
     - include: '#trigger-context-declaration'
-    - match: ([_[:alpha:]][_[:alnum:]]*)(\.)
+    - match: ([_[:alpha:]][_[:alnum:]]*)(\??\.)
       captures:
         '1': { name: variable.other.object.apex}
-        '2': { name: punctuation.accessor.apex }
+        '2': 
+          patterns:
+          - include: '#punctuation-accessor'
+          - include: '#operator-safe-navigation'
     - include: '#soql-colon-method-statement'
     - name: entity.name.variable.local.apex
       match: '[_[:alpha:]][_[:alnum:]]*'
@@ -910,7 +916,7 @@ repository:
       (?x)
       (switch)\b\s+
       (on)\b\s+
-      (?:([_.\'\(\)[:alnum:]]+)\s*)?
+      (?:([_.?\'\(\)[:alnum:]]+)\s*)?
       (\{)
     beginCaptures:
       '1': { name: keyword.control.switch.apex }
@@ -1378,16 +1384,17 @@ repository:
   invocation-expression:
     begin: |-
       (?x)
-      (?:(\?)\s*)?                                     # preceding null-conditional operator?
-      (?:(\.)\s*)?                                     # preceding dot?
-      (@?[_[:alpha:]][_[:alnum:]]*)\s*                   # method name
+      (?:(\??\.)\s*)?                                  # safe navigator or accessor
+      (@?[_[:alpha:]][_[:alnum:]]*)\s*                 # method name
       (?<type-args>\s*<([^<>]|\g<type-args>)+>\s*)?\s* # type arguments
       (?=\()                                           # open paren of argument list
     beginCaptures:
-      '1': { name: keyword.operator.null-conditional.apex }
-      '2': { name: punctuation.accessor.apex }
-      '3': { name: entity.name.function.apex }
-      '4':
+      '1':
+        patterns:
+        - include: '#punctuation-accessor'
+        - include: '#operator-safe-navigation'
+      '2': { name: entity.name.function.apex }
+      '3':
         patterns:
         - include: '#type-arguments'
     end: (?<=\))
@@ -1397,16 +1404,17 @@ repository:
   element-access-expression:
     begin: |-
       (?x)
-      (?:(\?)\s*)?                        # preceding null-conditional operator?
-      (?:(\.)\s*)?                        # preceding dot?
+      (?:(\??\.)\s*)?                       # safe navigator or accessor
       (?:(@?[_[:alpha:]][_[:alnum:]]*)\s*)? # property name
-      (?:(\?)\s*)?                        # null-conditional operator?
-      (?=\[)                              # open bracket of argument list
+      (?:(\?)\s*)?                          # null-conditional operator?
+      (?=\[)                                # open bracket of argument list
     beginCaptures:
-      '1': { name: keyword.operator.null-conditional.apex }
-      '2': { name: punctuation.accessor.apex }
-      '3': { name: variable.other.object.property.apex }
-      '4': { name: keyword.operator.null-conditional.apex }
+      '1':
+        patterns:
+        - include: '#punctuation-accessor'
+        - include: '#operator-safe-navigation'
+      '2': { name: variable.other.object.property.apex }
+      '3': { name: keyword.operator.null-conditional.apex }
     end: (?<=\])(?!\s*\[)
     patterns:
     - include: '#bracketed-argument-list'
@@ -1417,19 +1425,20 @@ repository:
       # be treated as a property, so long as it isn't followed by a ( or [.
     - match: |-
         (?x)
-        (?:(\?)\s*)?                   # preceding null-conditional operator?
-        (\.)\s*                        # preceding dot
+        (\??\.)\s*                       # safe navigator or accessor
         (@?[_[:alpha:]][_[:alnum:]]*)\s* # property name
-        (?![_[:alnum:]]|\(|(\?)?\[|<)  # next character is not alpha-numeric, nor a (, [, or <. Also, test for ?[
+        (?![_[:alnum:]]|\(|(\?)?\[|<)    # next character is not alpha-numeric, nor a (, [, or <. Also, test for ?[
       captures:
-        '1': { name: keyword.operator.null-conditional.apex }
-        '2': { name: punctuation.accessor.apex }
-        '3': { name: variable.other.object.property.apex }
+        '1':
+          patterns:
+          - include: '#punctuation-accessor'
+          - include: '#operator-safe-navigation'
+        '2': { name: variable.other.object.property.apex }
       # An identifier with type parameters should be treated as an object,
       # regardless of whether there is a dot to the left.
     - match: |-
         (?x)
-        (\.)?\s*
+        (\??\.)?\s*
         (@?[_[:alpha:]][_[:alnum:]]*)
         (?<type-params>\s*<([^<>]|\g<type-params>)+>\s*)
         (?=
@@ -1437,7 +1446,10 @@ repository:
           \s*\.\s*@?[_[:alpha:]][_[:alnum:]]*
         )
       captures:
-        '1': { name: punctuation.accessor.apex }
+        '1':
+          patterns:
+          - include: '#punctuation-accessor'
+          - include: '#operator-safe-navigation'
         '2': { name: variable.other.object.apex }
         '3':
           patterns:
@@ -1685,6 +1697,10 @@ repository:
   operator-assignment:
     name: keyword.operator.assignment.apex
     match: (?<!=|!)(=)(?!=)
+
+  operator-safe-navigation:
+    name: keyword.operator.safe-navigation.apex
+    match: '\?\.'
 
   punctuation-comma:
     name: punctuation.separator.comma.apex

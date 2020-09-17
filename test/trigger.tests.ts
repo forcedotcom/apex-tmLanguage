@@ -133,6 +133,34 @@ describe('Grammar', () => {
       ]);
     });
 
+    it('triggers language specific functions - complex scenario with safe navigator', async () => {
+      const input = Input.InTrigger(
+        `Trigger.newMap.get(q.opportunity__c)?.addError('Cannot delete quote');`
+      );
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Support.Class.Trigger,
+        Token.Punctuation.Accessor,
+        Token.Support.Type.TriggerText('newMap'),
+        Token.Punctuation.Accessor,
+        Token.Support.Function.TriggerText('get'),
+        Token.Punctuation.OpenParen,
+        Token.Variables.Object('q'),
+        Token.Punctuation.Accessor,
+        Token.Variables.Property('opportunity__c'),
+        Token.Punctuation.CloseParen,
+        Token.Operators.SafeNavigation,
+        Token.Support.Function.TriggerText('addError'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('Cannot delete quote'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
     it('SOQL in triggers', async () => {
       const input = Input.InTrigger(
         `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :Trigger.new];`
@@ -217,6 +245,40 @@ describe('Grammar', () => {
         Token.Operators.Conditional.Colon,
         Token.Variables.Object('myObject'),
         Token.Punctuation.Accessor,
+        Token.Identifiers.MethodName('keys'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('w'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.CloseBracket,
+        Token.Punctuation.Semicolon
+      ]);
+    });
+
+    it('SOQL in triggers using objects in clauses with safe navigator', async () => {
+      const input = Input.InTrigger(
+        `Contact[] cons = [SELECT LastName FROM Contact WHERE AccountId IN :myObject?.keys('w')];`
+      );
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Type('Contact'),
+        Token.Punctuation.OpenBracket,
+        Token.Punctuation.CloseBracket,
+        Token.Identifiers.LocalName('cons'),
+        Token.Operators.Assignment,
+        Token.Punctuation.OpenBracket,
+        Token.Keywords.Queries.Select,
+        Token.Keywords.Queries.FieldName('LastName'),
+        Token.Keywords.Queries.From,
+        Token.Keywords.Queries.TypeName('Contact'),
+        Token.Keywords.Queries.Where,
+        Token.Keywords.Queries.FieldName('AccountId'),
+        Token.Keywords.Queries.OperatorName('IN'),
+        Token.Operators.Conditional.Colon,
+        Token.Variables.Object('myObject'),
+        Token.Operators.SafeNavigation,
         Token.Identifiers.MethodName('keys'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.String.Begin,
