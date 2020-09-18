@@ -1,13 +1,18 @@
-#folders
-.circleci
-docs
-src
-test
+# Dev config folders
+/.circleci
+/.vscode
+/docs
+/src
+/test
+/scripts
 
-#files
+# Configuration files
 .editorconfig
 .prettierignore
 .prettierrc.json
 gulpfile.js
 ISSUE_TEMPLATE
 tsconfig.json
+
+# Ignore artifacts
+*.tgz

@@ -63,5 +63,8 @@
     "prettier": "^1.13.5",
     "typescript": "3.7.5",
     "vscode-textmate": "4.4.0"
+  },
+  "volta": {
+    "node": "12.18.4"
   }
 }
