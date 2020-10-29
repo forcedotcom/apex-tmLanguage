@@ -1,0 +1,40 @@
+>SELECT Name, (SELECT LastName FROM Contacts WHERE CreatedBy.Alias = 'x') FROM Account WHERE Industry = 'media'
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^^^ source.soql keyword.query.field.apex
+#           ^ source.soql punctuation.separator.comma.apex
+#            ^ source.soql
+#             ^ source.soql punctuation.parenthesis.open.apex
+#              ^^^^^^ source.soql keyword.operator.query.select.apex
+#                    ^ source.soql
+#                     ^^^^^^^^ source.soql keyword.query.field.apex
+#                             ^ source.soql
+#                              ^^^^ source.soql keyword.operator.query.from.apex
+#                                  ^ source.soql
+#                                   ^^^^^^^^ source.soql storage.type.apex
+#                                           ^ source.soql
+#                                            ^^^^^ source.soql keyword.operator.query.where.apex
+#                                                 ^ source.soql
+#                                                  ^^^^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                                 ^ source.soql
+#                                                                  ^ source.soql keyword.operator.assignment.apex
+#                                                                   ^ source.soql
+#                                                                    ^ source.soql string.quoted.single.apex punctuation.definition.string.begin.apex
+#                                                                     ^ source.soql string.quoted.single.apex
+#                                                                      ^ source.soql string.quoted.single.apex punctuation.definition.string.end.apex
+#                                                                       ^ source.soql punctuation.parenthesis.close.apex
+#                                                                        ^ source.soql
+#                                                                         ^^^^ source.soql keyword.operator.query.from.apex
+#                                                                             ^ source.soql
+#                                                                              ^^^^^^^ source.soql storage.type.apex
+#                                                                                     ^ source.soql
+#                                                                                      ^^^^^ source.soql keyword.operator.query.where.apex
+#                                                                                           ^ source.soql
+#                                                                                            ^^^^^^^^ source.soql keyword.query.field.apex
+#                                                                                                    ^ source.soql
+#                                                                                                     ^ source.soql keyword.operator.assignment.apex
+#                                                                                                      ^ source.soql
+#                                                                                                       ^ source.soql string.quoted.single.apex punctuation.definition.string.begin.apex
+#                                                                                                        ^^^^^ source.soql string.quoted.single.apex
+#                                                                                                             ^ source.soql string.quoted.single.apex punctuation.definition.string.end.apex
+>

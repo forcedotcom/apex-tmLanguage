@@ -1,0 +1,1 @@
+SELECT Name, COUNT(Id) FROM Account GROUP BY Name HAVING COUNT(Id) > 1

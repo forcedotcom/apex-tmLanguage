@@ -1,0 +1,29 @@
+>SELECT Id FROM Contact WHERE Name LIKE 'A%' AND MailingCity = 'California'
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^ source.soql keyword.query.field.apex
+#         ^ source.soql
+#          ^^^^ source.soql keyword.operator.query.from.apex
+#              ^ source.soql
+#               ^^^^^^^ source.soql storage.type.apex
+#                      ^ source.soql
+#                       ^^^^^ source.soql keyword.operator.query.where.apex
+#                            ^ source.soql
+#                             ^^^^ source.soql keyword.query.field.apex
+#                                 ^ source.soql
+#                                  ^^^^ source.soql keyword.operator.query.apex
+#                                      ^ source.soql
+#                                       ^ source.soql string.quoted.single.apex punctuation.definition.string.begin.apex
+#                                        ^^ source.soql string.quoted.single.apex
+#                                          ^ source.soql string.quoted.single.apex punctuation.definition.string.end.apex
+#                                           ^ source.soql
+#                                            ^^^ source.soql keyword.operator.query.apex
+#                                               ^ source.soql
+#                                                ^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                           ^ source.soql
+#                                                            ^ source.soql keyword.operator.assignment.apex
+#                                                             ^ source.soql
+#                                                              ^ source.soql string.quoted.single.apex punctuation.definition.string.begin.apex
+#                                                               ^^^^^^^^^^ source.soql string.quoted.single.apex
+#                                                                         ^ source.soql string.quoted.single.apex punctuation.definition.string.end.apex
+>

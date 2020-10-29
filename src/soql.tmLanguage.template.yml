@@ -1,0 +1,14 @@
+# This is an incomplete grammar used as a template at build time.
+# The build script uses this grammar and the full Apex language grammar as input to generate
+# a grammar to be used for standalone SOQL editors
+# (basically using only SOQL query expression at the top-level pattern)
+---
+name: SOQL
+scopeName: source.soql
+fileTypes: [soql]
+uuid: 1CDD8B23-7C84-46AA-9302-476968A79A83
+
+patterns:
+- include: '#soql-query-expression'
+
+repository: [] # All the Apex-language grammar repositry rules merged here

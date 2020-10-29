@@ -1,0 +1,19 @@
+>SELECT Name FROM Account ORDER BY Name DESC NULLS LAST
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^^^ source.soql keyword.query.field.apex
+#           ^ source.soql
+#            ^^^^ source.soql keyword.operator.query.from.apex
+#                ^ source.soql
+#                 ^^^^^^^ source.soql storage.type.apex
+#                        ^ source.soql
+#                         ^^^^^^^^ source.soql keyword.operator.query.orderby.apex
+#                                 ^ source.soql
+#                                  ^^^^ source.soql keyword.query.field.apex
+#                                      ^ source.soql
+#                                       ^^^^ source.soql keyword.operator.query.descending.apex
+#                                           ^ source.soql
+#                                            ^^^^^ source.soql keyword.query.field.apex
+#                                                 ^ source.soql
+#                                                  ^^^^ source.soql keyword.query.field.apex
+>

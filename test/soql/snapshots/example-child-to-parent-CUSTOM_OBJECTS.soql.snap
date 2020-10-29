@@ -1,0 +1,25 @@
+>SELECT Id, FirstName__c, Mother_of_Child__r.FirstName__c FROM Daughter__c WHERE Mother_of_Child__r.LastName__c LIKE 'C%'
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^ source.soql keyword.query.field.apex
+#         ^ source.soql punctuation.separator.comma.apex
+#          ^ source.soql
+#           ^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                       ^ source.soql punctuation.separator.comma.apex
+#                        ^ source.soql
+#                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                        ^ source.soql
+#                                                         ^^^^ source.soql keyword.operator.query.from.apex
+#                                                             ^ source.soql
+#                                                              ^^^^^^^^^^^ source.soql storage.type.apex
+#                                                                         ^ source.soql
+#                                                                          ^^^^^ source.soql keyword.operator.query.where.apex
+#                                                                               ^ source.soql
+#                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                                                                              ^ source.soql
+#                                                                                                               ^^^^ source.soql keyword.operator.query.apex
+#                                                                                                                   ^ source.soql
+#                                                                                                                    ^ source.soql string.quoted.single.apex punctuation.definition.string.begin.apex
+#                                                                                                                     ^^ source.soql string.quoted.single.apex
+#                                                                                                                       ^ source.soql string.quoted.single.apex punctuation.definition.string.end.apex
+>

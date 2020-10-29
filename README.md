@@ -16,9 +16,10 @@ Development and setup of this project has not been tested for Windows OS. You ma
 To **build and test** install Node.js do the following:
 
 - Run `npm install` to install any dependencies.
-- Run `gulp` to build and run tests.
+- Run `gulp` to build.
+- Run `npm run test` to run tests.
 
-Output grammars are output in the `grammars\` dirctory.
+Output grammars are output in the `grammars/` directory.
 
 To see the token changes from within the Salesforce VS Code Extensions:
 
@@ -29,10 +30,27 @@ To see the token changes from within the Salesforce VS Code Extensions:
 
 Token structure is based off of [Textmate's Language Grammar guidelines](https://manual.macromates.com/en/language_grammars)
 
+### Tests for SOQL grammar
+
+For the standalone SOQL grammar, tests are executed with [vscode-tmgrammar-tests](https://github.com/PanAeon/vscode-tmgrammar-test).
+
+    test/soql/
+    |-- simple_account.soql "Manually" created test cases
+    |-- ...
+    `-- snapshots/          "Snapshot-based" test cases
+        |-- example-*.soql
+        |-- example-*.soql.snap
+        `-- ...
+
+The difference between manual vs. snapshot tests is that the latter are auto-generated and can be updated with command `vscode-tmgrammar-snap -u`. They are useful to quickly see the output of applying the grammar and catch regressions.
+
+The example-\* queries were taken from [Example SELECT clauses](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_examples.htm).
+
 ## Supported outputs
 
-- `grammars\apex.tmLanguage.cson` - for Atom
-- `grammars\apex.tmLanguage` - TextMate grammar (XML plist)
+- `grammars/apex.tmLanguage.cson` - for Atom
+- `grammars/apex.tmLanguage` - TextMate grammar (XML plist)
+- `grammars/soql.tmLanguage` - TextMate grammar (XML plist) for standalone SOQL files
 
 ## Releasing
 

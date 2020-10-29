@@ -1,0 +1,1 @@
+SELECT LeadSource, COUNT(Name) FROM Lead GROUP BY LeadSource

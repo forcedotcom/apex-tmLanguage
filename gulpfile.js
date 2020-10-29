@@ -9,6 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const inputGrammar = 'src/apex.tmLanguage.yml';
+const inputSoqlGrammarTemplate = 'src/soql.tmLanguage.template.yml';
 const grammarsDirectory = 'grammars/';
 const jsOut = 'out/';
 
@@ -16,6 +17,8 @@ function handleError(err) {
   console.log(err.toString());
   process.exit(-1);
 }
+
+
 
 gulp.task('buildTmLanguage', function(done) {
   const text = fs.readFileSync(inputGrammar);
@@ -39,6 +42,20 @@ gulp.task('buildAtom', function() {
     .on('error', handleError);
 });
 
+
+gulp.task('buildSoqlTmLanguage', function(done) {
+  const soqlGrammar = js_yaml.safeLoad(fs.readFileSync(inputSoqlGrammarTemplate));
+  const apexGrammar = js_yaml.safeLoad(fs.readFileSync(inputGrammar));
+
+  if (!fs.existsSync(grammarsDirectory)) {
+    fs.mkdirSync(grammarsDirectory);
+  }
+
+  soqlGrammar['repository'] = apexGrammar.repository;
+  fs.writeFileSync(path.join(grammarsDirectory, 'soql.tmLanguage'), plist.build(soqlGrammar));
+  done();
+});
+
 gulp.task('compile', function() {
   const tsProject = ts.createProject('./tsconfig.json');
   return tsProject
@@ -59,7 +76,7 @@ gulp.task(
 
 gulp.task(
   'default',
-  gulp.series(['buildAtom', 'buildTmLanguage'], function(done) {
+  gulp.series(['buildAtom', 'buildTmLanguage', 'buildSoqlTmLanguage'], function(done) {
     done();
   })
 );

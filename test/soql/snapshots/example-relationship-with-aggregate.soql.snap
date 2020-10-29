@@ -1,0 +1,56 @@
+>SELECT Name, (SELECT CreatedBy.Name FROM Notes) FROM Account;
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^^^ source.soql keyword.query.field.apex
+#           ^ source.soql punctuation.separator.comma.apex
+#            ^ source.soql
+#             ^ source.soql punctuation.parenthesis.open.apex
+#              ^^^^^^ source.soql keyword.operator.query.select.apex
+#                    ^ source.soql
+#                     ^^^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                   ^ source.soql
+#                                    ^^^^ source.soql keyword.operator.query.from.apex
+#                                        ^ source.soql
+#                                         ^^^^^ source.soql storage.type.apex
+#                                              ^ source.soql punctuation.parenthesis.close.apex
+#                                               ^ source.soql
+#                                                ^^^^ source.soql keyword.operator.query.from.apex
+#                                                    ^ source.soql
+#                                                     ^^^^^^^ source.soql storage.type.apex
+#                                                            ^^ source.soql
+>
+>SELECT Amount, Id, Name, (SELECT Quantity, ListPrice, PricebookEntry.UnitPrice, PricebookEntry.Name FROM OpportunityLineItems) FROM Opportunity
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^^^^^ source.soql keyword.query.field.apex
+#             ^ source.soql punctuation.separator.comma.apex
+#              ^ source.soql
+#               ^^ source.soql keyword.query.field.apex
+#                 ^ source.soql punctuation.separator.comma.apex
+#                  ^ source.soql
+#                   ^^^^ source.soql keyword.query.field.apex
+#                       ^ source.soql punctuation.separator.comma.apex
+#                        ^ source.soql
+#                         ^ source.soql punctuation.parenthesis.open.apex
+#                          ^^^^^^ source.soql keyword.operator.query.select.apex
+#                                ^ source.soql
+#                                 ^^^^^^^^ source.soql keyword.query.field.apex
+#                                         ^ source.soql punctuation.separator.comma.apex
+#                                          ^ source.soql
+#                                           ^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                    ^ source.soql punctuation.separator.comma.apex
+#                                                     ^ source.soql
+#                                                      ^^^^^^^^^^^^^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                                              ^ source.soql punctuation.separator.comma.apex
+#                                                                               ^ source.soql
+#                                                                                ^^^^^^^^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                                                                   ^ source.soql
+#                                                                                                    ^^^^ source.soql keyword.operator.query.from.apex
+#                                                                                                        ^ source.soql
+#                                                                                                         ^^^^^^^^^^^^^^^^^^^^ source.soql storage.type.apex
+#                                                                                                                             ^ source.soql punctuation.parenthesis.close.apex
+#                                                                                                                              ^ source.soql
+#                                                                                                                               ^^^^ source.soql keyword.operator.query.from.apex
+#                                                                                                                                   ^ source.soql
+#                                                                                                                                    ^^^^^^^^^^^ source.soql storage.type.apex
+>

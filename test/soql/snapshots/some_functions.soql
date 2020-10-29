@@ -1,0 +1,4 @@
+
+SELECT city_c, State_c, COUNT(Employee_Name__C) Counts
+ FROM Employee__C
+ GROUP BY ROLLUP (City__c, State__C)

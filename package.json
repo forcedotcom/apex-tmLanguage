@@ -35,7 +35,9 @@
     "commit-init": "commitizen init cz-conventional-changelog --save-dev --save-exact --force",
     "commit": "git-cz",
     "watch": "node ./node_modules/typescript/bin/tsc -w -p .",
-    "test": "gulp test",
+    "test:soql-tmgrammar": "vscode-tmgrammar-test -s source.soql -g ./grammars/soql.tmLanguage -t './test/soql/*.soql'",
+    "test:soql-tmgrammar-snapshots": "vscode-tmgrammar-snap -s source.soql -g ./grammars/soql.tmLanguage -t './test/soql/snapshots/*.soql'",
+    "test": "gulp test; npm run test:soql-tmgrammar; npm run test:soql-tmgrammar-snapshots",
     "prepare": "gulp",
     "build:default": "gulp default",
     "format": "prettier --config .prettierrc.json --write './**/*.{ts,js,json,md}'"
@@ -48,16 +50,15 @@
   "engines": {
     "node": ">=12.4.0"
   },
-  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^7",
     "@commitlint/config-conventional": "^7",
-    "commitizen": "^3.0.5",
-    "cz-conventional-changelog": "^2.1.0",
     "@types/chai": "4.2.8",
     "@types/gulp": "^4.0.5",
     "@types/mocha": "^5.2.1",
     "chai": "^4.1.2",
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "^2.1.0",
     "gulp": "4.0.2",
     "gulp-json2cson": "^2.0.0",
     "gulp-mocha": "^6.0.0",
@@ -68,7 +69,8 @@
     "plist": "^3.0.1",
     "prettier": "^1.13.5",
     "typescript": "3.7.5",
-    "vscode-textmate": "4.4.0"
+    "vscode-textmate": "4.4.0",
+    "vscode-tmgrammar-test": "^0.0.10"
   },
   "volta": {
     "node": "12.18.4"

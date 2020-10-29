@@ -1,0 +1,5 @@
+SELECT Id, Owner.Name FROM Task WHERE Owner.FirstName like 'B%';
+
+SELECT Id, Who.FirstName, Who.LastName FROM Task WHERE Owner.FirstName LIKE 'B%';
+
+SELECT Id, What.Name FROM Event;
