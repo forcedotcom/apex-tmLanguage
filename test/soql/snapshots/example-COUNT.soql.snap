@@ -1,0 +1,11 @@
+>SELECT COUNT() FROM Contact
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^^^^ source.soql support.function.query.apex
+#            ^ source.soql punctuation.parenthesis.open.apex
+#             ^ source.soql punctuation.parenthesis.close.apex
+#              ^ source.soql
+#               ^^^^ source.soql keyword.operator.query.from.apex
+#                   ^ source.soql
+#                    ^^^^^^^ source.soql storage.type.apex
+>

@@ -1,0 +1,30 @@
+>SELECT Name, COUNT(Id) FROM Account GROUP BY Name HAVING COUNT(Id) > 1
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^^^ source.soql keyword.query.field.apex
+#           ^ source.soql punctuation.separator.comma.apex
+#            ^ source.soql
+#             ^^^^^ source.soql support.function.query.apex
+#                  ^ source.soql punctuation.parenthesis.open.apex
+#                   ^^ source.soql keyword.query.field.apex
+#                     ^ source.soql punctuation.parenthesis.close.apex
+#                      ^ source.soql
+#                       ^^^^ source.soql keyword.operator.query.from.apex
+#                           ^ source.soql
+#                            ^^^^^^^ source.soql storage.type.apex
+#                                   ^ source.soql
+#                                    ^^^^^^^^ source.soql keyword.operator.query.apex
+#                                            ^ source.soql
+#                                             ^^^^ source.soql keyword.query.field.apex
+#                                                 ^ source.soql
+#                                                  ^^^^^^ source.soql keyword.operator.query.apex
+#                                                        ^ source.soql
+#                                                         ^^^^^ source.soql support.function.query.apex
+#                                                              ^ source.soql punctuation.parenthesis.open.apex
+#                                                               ^^ source.soql keyword.query.field.apex
+#                                                                 ^ source.soql punctuation.parenthesis.close.apex
+#                                                                  ^ source.soql
+#                                                                   ^ source.soql keyword.operator.relational.apex
+#                                                                    ^ source.soql
+#                                                                     ^ source.soql constant.numeric.decimal.apex
+>

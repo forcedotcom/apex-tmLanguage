@@ -1,0 +1,1 @@
+SELECT Name, Id FROM Merchandise__c ORDER BY Name OFFSET 100

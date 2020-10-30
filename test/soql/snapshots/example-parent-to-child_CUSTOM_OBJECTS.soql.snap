@@ -1,0 +1,31 @@
+>SELECT Name, (SELECT Name FROM Line_Items__r) FROM Merchandise__c WHERE Name LIKE ‘Acme%’
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^^^ source.soql keyword.query.field.apex
+#           ^ source.soql punctuation.separator.comma.apex
+#            ^ source.soql
+#             ^ source.soql punctuation.parenthesis.open.apex
+#              ^^^^^^ source.soql keyword.operator.query.select.apex
+#                    ^ source.soql
+#                     ^^^^ source.soql keyword.query.field.apex
+#                         ^ source.soql
+#                          ^^^^ source.soql keyword.operator.query.from.apex
+#                              ^ source.soql
+#                               ^^^^^^^^^^^^^ source.soql storage.type.apex
+#                                            ^ source.soql punctuation.parenthesis.close.apex
+#                                             ^ source.soql
+#                                              ^^^^ source.soql keyword.operator.query.from.apex
+#                                                  ^ source.soql
+#                                                   ^^^^^^^^^^^^^^ source.soql storage.type.apex
+#                                                                 ^ source.soql
+#                                                                  ^^^^^ source.soql keyword.operator.query.where.apex
+#                                                                       ^ source.soql
+#                                                                        ^^^^ source.soql keyword.query.field.apex
+#                                                                            ^ source.soql
+#                                                                             ^^^^ source.soql keyword.operator.query.apex
+#                                                                                 ^ source.soql
+#                                                                                  ^ source.soql
+#                                                                                   ^^^^ source.soql keyword.query.field.apex
+#                                                                                       ^ source.soql keyword.operator.arithmetic.apex
+#                                                                                        ^^ source.soql
+>

@@ -1,0 +1,42 @@
+>SELECT TYPEOF What WHEN Account THEN Phone, NumberOfEmployees WHEN Opportunity THEN Amount, CloseDate ELSE Name, Email END FROM Event
+#^^^^^^ source.soql keyword.operator.query.select.apex
+#      ^ source.soql
+#       ^^^^^^ source.soql keyword.operator.query.apex
+#             ^ source.soql
+#              ^^^^ source.soql keyword.query.field.apex
+#                  ^ source.soql
+#                   ^^^^ source.soql keyword.query.field.apex
+#                       ^ source.soql
+#                        ^^^^^^^ source.soql keyword.query.field.apex
+#                               ^ source.soql
+#                                ^^^^ source.soql keyword.query.field.apex
+#                                    ^ source.soql
+#                                     ^^^^^ source.soql keyword.query.field.apex
+#                                          ^ source.soql punctuation.separator.comma.apex
+#                                           ^ source.soql
+#                                            ^^^^^^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                             ^ source.soql
+#                                                              ^^^^ source.soql keyword.query.field.apex
+#                                                                  ^ source.soql
+#                                                                   ^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                                              ^ source.soql
+#                                                                               ^^^^ source.soql keyword.query.field.apex
+#                                                                                   ^ source.soql
+#                                                                                    ^^^^^^ source.soql keyword.query.field.apex
+#                                                                                          ^ source.soql punctuation.separator.comma.apex
+#                                                                                           ^ source.soql
+#                                                                                            ^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                                                                     ^ source.soql
+#                                                                                                      ^^^^ source.soql keyword.query.field.apex
+#                                                                                                          ^ source.soql
+#                                                                                                           ^^^^ source.soql keyword.query.field.apex
+#                                                                                                               ^ source.soql punctuation.separator.comma.apex
+#                                                                                                                ^ source.soql
+#                                                                                                                 ^^^^^ source.soql keyword.query.field.apex
+#                                                                                                                      ^ source.soql
+#                                                                                                                       ^^^ source.soql keyword.query.field.apex
+#                                                                                                                          ^ source.soql
+#                                                                                                                           ^^^^ source.soql keyword.operator.query.from.apex
+#                                                                                                                               ^ source.soql
+#                                                                                                                                ^^^^^ source.soql storage.type.apex
+>

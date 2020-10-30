@@ -1,0 +1,3 @@
+SELECT Name, (SELECT CreatedBy.Name FROM Notes) FROM Account;
+
+SELECT Amount, Id, Name, (SELECT Quantity, ListPrice, PricebookEntry.UnitPrice, PricebookEntry.Name FROM OpportunityLineItems) FROM Opportunity
