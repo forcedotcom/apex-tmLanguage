@@ -1,4 +1,4 @@
->SELECT UserId, COUNT(Id) from LoginHistory WHERE LoginTime > 2010-09-20T22:16:30.000Z AND LoginTime < 2010-09-21T22:16:30.000Z GROUP BY UserId
+>SELECT UserId, COUNT(Id) FROM LoginHistory WHERE LoginTime > 2010-09-20T22:16:30.000Z AND LoginTime < 2010-09-21T22:16:30.000Z GROUP BY UserId
 #^^^^^^ source.soql keyword.operator.query.select.apex
 #      ^ source.soql
 #       ^^^^^^ source.soql keyword.query.field.apex
@@ -9,9 +9,9 @@
 #                     ^^ source.soql keyword.query.field.apex
 #                       ^ source.soql punctuation.parenthesis.close.apex
 #                        ^ source.soql
-#                         ^^^^ source.soql keyword.query.field.apex
+#                         ^^^^ source.soql keyword.operator.query.from.apex
 #                             ^ source.soql
-#                              ^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                              ^^^^^^^^^^^^ source.soql storage.type.apex
 #                                          ^ source.soql
 #                                           ^^^^^ source.soql keyword.operator.query.where.apex
 #                                                ^ source.soql
@@ -19,8 +19,7 @@
 #                                                          ^ source.soql
 #                                                           ^ source.soql keyword.operator.relational.apex
 #                                                            ^ source.soql
-#                                                             ^^^^^^^^^^^^^^^^^^^ source.soql constant.numeric.datetime.apex
-#                                                                                ^^^^^ source.soql keyword.query.field.apex
+#                                                             ^^^^^^^^^^^^^^^^^^^^^^^^ source.soql constant.numeric.datetime.apex
 #                                                                                     ^ source.soql
 #                                                                                      ^^^ source.soql keyword.operator.query.apex
 #                                                                                         ^ source.soql
@@ -28,8 +27,7 @@
 #                                                                                                   ^ source.soql
 #                                                                                                    ^ source.soql keyword.operator.relational.apex
 #                                                                                                     ^ source.soql
-#                                                                                                      ^^^^^^^^^^^^^^^^^^^ source.soql constant.numeric.datetime.apex
-#                                                                                                                         ^^^^^ source.soql keyword.query.field.apex
+#                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^ source.soql constant.numeric.datetime.apex
 #                                                                                                                              ^ source.soql
 #                                                                                                                               ^^^^^^^^ source.soql keyword.operator.query.apex
 #                                                                                                                                       ^ source.soql
