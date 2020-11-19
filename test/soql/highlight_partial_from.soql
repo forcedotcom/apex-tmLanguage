@@ -1,10 +1,9 @@
--- SYNTAX TEST "source.soql" "simple testcase"
+-- SYNTAX TEST "source.soql" "highlight partial FROM testcase"
 
-   SELECT Id, Name FROM Account
+   SELECT Id, Name FROM
 -- ^^^^^^ source.soql keyword.operator.query.select.apex
 --        ^^ source.soql keyword.query.field.apex
 --          ^ source.soql punctuation.separator.comma.apex
 --            ^^^^ source.soql keyword.query.field.apex
 --                 ^^^^ source.soql keyword.operator.query.from.apex
---                     ^ source.soql
---                      ^^^^^^^ source.soql storage.type.apex
+
