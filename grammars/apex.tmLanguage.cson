@@ -1024,7 +1024,7 @@ repository:
       }
     ]
   "from-clause":
-    match: "(FROM)\\b\\s*([_\\.[:alnum:]]+)\\b\\s*"
+    match: "(FROM)\\b\\s*([_\\.[:alnum:]]+\\b)?"
     captures:
       "1":
         name: "keyword.operator.query.from.apex"
