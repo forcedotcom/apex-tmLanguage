@@ -1,5 +1,5 @@
 >
->SELECT city_c, State_c, COUNT(Employee_Name__C) Counts
+>SELECT city_c, State_c, COUNT(Employee_Name__C) Counts, COUNT_DISTINCT(Employee_Name__C) DistCounts
 #^^^^^^ source.soql keyword.operator.query.select.apex
 #      ^ source.soql
 #       ^^^^^^ source.soql keyword.query.field.apex
@@ -14,6 +14,14 @@
 #                                              ^ source.soql punctuation.parenthesis.close.apex
 #                                               ^ source.soql
 #                                                ^^^^^^ source.soql keyword.query.field.apex
+#                                                      ^ source.soql punctuation.separator.comma.apex
+#                                                       ^ source.soql
+#                                                        ^^^^^^^^^^^^^^ source.soql support.function.query.apex
+#                                                                      ^ source.soql punctuation.parenthesis.open.apex
+#                                                                       ^^^^^^^^^^^^^^^^ source.soql keyword.query.field.apex
+#                                                                                       ^ source.soql punctuation.parenthesis.close.apex
+#                                                                                        ^ source.soql
+#                                                                                         ^^^^^^^^^^ source.soql keyword.query.field.apex
 > FROM Employee__C
 #^ source.soql
 # ^^^^ source.soql keyword.operator.query.from.apex

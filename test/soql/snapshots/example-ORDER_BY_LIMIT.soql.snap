@@ -23,9 +23,7 @@
 #                                                                            ^ source.soql
 #                                                                             ^^^ source.soql keyword.operator.query.ascending.apex
 #                                                                                ^ source.soql
-#                                                                                 ^^^^^ source.soql keyword.query.field.apex
-#                                                                                      ^ source.soql
-#                                                                                       ^^^^ source.soql keyword.query.field.apex
+#                                                                                 ^^^^^^^^^^ source.soql keyword.operator.query.nullslast.apex
 #                                                                                           ^ source.soql
 #                                                                                            ^^^^^ source.soql keyword.operator.query.apex
 #                                                                                                 ^ source.soql
