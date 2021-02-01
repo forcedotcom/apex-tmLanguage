@@ -13,7 +13,6 @@
 #                                      ^ source.soql
 #                                       ^^^^ source.soql keyword.operator.query.descending.apex
 #                                           ^ source.soql
-#                                            ^^^^^ source.soql keyword.query.field.apex
-#                                                 ^ source.soql
-#                                                  ^^^^ source.soql keyword.query.field.apex
+#                                            ^^^^^^^^^^ source.soql keyword.operator.query.nullslast.apex
+
 >

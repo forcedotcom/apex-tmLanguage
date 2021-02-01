@@ -384,11 +384,11 @@ export namespace Token {
       );
       export const Let = createToken('let', 'keyword.operator.query.let.apex');
       export const NullsFirst = createToken(
-        'NULLS first',
+        'NULLS FIRST',
         'keyword.operator.query.nullsfirst.apex'
       );
       export const NullsLast = createToken(
-        'NULLS last',
+        'NULLS LAST',
         'keyword.operator.query.nullslast.apex'
       );
       export const On = createToken('on', 'keyword.operator.query.on.apex');

@@ -196,7 +196,7 @@ describe('Grammar', () => {
 
     it('order by descending nulls last', async () => {
       const input = Input.InMethod(
-        `List<User> lUsers = [SELECT Id FROM account ORDER BY Name DESC NULLS last];`
+        `List<User> lUsers = [SELECT Id FROM account ORDER BY Name DESC NULLS LAST];`
       );
       const tokens = await tokenize(input);
 

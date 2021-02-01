@@ -1675,7 +1675,7 @@
       <key>soql-functions</key>
       <dict>
         <key>begin</key>
-        <string>\b(AVG|CALENDAR_MONTH|CALENDAR_QUARTER|CALENDAR_YEAR|convertCurrency|convertTimezone|COUNT|DAY_IN_MONTH|DAY_IN_WEEK|DAY_IN_YEAR|DAY_ONLY|toLabel|INCLUDES|EXCLUDES|FISCAL_MONTH|FISCAL_QUARTER|FISCAL_YEAR|FORMAT|GROUPING|GROUP BY CUBE|GROUP BY ROLLUP|HOUR_IN_DAY|MAX|MIN|SUM|WEEK_IN_MONTH|WEEK_IN_YEAR)\s*(\()</string>
+        <string>\b(AVG|CALENDAR_MONTH|CALENDAR_QUARTER|CALENDAR_YEAR|convertCurrency|convertTimezone|COUNT|COUNT_DISTINCT|DAY_IN_MONTH|DAY_IN_WEEK|DAY_IN_YEAR|DAY_ONLY|toLabel|INCLUDES|EXCLUDES|FISCAL_MONTH|FISCAL_QUARTER|FISCAL_YEAR|FORMAT|GROUPING|GROUP BY CUBE|GROUP BY ROLLUP|HOUR_IN_DAY|MAX|MIN|SUM|WEEK_IN_MONTH|WEEK_IN_YEAR)\s*(\()</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1797,7 +1797,7 @@
       <key>ordering-nulls</key>
       <dict>
         <key>match</key>
-        <string>\b(?:(NULLS first)|(NULLS last))\b</string>
+        <string>\b(?:(NULLS FIRST)|(NULLS LAST))\b</string>
         <key>captures</key>
         <dict>
           <key>1</key>
