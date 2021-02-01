@@ -1,0 +1,19 @@
+-- SYNTAX TEST "source.soql" "Line comments allowed at top of file only"
+
+   // Header comments
+-- ^^^^^^^^^^^^^^^^^^ source.soql comment.line
+     // may have leading spaces
+--   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source.soql comment.line
+
+   // and empty lines
+-- ^^^^^^^^^^^^^^^^^^ source.soql comment.line
+
+   SELECT Id, Name
+-- ^^^^^^^^^^^^^^^ source.soql
+   FROM Account
+-- ^^^^^^^^^^^^ source.soql
+   // comment not allowed within query
+-- ^^ source.soql keyword.operator.arithmetic.apex
+--   ^ source.soql
+   WHERE Name != 'Booh'
+-- ^^^^^ source.soql keyword.operator.query.where.apex

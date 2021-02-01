@@ -50,8 +50,14 @@ gulp.task('buildSoqlTmLanguage', function(done) {
   if (!fs.existsSync(grammarsDirectory)) {
     fs.mkdirSync(grammarsDirectory);
   }
+  
+  // Merge the repository of rules from Apex grammar
+  soqlGrammar['repository'] = Object.assign({}, apexGrammar.repository, soqlGrammar['repository']);
 
-  soqlGrammar['repository'] = apexGrammar.repository;
+  // Remove the comments rule SOQL query expression
+  const apexGrammarSoqlExpressionPatterns = apexGrammar['repository']['soql-query-expression']['patterns'];
+  soqlGrammar['repository']['soql-query-expression']['patterns'] = apexGrammarSoqlExpressionPatterns.filter((pattern) => pattern.include !== '#comment');
+
   fs.writeFileSync(path.join(grammarsDirectory, 'soql.tmLanguage'), plist.build(soqlGrammar));
   done();
 });

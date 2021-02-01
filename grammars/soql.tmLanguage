@@ -16,6 +16,10 @@
     <array>
       <dict>
         <key>include</key>
+        <string>#soqlHeaderComment</string>
+      </dict>
+      <dict>
+        <key>include</key>
         <string>#soql-query-expression</string>
       </dict>
     </array>
@@ -1366,10 +1370,6 @@
           <dict>
             <key>include</key>
             <string>#soql-query-body</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#comment</string>
           </dict>
           <dict>
             <key>include</key>
@@ -5069,6 +5069,15 @@
             <string>punctuation.definition.comment.apex</string>
           </dict>
         </dict>
+      </dict>
+      <key>soqlHeaderComment</key>
+      <dict>
+        <key>name</key>
+        <string>comment.line</string>
+        <key>begin</key>
+        <string>^\s*//.*$</string>
+        <key>while</key>
+        <string>^\s*//.*$</string>
       </dict>
     </dict>
   </dict>

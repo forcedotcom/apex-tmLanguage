@@ -9,6 +9,13 @@ fileTypes: [soql]
 uuid: 1CDD8B23-7C84-46AA-9302-476968A79A83
 
 patterns:
+- include: '#soqlHeaderComment'
 - include: '#soql-query-expression'
 
-repository: [] # All the Apex-language grammar repositry rules merged here
+repository: # All the Apex-language grammar repository rules merged here
+  soqlHeaderComment:
+    name: comment.line
+    begin: ^\s*//.*$
+    while: ^\s*//.*$
+
+  
