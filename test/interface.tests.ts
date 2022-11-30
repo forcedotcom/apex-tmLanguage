@@ -21,7 +21,7 @@ describe('Grammar', () => {
         Token.Keywords.Interface,
         Token.Identifiers.InterfaceName('IFoo'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -43,7 +43,7 @@ interface IBar extends IFoo { }
         Token.Keywords.Extends,
         Token.Identifiers.ExtendsName('IFoo'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -60,7 +60,7 @@ interface IBar extends IFoo { }
         Token.Identifiers.TypeParameterName('T2'),
         Token.Punctuation.TypeParameters.End,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -75,7 +75,7 @@ interface IBar extends IFoo { }
         Token.Keywords.Extends,
         Token.Identifiers.ExtendsName('MyInterface'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });

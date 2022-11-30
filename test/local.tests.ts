@@ -20,7 +20,7 @@ describe('Grammar', () => {
       tokens.should.deep.equal([
         Token.PrimitiveType.Integer,
         Token.Identifiers.LocalName('x'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -33,7 +33,7 @@ describe('Grammar', () => {
         Token.Identifiers.LocalName('x'),
         Token.Operators.Assignment,
         Token.Literals.Numeric.Decimal('42'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -46,7 +46,7 @@ describe('Grammar', () => {
         Token.Identifiers.LocalName('x'),
         Token.Punctuation.Comma,
         Token.Identifiers.LocalName('y'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -63,7 +63,7 @@ describe('Grammar', () => {
         Token.Identifiers.LocalName('y'),
         Token.Operators.Assignment,
         Token.Literals.Numeric.Decimal('23'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
   });

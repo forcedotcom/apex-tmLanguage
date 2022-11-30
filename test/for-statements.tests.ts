@@ -27,7 +27,7 @@ describe('Grammar', () => {
         Token.Operators.Increment,
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -57,7 +57,7 @@ for (Integer i = 0; i < 42; i++)
         Token.Punctuation.OpenBrace,
         Token.Keywords.Control.Break,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -87,7 +87,7 @@ for (Integer i = 0; i < 42; i++)
         Token.Punctuation.OpenBrace,
         Token.Keywords.Control.Continue,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -110,7 +110,7 @@ for (Integer i : listOfIntegers)
         Token.Punctuation.OpenBrace,
         Token.Keywords.Control.Continue,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -140,7 +140,7 @@ for (Integer i : listOfIntegers)
         Token.Comment.LeadingWhitespace('    '),
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text(' break;'),
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -170,7 +170,7 @@ for (Integer i : listOfIntegers)
         Token.Punctuation.OpenBrace,
         Token.Keywords.Control.Break,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -192,7 +192,7 @@ for (Integer i : listOfIntegers)
         Token.Punctuation.OpenBrace,
         Token.Keywords.Control.Break,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -218,7 +218,7 @@ for (Integer i : listOfIntegers)
         Token.Punctuation.OpenBrace,
         Token.Keywords.Control.Break,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -244,7 +244,7 @@ for (Integer i : listOfIntegers)
         Token.Punctuation.OpenBrace,
         Token.Keywords.Control.Break,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -287,7 +287,7 @@ for (Integer i : listOfIntegers)
         Token.Variables.ReadWrite('myFancyObject'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });

@@ -13,7 +13,8 @@ describe('Grammar', () => {
 
   describe('Apex Trigger', () => {
     it('before insert before update Account trigger', async () => {
-      const input = Input.FromText(`trigger myAccountTrigger on Account (before insert, after update) {
+      const input =
+        Input.FromText(`trigger myAccountTrigger on Account (before insert, after update) {
         // Your code here
         if(true) {}
 }`);
@@ -41,7 +42,7 @@ describe('Grammar', () => {
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -63,7 +64,7 @@ describe('Grammar', () => {
         Token.Support.Type.TriggerText('isInsert'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -85,7 +86,7 @@ describe('Grammar', () => {
         Token.Support.Type.TriggerText('isInsert'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -101,7 +102,7 @@ describe('Grammar', () => {
         Token.Support.Function.TriggerText('keySet'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -129,7 +130,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.String.SingleQuoted.Text('Cannot delete quote'),
         Token.Punctuation.String.End,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -157,7 +158,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.String.SingleQuoted.Text('Cannot delete quote'),
         Token.Punctuation.String.End,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -186,7 +187,7 @@ describe('Grammar', () => {
         Token.Punctuation.Accessor,
         Token.Support.Type.TriggerText('new'),
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -218,7 +219,7 @@ describe('Grammar', () => {
         Token.Punctuation.String.End,
         Token.Punctuation.CloseParen,
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -252,7 +253,7 @@ describe('Grammar', () => {
         Token.Punctuation.String.End,
         Token.Punctuation.CloseParen,
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -286,7 +287,7 @@ describe('Grammar', () => {
         Token.Punctuation.String.End,
         Token.Punctuation.CloseParen,
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
   });

@@ -20,7 +20,7 @@ describe('Grammar', () => {
       tokens.should.deep.equal([
         Token.PrimitiveType.Object,
         Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -34,7 +34,7 @@ describe('Grammar', () => {
         Token.PrimitiveType.Integer,
         Token.Punctuation.TypeParameters.End,
         Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -50,7 +50,7 @@ describe('Grammar', () => {
         Token.PrimitiveType.Integer,
         Token.Punctuation.TypeParameters.End,
         Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -72,7 +72,7 @@ describe('Grammar', () => {
         Token.PrimitiveType.Integer,
         Token.Punctuation.TypeParameters.End,
         Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -83,7 +83,7 @@ describe('Grammar', () => {
       tokens.should.deep.equal([
         Token.PrimitiveType.Integer,
         Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
   });

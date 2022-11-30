@@ -22,7 +22,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.Text(' '),
         Token.XmlDocComments.Tag.StartTagBegin,
         Token.XmlDocComments.Tag.Name('summary'),
-        Token.XmlDocComments.Tag.StartTagEnd
+        Token.XmlDocComments.Tag.StartTagEnd,
       ]);
     });
 
@@ -35,7 +35,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.Text(' '),
         Token.XmlDocComments.Tag.EndTagBegin,
         Token.XmlDocComments.Tag.Name('summary'),
-        Token.XmlDocComments.Tag.EndTagEnd
+        Token.XmlDocComments.Tag.EndTagEnd,
       ]);
     });
 
@@ -48,7 +48,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.Text(' '),
         Token.XmlDocComments.Tag.EmptyTagBegin,
         Token.XmlDocComments.Tag.Name('summary'),
-        Token.XmlDocComments.Tag.EmptyTagEnd
+        Token.XmlDocComments.Tag.EmptyTagEnd,
       ]);
     });
 
@@ -66,7 +66,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.String.SingleQuoted.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('x'),
         Token.XmlDocComments.String.SingleQuoted.End,
-        Token.XmlDocComments.Tag.StartTagEnd
+        Token.XmlDocComments.Tag.StartTagEnd,
       ]);
     });
 
@@ -84,7 +84,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.String.DoubleQuoted.Begin,
         Token.XmlDocComments.String.DoubleQuoted.Text('x'),
         Token.XmlDocComments.String.DoubleQuoted.End,
-        Token.XmlDocComments.Tag.StartTagEnd
+        Token.XmlDocComments.Tag.StartTagEnd,
       ]);
     });
 
@@ -97,7 +97,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.Text(' '),
         Token.XmlDocComments.Comment.Begin,
         Token.XmlDocComments.Comment.Text(' comment '),
-        Token.XmlDocComments.Comment.End
+        Token.XmlDocComments.Comment.End,
       ]);
     });
 
@@ -110,7 +110,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.Text(' '),
         Token.XmlDocComments.CData.Begin,
         Token.XmlDocComments.CData.Text('c'),
-        Token.XmlDocComments.CData.End
+        Token.XmlDocComments.CData.End,
       ]);
     });
 
@@ -123,7 +123,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.Text(' '),
         Token.XmlDocComments.CharacterEntity.Begin,
         Token.XmlDocComments.CharacterEntity.Text('amp'),
-        Token.XmlDocComments.CharacterEntity.End
+        Token.XmlDocComments.CharacterEntity.End,
       ]);
     });
 
@@ -136,7 +136,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.Text(' '),
         Token.XmlDocComments.CharacterEntity.Begin,
         Token.XmlDocComments.CharacterEntity.Text('#0038'),
-        Token.XmlDocComments.CharacterEntity.End
+        Token.XmlDocComments.CharacterEntity.End,
       ]);
     });
 
@@ -149,7 +149,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.Text(' '),
         Token.XmlDocComments.CharacterEntity.Begin,
         Token.XmlDocComments.CharacterEntity.Text('#x0026'),
-        Token.XmlDocComments.CharacterEntity.End
+        Token.XmlDocComments.CharacterEntity.End,
       ]);
     });
 
@@ -207,7 +207,7 @@ public enum TestEnum
         Token.Identifiers.EnumMemberName('TestValueTwo'),
         Token.Operators.Assignment,
         Token.Literals.Numeric.Decimal('1'),
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });

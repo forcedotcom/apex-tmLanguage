@@ -34,7 +34,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.Comma,
           Token.Literals.Numeric.Decimal('0'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -58,7 +58,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Operators.Arithmetic.Subtraction,
           Token.Literals.Numeric.Decimal('3'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -80,7 +80,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Operators.Arithmetic.Subtraction,
           Token.Literals.Numeric.Decimal('3'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -98,7 +98,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.PrimitiveType.Object,
           Token.Punctuation.CloseParen,
           Token.Literals.Numeric.Decimal('42'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -117,7 +117,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.TypeParameters.End,
           Token.Punctuation.CloseParen,
           Token.Literals.Numeric.Decimal('42'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -133,7 +133,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.CloseParen,
           Token.Literals.Numeric.Decimal('42'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -152,7 +152,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.CloseParen,
           Token.Literals.Numeric.Decimal('42'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -171,7 +171,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Literals.Numeric.Decimal('19'),
           Token.Operators.Conditional.Colon,
           Token.Literals.Numeric.Decimal('23'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -188,7 +188,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Operators.Conditional.Colon,
           Token.Literals.Numeric.Decimal('23'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -205,7 +205,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Variables.Property('P'),
           Token.Punctuation.OpenBracket,
           Token.Punctuation.CloseBracket,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -221,7 +221,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.OpenBracket,
           Token.Literals.Numeric.Decimal('42'),
           Token.Punctuation.CloseBracket,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -239,7 +239,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.Comma,
           Token.Literals.Numeric.Decimal('23'),
           Token.Punctuation.CloseBracket,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -257,7 +257,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.OpenBracket,
           Token.Literals.Numeric.Decimal('0'),
           Token.Punctuation.CloseBracket,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -275,7 +275,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.OpenBracket,
           Token.Literals.Numeric.Decimal('0'),
           Token.Punctuation.CloseBracket,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -296,7 +296,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.OpenBracket,
           Token.Literals.Numeric.Decimal('23'),
           Token.Punctuation.CloseBracket,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -317,7 +317,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.OpenBracket,
           Token.Literals.Numeric.Decimal('23'),
           Token.Punctuation.CloseBracket,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -340,7 +340,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.CloseBracket,
           Token.Punctuation.Accessor,
           Token.Variables.Property('d'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -363,7 +363,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.CloseBracket,
           Token.Operators.SafeNavigation,
           Token.Variables.Property('d'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -388,7 +388,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Identifiers.MethodName('d'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -413,7 +413,7 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Identifiers.MethodName('d'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -475,7 +475,7 @@ a1[1] = ((this.a)); a1[2] = (c); a1[1] = (i);
           Token.Punctuation.OpenParen,
           Token.Variables.ReadWrite('i'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -516,7 +516,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.CloseBracket,
           Token.Punctuation.Accessor,
           Token.Variables.Property('AsLong'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -530,7 +530,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -542,7 +542,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -555,7 +555,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.OpenParen,
           Token.Literals.Numeric.Decimal('42'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -568,7 +568,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.OpenParen,
           Token.Literals.Numeric.Decimal('42'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -583,7 +583,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.Comma,
           Token.Literals.Numeric.Decimal('23'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -602,7 +602,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.Colon,
           Token.Literals.Numeric.Decimal('23'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -617,7 +617,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.TypeParameters.End,
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -635,7 +635,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.TypeParameters.End,
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -656,7 +656,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.TypeParameters.End,
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -673,7 +673,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -692,7 +692,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -711,7 +711,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -727,7 +727,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -741,7 +741,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -760,7 +760,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -775,7 +775,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Operators.Arithmetic.Multiplication,
           Token.Variables.ReadWrite('n2'),
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -791,7 +791,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M2'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -807,7 +807,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Identifiers.MethodName('M2'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -827,7 +827,7 @@ Long total = data['bonusGame']['win'].AsLong * data['bonusGame']['betMult'].AsLo
           Token.Punctuation.OpenBracket,
           Token.Literals.Numeric.Decimal('0'),
           Token.Punctuation.CloseBracket,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });

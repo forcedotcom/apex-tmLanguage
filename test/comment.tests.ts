@@ -19,7 +19,7 @@ describe('Grammar', () => {
 
       tokens.should.deep.equal([
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text(' foo')
+        Token.Comment.SingleLine.Text(' foo'),
       ]);
     });
 
@@ -30,7 +30,7 @@ describe('Grammar', () => {
       tokens.should.deep.equal([
         Token.Comment.LeadingWhitespace('    '),
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text(' foo')
+        Token.Comment.SingleLine.Text(' foo'),
       ]);
     });
 
@@ -40,7 +40,7 @@ describe('Grammar', () => {
 
       tokens.should.deep.equal([
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text('// foo')
+        Token.Comment.SingleLine.Text('// foo'),
       ]);
     });
 
@@ -51,7 +51,7 @@ describe('Grammar', () => {
       tokens.should.deep.equal([
         Token.Comment.MultiLine.Start,
         Token.Comment.MultiLine.Text(' foo '),
-        Token.Comment.MultiLine.End
+        Token.Comment.MultiLine.End,
       ]);
     });
 
@@ -61,7 +61,7 @@ describe('Grammar', () => {
 
       tokens.should.deep.equal([
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text(' foo')
+        Token.Comment.SingleLine.Text(' foo'),
       ]);
     });
 
@@ -71,7 +71,7 @@ describe('Grammar', () => {
 
       tokens.should.deep.equal([
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text(' foo')
+        Token.Comment.SingleLine.Text(' foo'),
       ]);
     });
 
@@ -81,7 +81,7 @@ describe('Grammar', () => {
 
       tokens.should.deep.equal([
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text(' foo')
+        Token.Comment.SingleLine.Text(' foo'),
       ]);
     });
 
@@ -91,7 +91,7 @@ describe('Grammar', () => {
 
       tokens.should.deep.equal([
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text(' foo')
+        Token.Comment.SingleLine.Text(' foo'),
       ]);
     });
 
@@ -108,7 +108,7 @@ private String GetChar()//Метод возвращающий
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text('Метод возвращающий')
+        Token.Comment.SingleLine.Text('Метод возвращающий'),
       ]);
     });
 
@@ -127,7 +127,7 @@ public class CustomBootstrapper // : DefaultNancyBootstrapper
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text(' : DefaultNancyBootstrapper'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -147,7 +147,7 @@ public class CustomBootstrapper /* : DefaultNancyBootstrapper */
         Token.Comment.MultiLine.Text(' : DefaultNancyBootstrapper '),
         Token.Comment.MultiLine.End,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -166,7 +166,7 @@ public interface CustomBootstrapper // : DefaultNancyBootstrapper
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text(' : DefaultNancyBootstrapper'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -186,7 +186,7 @@ public interface CustomBootstrapper /* : DefaultNancyBootstrapper */
         Token.Comment.MultiLine.Text(' : DefaultNancyBootstrapper '),
         Token.Comment.MultiLine.End,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -205,7 +205,7 @@ public enum CustomBootstrapper // : byte
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text(' : byte'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -225,7 +225,7 @@ public enum CustomBootstrapper /* : byte */
         Token.Comment.MultiLine.Text(' : byte '),
         Token.Comment.MultiLine.End,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -254,7 +254,7 @@ Integer P {
         Token.Punctuation.CloseBrace,
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text(' comment2'),
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -277,7 +277,7 @@ finally
         Token.Punctuation.CloseBrace,
         Token.Keywords.Control.Finally,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -300,7 +300,7 @@ finally //comment
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text('comment'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -323,7 +323,7 @@ catch //comment
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text('comment'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -349,7 +349,7 @@ catch (Exception) //comment
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text('comment'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -378,7 +378,7 @@ catch (DataNotFoundException dnfe) //Only catch exceptions that are distinctly D
           'Only catch exceptions that are distinctly DataNotFoundException'
         ),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });

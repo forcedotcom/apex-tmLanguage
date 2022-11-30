@@ -26,7 +26,7 @@ describe('Grammar', () => {
           Token.Punctuation.OpenParen,
           Token.Literals.Boolean.True,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -42,7 +42,7 @@ describe('Grammar', () => {
           Token.Literals.Boolean.True,
           Token.Punctuation.CloseParen,
           Token.Punctuation.OpenBrace,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
     });
@@ -58,7 +58,7 @@ describe('Grammar', () => {
           Token.Literals.Boolean.True,
           Token.Punctuation.CloseParen,
           Token.Keywords.Control.Return,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -76,7 +76,7 @@ describe('Grammar', () => {
           Token.Support.Type.TriggerText('isBefore'),
           Token.Punctuation.CloseParen,
           Token.Keywords.Control.Return,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -92,7 +92,7 @@ describe('Grammar', () => {
           Token.Identifiers.MethodName('Do'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -110,7 +110,7 @@ describe('Grammar', () => {
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
           Token.Punctuation.Semicolon,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
 
@@ -129,7 +129,7 @@ if (true)
           Token.Identifiers.MethodName('Do'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -151,7 +151,7 @@ if (true)
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
           Token.Punctuation.Semicolon,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
 
@@ -177,7 +177,7 @@ else
           Token.Identifiers.MethodName('Dont'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -210,7 +210,7 @@ else
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
           Token.Punctuation.Semicolon,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
 
@@ -240,7 +240,7 @@ else if (false)
           Token.Identifiers.MethodName('Dont'),
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -277,7 +277,7 @@ else if (false)
           Token.Punctuation.OpenParen,
           Token.Punctuation.CloseParen,
           Token.Punctuation.Semicolon,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
 
@@ -310,7 +310,7 @@ while (i < 10)
           Token.Punctuation.Semicolon,
           Token.Keywords.Control.Break,
           Token.Punctuation.Semicolon,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
     });
@@ -332,7 +332,7 @@ finally
           Token.Punctuation.CloseBrace,
           Token.Keywords.Control.Finally,
           Token.Punctuation.OpenBrace,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
 
@@ -352,7 +352,7 @@ catch
           Token.Punctuation.CloseBrace,
           Token.Keywords.Control.Catch,
           Token.Punctuation.OpenBrace,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
 
@@ -378,7 +378,7 @@ finally
           Token.Punctuation.CloseBrace,
           Token.Keywords.Control.Finally,
           Token.Punctuation.OpenBrace,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
 
@@ -401,7 +401,7 @@ catch (Exception)
           Token.Support.Class.Text('Exception'),
           Token.Punctuation.CloseParen,
           Token.Punctuation.OpenBrace,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
 
@@ -425,7 +425,7 @@ catch (Exception ex)
           Token.Identifiers.LocalName('ex'),
           Token.Punctuation.CloseParen,
           Token.Punctuation.OpenBrace,
-          Token.Punctuation.CloseBrace
+          Token.Punctuation.CloseBrace,
         ]);
       });
 
@@ -449,7 +449,7 @@ Integer x;`);
           Token.Punctuation.CloseBrace,
           Token.PrimitiveType.Integer,
           Token.Identifiers.LocalName('x'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
