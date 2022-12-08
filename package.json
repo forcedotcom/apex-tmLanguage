@@ -37,7 +37,7 @@
     "watch": "node ./node_modules/typescript/bin/tsc -w -p .",
     "test:soql-tmgrammar": "vscode-tmgrammar-test -s source.soql -g ./grammars/soql.tmLanguage -t './test/soql/*.soql'",
     "test:soql-tmgrammar-snapshots": "vscode-tmgrammar-snap -s source.soql -g ./grammars/soql.tmLanguage -t './test/soql/snapshots/*.soql'",
-    "test": "gulp test; npm run test:soql-tmgrammar; npm run test:soql-tmgrammar-snapshots",
+    "test": "gulp test; yarn run test:soql-tmgrammar; yarn run test:soql-tmgrammar-snapshots",
     "prepare": "gulp",
     "build:default": "gulp default",
     "format": "prettier --config .prettierrc.json --write './**/*.{ts,js,json,md}'"
@@ -71,9 +71,6 @@
     "typescript": "3.7.5",
     "vscode-textmate": "4.4.0",
     "vscode-tmgrammar-test": "^0.0.10"
-  },
-  "volta": {
-    "node": "12.18.4"
   },
   "husky": {
     "hooks": {
