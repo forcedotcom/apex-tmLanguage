@@ -1,6 +1,5 @@
 # Salesforce Apex Language Grammar
 
-[![CircleCI](https://circleci.com/gh/forcedotcom/apex-tmLanguage.svg?style=svg)](https://circleci.com/gh/forcedotcom/apex-tmLanguage)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Introduction
@@ -54,7 +53,7 @@ The example-\* queries were taken from [Example SELECT clauses](https://develope
 
 ## Releasing
 
-Tags on this repo get automatically published as a GitHub release and an NPM package through Travis CI.
+Merges to main on this repo with commits of type 'feat' or 'fix' get automatically published as a GitHub release and an NPM package through Github Actions.
 
 ## Attribution
 
