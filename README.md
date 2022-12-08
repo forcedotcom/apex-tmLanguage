@@ -15,7 +15,7 @@ Development and setup of this project has not been tested for Windows OS. You ma
 To **build and test** install Node.js do the following:
 
 - Run `yarn install` to install any dependencies.
-- Run `yarn run prepare` to build using gulp.
+- Run `yarn run build` to build using gulp.
 - Run `yarn run test` to run tests.
 
 Output grammars are output in the `grammars/` directory.
