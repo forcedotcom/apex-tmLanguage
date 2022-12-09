@@ -1,4 +1,5 @@
-name: Slack notification for Github Actions
+name: Slack Notification for Github Actions
+
 on:
   workflow_run:
     workflows:
