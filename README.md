@@ -1,6 +1,5 @@
 # Salesforce Apex Language Grammar
 
-[![CircleCI](https://circleci.com/gh/forcedotcom/apex-tmLanguage.svg?style=svg)](https://circleci.com/gh/forcedotcom/apex-tmLanguage)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Introduction
@@ -15,9 +14,9 @@ Development and setup of this project has not been tested for Windows OS. You ma
 
 To **build and test** install Node.js do the following:
 
-- Run `npm install` to install any dependencies.
-- Run `gulp` to build.
-- Run `npm run test` to run tests.
+- Run `yarn install` to install any dependencies.
+- Run `yarn run build` to build using gulp.
+- Run `yarn run test` to run tests.
 
 Output grammars are output in the `grammars/` directory.
 
@@ -54,7 +53,7 @@ The example-\* queries were taken from [Example SELECT clauses](https://develope
 
 ## Releasing
 
-Tags on this repo get automatically published as a GitHub release and an NPM package through Travis CI.
+Merges to main on this repo with commits of type 'feat' or 'fix' get automatically published as a GitHub release and an NPM package through Github Actions.
 
 ## Attribution
 

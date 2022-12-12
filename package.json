@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/apex-tmlanguage",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Textmate grammar for Apex with outputs for VSCode, Atom and TextMate.",
   "displayName": "apex-tmLanguage",
   "keywords": [
@@ -31,13 +31,14 @@
     }
   ],
   "scripts": {
+    "build": "gulp",
     "compile": "node ./node_modules/typescript/bin/tsc -p .",
     "commit-init": "commitizen init cz-conventional-changelog --save-dev --save-exact --force",
     "commit": "git-cz",
     "watch": "node ./node_modules/typescript/bin/tsc -w -p .",
-    "test:soql-tmgrammar": "vscode-tmgrammar-test -g ./grammars/soql.tmLanguage './test/soql/*.soql'",
-    "test:soql-tmgrammar-snapshots": "vscode-tmgrammar-snap -s source.soql -g ./grammars/soql.tmLanguage './test/soql/snapshots/*.soql'",
-    "test": "gulp test; npm run test:soql-tmgrammar; npm run test:soql-tmgrammar-snapshots",
+    "test:soql-tmgrammar": "vscode-tmgrammar-test -g \"./grammars/soql.tmLanguage\" \"./test/soql/*.soql\" ",
+    "test:soql-tmgrammar-snapshots": "vscode-tmgrammar-snap -s source.soql -g \"./grammars/soql.tmLanguage\" \"./test/soql/snapshots/*.soql\" ",
+    "test": "gulp test && yarn run test:soql-tmgrammar && yarn run test:soql-tmgrammar-snapshots",
     "prepare": "gulp",
     "build:default": "gulp default",
     "format": "prettier --config .prettierrc.json --write './**/*.{ts,js,json,md}'"
@@ -71,9 +72,6 @@
     "typescript": "4.9.3",
     "vscode-textmate": "7.0.4",
     "vscode-tmgrammar-test": "^0.1.1"
-  },
-  "volta": {
-    "node": "18.12.1"
   },
   "husky": {
     "hooks": {
