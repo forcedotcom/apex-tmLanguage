@@ -23,7 +23,7 @@ describe('Grammar', () => {
           Token.Identifiers.FieldName('x'),
           Token.Operators.Assignment,
           Token.Literals.Boolean.True,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -36,7 +36,7 @@ describe('Grammar', () => {
           Token.Identifiers.FieldName('x'),
           Token.Operators.Assignment,
           Token.Literals.Boolean.False,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -52,7 +52,7 @@ describe('Grammar', () => {
           Token.Operators.Assignment,
           Token.Punctuation.String.Begin,
           Token.Punctuation.String.End,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -67,7 +67,7 @@ describe('Grammar', () => {
           Token.Punctuation.String.Begin,
           Token.Literals.String('a'),
           Token.Punctuation.String.End,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -82,7 +82,7 @@ describe('Grammar', () => {
           Token.Punctuation.String.Begin,
           Token.Literals.CharacterEscape("\\'"),
           Token.Punctuation.String.End,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -97,7 +97,7 @@ describe('Grammar', () => {
           Token.Identifiers.FieldName('x'),
           Token.Operators.Assignment,
           Token.Literals.Numeric.Decimal('0'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -110,7 +110,7 @@ describe('Grammar', () => {
           Token.Identifiers.FieldName('x'),
           Token.Operators.Assignment,
           Token.Literals.Numeric.Hexadecimal('0x0'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -123,7 +123,7 @@ describe('Grammar', () => {
           Token.Identifiers.FieldName('x'),
           Token.Operators.Assignment,
           Token.Literals.Numeric.Binary('0b0'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -136,7 +136,7 @@ describe('Grammar', () => {
           Token.Identifiers.FieldName('x'),
           Token.Operators.Assignment,
           Token.Literals.Numeric.Decimal('0.0'),
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });
@@ -153,7 +153,7 @@ describe('Grammar', () => {
           Token.Punctuation.String.Begin,
           Token.Literals.String('hello world!'),
           Token.Punctuation.String.End,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
 
@@ -171,7 +171,7 @@ describe('Grammar', () => {
           Token.Literals.String('world!'),
           Token.Literals.CharacterEscape('\\"'),
           Token.Punctuation.String.End,
-          Token.Punctuation.Semicolon
+          Token.Punctuation.Semicolon,
         ]);
       });
     });

@@ -22,7 +22,7 @@ describe('Grammar', () => {
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -36,7 +36,7 @@ describe('Grammar', () => {
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -52,7 +52,7 @@ describe('Grammar', () => {
         Token.Identifiers.ParameterName('x'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -68,7 +68,7 @@ describe('Grammar', () => {
         Token.Identifiers.ParameterName('x'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -89,7 +89,7 @@ TestClass(String x, Integer y)
         Token.Identifiers.ParameterName('y'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -102,7 +102,7 @@ TestClass(String x, Integer y)
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -128,7 +128,7 @@ WaitHandle(Task self)
         Token.Operators.Assignment,
         Token.Variables.ReadWrite('self'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -151,7 +151,7 @@ public C(
 
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -193,7 +193,7 @@ public AccountController(
 
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });

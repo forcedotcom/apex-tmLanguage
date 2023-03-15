@@ -34,7 +34,7 @@ describe('Grammar', () => {
         Token.Identifiers.ParameterName('a'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -58,7 +58,7 @@ public static void doCalloutFromFuture() {
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -74,7 +74,7 @@ public             class MyTestClass { }`);
         Token.Keywords.Class,
         Token.Identifiers.ClassName('MyTestClass'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -97,12 +97,13 @@ public             class MyTestClass { }`);
         Token.Punctuation.String.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('Inserts new accounts.'),
         Token.Punctuation.String.End,
-        Token.Punctuation.CloseParen
+        Token.Punctuation.CloseParen,
       ]);
     });
 
     it('annotation with multiple parameters on field', async () => {
-      const input = Input.InClass(`@InvocableMethod(label='Insert Accounts' description='Inserts new accounts.' required=false)
+      const input =
+        Input.InClass(`@InvocableMethod(label='Insert Accounts' description='Inserts new accounts.' required=false)
       global ID leadId;
 `);
       const tokens = await tokenize(input);
@@ -127,7 +128,7 @@ public             class MyTestClass { }`);
         Token.Keywords.Modifiers.Global,
         Token.PrimitiveType.ID,
         Token.Identifiers.FieldName('leadId'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
   });

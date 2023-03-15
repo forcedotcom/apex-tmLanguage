@@ -39,7 +39,7 @@ public ColorTest(String white)
         Token.Operators.Assignment,
         Token.Variables.ReadWrite('white'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });

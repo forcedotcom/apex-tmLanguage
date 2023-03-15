@@ -596,15 +596,15 @@ repository:
   field-declaration:
     begin: |-
       (?x)
-      (?<type-name>
+      (?<type_name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
+            (?<name_and_type_args> # identifier + type arguments (if any)
               \g<identifier>\s*
-              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
             )
-            (?:\s*\.\s*\g<name-and-type-args>)*
+            (?:\s*\.\s*\g<name_and_type_args>)*
           )
           (?:\s*\?\s*)? # nullable suffix?
           (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -618,8 +618,8 @@ repository:
         - include: '#support-type'
         - include: '#type'
       # '2': ?<identifier> is a sub-expression. It's final value is not considered.
-      # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-      # '4': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '3': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
+      # '4': ?<type_args> is a sub-expression. It's final value is not considered.
       '5': { name: entity.name.variable.field.apex }
     end: (?=;)
     patterns:
@@ -634,35 +634,35 @@ repository:
     begin: |-
       (?x)
       (?!.*\b(?:class|interface|enum)\b)\s*
-      (?<return-type>
-        (?<type-name>
+      (?<return_type>
+        (?<type_name>
           (?:
             (?:ref\s+)?   # ref return
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-              (?<name-and-type-args> # identifier + type arguments (if any)
+              (?<name_and_type_args> # identifier + type arguments (if any)
                 \g<identifier>\s*
-                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+                (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
               )
-              (?:\s*\.\s*\g<name-and-type-args>)*
+              (?:\s*\.\s*\g<name_and_type_args>)*
             )
             (?:\s*\?\s*)? # nullable suffix?
             (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
           )
         )\s+
       )
-      (?<interface-name>\g<type-name>\s*\.\s*)?
-      (?<property-name>\g<identifier>)\s*
+      (?<interface_name>\g<type_name>\s*\.\s*)?
+      (?<property_name>\g<identifier>)\s*
       (?=\{|=>|$)
     beginCaptures:
       '1':
         patterns:
         # - include: '#support-type'
         - include: '#type'
-      # '2': ?<type-name> is a sub-expression. It's final value is not considered.
+      # '2': ?<type_name> is a sub-expression. It's final value is not considered.
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
-      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '4': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type_args> is a sub-expression. It's final value is not considered.
       '6':
         patterns:
         - include: '#type'
@@ -679,34 +679,34 @@ repository:
   indexer-declaration:
     begin: |-
       (?x)
-      (?<return-type>
-        (?<type-name>
+      (?<return_type>
+        (?<type_name>
           (?:
             (?:ref\s+)?   # ref return
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-              (?<name-and-type-args> # identifier + type arguments (if any)
+              (?<name_and_type_args> # identifier + type arguments (if any)
                 \g<identifier>\s*
-                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+                (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
               )
-              (?:\s*\.\s*\g<name-and-type-args>)*
+              (?:\s*\.\s*\g<name_and_type_args>)*
             )
             (?:\s*\?\s*)? # nullable suffix?
             (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
           )
         )\s+
       )
-      (?<interface-name>\g<type-name>\s*\.\s*)?
-      (?<indexer-name>this)\s*
+      (?<interface_name>\g<type_name>\s*\.\s*)?
+      (?<indexer_name>this)\s*
       (?=\[)
     beginCaptures:
       '1':
         patterns:
         - include: '#type'
-      # '2': ?<type-name> is a sub-expression. It's final value is not considered.
+      # '2': ?<type_name> is a sub-expression. It's final value is not considered.
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
-      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '4': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type_args> is a sub-expression. It's final value is not considered.
       '6':
         patterns:
         - include: '#type'
@@ -742,24 +742,24 @@ repository:
   method-declaration:
     begin: |-
       (?x)
-      (?<return-type>
-        (?<type-name>
+      (?<return_type>
+        (?<type_name>
           (?:
             (?:ref\s+)?   # ref return
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-              (?<name-and-type-args> # identifier + type arguments (if any)
+              (?<name_and_type_args> # identifier + type arguments (if any)
                 \g<identifier>\s*
-                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+                (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
               )
-              (?:\s*\.\s*\g<name-and-type-args>)*
+              (?:\s*\.\s*\g<name_and_type_args>)*
             )
             (?:\s*\?\s*)? # nullable suffix?
             (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
           )
         )\s+
       )
-      (?<interface-name>\g<type-name>\s*\.\s*)?
+      (?<interface_name>\g<type_name>\s*\.\s*)?
       (\g<identifier>)\s*
       (<([^<>]+)>)?\s*
       (?=\()
@@ -768,10 +768,10 @@ repository:
         patterns:
         - include: '#support-type'
         - include: '#type'
-      # '2': ?<type-name> is a sub-expression. It's final value is not considered.
+      # '2': ?<type_name> is a sub-expression. It's final value is not considered.
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
-      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '4': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type_args> is a sub-expression. It's final value is not considered.
       '6':
         patterns:
         - include: '#type'
@@ -1099,15 +1099,15 @@ repository:
       patterns:
       - match: |-
           (?x)
-          (?<type-name>
+          (?<type_name>
             (?:
               (?:
                 (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-                (?<name-and-type-args> # identifier + type arguments (if any)
+                (?<name_and_type_args> # identifier + type arguments (if any)
                   \g<identifier>\s*
-                  (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+                  (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
                 )
-                (?:\s*\.\s*\g<name-and-type-args>)*
+                (?:\s*\.\s*\g<name_and_type_args>)*
               )
               (?:\s*\?\s*)? # nullable suffix?
               (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1120,8 +1120,8 @@ repository:
             - include: '#support-type'
             - include: '#type'
           # '2': ?<identifier> is a sub-expression. It's final value is not considered.
-          # '3': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-          # '4': ?<type-args> is a sub-expression. It's final value is not considered.
+          # '3': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
+          # '4': ?<type_args> is a sub-expression. It's final value is not considered.
           '5': { name: entity.name.variable.local.apex }
     - include: '#comment'
     - include: '#block'
@@ -1136,16 +1136,16 @@ repository:
       (?x)
       (?:
         (?:(\bref)\s+)?(\bvar\b)| # ref local
-        (?<type-name>
+        (?<type_name>
           (?:
             (?:ref\s+)?   # ref local
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-              (?<name-and-type-args> # identifier + type arguments (if any)
+              (?<name_and_type_args> # identifier + type arguments (if any)
                 \g<identifier>\s*
-                (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+                (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
               )
-              (?:\s*\.\s*\g<name-and-type-args>)*
+              (?:\s*\.\s*\g<name_and_type_args>)*
             )
             (?:\s*\?\s*)? # nullable suffix?
             (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1162,8 +1162,8 @@ repository:
         - include: '#support-type'
         - include: '#type'
       # '4': ?<identifier> is a sub-expression. It's final value is not considered.
-      # '5': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-      # '6': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '5': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
+      # '6': ?<type_args> is a sub-expression. It's final value is not considered.
       '7': { name: entity.name.variable.local.apex }
     end: (?=;|\))
     patterns:
@@ -1176,16 +1176,16 @@ repository:
   local-constant-declaration:
     begin: |-
       (?x)
-      (?<const-keyword>\b(?:const)\b)\s*
-      (?<type-name>
+      (?<const_keyword>\b(?:const)\b)\s*
+      (?<type_name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
+            (?<name_and_type_args> # identifier + type arguments (if any)
               \g<identifier>\s*
-              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
             )
-            (?:\s*\.\s*\g<name-and-type-args>)*
+            (?:\s*\.\s*\g<name_and_type_args>)*
           )
           (?:\s*\?\s*)? # nullable suffix?
           (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1199,8 +1199,8 @@ repository:
         patterns:
         - include: '#type'
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
-      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '4': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type_args> is a sub-expression. It's final value is not considered.
       '6': { name: entity.name.variable.local.apex }
     end: (?=;)
     patterns:
@@ -1350,15 +1350,15 @@ repository:
     match: |-
       (?x)
       (\()\s*
-      (?<type-name>
+      (?<type_name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
+            (?<name_and_type_args> # identifier + type arguments (if any)
               \g<identifier>\s*
-              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
             )
-            (?:\s*\.\s*\g<name-and-type-args>)*
+            (?:\s*\.\s*\g<name_and_type_args>)*
           )
           (?:\s*\?\s*)? # nullable suffix?
           (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1372,8 +1372,8 @@ repository:
         - include: '#support-type'
         - include: '#type'
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
-      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '4': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type_args> is a sub-expression. It's final value is not considered.
       '6': { name: punctuation.parenthesis.close.apex }
 
   this-expression:
@@ -1386,7 +1386,7 @@ repository:
       (?x)
       (?:(\??\.)\s*)?                                  # safe navigator or accessor
       (@?[_[:alpha:]][_[:alnum:]]*)\s*                 # method name
-      (?<type-args>\s*<([^<>]|\g<type-args>)+>\s*)?\s* # type arguments
+      (?<type_args>\s*<([^<>]|\g<type_args>)+>\s*)?\s* # type arguments
       (?=\()                                           # open paren of argument list
     beginCaptures:
       '1':
@@ -1440,7 +1440,7 @@ repository:
         (?x)
         (\??\.)?\s*
         (@?[_[:alpha:]][_[:alnum:]]*)
-        (?<type-params>\s*<([^<>]|\g<type-params>)+>\s*)
+        (?<type_params>\s*<([^<>]|\g<type_params>)+>\s*)
         (?=
           (\s*\?)?
           \s*\.\s*@?[_[:alpha:]][_[:alnum:]]*
@@ -1477,15 +1477,15 @@ repository:
       (?x)
       (delete|insert|undelete|update|upsert)?
       \s*(new)\s+
-      (?<type-name>
+      (?<type_name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
+            (?<name_and_type_args> # identifier + type arguments (if any)
               \g<identifier>\s*
-              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
             )
-            (?:\s*\.\s*\g<name-and-type-args>)*
+            (?:\s*\.\s*\g<name_and_type_args>)*
           )
           (?:\s*\?\s*)? # nullable suffix?
           (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1508,15 +1508,15 @@ repository:
       (?x)
       (delete|insert|undelete|update|upsert)?
       \s*(new)\s+
-      (?<type-name>
+      (?<type_name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
+            (?<name_and_type_args> # identifier + type arguments (if any)
               \g<identifier>\s*
-              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
             )
-            (?:\s*\.\s*\g<name-and-type-args>)*
+            (?:\s*\.\s*\g<name_and_type_args>)*
           )
           (?:\s*\?\s*)? # nullable suffix?
           (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1535,15 +1535,15 @@ repository:
     begin: |-
       (?x)
       \b(new)\b\s*
-      (?<type-name>
+      (?<type_name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
+            (?<name_and_type_args> # identifier + type arguments (if any)
               \g<identifier>\s*
-              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
             )
-            (?:\s*\.\s*\g<name-and-type-args>)*
+            (?:\s*\.\s*\g<name_and_type_args>)*
           )
           (?:\s*\?\s*)? # nullable suffix?
           (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1577,16 +1577,16 @@ repository:
     match: |-
       (?x)
       (?:(?:\b(this)\b)\s+)?
-      (?<type-name>
+      (?<type_name>
         (?:
           (?:ref\s+)?   # ref return
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-            (?<name-and-type-args> # identifier + type arguments (if any)
+            (?<name_and_type_args> # identifier + type arguments (if any)
               \g<identifier>\s*
-              (?<type-args>\s*<(?:[^<>]|\g<type-args>)+>\s*)?
+              (?<type_args>\s*<(?:[^<>]|\g<type_args>)+>\s*)?
             )
-            (?:\s*\.\s*\g<name-and-type-args>)*
+            (?:\s*\.\s*\g<name_and_type_args>)*
           )
           (?:\s*\?\s*)? # nullable suffix?
           (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1600,8 +1600,8 @@ repository:
         - include: '#support-type'
         - include: '#type'
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
-      # '4': ?<name-and-type-args> is a sub-expression. It's final value is not considered.
-      # '5': ?<type-args> is a sub-expression. It's final value is not considered.
+      # '4': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
+      # '5': ?<type_args> is a sub-expression. It's final value is not considered.
       '6': { name: entity.name.variable.parameter.apex }
 
   argument-list:

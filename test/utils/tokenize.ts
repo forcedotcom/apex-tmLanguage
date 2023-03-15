@@ -11,7 +11,7 @@ const registry = new TMRegistry();
 const excludedTypes = [
   'source.apex',
   'meta.tag.apex',
-  'meta.type.parameters.apex'
+  'meta.type.parameters.apex',
 ];
 
 export async function tokenize(
@@ -75,7 +75,7 @@ export class Input {
       startLine: 0,
       startIndex: 0,
       endLine: lines.length - 1,
-      endIndex: lines[lines.length - 1].length
+      endIndex: lines[lines.length - 1].length,
     });
   }
 
@@ -93,7 +93,7 @@ enum TestEnum {
       startLine: 2,
       startIndex: 4,
       endLine: lines.length - 1,
-      endIndex: 0
+      endIndex: 0,
     });
   }
 
@@ -111,7 +111,7 @@ class TestClass {
       startLine: 2,
       startIndex: 4,
       endLine: lines.length - 1,
-      endIndex: 0
+      endIndex: 0,
     });
   }
 
@@ -129,7 +129,7 @@ trigger TestTrigger on Account (before insert, after update) {
       startLine: 2,
       startIndex: 4,
       endLine: lines.length - 1,
-      endIndex: 0
+      endIndex: 0,
     });
   }
 
@@ -147,7 +147,7 @@ interface TestInterface {
       startLine: 2,
       startIndex: 4,
       endLine: lines.length - 1,
-      endIndex: 0
+      endIndex: 0,
     });
   }
 
@@ -167,7 +167,7 @@ class TestClass {
       startLine: 3,
       startIndex: 8,
       endLine: lines.length - 2,
-      endIndex: 0
+      endIndex: 0,
     });
   }
 }

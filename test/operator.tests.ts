@@ -33,7 +33,7 @@ describe('Grammar', () => {
         Token.Operators.Arithmetic.Addition,
         Token.Variables.ReadWrite('value'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -57,7 +57,7 @@ describe('Grammar', () => {
         Token.Operators.Arithmetic.Subtraction,
         Token.Variables.ReadWrite('value'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -85,7 +85,7 @@ describe('Grammar', () => {
         Token.Literals.Numeric.Decimal('0'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -109,7 +109,7 @@ describe('Grammar', () => {
         Token.Operators.Increment,
         Token.Variables.ReadWrite('value'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -133,7 +133,7 @@ describe('Grammar', () => {
         Token.Operators.Decrement,
         Token.Variables.ReadWrite('value'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -158,7 +158,7 @@ describe('Grammar', () => {
         Token.Operators.Relational.NotEqual,
         Token.Literals.Numeric.Decimal('0'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -183,7 +183,7 @@ describe('Grammar', () => {
         Token.Operators.Relational.Equals,
         Token.Literals.Numeric.Decimal('0'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -211,7 +211,7 @@ describe('Grammar', () => {
         Token.Operators.Arithmetic.Addition,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -239,7 +239,7 @@ describe('Grammar', () => {
         Token.Operators.Arithmetic.Subtraction,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -267,7 +267,7 @@ describe('Grammar', () => {
         Token.Operators.Arithmetic.Multiplication,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -295,7 +295,7 @@ describe('Grammar', () => {
         Token.Operators.Arithmetic.Division,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -323,7 +323,7 @@ describe('Grammar', () => {
         Token.Operators.Bitwise.And,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -351,7 +351,7 @@ describe('Grammar', () => {
         Token.Operators.Bitwise.Or,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -379,7 +379,7 @@ describe('Grammar', () => {
         Token.Operators.Bitwise.ShiftLeft,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -407,7 +407,7 @@ describe('Grammar', () => {
         Token.Operators.Bitwise.ShiftRight,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -435,7 +435,7 @@ describe('Grammar', () => {
         Token.Operators.Relational.GreaterThan,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -463,7 +463,7 @@ describe('Grammar', () => {
         Token.Operators.Relational.LessThan,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -491,7 +491,7 @@ describe('Grammar', () => {
         Token.Operators.Relational.GreaterThanOrEqual,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -519,7 +519,7 @@ describe('Grammar', () => {
         Token.Operators.Relational.LessThanOrEqual,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });

@@ -82,7 +82,7 @@ public    abstract class PublicAbstractClass { }
         Token.Keywords.Class,
         Token.Identifiers.ClassName('DefaultAbstractClass'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -96,7 +96,7 @@ public    abstract class PublicAbstractClass { }
         Token.Keywords.Class,
         Token.Identifiers.ClassName('C'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -110,7 +110,7 @@ public    abstract class PublicAbstractClass { }
         Token.Keywords.Class,
         Token.Identifiers.ClassName('Fireburn'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -123,7 +123,7 @@ public    abstract class PublicAbstractClass { }
         Token.Keywords.Class,
         Token.Identifiers.ClassName('SimpleClass'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -136,7 +136,7 @@ public    abstract class PublicAbstractClass { }
         Token.Keywords.Class,
         Token.Identifiers.ClassName('GlobalClass'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -151,7 +151,7 @@ public    abstract class PublicAbstractClass { }
         Token.Keywords.Extends,
         Token.Identifiers.ExtendsName('Vehicle'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -171,7 +171,7 @@ public    abstract class PublicAbstractClass { }
         Token.Keywords.Implements,
         Token.Identifiers.ImplementsName('MyInterface'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -191,7 +191,7 @@ public    abstract class PublicAbstractClass { }
         Token.Keywords.Extends,
         Token.Identifiers.ExtendsName('Exception'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });

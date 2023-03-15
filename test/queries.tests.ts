@@ -33,7 +33,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.From,
         Token.Keywords.Queries.TypeName('User'),
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -62,7 +62,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.From,
         Token.Keywords.Queries.TypeName('User'),
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -97,7 +97,7 @@ describe('Grammar', () => {
         Token.Literals.String('10'),
         Token.Punctuation.String.End,
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -139,7 +139,7 @@ describe('Grammar', () => {
         Token.Literals.String('10'),
         Token.Punctuation.String.End,
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -164,7 +164,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.OrderBy,
         Token.Keywords.Queries.FieldName('SomeField__c'),
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -190,7 +190,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('SomeField__c'),
         Token.Keywords.Queries.Ascending,
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -217,7 +217,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.Descending,
         Token.Keywords.Queries.NullsLast,
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -245,7 +245,7 @@ describe('Grammar', () => {
         Token.Operators.Conditional.Colon,
         Token.Identifiers.LocalName('variable'),
         Token.Punctuation.CloseBracket,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -272,7 +272,7 @@ describe('Grammar', () => {
         Token.Punctuation.String.Begin,
         Token.Literals.String('Name'),
         Token.Punctuation.String.End,
-        Token.Punctuation.CloseParen
+        Token.Punctuation.CloseParen,
       ]);
     });
 
@@ -305,7 +305,7 @@ describe('Grammar', () => {
         Token.Operators.Assignment,
         Token.Literals.Numeric.Decimal('20'),
         Token.Punctuation.CloseParen,
-        Token.Punctuation.CloseParen
+        Token.Punctuation.CloseParen,
       ]);
     });
 
@@ -331,7 +331,7 @@ describe('Grammar', () => {
         Token.Operators.Assignment,
         Token.Punctuation.String.Begin,
         Token.Literals.String('California'),
-        Token.Punctuation.String.End
+        Token.Punctuation.String.End,
       ]);
     });
 
@@ -349,7 +349,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.Where,
         Token.Keywords.Queries.FieldName('CreatedDate'),
         Token.Operators.Relational.GreaterThan,
-        Token.Literals.Numeric.DateTimeUTC('2011-04-26T10:00:00-08:00')
+        Token.Literals.Numeric.DateTimeUTC('2011-04-26T10:00:00-08:00'),
       ]);
     });
 
@@ -370,7 +370,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('CreatedDate'),
         Token.Punctuation.CloseParen,
         Token.Operators.Assignment,
-        Token.Literals.Numeric.Decimal('2011')
+        Token.Literals.Numeric.Decimal('2011'),
       ]);
     });
 
@@ -389,7 +389,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('Recordtype.Name'),
         Token.Punctuation.CloseParen,
         Token.Keywords.Queries.From,
-        Token.Keywords.Queries.TypeName('Lead')
+        Token.Keywords.Queries.TypeName('Lead'),
       ]);
     });
 
@@ -417,7 +417,7 @@ describe('Grammar', () => {
         Token.Punctuation.String.Begin,
         Token.Literals.String('CCC'),
         Token.Punctuation.String.End,
-        Token.Punctuation.CloseParen
+        Token.Punctuation.CloseParen,
       ]);
     });
 
@@ -443,7 +443,7 @@ describe('Grammar', () => {
         Token.Punctuation.String.Begin,
         Token.Literals.String('Opportunity'),
         Token.Punctuation.String.End,
-        Token.Punctuation.CloseParen
+        Token.Punctuation.CloseParen,
       ]);
     });
 
@@ -461,7 +461,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.Where,
         Token.Keywords.Queries.FieldName('CreatedDate'),
         Token.Operators.Assignment,
-        Token.Keywords.Queries.DateLiteral('LAST_90_DAYS')
+        Token.Keywords.Queries.DateLiteral('LAST_90_DAYS'),
       ]);
     });
 
@@ -479,7 +479,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.Where,
         Token.Keywords.Queries.FieldName('CloseDate'),
         Token.Operators.Relational.GreaterThan,
-        Token.Keywords.Queries.DateLiteral('LAST_N_FISCAL_YEARS:3')
+        Token.Keywords.Queries.DateLiteral('LAST_N_FISCAL_YEARS:3'),
       ]);
     });
 
@@ -492,7 +492,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('Id'),
         Token.Keywords.Queries.From,
         Token.Keywords.Queries.TypeName('Account'),
-        Token.Keywords.Queries.UsingScope('USING SCOPE Mine')
+        Token.Keywords.Queries.UsingScope('USING SCOPE Mine'),
       ]);
     });
 
@@ -510,7 +510,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.OperatorName('LIMIT'),
         Token.Literals.Numeric.Decimal('100'),
         Token.Keywords.Queries.OperatorName('OFFSET'),
-        Token.Literals.Numeric.Decimal('20')
+        Token.Literals.Numeric.Decimal('20'),
       ]);
     });
 
@@ -538,7 +538,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('Status'),
         Token.Punctuation.Comma,
         Token.Keywords.Queries.FieldName('LeadSource'),
-        Token.Punctuation.CloseParen
+        Token.Punctuation.CloseParen,
       ]);
     });
 
@@ -560,7 +560,7 @@ describe('Grammar', () => {
         Token.Punctuation.OpenParen,
         Token.Keywords.Queries.FieldName('CreatedDate'),
         Token.Punctuation.CloseParen,
-        Token.Punctuation.CloseParen
+        Token.Punctuation.CloseParen,
       ]);
     });
 
@@ -577,7 +577,7 @@ describe('Grammar', () => {
         Token.Keywords.Queries.FieldName('Id'),
         Token.Keywords.Queries.OperatorName('IN'),
         Token.Operators.Conditional.Colon,
-        Token.Identifiers.LocalName('variable')
+        Token.Identifiers.LocalName('variable'),
       ]);
     });
   });

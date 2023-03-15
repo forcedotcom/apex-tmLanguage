@@ -21,7 +21,7 @@ describe('Grammar', () => {
         Token.Keywords.Enum,
         Token.Identifiers.EnumName('E'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -41,7 +41,7 @@ describe('Grammar', () => {
         Token.Identifiers.EnumMemberName('SUMMER'),
         Token.Punctuation.Comma,
         Token.Identifiers.EnumMemberName('FALL'),
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -63,7 +63,7 @@ describe('Grammar', () => {
         Token.Identifiers.EnumMemberName('SUMMER'),
         Token.Punctuation.Comma,
         Token.Identifiers.EnumMemberName('FALL'),
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -76,7 +76,7 @@ describe('Grammar', () => {
         Token.Identifiers.EnumName('E'),
         Token.Punctuation.OpenBrace,
         Token.Identifiers.EnumMemberName('M1'),
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -93,7 +93,7 @@ describe('Grammar', () => {
         Token.Identifiers.EnumMemberName('Green'),
         Token.Punctuation.Comma,
         Token.Identifiers.EnumMemberName('Blue'),
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -120,7 +120,7 @@ enum E
         Token.Identifiers.EnumMemberName('Value2'),
         Token.Punctuation.Comma,
         Token.Identifiers.EnumMemberName('Value3'),
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -191,7 +191,7 @@ public class TestClass2
         Token.Keywords.Class,
         Token.Identifiers.ClassName('TestClass2'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });

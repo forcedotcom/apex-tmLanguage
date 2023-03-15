@@ -35,7 +35,7 @@ private List field123;`);
         Token.Keywords.Modifiers.Private,
         Token.Type('List'),
         Token.Identifiers.FieldName('field123'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -62,7 +62,7 @@ private List field123;`);
         Token.Punctuation.TypeParameters.End,
         Token.Punctuation.TypeParameters.End,
         Token.Identifiers.FieldName('_field'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -82,7 +82,7 @@ String[] field123;`);
         Token.Punctuation.OpenBracket,
         Token.Punctuation.CloseBracket,
         Token.Identifiers.FieldName('field123'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -107,7 +107,7 @@ private String field = 'hello';
         Token.Identifiers.FieldName('field'),
         Token.Operators.Assignment,
         Token.Literals.Boolean.True,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -128,7 +128,7 @@ private String field = 'hello';
         Token.Identifiers.FieldName('z'),
         Token.Operators.Assignment,
         Token.Literals.Numeric.Decimal('42'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -141,7 +141,7 @@ private String field = 'hello';
         Token.Keywords.Modifiers.Static,
         Token.PrimitiveType.Integer,
         Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -168,7 +168,7 @@ private UnityEngine.UI.Image[] selectedImages;
         Token.Punctuation.OpenBracket,
         Token.Punctuation.CloseBracket,
         Token.Identifiers.FieldName('selectedImages'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
   });

@@ -18,7 +18,7 @@ describe('Grammar', () => {
       tokens.should.deep.equal([
         Token.Comment.MultiLine.JavaDocStart,
         Token.Comment.MultiLine.JavaDocText('********'),
-        Token.Comment.MultiLine.End
+        Token.Comment.MultiLine.End,
       ]);
     });
 
@@ -33,7 +33,7 @@ describe('Grammar', () => {
       tokens.should.deep.equal([
         Token.Comment.MultiLine.JavaDocStart,
         Token.Comment.MultiLine.JavaDocText('* foo'),
-        Token.Comment.MultiLine.End
+        Token.Comment.MultiLine.End,
       ]);
     });
 
@@ -54,7 +54,7 @@ describe('Grammar', () => {
         Token.Comment.MultiLine.End,
         Token.Comment.MultiLine.JavaDocStart,
         Token.Comment.MultiLine.JavaDocText('**********'),
-        Token.Comment.MultiLine.End
+        Token.Comment.MultiLine.End,
       ]);
     });
 
@@ -71,7 +71,7 @@ describe('Grammar', () => {
         Token.Comment.MultiLine.JavaDocText('* '),
         Token.Comment.MultiLine.JavaDocKeyword('@return'),
         Token.Comment.MultiLine.JavaDocText(' null'),
-        Token.Comment.MultiLine.End
+        Token.Comment.MultiLine.End,
       ]);
     });
 
@@ -135,7 +135,7 @@ describe('Grammar', () => {
         Token.Comment.MultiLine.JavaDocKeyword('@author'),
         Token.Comment.MultiLine.JavaDocText(' Eduardo Mora em@example.com'),
         Token.Comment.MultiLine.JavaDocText(' '),
-        Token.Comment.MultiLine.End
+        Token.Comment.MultiLine.End,
       ]);
     });
   });

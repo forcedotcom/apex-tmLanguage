@@ -23,7 +23,7 @@ describe('Grammar', () => {
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -51,7 +51,7 @@ Integer Add(Integer x, Integer y)
         Token.Operators.Arithmetic.Addition,
         Token.Variables.ReadWrite('y'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -69,7 +69,7 @@ Integer Add(Integer x, Integer y)
         Token.Identifiers.MethodName('toString'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -82,7 +82,7 @@ Integer Add(Integer x, Integer y)
         Token.Identifiers.MethodName('GetString'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -104,7 +104,7 @@ Integer Add(Integer x, Integer y)
         Token.Punctuation.CloseBracket,
         Token.Identifiers.ParameterName('args'),
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -119,7 +119,7 @@ Integer Add(Integer x, Integer y)
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -134,7 +134,7 @@ Integer Add(Integer x, Integer y)
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -152,7 +152,7 @@ Integer Add(Integer x, Integer y)
         Token.Identifiers.ParameterName('o'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -178,7 +178,7 @@ Integer Add(Integer x, Integer y)
         Token.Identifiers.ParameterName('p3'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -219,7 +219,7 @@ public interface test
         Token.Identifiers.ParameterName('blah'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -254,7 +254,7 @@ new void foo2() //Function name not highlighted
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text('Function name not highlighted'),
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -278,7 +278,7 @@ public abstract void Notify(PlayerId playerId, ISessionResponse response); //the
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text('the')
+        Token.Comment.SingleLine.Text('the'),
       ]);
     });
 
@@ -302,7 +302,7 @@ public abstract void Notify(PlayerId playerId, ISessionResponse response); //the
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text('the')
+        Token.Comment.SingleLine.Text('the'),
       ]);
     });
 
@@ -326,7 +326,7 @@ public abstract void Notify(PlayerId playerId, ISessionResponse response); //the
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Comment.SingleLine.Start,
-        Token.Comment.SingleLine.Text('the a')
+        Token.Comment.SingleLine.Text('the a'),
       ]);
     });
 
@@ -346,7 +346,7 @@ void M(String p = null) { }
         Token.Literals.Null,
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -369,7 +369,7 @@ void M(
 
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -413,7 +413,7 @@ public void LinearRegression(Double[,] samples, Double[] standardDeviations, Int
         Token.Punctuation.Accessor,
         Token.Type('lrreport'),
         Token.Identifiers.LocalName('ar'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
   });

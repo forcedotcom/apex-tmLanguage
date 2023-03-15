@@ -50,7 +50,7 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -99,7 +99,7 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -157,7 +157,7 @@ System.debug('test');`);
         Token.XmlDocComments.String.SingleQuoted.Text('test'),
         Token.XmlDocComments.String.SingleQuoted.End,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -208,7 +208,7 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -266,7 +266,7 @@ when else {
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text(' some comment.'),
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -331,7 +331,7 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -400,7 +400,7 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -466,7 +466,7 @@ when else {
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text(' @TODO.'),
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -534,7 +534,7 @@ when else {
         Token.Comment.SingleLine.Start,
         Token.Comment.SingleLine.Text(' @TODO.'),
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -600,7 +600,7 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -665,7 +665,7 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 

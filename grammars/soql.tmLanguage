@@ -1896,15 +1896,15 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(?&lt;type-name&gt;
+(?&lt;type_name&gt;
   (?:
     (?:
       (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+      (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
         \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+        (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+      (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -1967,25 +1967,25 @@
         <key>begin</key>
         <string>(?x)
 (?!.*\b(?:class|interface|enum)\b)\s*
-(?&lt;return-type&gt;
-  (?&lt;type-name&gt;
+(?&lt;return_type&gt;
+  (?&lt;type_name&gt;
     (?:
       (?:ref\s+)?   # ref return
       (?:
         (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-        (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+        (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
           \g&lt;identifier&gt;\s*
-          (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+          (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
         )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+        (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
       )
       (?:\s*\?\s*)? # nullable suffix?
       (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
     )
   )\s+
 )
-(?&lt;interface-name&gt;\g&lt;type-name&gt;\s*\.\s*)?
-(?&lt;property-name&gt;\g&lt;identifier&gt;)\s*
+(?&lt;interface_name&gt;\g&lt;type_name&gt;\s*\.\s*)?
+(?&lt;property_name&gt;\g&lt;identifier&gt;)\s*
 (?=\{|=&gt;|$)</string>
         <key>beginCaptures</key>
         <dict>
@@ -2049,25 +2049,25 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(?&lt;return-type&gt;
-  (?&lt;type-name&gt;
+(?&lt;return_type&gt;
+  (?&lt;type_name&gt;
     (?:
       (?:ref\s+)?   # ref return
       (?:
         (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-        (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+        (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
           \g&lt;identifier&gt;\s*
-          (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+          (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
         )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+        (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
       )
       (?:\s*\?\s*)? # nullable suffix?
       (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
     )
   )\s+
 )
-(?&lt;interface-name&gt;\g&lt;type-name&gt;\s*\.\s*)?
-(?&lt;indexer-name&gt;this)\s*
+(?&lt;interface_name&gt;\g&lt;type_name&gt;\s*\.\s*)?
+(?&lt;indexer_name&gt;this)\s*
 (?=\[)</string>
         <key>beginCaptures</key>
         <dict>
@@ -2187,24 +2187,24 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(?&lt;return-type&gt;
-  (?&lt;type-name&gt;
+(?&lt;return_type&gt;
+  (?&lt;type_name&gt;
     (?:
       (?:ref\s+)?   # ref return
       (?:
         (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-        (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+        (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
           \g&lt;identifier&gt;\s*
-          (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+          (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
         )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+        (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
       )
       (?:\s*\?\s*)? # nullable suffix?
       (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
     )
   )\s+
 )
-(?&lt;interface-name&gt;\g&lt;type-name&gt;\s*\.\s*)?
+(?&lt;interface_name&gt;\g&lt;type_name&gt;\s*\.\s*)?
 (\g&lt;identifier&gt;)\s*
 (&lt;([^&lt;&gt;]+)&gt;)?\s*
 (?=\()</string>
@@ -3217,15 +3217,15 @@
               <dict>
                 <key>match</key>
                 <string>(?x)
-(?&lt;type-name&gt;
+(?&lt;type_name&gt;
   (?:
     (?:
       (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+      (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
         \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+        (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+      (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -3287,16 +3287,16 @@
         <string>(?x)
 (?:
   (?:(\bref)\s+)?(\bvar\b)| # ref local
-  (?&lt;type-name&gt;
+  (?&lt;type_name&gt;
     (?:
       (?:ref\s+)?   # ref local
       (?:
         (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-        (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+        (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
           \g&lt;identifier&gt;\s*
-          (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+          (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
         )
-        (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+        (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
       )
       (?:\s*\?\s*)? # nullable suffix?
       (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -3365,16 +3365,16 @@
       <dict>
         <key>begin</key>
         <string>(?x)
-(?&lt;const-keyword&gt;\b(?:const)\b)\s*
-(?&lt;type-name&gt;
+(?&lt;const_keyword&gt;\b(?:const)\b)\s*
+(?&lt;type_name&gt;
   (?:
     (?:
       (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+      (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
         \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+        (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+      (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -3778,15 +3778,15 @@
         <key>match</key>
         <string>(?x)
 (\()\s*
-(?&lt;type-name&gt;
+(?&lt;type_name&gt;
   (?:
     (?:
       (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+      (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
         \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+        (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+      (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -3840,7 +3840,7 @@
         <string>(?x)
 (?:(\??\.)\s*)?                                  # safe navigator or accessor
 (@?[_[:alpha:]][_[:alnum:]]*)\s*                 # method name
-(?&lt;type-args&gt;\s*&lt;([^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?\s* # type arguments
+(?&lt;type_args&gt;\s*&lt;([^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?\s* # type arguments
 (?=\()                                           # open paren of argument list</string>
         <key>beginCaptures</key>
         <dict>
@@ -3967,7 +3967,7 @@
             <string>(?x)
 (\??\.)?\s*
 (@?[_[:alpha:]][_[:alnum:]]*)
-(?&lt;type-params&gt;\s*&lt;([^&lt;&gt;]|\g&lt;type-params&gt;)+&gt;\s*)
+(?&lt;type_params&gt;\s*&lt;([^&lt;&gt;]|\g&lt;type_params&gt;)+&gt;\s*)
 (?=
   (\s*\?)?
   \s*\.\s*@?[_[:alpha:]][_[:alnum:]]*
@@ -4048,15 +4048,15 @@
         <string>(?x)
 (delete|insert|undelete|update|upsert)?
 \s*(new)\s+
-(?&lt;type-name&gt;
+(?&lt;type_name&gt;
   (?:
     (?:
       (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+      (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
         \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+        (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+      (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -4106,15 +4106,15 @@
         <string>(?x)
 (delete|insert|undelete|update|upsert)?
 \s*(new)\s+
-(?&lt;type-name&gt;
+(?&lt;type_name&gt;
   (?:
     (?:
       (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+      (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
         \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+        (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+      (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -4154,15 +4154,15 @@
         <key>begin</key>
         <string>(?x)
 \b(new)\b\s*
-(?&lt;type-name&gt;
+(?&lt;type_name&gt;
   (?:
     (?:
       (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+      (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
         \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+        (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+      (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?
@@ -4248,16 +4248,16 @@
         <key>match</key>
         <string>(?x)
 (?:(?:\b(this)\b)\s+)?
-(?&lt;type-name&gt;
+(?&lt;type_name&gt;
   (?:
     (?:ref\s+)?   # ref return
     (?:
       (?:(?&lt;identifier&gt;@?[_[:alpha:]][_[:alnum:]]*)\s*\:\:\s*)? # alias-qualification
-      (?&lt;name-and-type-args&gt; # identifier + type arguments (if any)
+      (?&lt;name_and_type_args&gt; # identifier + type arguments (if any)
         \g&lt;identifier&gt;\s*
-        (?&lt;type-args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type-args&gt;)+&gt;\s*)?
+        (?&lt;type_args&gt;\s*&lt;(?:[^&lt;&gt;]|\g&lt;type_args&gt;)+&gt;\s*)?
       )
-      (?:\s*\.\s*\g&lt;name-and-type-args&gt;)*
+      (?:\s*\.\s*\g&lt;name_and_type_args&gt;)*
     )
     (?:\s*\?\s*)? # nullable suffix?
     (?:\s*\[(?:\s*,\s*)*\]\s*)* # array suffix?

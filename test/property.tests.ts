@@ -40,7 +40,7 @@ public IBooom Property
         Token.Variables.ReadWrite('value'),
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -69,7 +69,7 @@ public IBooom Property
         Token.Variables.ReadWrite('value'),
         Token.Punctuation.Semicolon,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -85,7 +85,7 @@ public IBooom Property
         Token.Punctuation.Semicolon,
         Token.Keywords.Set,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -102,7 +102,7 @@ public IBooom Property
         Token.Punctuation.Semicolon,
         Token.Keywords.Set,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -124,7 +124,7 @@ public IBooom Property
         Token.Punctuation.Semicolon,
         Token.Keywords.Set,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -153,7 +153,7 @@ public IBooom Property
         Token.Punctuation.Semicolon,
         Token.Keywords.Set,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -196,7 +196,7 @@ public IBooom Property
         Token.Punctuation.TypeParameters.End,
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -221,7 +221,7 @@ private Boolean   prop2 = true;`);
         Token.Identifiers.FieldName('prop2'),
         Token.Operators.Assignment,
         Token.Literals.Boolean.True,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -242,7 +242,7 @@ private Boolean   prop2 = true;`);
         Token.Punctuation.Semicolon,
         Token.Keywords.Set,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -258,7 +258,7 @@ private Boolean   prop2 = true;`);
         Token.Punctuation.Semicolon,
         Token.Keywords.Set,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -272,7 +272,7 @@ private Boolean   prop2 = true;`);
         Token.Punctuation.OpenBrace,
         Token.Keywords.Get,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -286,7 +286,7 @@ private Boolean   prop2 = true;`);
         Token.Punctuation.OpenBrace,
         Token.Keywords.Set,
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -313,7 +313,7 @@ public Integer P1
         Token.Keywords.Set,
         Token.Punctuation.OpenBrace,
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
     /*

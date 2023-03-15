@@ -17,7 +17,7 @@ describe('Grammar', () => {
         Token.Support.Class.FunctionText('isBatch'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -31,7 +31,7 @@ describe('Grammar', () => {
         Token.Support.Class.FunctionText('isBatch'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -48,7 +48,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.String.SingleQuoted.Text('This is a test'),
         Token.XmlDocComments.String.SingleQuoted.End,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -73,7 +73,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.String.SingleQuoted.Text('This is a test'),
         Token.XmlDocComments.String.SingleQuoted.End,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -98,7 +98,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.String.SingleQuoted.Text('This is a test'),
         Token.XmlDocComments.String.SingleQuoted.End,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -117,7 +117,7 @@ describe('Grammar', () => {
         Token.XmlDocComments.String.SingleQuoted.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('This is a test'),
         Token.XmlDocComments.String.SingleQuoted.End,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -130,7 +130,7 @@ describe('Grammar', () => {
         Token.Punctuation.Accessor,
         Token.Support.Class.TypeText('Object'),
         Token.Identifiers.FieldName('x'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -143,7 +143,7 @@ describe('Grammar', () => {
         Token.Punctuation.Accessor,
         Token.Support.Class.TypeText('Object'),
         Token.Identifiers.LocalName('x'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -165,7 +165,7 @@ describe('Grammar', () => {
         Token.Identifiers.ParameterName('lUsers'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -182,7 +182,7 @@ describe('Grammar', () => {
         Token.Support.Class.FunctionText('setSavepoint'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -209,7 +209,7 @@ describe('Grammar', () => {
         Token.Punctuation.Comma,
         Token.Literals.Boolean.False,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -220,7 +220,7 @@ describe('Grammar', () => {
       tokens.should.deep.equal([
         Token.Support.Class.FunctionText('insert'),
         Token.Identifiers.LocalName('lResults'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -234,7 +234,7 @@ describe('Grammar', () => {
         Token.Support.Class.FunctionText('startTest'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -264,7 +264,7 @@ describe('Grammar', () => {
         Token.Literals.Numeric.Decimal('12'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -282,7 +282,7 @@ describe('Grammar', () => {
         Token.Identifiers.LocalName('e'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -305,7 +305,7 @@ describe('Grammar', () => {
         Token.Identifiers.ParameterName('BC'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
 
@@ -335,7 +335,7 @@ describe('Grammar', () => {
         Token.Variables.ReadWrite('message'),
         Token.Punctuation.CloseParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -351,7 +351,7 @@ describe('Grammar', () => {
         Token.Support.Class.Text('SObject'),
         Token.Punctuation.CloseParen,
         Token.Variables.ReadWrite('Something'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -378,7 +378,7 @@ describe('Grammar', () => {
         Token.Literals.String('Bad'),
         Token.Punctuation.String.End,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -392,7 +392,7 @@ describe('Grammar', () => {
         Token.Type('MyObjectWrapper'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -412,7 +412,7 @@ describe('Grammar', () => {
         Token.Punctuation.Comma,
         Token.Variables.ReadWrite('User2'),
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -424,7 +424,7 @@ describe('Grammar', () => {
         Token.Support.Class.FunctionText('merge'),
         Token.Variables.ReadWrite('masterAcct'),
         Token.Variables.ReadWrite('mergeAcct'),
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -446,7 +446,7 @@ describe('Grammar', () => {
         Token.Literals.String('Master'),
         Token.Punctuation.String.End,
         Token.Punctuation.CloseParen,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
@@ -477,12 +477,13 @@ describe('Grammar', () => {
         Token.Punctuation.Comma,
         Token.Variables.ReadWrite('acc2'),
         Token.Punctuation.CloseBrace,
-        Token.Punctuation.Semicolon
+        Token.Punctuation.Semicolon,
       ]);
     });
 
     it('Apex support classes are not incorrectly tokenized', async () => {
-      const input = Input.InClass(`public SObjectDomain(List<SObject> sObjectList) {
+      const input =
+        Input.InClass(`public SObjectDomain(List<SObject> sObjectList) {
         records = SystemList;
       }`);
       const tokens = await tokenize(input);
@@ -502,7 +503,7 @@ describe('Grammar', () => {
         Token.Operators.Assignment,
         Token.Variables.ReadWrite('SystemList'),
         Token.Punctuation.Semicolon,
-        Token.Punctuation.CloseBrace
+        Token.Punctuation.CloseBrace,
       ]);
     });
   });
