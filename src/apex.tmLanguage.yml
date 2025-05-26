@@ -115,7 +115,7 @@ repository:
     begin: ([@][_[:alpha:]]+)\b
     beginCaptures:
       '1': { name: storage.type.annotation.apex }
-    end: (?=\(|\s|$)
+    end: (?=\s(?!\())|(?=\s*$)|(?<=\s*\))
     patterns:
     - begin: \(
       beginCaptures:
