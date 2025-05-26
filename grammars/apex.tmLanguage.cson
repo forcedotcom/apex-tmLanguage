@@ -275,7 +275,7 @@ repository:
     beginCaptures:
       "1":
         name: "storage.type.annotation.apex"
-    end: "(?<=\\)|$)"
+    end: "(?=\\(|\\s|$)"
     patterns: [
       {
         begin: "\\("
