@@ -42,7 +42,7 @@ repository:
     - include: '#punctuation-semicolon'
 
   class-or-trigger-members:
-    patterns:  
+    patterns:
     - include: '#javadoc-comment'
     - include: '#comment'
     - include: '#storage-modifier'
@@ -57,7 +57,7 @@ repository:
     - include: '#punctuation-semicolon'
 
   interface-members:
-    patterns:    
+    patterns:
     - include: '#javadoc-comment'
     - include: '#comment'
     - include: '#property-declaration'
@@ -115,7 +115,7 @@ repository:
     begin: ([@][_[:alpha:]]+)\b
     beginCaptures:
       '1': { name: storage.type.annotation.apex }
-    end: (?<=\)|$)
+    end: (?=\s(?!\())|(?=\s*$)|(?<=\s*\))
     patterns:
     - begin: \(
       beginCaptures:
@@ -467,7 +467,7 @@ repository:
     - match: ([_[:alpha:]][_[:alnum:]]*)(\??\.)
       captures:
         '1': { name: variable.other.object.apex}
-        '2': 
+        '2':
           patterns:
           - include: '#punctuation-accessor'
           - include: '#operator-safe-navigation'
@@ -950,7 +950,7 @@ repository:
     patterns:
     - include: '#block'
     - include: '#expression'
-  
+
   when-string:
     begin: (when)(\b\s*)((\')[_.\,\'\s*[:alnum:]]+)
     beginCaptures:
@@ -964,7 +964,7 @@ repository:
     patterns:
     - include: '#block'
     - include: '#expression'
-  
+
   when-string-statement:
     patterns:
     - name: string.quoted.single.apex

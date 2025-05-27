@@ -396,7 +396,7 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(?&lt;=\)|$)</string>
+        <string>(?=\s(?!\())|(?=\s*$)|(?&lt;=\s*\))</string>
         <key>patterns</key>
         <array>
           <dict>
