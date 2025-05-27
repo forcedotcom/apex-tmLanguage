@@ -4,7 +4,7 @@
  *  See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { INITIAL, StackElement } from 'vscode-textmate';
+import { INITIAL, StateStack } from 'vscode-textmate';
 import { TMRegistry } from './registry';
 
 const registry = new TMRegistry();
@@ -23,7 +23,7 @@ export async function tokenize(
   }
 
   let tokens: Token[] = [];
-  let previousStack: StackElement = INITIAL;
+  let previousStack: StateStack = INITIAL;
   const grammar = await registry.loadGrammar('apex');
 
   for (let lineIndex = 0; lineIndex < input.lines.length; lineIndex++) {
