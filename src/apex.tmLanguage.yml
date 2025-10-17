@@ -417,10 +417,14 @@ repository:
     end: '(?={|implements)'
 
   implements-class:
-    begin: (implements)\b\s+([_[:alpha:]][_[:alnum:]]*)
+    begin: (implements)\b
     beginCaptures:
       '1': { name: keyword.other.implements.apex }
-      '2': { name: entity.name.type.implements.apex }
+    patterns:
+    - match: ([_[:alpha:]][_[:alnum:]]*)\b\s*(,)?
+      captures:
+        '1': { name: entity.name.type.implements.apex }
+        '2': { name: punctuation.separator.comma.apex }
     end: '(?={|extends)'
 
   soql-query-expression:
@@ -952,28 +956,19 @@ repository:
     - include: '#expression'
 
   when-string:
-    begin: (when)(\b\s*)((\')[_.\,\'\s*[:alnum:]]+)
+    begin: (when)\b\s*('[^'\n]*')(,)?
     beginCaptures:
       '1': { name: keyword.control.switch.when.apex }
-      '2': { name: punctuation.whitespace.apex }
+      '2':
+        patterns:
+        - include: '#string-literal'
       '3':
         patterns:
-        - include: '#when-string-statement'
         - include: '#punctuation-comma'
     end: (?<=\})
     patterns:
     - include: '#block'
     - include: '#expression'
-
-  when-string-statement:
-    patterns:
-    - name: string.quoted.single.apex
-      begin: \'
-      beginCaptures:
-        '0': { name: punctuation.definition.string.begin.apex }
-      end: \'
-      endCaptures:
-        '0': { name: punctuation.definition.string.end.apex }
 
   when-else-statement:
     begin: (when)\b\s+(else)\b\s*

@@ -1348,7 +1348,7 @@
       <key>implements-class</key>
       <dict>
         <key>begin</key>
-        <string>(implements)\b\s+([_[:alpha:]][_[:alnum:]]*)</string>
+        <string>(implements)\b</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1356,12 +1356,27 @@
             <key>name</key>
             <string>keyword.other.implements.apex</string>
           </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.type.implements.apex</string>
-          </dict>
         </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>match</key>
+            <string>([_[:alpha:]][_[:alnum:]]*)\b\s*(,)?</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.type.implements.apex</string>
+              </dict>
+              <key>2</key>
+              <dict>
+                <key>name</key>
+                <string>punctuation.separator.comma.apex</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
         <key>end</key>
         <string>(?={|extends)</string>
       </dict>
@@ -2782,7 +2797,7 @@
       <key>when-string</key>
       <dict>
         <key>begin</key>
-        <string>(when)(\b\s*)((\')[_.\,\'\s*[:alnum:]]+)</string>
+        <string>(when)\b\s*('[^'\n]*')(,)?</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -2792,17 +2807,18 @@
           </dict>
           <key>2</key>
           <dict>
-            <key>name</key>
-            <string>punctuation.whitespace.apex</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#string-literal</string>
+              </dict>
+            </array>
           </dict>
           <key>3</key>
           <dict>
             <key>patterns</key>
             <array>
-              <dict>
-                <key>include</key>
-                <string>#when-string-statement</string>
-              </dict>
               <dict>
                 <key>include</key>
                 <string>#punctuation-comma</string>
@@ -2821,36 +2837,6 @@
           <dict>
             <key>include</key>
             <string>#expression</string>
-          </dict>
-        </array>
-      </dict>
-      <key>when-string-statement</key>
-      <dict>
-        <key>patterns</key>
-        <array>
-          <dict>
-            <key>name</key>
-            <string>string.quoted.single.apex</string>
-            <key>begin</key>
-            <string>\'</string>
-            <key>beginCaptures</key>
-            <dict>
-              <key>0</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.definition.string.begin.apex</string>
-              </dict>
-            </dict>
-            <key>end</key>
-            <string>\'</string>
-            <key>endCaptures</key>
-            <dict>
-              <key>0</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.definition.string.end.apex</string>
-              </dict>
-            </dict>
           </dict>
         </array>
       </dict>

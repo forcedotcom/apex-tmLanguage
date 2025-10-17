@@ -27,7 +27,6 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
         Token.Keywords.Switch.When,
-        Token.Literals.Whitespace(' '),
         Token.Punctuation.String.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('A'),
         Token.Punctuation.String.End,
@@ -49,6 +48,30 @@ when else {
         Token.Punctuation.OpenParen,
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
+
+    it('simple switch with hyphen', async () => {
+      const input = Input.InMethod(`
+switch on (param) {
+when 'string-with-hyphen' {}
+}`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Punctuation.OpenParen,
+        Token.Variables.ReadWrite('param'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('string-with-hyphen'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.OpenBrace,
         Token.Punctuation.CloseBrace,
         Token.Punctuation.CloseBrace,
       ]);
@@ -76,7 +99,6 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
         Token.Keywords.Switch.When,
-        Token.Literals.Whitespace(' '),
         Token.Punctuation.String.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('A'),
         Token.Punctuation.String.End,
@@ -125,7 +147,6 @@ System.debug('test');`);
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
         Token.Keywords.Switch.When,
-        Token.Literals.Whitespace(' '),
         Token.Punctuation.String.Begin,
         Token.Literals.String('this IS a test'),
         Token.Punctuation.String.End,
@@ -181,7 +202,6 @@ when else {
         Token.Punctuation.CloseParen,
         Token.Punctuation.OpenBrace,
         Token.Keywords.Switch.When,
-        Token.Literals.Whitespace(' '),
         Token.Punctuation.String.Begin,
         Token.XmlDocComments.String.SingleQuoted.Text('A'),
         Token.Punctuation.String.End,
@@ -664,6 +684,28 @@ when else {
         Token.XmlDocComments.String.SingleQuoted.End,
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
+
+    it('switch without whitespace', async () => {
+      const input = Input.InMethod(`
+switch on param {
+when'label' {}
+}`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Variables.ReadWrite('param'),
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('label'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.OpenBrace,
         Token.Punctuation.CloseBrace,
         Token.Punctuation.CloseBrace,
       ]);
