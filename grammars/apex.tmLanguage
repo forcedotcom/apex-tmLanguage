@@ -2678,7 +2678,7 @@
         <string>(?x)
 (switch)\b\s+
 (on)\b\s+
-(?:([_.?\'\(\)[:alnum:]]+)\s*)?
+(.*)
 (\{)</string>
         <key>beginCaptures</key>
         <dict>

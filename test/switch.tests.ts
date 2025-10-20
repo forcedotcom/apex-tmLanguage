@@ -711,6 +711,31 @@ when'label' {}
       ]);
     });
 
+    it('switch on array member', async () => {
+      const input = Input.InMethod(`
+switch on param[0] {
+when 'label' {}
+}`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Switch.Switch,
+        Token.Keywords.Switch.On,
+        Token.Variables.Property('param'),
+        Token.Punctuation.OpenBracket,
+        Token.Literals.Numeric.Decimal('0'),
+        Token.Punctuation.CloseBracket,
+        Token.Punctuation.OpenBrace,
+        Token.Keywords.Switch.When,
+        Token.Punctuation.String.Begin,
+        Token.XmlDocComments.String.SingleQuoted.Text('label'),
+        Token.Punctuation.String.End,
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
+
     /*    it('switch usage in triggers', () => {
       const input = Input.InTrigger(`
         switch on sobject {

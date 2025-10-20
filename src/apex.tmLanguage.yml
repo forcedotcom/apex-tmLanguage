@@ -920,7 +920,7 @@ repository:
       (?x)
       (switch)\b\s+
       (on)\b\s+
-      (?:([_.?\'\(\)[:alnum:]]+)\s*)?
+      (.*)
       (\{)
     beginCaptures:
       '1': { name: keyword.control.switch.apex }
