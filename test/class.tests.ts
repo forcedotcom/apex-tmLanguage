@@ -194,5 +194,27 @@ public    abstract class PublicAbstractClass { }
         Token.Punctuation.CloseBrace,
       ]);
     });
+
+    it('class implements multiple', async () => {
+      const input = Input.FromText(
+        `public abstract class MySecondException implements MyInterface, MyInterface2, MyInterface3 {}`
+      );
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Modifiers.Public,
+        Token.Keywords.Modifiers.Abstract,
+        Token.Keywords.Class,
+        Token.Identifiers.ClassName('MySecondException'),
+        Token.Keywords.Implements,
+        Token.Identifiers.ImplementsName('MyInterface'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.ImplementsName('MyInterface2'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.ImplementsName('MyInterface3'),
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
   });
 });
