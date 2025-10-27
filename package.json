@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/apex-tmlanguage",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Textmate grammar for Apex with outputs for VSCode, Atom and TextMate.",
   "displayName": "apex-tmLanguage",
   "keywords": [
