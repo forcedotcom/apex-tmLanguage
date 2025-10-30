@@ -191,6 +191,48 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.Semicolon,
         ]);
       });
+
+      it('nested ternary expression (issue #43)', async () => {
+        const input = Input.InMethod(`Integer result = x ? y ? 1 : 2 : 3;`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.Integer,
+          Token.Identifiers.LocalName('result'),
+          Token.Operators.Assignment,
+          Token.Variables.ReadWrite('x'),
+          Token.Operators.Conditional.QuestionMark,
+          Token.Variables.ReadWrite('y'),
+          Token.Operators.Conditional.QuestionMark,
+          Token.Literals.Numeric.Decimal('1'),
+          Token.Operators.Conditional.Colon,
+          Token.Literals.Numeric.Decimal('2'),
+          Token.Operators.Conditional.Colon,
+          Token.Literals.Numeric.Decimal('3'),
+          Token.Punctuation.Semicolon,
+        ]);
+      });
+
+      it('ternary with method call (issue #43)', async () => {
+        const input = Input.InMethod(`String s = x ? getValue() : getDefault();`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.String,
+          Token.Identifiers.LocalName('s'),
+          Token.Operators.Assignment,
+          Token.Variables.ReadWrite('x'),
+          Token.Operators.Conditional.QuestionMark,
+          Token.Identifiers.MethodName('getValue'),
+          Token.Punctuation.OpenParen,
+          Token.Punctuation.CloseParen,
+          Token.Operators.Conditional.Colon,
+          Token.Identifiers.MethodName('getDefault'),
+          Token.Punctuation.OpenParen,
+          Token.Punctuation.CloseParen,
+          Token.Punctuation.Semicolon,
+        ]);
+      });
     });
 
     describe('Element Access', () => {
