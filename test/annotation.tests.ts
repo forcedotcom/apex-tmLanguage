@@ -104,7 +104,7 @@ public             class MyTestClass { }`);
     it('annotation with multiple parameters on field', async () => {
       const input =
         Input.InClass(`@InvocableMethod(label='Insert Accounts' description='Inserts new accounts.' required=false)
-      global ID leadId;
+      global Id leadId;
 `);
       const tokens = await tokenize(input);
 
@@ -133,7 +133,9 @@ public             class MyTestClass { }`);
     });
 
     it('annotation on same line as method declaration (issue #44)', async () => {
-      const input = Input.InClass(`@Future(callout=true) public static void method() {}`);
+      const input = Input.InClass(
+        `@Future(callout=true) public static void method() {}`
+      );
       const tokens = await tokenize(input);
 
       tokens.should.deep.equal([

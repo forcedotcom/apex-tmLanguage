@@ -5,7 +5,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { should } from 'chai';
-import { tokenize, Token } from './utils/tokenize';
+import { tokenize, Input, Token } from './utils/tokenize';
 
 describe('Grammar', () => {
   before(() => {
@@ -74,6 +74,22 @@ interface IBar extends IFoo { }
         Token.Identifiers.InterfaceName('MyInterface2'),
         Token.Keywords.Extends,
         Token.Identifiers.ExtendsName('MyInterface'),
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
+
+    it('interface extends namespace-qualified type (issue #50)', async () => {
+      const input = Input.FromText(`interface MyInterface extends System.IComparable {}`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Interface,
+        Token.Identifiers.InterfaceName('MyInterface'),
+        Token.Keywords.Extends,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('IComparable'),
         Token.Punctuation.OpenBrace,
         Token.Punctuation.CloseBrace,
       ]);
