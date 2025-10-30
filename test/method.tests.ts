@@ -173,6 +173,35 @@ Integer Add(Integer x, Integer y)
       ]);
     });
 
+    it('final keyword does not unhighlight types (PR #67)', async () => {
+      const input = Input.InClass(`
+void method(final String str1, String str2, final Integer num, final Boolean flag) { }`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.PrimitiveType.Void,
+        Token.Identifiers.MethodName('method'),
+        Token.Punctuation.OpenParen,
+        Token.Keywords.Modifiers.Final,
+        Token.PrimitiveType.String,
+        Token.Identifiers.ParameterName('str1'),
+        Token.Punctuation.Comma,
+        Token.PrimitiveType.String,
+        Token.Identifiers.ParameterName('str2'),
+        Token.Punctuation.Comma,
+        Token.Keywords.Modifiers.Final,
+        Token.PrimitiveType.Integer,
+        Token.Identifiers.ParameterName('num'),
+        Token.Punctuation.Comma,
+        Token.Keywords.Modifiers.Final,
+        Token.PrimitiveType.Boolean,
+        Token.Identifiers.ParameterName('flag'),
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
+
     it('commented parameters are highlighted properly (issue omnisharp-vscode#802)', async () => {
       const input = Input.InClass(
         `public void methodWithParametersCommented(Integer p1, /*Integer p2*/, Integer p3) {}`

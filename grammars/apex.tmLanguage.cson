@@ -378,7 +378,7 @@ repository:
       '1':
         name: 'support.class.apex'
   'support-functions':
-    match: '\\b(delete|execute|finish|insert|start|undelete|update|upsert)\\b'
+    match: '\\b(execute|finish|start)\\b'
     captures:
       '1':
         name: 'support.function.apex'
@@ -2631,12 +2631,28 @@ repository:
       '1':
         name: 'storage.modifier.apex'
       '2':
+        name: 'meta.type.apex'
         patterns: [
           {
-            include: '#support-type'
+            include: '#comment'
           }
           {
-            include: '#type'
+            include: '#type-builtin'
+          }
+          {
+            include: '#type-name'
+          }
+          {
+            include: '#type-arguments'
+          }
+          {
+            include: '#type-array-suffix'
+          }
+          {
+            include: '#type-nullable-suffix'
+          }
+          {
+            include: '#support-type'
           }
         ]
       '6':

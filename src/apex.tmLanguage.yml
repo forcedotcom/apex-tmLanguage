@@ -176,7 +176,7 @@ repository:
       '1': { name: support.class.apex }
 
   support-functions:
-    match: \b(delete|execute|finish|insert|start|undelete|update|upsert)\b
+    match: \b(execute|finish|start)\b
     captures:
       '1': { name: support.function.apex }
 
@@ -1630,9 +1630,15 @@ repository:
     captures:
       '1': { name: storage.modifier.apex }
       '2':
+        name: meta.type.apex
         patterns:
+        - include: '#comment'
+        - include: '#type-builtin'
+        - include: '#type-name'
+        - include: '#type-arguments'
+        - include: '#type-array-suffix'
+        - include: '#type-nullable-suffix'
         - include: '#support-type'
-        - include: '#type'
       # '3': ?<identifier> is a sub-expression. It's final value is not considered.
       # '4': ?<name_and_type_args> is a sub-expression. It's final value is not considered.
       # '5': ?<type_args> is a sub-expression. It's final value is not considered.

@@ -580,7 +580,7 @@
       <key>support-functions</key>
       <dict>
         <key>match</key>
-        <string>\b(delete|execute|finish|insert|start|undelete|update|upsert)\b</string>
+        <string>\b(execute|finish|start)\b</string>
         <key>captures</key>
         <dict>
           <key>1</key>
@@ -4403,15 +4403,37 @@
           </dict>
           <key>2</key>
           <dict>
+            <key>name</key>
+            <string>meta.type.apex</string>
             <key>patterns</key>
             <array>
               <dict>
                 <key>include</key>
-                <string>#support-type</string>
+                <string>#comment</string>
               </dict>
               <dict>
                 <key>include</key>
-                <string>#type</string>
+                <string>#type-builtin</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#type-name</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#type-arguments</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#type-array-suffix</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#type-nullable-suffix</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
               </dict>
             </array>
           </dict>
