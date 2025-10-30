@@ -86,5 +86,59 @@ describe('Grammar', () => {
         Token.Punctuation.Semicolon,
       ]);
     });
+
+    it('Id type (lowercase d) - Apex is case-insensitive', async () => {
+      const input = Input.InClass(`Id recordId;`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.PrimitiveType.ID,
+        Token.Identifiers.FieldName('recordId'),
+        Token.Punctuation.Semicolon,
+      ]);
+    });
+
+    it('ID type (uppercase D) - Apex is case-insensitive', async () => {
+      const input = Input.InClass(`ID recordId;`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        { text: 'ID', type: 'keyword.type.apex' },
+        Token.Identifiers.FieldName('recordId'),
+        Token.Punctuation.Semicolon,
+      ]);
+    });
+
+    it('Id in generic type parameter', async () => {
+      const input = Input.InClass(`Map<Id, Account> accounts;`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Type('Map'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.PrimitiveType.ID,
+        Token.Punctuation.Comma,
+        Token.Type('Account'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Identifiers.FieldName('accounts'),
+        Token.Punctuation.Semicolon,
+      ]);
+    });
+
+    it('ID in generic type parameter', async () => {
+      const input = Input.InClass(`Map<ID, Account> accounts;`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Type('Map'),
+        Token.Punctuation.TypeParameters.Begin,
+        { text: 'ID', type: 'keyword.type.apex' },
+        Token.Punctuation.Comma,
+        Token.Type('Account'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Identifiers.FieldName('accounts'),
+        Token.Punctuation.Semicolon,
+      ]);
+    });
   });
 });

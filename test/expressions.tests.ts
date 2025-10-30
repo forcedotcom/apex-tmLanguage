@@ -214,7 +214,9 @@ Object newPoint = new Vector(point.x * z, 0);`);
       });
 
       it('ternary with method call (issue #43)', async () => {
-        const input = Input.InMethod(`String s = x ? getValue() : getDefault();`);
+        const input = Input.InMethod(
+          `String s = x ? getValue() : getDefault();`
+        );
         const tokens = await tokenize(input);
 
         tokens.should.deep.equal([

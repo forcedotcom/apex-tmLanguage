@@ -1,0 +1,6 @@
+# Standard SFDX ignore patterns
+**/__tests__/**
+**/.sfdx/**
+**/.localdevserver/**
+**/node_modules/**
+

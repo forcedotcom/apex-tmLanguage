@@ -54,6 +54,7 @@ repository:
     - include: '#variable-initializer'
     - include: '#constructor-declaration'
     - include: '#method-declaration'
+    - include: '#initializer-block'
     - include: '#punctuation-semicolon'
 
   interface-members:
@@ -92,6 +93,7 @@ repository:
   expression:
     patterns:
     - include: '#comment'
+    - include: '#dml-expression'
     - include: '#merge-expression'
     - include: '#support-expression'
     - include: '#throw-expression'
@@ -209,6 +211,15 @@ repository:
     - include: '#comment'
     - include: '#support-type'
     - include: '#punctuation-comma'
+
+  dml-expression:
+    begin: \b(delete|insert|undelete|update|upsert)\b\s+(?!new\b)
+    beginCaptures:
+      '1': { name: support.function.apex }
+    end: (?<=\;)
+    patterns:
+    - include: '#expression'
+    - include: '#punctuation-semicolon'
 
   merge-expression:
     begin: (merge)\b\s+
@@ -410,21 +421,35 @@ repository:
     - include: '#comment'
 
   extends-class:
-    begin: (extends)\b\s+([_[:alpha:]][_[:alnum:]]*)
+    begin: (extends)\b\s+
     beginCaptures:
       '1': { name: keyword.other.extends.apex }
-      '2': { name: entity.name.type.extends.apex }
     end: '(?={|implements)'
+    patterns:
+    - begin: (?=[_[:alpha:]][_[:alnum:]]*\s*\.)
+      end: '(?={|implements)'
+      patterns:
+      - include: '#support-type'
+      - include: '#type'
+    - match: ([_[:alpha:]][_[:alnum:]]*)
+      captures:
+        '1': { name: entity.name.type.extends.apex }
 
   implements-class:
     begin: (implements)\b
     beginCaptures:
       '1': { name: keyword.other.implements.apex }
     patterns:
+    - begin: (?=[_[:alpha:]][_[:alnum:]]*\s*\.)
+      end: '(?={|extends|,)'
+      patterns:
+      - include: '#support-type'
+      - include: '#type'
     - match: ([_[:alpha:]][_[:alnum:]]*)\b\s*(,)?
       captures:
         '1': { name: entity.name.type.implements.apex }
         '2': { name: punctuation.separator.comma.apex }
+    - include: '#punctuation-comma'
     end: '(?={|extends)'
 
   soql-query-expression:
@@ -835,6 +860,16 @@ repository:
     patterns:
     - include: '#statement'
 
+  initializer-block:
+    begin: \{
+    beginCaptures:
+      '0': { name: punctuation.curlybrace.open.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.curlybrace.close.apex }
+    patterns:
+    - include: '#statement'
+
   variable-initializer:
     begin: (?<!=|!)(=)(?!=|>)
     beginCaptures:
@@ -944,28 +979,31 @@ repository:
     - include: '#punctuation-semicolon'
 
   when-statement:
-    begin: (when)\b\s+([\'_\-[:alnum:]]+)\s*
+    begin: (when)\b\s+([_\-[:alnum:]]+)\s*
     beginCaptures:
       '1': { name: keyword.control.switch.when.apex }
       '2':
         patterns:
         - include: '#expression'
-    end: (?<=\})
+    end: (?=\})|(?=when\b)
     patterns:
     - include: '#block'
     - include: '#expression'
 
   when-string:
-    begin: (when)\b\s*('[^'\n]*')(,)?
+    begin: (when)\b\s*('[^'\n]*')(\s*(,)\s*('[^'\n]*'))*\s*
     beginCaptures:
       '1': { name: keyword.control.switch.when.apex }
       '2':
         patterns:
         - include: '#string-literal'
-      '3':
+      '4':
         patterns:
         - include: '#punctuation-comma'
-    end: (?<=\})
+      '5':
+        patterns:
+        - include: '#string-literal'
+    end: (?=\})|(?=when\b)
     patterns:
     - include: '#block'
     - include: '#expression'
@@ -975,7 +1013,7 @@ repository:
     beginCaptures:
       '1': { name: keyword.control.switch.when.apex }
       '2': { name: keyword.control.switch.else.apex }
-    end: (?<=\})
+    end: (?=\})|(?=when\b)
     patterns:
     - include: '#block'
     - include: '#expression'
@@ -984,10 +1022,11 @@ repository:
     begin: (when)\b\s*
     beginCaptures:
       '1': { name: keyword.control.switch.when.apex }
-    end: (?<=\})
+    end: (?=\})|(?=when\b)
     patterns:
     - include: '#block'
     - include: '#expression'
+    - include: '#punctuation-comma'
 
   when-sobject-statement:
     begin: (when)\b\s+([_[:alnum:]]+)\s+([_[:alnum:]]+)\s*
@@ -995,7 +1034,7 @@ repository:
       '1': { name: keyword.control.switch.when.apex }
       '2': { name: storage.type.apex }
       '3': { name: entity.name.variable.local.apex }
-    end: (?<=\})
+    end: (?=\})|(?=when\b)
     patterns:
     - include: '#block'
     - include: '#expression'
@@ -1644,7 +1683,7 @@ repository:
     - include: '#type-nullable-suffix'
 
   type-builtin:
-    match: \b(Blob|Boolean|byte|Date|Datetime|Decimal|Double|ID|Integer|Long|Object|String|Time|void)\b
+    match: \b(Blob|Boolean|byte|Date|Datetime|Decimal|Double|Id|ID|Integer|Long|Object|String|Time|void)\b
     captures:
       '1': { name: keyword.type.apex }
 
