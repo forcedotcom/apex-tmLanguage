@@ -177,6 +177,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#initializer-block</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#punctuation-semicolon</string>
           </dict>
         </array>
@@ -2485,6 +2489,36 @@
         </array>
       </dict>
       <key>block</key>
+      <dict>
+        <key>begin</key>
+        <string>\{</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.curlybrace.open.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\}</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.curlybrace.close.apex</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#statement</string>
+          </dict>
+        </array>
+      </dict>
+      <key>initializer-block</key>
       <dict>
         <key>begin</key>
         <string>\{</string>
