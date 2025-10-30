@@ -2873,7 +2873,7 @@
       <key>when-statement</key>
       <dict>
         <key>begin</key>
-        <string>(when)\b\s+([\'_\-[:alnum:]]+)\s*</string>
+        <string>(when)\b\s+([_\-[:alnum:]]+)\s*</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>

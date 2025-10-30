@@ -1694,7 +1694,7 @@ repository:
       }
     ]
   'when-statement':
-    begin: "(when)\\b\\s+([\\'_\\-[:alnum:]]+)\\s*"
+    begin: '(when)\\b\\s+([_\\-[:alnum:]]+)\\s*'
     beginCaptures:
       '1':
         name: 'keyword.control.switch.when.apex'
