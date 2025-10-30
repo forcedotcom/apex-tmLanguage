@@ -54,6 +54,7 @@ repository:
     - include: '#variable-initializer'
     - include: '#constructor-declaration'
     - include: '#method-declaration'
+    - include: '#initializer-block'
     - include: '#punctuation-semicolon'
 
   interface-members:
@@ -850,6 +851,16 @@ repository:
     - include: "#argument-list"
 
   block:
+    begin: \{
+    beginCaptures:
+      '0': { name: punctuation.curlybrace.open.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.curlybrace.close.apex }
+    patterns:
+    - include: '#statement'
+
+  initializer-block:
     begin: \{
     beginCaptures:
       '0': { name: punctuation.curlybrace.open.apex }
