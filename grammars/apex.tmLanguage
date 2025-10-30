@@ -311,6 +311,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#dml-expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#merge-expression</string>
           </dict>
           <dict>
@@ -690,6 +694,32 @@
           <dict>
             <key>include</key>
             <string>#punctuation-comma</string>
+          </dict>
+        </array>
+      </dict>
+      <key>dml-expression</key>
+      <dict>
+        <key>begin</key>
+        <string>\b(delete|insert|undelete|update|upsert)\b\s+(?!new\b)</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>support.function.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>(?&lt;=\;)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#punctuation-semicolon</string>
           </dict>
         </array>
       </dict>
@@ -1328,7 +1358,7 @@
       <key>extends-class</key>
       <dict>
         <key>begin</key>
-        <string>(extends)\b\s+([_[:alpha:]][_[:alnum:]]*)</string>
+        <string>(extends)\b\s+</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -1336,14 +1366,41 @@
             <key>name</key>
             <string>keyword.other.extends.apex</string>
           </dict>
-          <key>2</key>
-          <dict>
-            <key>name</key>
-            <string>entity.name.type.extends.apex</string>
-          </dict>
         </dict>
         <key>end</key>
         <string>(?={|implements)</string>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>begin</key>
+            <string>(?=[_[:alpha:]][_[:alnum:]]*\s*\.)</string>
+            <key>end</key>
+            <string>(?={|implements)</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#type</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
+            <key>match</key>
+            <string>([_[:alpha:]][_[:alnum:]]*)</string>
+            <key>captures</key>
+            <dict>
+              <key>1</key>
+              <dict>
+                <key>name</key>
+                <string>entity.name.type.extends.apex</string>
+              </dict>
+            </dict>
+          </dict>
+        </array>
       </dict>
       <key>implements-class</key>
       <dict>
@@ -1360,6 +1417,23 @@
         <key>patterns</key>
         <array>
           <dict>
+            <key>begin</key>
+            <string>(?=[_[:alpha:]][_[:alnum:]]*\s*\.)</string>
+            <key>end</key>
+            <string>(?={|extends|,)</string>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#support-type</string>
+              </dict>
+              <dict>
+                <key>include</key>
+                <string>#type</string>
+              </dict>
+            </array>
+          </dict>
+          <dict>
             <key>match</key>
             <string>([_[:alpha:]][_[:alnum:]]*)\b\s*(,)?</string>
             <key>captures</key>
@@ -1375,6 +1449,10 @@
                 <string>punctuation.separator.comma.apex</string>
               </dict>
             </dict>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#punctuation-comma</string>
           </dict>
         </array>
         <key>end</key>
@@ -4251,7 +4329,7 @@
       <dict>
         <key>match</key>
         <string>(?x)
-(?:(?:\b(this)\b)\s+)?
+(?:(?:\b(this|final)\b)\s+)?
 (?&lt;type_name&gt;
   (?:
     (?:ref\s+)?   # ref return
@@ -4438,7 +4516,7 @@
       <key>type-builtin</key>
       <dict>
         <key>match</key>
-        <string>\b(Blob|Boolean|byte|Date|Datetime|Decimal|Double|ID|Integer|Long|Object|String|Time|void)\b</string>
+        <string>\b(Blob|Boolean|byte|Date|Datetime|Decimal|Double|Id|ID|Integer|Long|Object|String|Time|void)\b</string>
         <key>captures</key>
         <dict>
           <key>1</key>
