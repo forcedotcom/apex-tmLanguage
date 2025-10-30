@@ -92,6 +92,7 @@ repository:
   expression:
     patterns:
     - include: '#comment'
+    - include: '#dml-expression'
     - include: '#merge-expression'
     - include: '#support-expression'
     - include: '#throw-expression'
@@ -209,6 +210,15 @@ repository:
     - include: '#comment'
     - include: '#support-type'
     - include: '#punctuation-comma'
+
+  dml-expression:
+    begin: \b(delete|insert|undelete|update|upsert)\b\s+(?!new\b)
+    beginCaptures:
+      '1': { name: support.function.apex }
+    end: (?<=\;)
+    patterns:
+    - include: '#expression'
+    - include: '#punctuation-semicolon'
 
   merge-expression:
     begin: (merge)\b\s+

@@ -506,5 +506,51 @@ describe('Grammar', () => {
         Token.Punctuation.CloseBrace,
       ]);
     });
+
+    it('DML on Map.values() receives same scope as direct insert (issue #26)', async () => {
+      const input = Input.InMethod(`
+Map<Id, Account> accounts = new Map<Id, Account>();
+insert accounts.values();
+insert new List<Account>();
+`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Type('Map'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Type('Id'),
+        Token.Punctuation.Comma,
+        Token.Type('Account'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Identifiers.LocalName('accounts'),
+        Token.Operators.Assignment,
+        Token.Keywords.Control.New,
+        Token.Type('Map'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Type('Id'),
+        Token.Punctuation.Comma,
+        Token.Type('Account'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Support.Class.FunctionText('insert'),
+        Token.Variables.Object('accounts'),
+        Token.Punctuation.Accessor,
+        Token.Identifiers.MethodName('values'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+        Token.Support.Class.FunctionText('insert'),
+        Token.Keywords.Control.New,
+        Token.Type('List'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Type('Account'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.Semicolon,
+      ]);
+    });
   });
 });
