@@ -37,7 +37,9 @@ describe('Grammar', () => {
         Token.Identifiers.MethodName('setMessage'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.String.Begin,
-        Token.Literals.String('Object graph should be a Directed Acyclic Graph.'),
+        Token.Literals.String(
+          'Object graph should be a Directed Acyclic Graph.'
+        ),
         Token.Punctuation.String.End,
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
@@ -105,9 +107,7 @@ public class TestDataBuilder {
       );
       const initBlockEnd = tokens.findIndex(
         (t, i) =>
-          i > initBlockStart &&
-          t.text === '}' &&
-          tokens[i - 1]?.text === ';'
+          i > initBlockStart && t.text === '}' && tokens[i - 1]?.text === ';'
       );
 
       // Extract tokens for the initialization block
@@ -124,7 +124,9 @@ public class TestDataBuilder {
         Token.Identifiers.MethodName('setMessage'),
         Token.Punctuation.OpenParen,
         Token.Punctuation.String.Begin,
-        Token.Literals.String('Object graph should be a Directed Acyclic Graph.'),
+        Token.Literals.String(
+          'Object graph should be a Directed Acyclic Graph.'
+        ),
         Token.Punctuation.String.End,
         Token.Punctuation.CloseParen,
         Token.Punctuation.Semicolon,
@@ -155,7 +157,8 @@ public void testMethod() {
         (t, i) => i > initEnd && tokens[i - 1]?.text === ')' && t.text === '{'
       );
       const methodEnd = tokens.findIndex(
-        (t, i) => i > methodStart && t.text === '}' && tokens[i - 1]?.text === ';'
+        (t, i) =>
+          i > methodStart && t.text === '}' && tokens[i - 1]?.text === ';'
       );
       const methodTokens = tokens.slice(methodStart, methodEnd + 1);
 
@@ -170,6 +173,29 @@ public void testMethod() {
       initStringTokens.length.should.be.greaterThan(0);
       methodStringTokens.length.should.be.greaterThan(0);
       initStringTokens[0].type.should.equal(methodStringTokens[0].type);
+    });
+
+    it('static keyword before block is handled (even though static blocks are not valid Apex)', async () => {
+      // Note: Apex does NOT support static initialization blocks like Java
+      // This test verifies the grammar handles the syntax correctly for highlighting
+      // even though it's not valid Apex code
+      const input = Input.InClass(`
+static {
+    Integer x = 5;
+}`);
+      const tokens = await tokenize(input);
+
+      // The static keyword should be matched, then the block should be matched
+      tokens.should.include.deep.members([
+        Token.Keywords.Modifiers.Static,
+        Token.Punctuation.OpenBrace,
+        Token.PrimitiveType.Integer,
+        Token.Identifiers.LocalName('x'),
+        Token.Operators.Assignment,
+        Token.Literals.Numeric.Decimal('5'),
+        Token.Punctuation.Semicolon,
+        Token.Punctuation.CloseBrace,
+      ]);
     });
   });
 });
