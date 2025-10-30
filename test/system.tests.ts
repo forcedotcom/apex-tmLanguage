@@ -518,7 +518,7 @@ insert new List<Account>();
       tokens.should.deep.equal([
         Token.Type('Map'),
         Token.Punctuation.TypeParameters.Begin,
-        Token.Type('Id'),
+        Token.PrimitiveType.ID,
         Token.Punctuation.Comma,
         Token.Type('Account'),
         Token.Punctuation.TypeParameters.End,
@@ -527,7 +527,7 @@ insert new List<Account>();
         Token.Keywords.Control.New,
         Token.Type('Map'),
         Token.Punctuation.TypeParameters.Begin,
-        Token.Type('Id'),
+        Token.PrimitiveType.ID,
         Token.Punctuation.Comma,
         Token.Type('Account'),
         Token.Punctuation.TypeParameters.End,

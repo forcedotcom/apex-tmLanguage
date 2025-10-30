@@ -80,7 +80,9 @@ interface IBar extends IFoo { }
     });
 
     it('interface extends namespace-qualified type (issue #50)', async () => {
-      const input = Input.FromText(`interface MyInterface extends System.IComparable {}`);
+      const input = Input.FromText(
+        `interface MyInterface extends System.IComparable {}`
+      );
       const tokens = await tokenize(input);
 
       tokens.should.deep.equal([
