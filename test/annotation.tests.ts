@@ -131,5 +131,27 @@ public             class MyTestClass { }`);
         Token.Punctuation.Semicolon,
       ]);
     });
+
+    it('annotation on same line as method declaration (issue #44)', async () => {
+      const input = Input.InClass(`@Future(callout=true) public static void method() {}`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Modifiers.AnnotationName('@Future'),
+        Token.Punctuation.OpenParen,
+        Token.Variables.ReadWrite('callout'),
+        Token.Operators.Assignment,
+        Token.Literals.Boolean.True,
+        Token.Punctuation.CloseParen,
+        Token.Keywords.Modifiers.Public,
+        Token.Keywords.Modifiers.Static,
+        Token.PrimitiveType.Void,
+        Token.Identifiers.MethodName('method'),
+        Token.Punctuation.OpenParen,
+        Token.Punctuation.CloseParen,
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
   });
 });
