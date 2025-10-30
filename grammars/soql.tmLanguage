@@ -2855,7 +2855,7 @@
       <key>when-statement</key>
       <dict>
         <key>begin</key>
-        <string>(when)\b\s+([\'_\-[:alnum:]]+)\s*</string>
+        <string>(when)\b\s+([_\-[:alnum:]]+)\s*</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -2875,7 +2875,7 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(?&lt;=\})</string>
+        <string>(?=\})|(?=when\b)</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -2891,7 +2891,7 @@
       <key>when-string</key>
       <dict>
         <key>begin</key>
-        <string>(when)\b\s*('[^'\n]*')(,)?</string>
+        <string>(when)\b\s*('[^'\n]*')(\s*(,)\s*('[^'\n]*'))*\s*</string>
         <key>beginCaptures</key>
         <dict>
           <key>1</key>
@@ -2909,7 +2909,7 @@
               </dict>
             </array>
           </dict>
-          <key>3</key>
+          <key>4</key>
           <dict>
             <key>patterns</key>
             <array>
@@ -2919,9 +2919,19 @@
               </dict>
             </array>
           </dict>
+          <key>5</key>
+          <dict>
+            <key>patterns</key>
+            <array>
+              <dict>
+                <key>include</key>
+                <string>#string-literal</string>
+              </dict>
+            </array>
+          </dict>
         </dict>
         <key>end</key>
-        <string>(?&lt;=\})</string>
+        <string>(?=\})|(?=when\b)</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -2952,7 +2962,7 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(?&lt;=\})</string>
+        <string>(?=\})|(?=when\b)</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -2978,7 +2988,7 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(?&lt;=\})</string>
+        <string>(?=\})|(?=when\b)</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -2988,6 +2998,10 @@
           <dict>
             <key>include</key>
             <string>#expression</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#punctuation-comma</string>
           </dict>
         </array>
       </dict>
@@ -3014,7 +3028,7 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(?&lt;=\})</string>
+        <string>(?=\})|(?=when\b)</string>
         <key>patterns</key>
         <array>
           <dict>
