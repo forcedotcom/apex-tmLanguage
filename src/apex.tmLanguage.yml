@@ -1571,7 +1571,7 @@ repository:
   parameter:
     match: |-
       (?x)
-      (?:(?:\b(this)\b)\s+)?
+      (?:(?:\b(this|final)\b)\s+)?
       (?<type_name>
         (?:
           (?:ref\s+)?   # ref return
