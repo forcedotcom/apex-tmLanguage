@@ -1704,7 +1704,7 @@ repository:
             include: '#expression'
           }
         ]
-    end: '(?<=\\})'
+    end: '(?=\\})|(?=when\\b)'
     patterns: [
       {
         include: '#block'
@@ -1714,7 +1714,7 @@ repository:
       }
     ]
   'when-string':
-    begin: "(when)\\b\\s*('[^'\\n]*')(,)?"
+    begin: "(when)\\b\\s*('[^'\\n]*')(\\s*(,)\\s*('[^'\\n]*'))*\\s*"
     beginCaptures:
       '1':
         name: 'keyword.control.switch.when.apex'
@@ -1724,13 +1724,19 @@ repository:
             include: '#string-literal'
           }
         ]
-      '3':
+      '4':
         patterns: [
           {
             include: '#punctuation-comma'
           }
         ]
-    end: '(?<=\\})'
+      '5':
+        patterns: [
+          {
+            include: '#string-literal'
+          }
+        ]
+    end: '(?=\\})|(?=when\\b)'
     patterns: [
       {
         include: '#block'
@@ -1746,7 +1752,7 @@ repository:
         name: 'keyword.control.switch.when.apex'
       '2':
         name: 'keyword.control.switch.else.apex'
-    end: '(?<=\\})'
+    end: '(?=\\})|(?=when\\b)'
     patterns: [
       {
         include: '#block'
@@ -1760,13 +1766,16 @@ repository:
     beginCaptures:
       '1':
         name: 'keyword.control.switch.when.apex'
-    end: '(?<=\\})'
+    end: '(?=\\})|(?=when\\b)'
     patterns: [
       {
         include: '#block'
       }
       {
         include: '#expression'
+      }
+      {
+        include: '#punctuation-comma'
       }
     ]
   'when-sobject-statement':
@@ -1778,7 +1787,7 @@ repository:
         name: 'storage.type.apex'
       '3':
         name: 'entity.name.variable.local.apex'
-    end: '(?<=\\})'
+    end: '(?=\\})|(?=when\\b)'
     patterns: [
       {
         include: '#block'
