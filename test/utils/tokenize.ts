@@ -646,7 +646,7 @@ export namespace Token {
     export const Datetime = createToken('Datetime', 'keyword.type.apex');
     export const Decimal = createToken('Decimal', 'keyword.type.apex');
     export const Double = createToken('Double', 'keyword.type.apex');
-    export const ID = createToken('ID', 'keyword.type.apex');
+    export const ID = createToken('Id', 'keyword.type.apex');
     export const Integer = createToken('Integer', 'keyword.type.apex');
     export const Long = createToken('Long', 'keyword.type.apex');
     export const Object = createToken('Object', 'keyword.type.apex');

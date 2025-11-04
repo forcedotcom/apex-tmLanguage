@@ -216,5 +216,42 @@ public    abstract class PublicAbstractClass { }
         Token.Punctuation.CloseBrace,
       ]);
     });
+
+    it('class extends namespace-qualified type (issue #50)', async () => {
+      const input = Input.FromText(`class MyClass extends System.Exception {}`);
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Class,
+        Token.Identifiers.ClassName('MyClass'),
+        Token.Keywords.Extends,
+        Token.Support.Class.System,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('Exception'),
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
+
+    it('class implements namespace-qualified type (issue #50)', async () => {
+      const input = Input.FromText(
+        `class MyClass implements Database.Batchable<Account> {}`
+      );
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Class,
+        Token.Identifiers.ClassName('MyClass'),
+        Token.Keywords.Implements,
+        Token.Support.Class.Database,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('Batchable'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Type('Account'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
   });
 });
