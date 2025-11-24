@@ -1,6 +1,6 @@
 {
   "name": "@salesforce/apex-tmlanguage",
-  "version": "1.8.3",
+  "version": "2.0.0",
   "description": "Textmate grammar for Apex with outputs for VSCode, Atom and TextMate.",
   "displayName": "apex-tmLanguage",
   "keywords": [
@@ -36,8 +36,6 @@
     "build:soql": "node scripts/build-soql.js",
     "build": "npm run build:grammars && npm run build:atom && npm run build:soql",
     "compile": "tsc -p .",
-    "commit-init": "commitizen init cz-conventional-changelog --save-dev --save-exact --force",
-    "commit": "git-cz",
     "watch": "tsc -w -p .",
     "test:soql-tmgrammar": "vscode-tmgrammar-test -g \"./grammars/soql.tmLanguage\" \"./test/soql/*.soql\" ",
     "test:soql-tmgrammar-snapshots": "vscode-tmgrammar-snap -s source.soql -g \"./grammars/soql.tmLanguage\" \"./test/soql/snapshots/*.soql\" ",
@@ -51,33 +49,27 @@
     "README.md"
   ],
   "engines": {
-    "node": ">=16"
+    "node": ">=20"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17",
-    "@commitlint/config-conventional": "^17",
+    "@commitlint/cli": "^20",
+    "@commitlint/config-conventional": "^20",
     "@types/chai": "4.3.4",
     "@types/mocha": "^10.0.10",
     "chai": "^4.3.7",
-    "commitizen": "^4.3.1",
     "cson-parser": "^4.0.9",
     "cz-conventional-changelog": "^3.3.0",
-    "js-yaml": "^4.1.0",
-    "mocha": "^10.1.0",
+    "js-yaml": "^4.1.1",
+    "mocha": "^11.7.5",
     "plist": "^3.1.0",
-    "prettier": "^2.8.0",
+    "prettier": "^3.6.2",
     "typescript": "4.9.3",
-    "vscode-textmate": "^9.2.0",
+    "vscode-textmate": "^9.2.1",
     "vscode-tmgrammar-test": "^0.1.3"
   },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }
