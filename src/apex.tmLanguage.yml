@@ -1342,7 +1342,8 @@ repository:
     # Only match ? if:
     # 1. There isn't a preceding or trailing ? (null-coalescing operator)
     # 2. There isn't a trailing . or [ (null-conditional operator)
-    begin: (?<!\?)\?(?!\?|\.|\[)
+    # 3. UNLESS the trailing . is followed by a digit (decimal literal like ?.34)
+    begin: (?<!\?)\?(?!\?|\.(?!\d)|\[)
     beginCaptures:
       '0': { name: keyword.operator.conditional.question-mark.apex }
     end: ':'
