@@ -39,7 +39,7 @@
     "watch": "tsc -w -p .",
     "test:soql-tmgrammar": "vscode-tmgrammar-test -g \"./grammars/soql.tmLanguage\" \"./test/soql/*.soql\" ",
     "test:soql-tmgrammar-snapshots": "vscode-tmgrammar-snap -s source.soql -g \"./grammars/soql.tmLanguage\" \"./test/soql/snapshots/*.soql\" ",
-    "test": "npm run compile && mocha out/test/**/*.tests.js && npm run test:soql-tmgrammar && npm run test:soql-tmgrammar-snapshots",
+    "test": "npm run compile && mocha out/test/**/*.test.js && npm run test:soql-tmgrammar && npm run test:soql-tmgrammar-snapshots",
     "prepare": "npm run build",
     "format": "prettier --config .prettierrc.json --write './**/*.{ts,js,json,md}'"
   },
