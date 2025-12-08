@@ -235,6 +235,57 @@ Object newPoint = new Vector(point.x * z, 0);`);
           Token.Punctuation.Semicolon,
         ]);
       });
+
+      it('ternary with decimal literal without spaces (W-8095488)', async () => {
+        const input = Input.InMethod(`Decimal d = b?.34:0;`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.Decimal,
+          Token.Identifiers.LocalName('d'),
+          Token.Operators.Assignment,
+          Token.Variables.ReadWrite('b'),
+          Token.Operators.Conditional.QuestionMark,
+          Token.Literals.Numeric.Decimal('34'),
+          Token.Operators.Conditional.Colon,
+          Token.Literals.Numeric.Decimal('0'),
+          Token.Punctuation.Semicolon,
+        ]);
+      });
+
+      it('ternary with decimal literal with leading digits (W-8095488)', async () => {
+        const input = Input.InMethod(`Decimal i = b?.123:0;`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.Decimal,
+          Token.Identifiers.LocalName('i'),
+          Token.Operators.Assignment,
+          Token.Variables.ReadWrite('b'),
+          Token.Operators.Conditional.QuestionMark,
+          Token.Literals.Numeric.Decimal('123'),
+          Token.Operators.Conditional.Colon,
+          Token.Literals.Numeric.Decimal('0'),
+          Token.Punctuation.Semicolon,
+        ]);
+      });
+
+      it('ternary with decimal literal with spaces (W-8095488)', async () => {
+        const input = Input.InMethod(`Decimal d = b ? .34 : 0;`);
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.Decimal,
+          Token.Identifiers.LocalName('d'),
+          Token.Operators.Assignment,
+          Token.Variables.ReadWrite('b'),
+          Token.Operators.Conditional.QuestionMark,
+          Token.Literals.Numeric.Decimal('34'),
+          Token.Operators.Conditional.Colon,
+          Token.Literals.Numeric.Decimal('0'),
+          Token.Punctuation.Semicolon,
+        ]);
+      });
     });
 
     describe('Element Access', () => {
