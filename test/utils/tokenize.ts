@@ -482,6 +482,8 @@ export namespace Token {
 
     export const String = (text: string) =>
       createToken(text, 'string.quoted.single.apex');
+    export const MultilineString = (text: string) =>
+      createToken(text, 'string.quoted.single.multiline.apex');
     export const CharacterEscape = (text: string) =>
       createToken(text, 'constant.character.escape.apex');
     export const StringDoubleQuote = (text: string) =>
@@ -655,6 +657,17 @@ export namespace Token {
     export const Void = createToken('void', 'keyword.type.apex');
   }
 
+  export namespace TemplateExpression {
+    export const Begin = createToken(
+      '${',
+      'punctuation.definition.template-expression.begin.apex'
+    );
+    export const End = createToken(
+      '}',
+      'punctuation.definition.template-expression.end.apex'
+    );
+  }
+
   export namespace Punctuation {
     export namespace String {
       export const Begin = createToken(
@@ -663,6 +676,17 @@ export namespace Token {
       );
       export const End = createToken(
         "'",
+        'punctuation.definition.string.end.apex'
+      );
+    }
+
+    export namespace MultilineString {
+      export const Begin = createToken(
+        "'''",
+        'punctuation.definition.string.begin.apex'
+      );
+      export const End = createToken(
+        "'''",
         'punctuation.definition.string.end.apex'
       );
     }
