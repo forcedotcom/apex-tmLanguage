@@ -157,7 +157,7 @@ public    abstract class PublicAbstractClass { }
 
     it('class extends implements', async () => {
       const input = Input.FromText(
-        `public abstract class MySecondException extends Exception implements MyInterface {}`
+        `public abstract class MySecondException extends Exception implements MyInterface {}`,
       );
       const tokens = await tokenize(input);
 
@@ -177,7 +177,7 @@ public    abstract class PublicAbstractClass { }
 
     it('class implements extends', async () => {
       const input = Input.FromText(
-        `public abstract class MySecondException implements MyInterface extends Exception {}`
+        `public abstract class MySecondException implements MyInterface extends Exception {}`,
       );
       const tokens = await tokenize(input);
 
@@ -197,7 +197,7 @@ public    abstract class PublicAbstractClass { }
 
     it('class implements multiple', async () => {
       const input = Input.FromText(
-        `public abstract class MySecondException implements MyInterface, MyInterface2, MyInterface3 {}`
+        `public abstract class MySecondException implements MyInterface, MyInterface2, MyInterface3 {}`,
       );
       const tokens = await tokenize(input);
 
@@ -235,7 +235,7 @@ public    abstract class PublicAbstractClass { }
 
     it('class implements namespace-qualified type (issue #50)', async () => {
       const input = Input.FromText(
-        `class MyClass implements Database.Batchable<Account> {}`
+        `class MyClass implements Database.Batchable<Account> {}`,
       );
       const tokens = await tokenize(input);
 
@@ -249,6 +249,83 @@ public    abstract class PublicAbstractClass { }
         Token.Punctuation.TypeParameters.Begin,
         Token.Type('Account'),
         Token.Punctuation.TypeParameters.End,
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
+
+    it('class implements multiple namespace-qualified interfaces', async () => {
+      const input = Input.FromText(
+        `public class MyClass implements Database.Batchable<Account>, Database.Schedulable {}`,
+      );
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Modifiers.Public,
+        Token.Keywords.Class,
+        Token.Identifiers.ClassName('MyClass'),
+        Token.Keywords.Implements,
+        Token.Support.Class.Database,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('Batchable'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Type('Account'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Punctuation.Comma,
+        Token.Support.Class.Database,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('Schedulable'),
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
+
+    it('class implements mixed regular and namespace-qualified interfaces', async () => {
+      const input = Input.FromText(
+        `public class MyClass implements Database.Batchable<Account>, MyInterface, Database.Schedulable {}`,
+      );
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Modifiers.Public,
+        Token.Keywords.Class,
+        Token.Identifiers.ClassName('MyClass'),
+        Token.Keywords.Implements,
+        Token.Support.Class.Database,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('Batchable'),
+        Token.Punctuation.TypeParameters.Begin,
+        Token.Type('Account'),
+        Token.Punctuation.TypeParameters.End,
+        Token.Punctuation.Comma,
+        Token.Identifiers.ImplementsName('MyInterface'),
+        Token.Punctuation.Comma,
+        Token.Support.Class.Database,
+        Token.Punctuation.Accessor,
+        Token.Support.Class.TypeText('Schedulable'),
+        Token.Punctuation.OpenBrace,
+        Token.Punctuation.CloseBrace,
+      ]);
+    });
+
+    it('class extends and implements multiple interfaces', async () => {
+      const input = Input.FromText(
+        `public class MyClass extends BaseClass implements InterfaceOne, InterfaceTwo, InterfaceThree {}`,
+      );
+      const tokens = await tokenize(input);
+
+      tokens.should.deep.equal([
+        Token.Keywords.Modifiers.Public,
+        Token.Keywords.Class,
+        Token.Identifiers.ClassName('MyClass'),
+        Token.Keywords.Extends,
+        Token.Identifiers.ExtendsName('BaseClass'),
+        Token.Keywords.Implements,
+        Token.Identifiers.ImplementsName('InterfaceOne'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.ImplementsName('InterfaceTwo'),
+        Token.Punctuation.Comma,
+        Token.Identifiers.ImplementsName('InterfaceThree'),
         Token.Punctuation.OpenBrace,
         Token.Punctuation.CloseBrace,
       ]);
