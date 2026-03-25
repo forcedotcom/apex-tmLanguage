@@ -1254,6 +1254,7 @@ repository:
     - include: '#boolean-literal'
     - include: '#null-literal'
     - include: '#numeric-literal'
+    - include: '#multiline-string-literal'
     - include: '#string-literal'
 
   boolean-literal:
@@ -1297,9 +1298,21 @@ repository:
     - name: constant.numeric.decimal.apex
       match: \b[0-9_]+(U|u|L|l|UL|Ul|uL|ul|LU|Lu|lU|lu)?\b
 
+  multiline-string-literal:
+    name: string.quoted.single.multiline.apex
+    begin: "'''"
+    beginCaptures:
+      '0': { name: punctuation.definition.string.begin.apex }
+    end: "'''"
+    endCaptures:
+      '0': { name: punctuation.definition.string.end.apex }
+    patterns:
+    - include: '#string-character-escape'
+    - include: '#string-template-expression'
+
   string-literal:
     name: string.quoted.single.apex
-    begin: "'"
+    begin: \'(?!'')
     beginCaptures:
       '0': { name: punctuation.definition.string.begin.apex }
     end: (\')|((?:[^\\\n])$)
@@ -1308,10 +1321,23 @@ repository:
       '2': { name: invalid.illegal.newline.apex }
     patterns:
     - include: '#string-character-escape'
+    - include: '#string-template-expression'
 
   string-character-escape:
     name: constant.character.escape.apex
     match: \\.
+
+  string-template-expression:
+    name: meta.template-expression.apex
+    begin: \$\{
+    beginCaptures:
+      '0': { name: punctuation.definition.template-expression.begin.apex }
+    end: \}
+    endCaptures:
+      '0': { name: punctuation.definition.template-expression.end.apex }
+    patterns:
+    - name: variable.other.readwrite.apex
+      match: '@?[_[:alpha:]][_[:alnum:]]*'
 
   expression-operators:
     patterns:

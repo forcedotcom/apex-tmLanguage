@@ -3572,6 +3572,10 @@
           </dict>
           <dict>
             <key>include</key>
+            <string>#multiline-string-literal</string>
+          </dict>
+          <dict>
+            <key>include</key>
             <string>#string-literal</string>
           </dict>
         </array>
@@ -3661,12 +3665,48 @@
           </dict>
         </array>
       </dict>
+      <key>multiline-string-literal</key>
+      <dict>
+        <key>name</key>
+        <string>string.quoted.single.multiline.apex</string>
+        <key>begin</key>
+        <string>'''</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.string.begin.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>'''</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.string.end.apex</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#string-character-escape</string>
+          </dict>
+          <dict>
+            <key>include</key>
+            <string>#string-template-expression</string>
+          </dict>
+        </array>
+      </dict>
       <key>string-literal</key>
       <dict>
         <key>name</key>
         <string>string.quoted.single.apex</string>
         <key>begin</key>
-        <string>'</string>
+        <string>\'(?!'')</string>
         <key>beginCaptures</key>
         <dict>
           <key>0</key>
@@ -3696,6 +3736,10 @@
             <key>include</key>
             <string>#string-character-escape</string>
           </dict>
+          <dict>
+            <key>include</key>
+            <string>#string-template-expression</string>
+          </dict>
         </array>
       </dict>
       <key>string-character-escape</key>
@@ -3704,6 +3748,40 @@
         <string>constant.character.escape.apex</string>
         <key>match</key>
         <string>\\.</string>
+      </dict>
+      <key>string-template-expression</key>
+      <dict>
+        <key>name</key>
+        <string>meta.template-expression.apex</string>
+        <key>begin</key>
+        <string>\$\{</string>
+        <key>beginCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.template-expression.begin.apex</string>
+          </dict>
+        </dict>
+        <key>end</key>
+        <string>\}</string>
+        <key>endCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>punctuation.definition.template-expression.end.apex</string>
+          </dict>
+        </dict>
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>name</key>
+            <string>variable.other.readwrite.apex</string>
+            <key>match</key>
+            <string>@?[_[:alpha:]][_[:alnum:]]*</string>
+          </dict>
+        </array>
       </dict>
       <key>expression-operators</key>
       <dict>
