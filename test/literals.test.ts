@@ -193,6 +193,41 @@ describe('Grammar', () => {
           Token.Punctuation.Semicolon,
         ]);
       });
+
+      it('string with escaped dollar is not a template expression', async () => {
+        const input = Input.InClass("String s = 'hello \\${name}';");
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.String,
+          Token.Identifiers.FieldName('s'),
+          Token.Operators.Assignment,
+          Token.Punctuation.String.Begin,
+          Token.Literals.String('hello '),
+          Token.Literals.CharacterEscape('\\$'),
+          Token.Literals.String('{name}'),
+          Token.Punctuation.String.End,
+          Token.Punctuation.Semicolon,
+        ]);
+      });
+
+      it('string with dotted template expression', async () => {
+        const input = Input.InClass("String s = 'x=${a.b}';");
+        const tokens = await tokenize(input);
+
+        tokens.should.deep.equal([
+          Token.PrimitiveType.String,
+          Token.Identifiers.FieldName('s'),
+          Token.Operators.Assignment,
+          Token.Punctuation.String.Begin,
+          Token.Literals.String('x='),
+          Token.TemplateExpression.Begin,
+          Token.Variables.ReadWrite('a.b'),
+          Token.TemplateExpression.End,
+          Token.Punctuation.String.End,
+          Token.Punctuation.Semicolon,
+        ]);
+      });
     });
 
     describe('Multiline Strings', () => {
@@ -211,7 +246,7 @@ describe('Grammar', () => {
         ]);
       });
 
-      it('multiline string with template expression', async () => {
+      it('multiline string: ${…} is not separately highlighted (same scopes as body)', async () => {
         const input = Input.InClass(
           `String s = '''\nhello \${name}\n''';`
         );
@@ -222,16 +257,13 @@ describe('Grammar', () => {
           Token.Identifiers.FieldName('s'),
           Token.Operators.Assignment,
           Token.Punctuation.MultilineString.Begin,
-          Token.Literals.MultilineString('hello '),
-          Token.TemplateExpression.Begin,
-          Token.Variables.ReadWrite('name'),
-          Token.TemplateExpression.End,
+          Token.Literals.MultilineString('hello ${name}'),
           Token.Punctuation.MultilineString.End,
           Token.Punctuation.Semicolon,
         ]);
       });
 
-      it('multiline string with multiple template expressions', async () => {
+      it('multiline string: multiple ${…} spans are plain multiline string text per line', async () => {
         const input = Input.InClass(
           `String s = '''\nI am a multi \${var1}\nline \${var2}\nstring \${var3}\n''';`
         );
@@ -242,18 +274,9 @@ describe('Grammar', () => {
           Token.Identifiers.FieldName('s'),
           Token.Operators.Assignment,
           Token.Punctuation.MultilineString.Begin,
-          Token.Literals.MultilineString('I am a multi '),
-          Token.TemplateExpression.Begin,
-          Token.Variables.ReadWrite('var1'),
-          Token.TemplateExpression.End,
-          Token.Literals.MultilineString('line '),
-          Token.TemplateExpression.Begin,
-          Token.Variables.ReadWrite('var2'),
-          Token.TemplateExpression.End,
-          Token.Literals.MultilineString('string '),
-          Token.TemplateExpression.Begin,
-          Token.Variables.ReadWrite('var3'),
-          Token.TemplateExpression.End,
+          Token.Literals.MultilineString('I am a multi ${var1}'),
+          Token.Literals.MultilineString('line ${var2}'),
+          Token.Literals.MultilineString('string ${var3}'),
           Token.Punctuation.MultilineString.End,
           Token.Punctuation.Semicolon,
         ]);
@@ -279,7 +302,7 @@ describe('Grammar', () => {
 
       it('multiline string as method argument', async () => {
         const input = Input.InMethod(
-          `System.debug('''multi\nline''');`
+          `System.debug('''\nmulti\nline''');`
         );
         const tokens = await tokenize(input);
 
@@ -298,7 +321,7 @@ describe('Grammar', () => {
       });
 
       it('multiline string in return statement', async () => {
-        const input = Input.InMethod(`return '''hello''';`);
+        const input = Input.InMethod(`return '''\nhello''';`);
         const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
@@ -312,7 +335,7 @@ describe('Grammar', () => {
 
       it('multiline string in SOQL WHERE clause', async () => {
         const input = Input.InMethod(
-          `List<Account> a = [SELECT Id FROM Account WHERE Name = '''value'''];`
+          `List<Account> a = [SELECT Id FROM Account WHERE Name = '''\nvalue'''];`
         );
         const tokens = await tokenize(input);
 
@@ -341,7 +364,7 @@ describe('Grammar', () => {
 
       it('multiline string in Map literal', async () => {
         const input = Input.InMethod(
-          `Map<String,String> m = new Map<String,String>{'''key''' => '''value'''};`
+          `Map<String,String> m = new Map<String,String>{'''\nkey''' => '''\nvalue'''};`
         );
         const tokens = await tokenize(input);
 
@@ -377,7 +400,7 @@ describe('Grammar', () => {
 
       it('multiline string in throw statement', async () => {
         const input = Input.InMethod(
-          `throw new TestException('''msg''');`
+          `throw new TestException('''\nmsg''');`
         );
         const tokens = await tokenize(input);
 
@@ -396,7 +419,7 @@ describe('Grammar', () => {
 
       it('multiline string in annotation', async () => {
         const input = Input.FromText(
-          `@MyAnnotation(value = '''text''')
+          `@MyAnnotation(value = '''\ntext''')
 public class Foo { }`
         );
         const tokens = await tokenize(input);
@@ -421,7 +444,7 @@ public class Foo { }`
       it('multiline string in initializer block', async () => {
         const input = Input.InClass(`
 {
-    this.setMessage('''multiline message''');
+    this.setMessage('''\nmultiline message''');
 }`);
         const tokens = await tokenize(input);
 
@@ -492,7 +515,7 @@ public class Foo { }`
 
       it('multiline string in throw statement', async () => {
         const input = Input.InMethod(
-          `throw new IllegalArgumentException('''msg''');`
+          `throw new IllegalArgumentException('''\nmsg''');`
         );
         const tokens = await tokenize(input);
 
@@ -511,7 +534,7 @@ public class Foo { }`
 
       it('multiline string in annotation', async () => {
         const input = Input.FromText(
-          `@MyAnnotation(value = '''text''')
+          `@MyAnnotation(value = '''\ntext''')
 public class C { }`
         );
         const tokens = await tokenize(input);
@@ -536,7 +559,7 @@ public class C { }`
       it('multiline string in initializer block', async () => {
         const input = Input.InClass(`
 {
-    String s = '''hello''';
+    String s = '''\nhello''';
 }`);
         const tokens = await tokenize(input);
 
@@ -555,7 +578,7 @@ public class C { }`
 
       it('multiline string in method argument', async () => {
         const input = Input.InMethod(
-          `System.debug('''multi\nline''');`
+          `System.debug('''\nmulti\nline''');`
         );
         const tokens = await tokenize(input);
 
@@ -574,7 +597,7 @@ public class C { }`
       });
 
       it('multiline string in return statement', async () => {
-        const input = Input.InMethod(`return '''hello''';`);
+        const input = Input.InMethod(`return '''\nhello''';`);
         const tokens = await tokenize(input);
 
         tokens.should.deep.equal([
@@ -588,7 +611,7 @@ public class C { }`
 
       it('multiline string in SOQL WHERE clause', async () => {
         const input = Input.InMethod(
-          `List<Account> a = [SELECT Id FROM Account WHERE Name = '''value'''];`
+          `List<Account> a = [SELECT Id FROM Account WHERE Name = '''\nvalue'''];`
         );
         const tokens = await tokenize(input);
 
@@ -617,7 +640,7 @@ public class C { }`
 
       it('multiline string in map literal', async () => {
         const input = Input.InMethod(
-          `Map<String,String> m = new Map<String,String>{'''key''' => '''value'''};`
+          `Map<String,String> m = new Map<String,String>{'''\nkey''' => '''\nvalue'''};`
         );
         const tokens = await tokenize(input);
 
@@ -653,7 +676,7 @@ public class C { }`
 
       it('multiline string in throw statement', async () => {
         const input = Input.InMethod(
-          `throw new Exception('''msg''');`
+          `throw new Exception('''\nmsg''');`
         );
         const tokens = await tokenize(input);
 
@@ -672,7 +695,7 @@ public class C { }`
 
       it('multiline string in annotation', async () => {
         const input = Input.InClass(
-          `@MyAnnotation(value = '''text''')
+          `@MyAnnotation(value = '''\ntext''')
   void m() {}`
         );
         const tokens = await tokenize(input);
@@ -698,7 +721,7 @@ public class C { }`
       it('multiline string in initializer block', async () => {
         const input = Input.InClass(`
 {
-    String s = '''hello''';
+    String s = '''\nhello''';
 }`);
         const tokens = await tokenize(input);
 

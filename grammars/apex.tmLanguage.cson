@@ -1721,6 +1721,9 @@ repository:
       '2':
         patterns: [
           {
+            include: '#multiline-string-literal'
+          }
+          {
             include: '#string-literal'
           }
         ]
@@ -1732,6 +1735,9 @@ repository:
         ]
       '5':
         patterns: [
+          {
+            include: '#multiline-string-literal'
+          }
           {
             include: '#string-literal'
           }
@@ -2178,8 +2184,8 @@ repository:
       }
     ]
   'multiline-string-literal':
-    name: 'string.quoted.single.multiline.apex'
-    begin: "'''"
+    name: 'string.quoted.single.apex string.quoted.single.multiline.apex'
+    begin: "'''(?=$)"
     beginCaptures:
       '0':
         name: 'punctuation.definition.string.begin.apex'
@@ -2190,9 +2196,6 @@ repository:
     patterns: [
       {
         include: '#string-character-escape'
-      }
-      {
-        include: '#string-template-expression'
       }
     ]
   'string-literal':
@@ -2220,7 +2223,7 @@ repository:
     match: '\\\\.'
   'string-template-expression':
     name: 'meta.template-expression.apex'
-    begin: '\\$\\{'
+    begin: '(?<!\\\\)\\$\\{'
     beginCaptures:
       '0':
         name: 'punctuation.definition.template-expression.begin.apex'
@@ -2231,7 +2234,7 @@ repository:
     patterns: [
       {
         name: 'variable.other.readwrite.apex'
-        match: '@?[_[:alpha:]][_[:alnum:]]*'
+        match: '\\G@?[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*'
       }
     ]
   'expression-operators':

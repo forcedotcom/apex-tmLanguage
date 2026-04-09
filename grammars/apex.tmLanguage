@@ -2923,6 +2923,10 @@
             <array>
               <dict>
                 <key>include</key>
+                <string>#multiline-string-literal</string>
+              </dict>
+              <dict>
+                <key>include</key>
                 <string>#string-literal</string>
               </dict>
             </array>
@@ -2941,6 +2945,10 @@
           <dict>
             <key>patterns</key>
             <array>
+              <dict>
+                <key>include</key>
+                <string>#multiline-string-literal</string>
+              </dict>
               <dict>
                 <key>include</key>
                 <string>#string-literal</string>
@@ -3686,9 +3694,9 @@
       <key>multiline-string-literal</key>
       <dict>
         <key>name</key>
-        <string>string.quoted.single.multiline.apex</string>
+        <string>string.quoted.single.apex string.quoted.single.multiline.apex</string>
         <key>begin</key>
-        <string>'''</string>
+        <string>'''(?=$)</string>
         <key>beginCaptures</key>
         <dict>
           <key>0</key>
@@ -3712,10 +3720,6 @@
           <dict>
             <key>include</key>
             <string>#string-character-escape</string>
-          </dict>
-          <dict>
-            <key>include</key>
-            <string>#string-template-expression</string>
           </dict>
         </array>
       </dict>
@@ -3772,7 +3776,7 @@
         <key>name</key>
         <string>meta.template-expression.apex</string>
         <key>begin</key>
-        <string>\$\{</string>
+        <string>(?&lt;!\\)\$\{</string>
         <key>beginCaptures</key>
         <dict>
           <key>0</key>
@@ -3797,7 +3801,7 @@
             <key>name</key>
             <string>variable.other.readwrite.apex</string>
             <key>match</key>
-            <string>@?[_[:alpha:]][_[:alnum:]]*</string>
+            <string>\G@?[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*</string>
           </dict>
         </array>
       </dict>
